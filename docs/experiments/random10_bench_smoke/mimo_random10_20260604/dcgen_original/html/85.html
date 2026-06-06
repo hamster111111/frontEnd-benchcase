@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Yandex</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+            background-color: #ffffff;
+            color: #000000;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+        }
+
+        .top-nav {
+            position: absolute;
+            top: 20px;
+            right: 30px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .login-btn {
+            padding: 10px 20px;
+            border: 1px solid #d9d9d9;
+            border-radius: 25px;
+            background: transparent;
+            color: #000000;
+            font-size: 15px;
+            cursor: pointer;
+            font-weight: 500;
+            transition: background-color 0.2s;
+        }
+
+        .login-btn:hover {
+            background-color: #f5f5f5;
+        }
+
+        .menu-icon {
+            width: 30px;
+            height: 30px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            gap: 5px;
+            cursor: pointer;
+        }
+
+        .menu-icon span {
+            display: block;
+            width: 24px;
+            height: 2px;
+            background-color: #333;
+            border-radius: 1px;
+        }
+
+        .weather-card {
+            position: absolute;
+            top: 80px;
+            right: 30px;
+            padding: 15px 20px;
+            background: #f5f5f5;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+            max-width: 280px;
+        }
+
+        .weather-text {
+            font-size: 14px;
+            line-height: 1.4;
+            color: #333;
+        }
+
+        .weather-icon {
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(135deg, #a0d8ef 0%, #b8d4e3 100%);
+            border-radius: 8px;
+            flex-shrink: 0;
+        }
+
+        .main-content {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 0 20px;
+        }
+
+        .search-container {
+            width: 100%;
+            max-width: 750px;
+            margin-bottom: 20px;
+        }
+
+        .search-box {
+            width: 100%;
+            height: 55px;
+            border: 2px solid #FFD54F;
+            border-radius: 30px;
+            padding: 0 20px;
+            display: flex;
+            align-items: center;
+            position: relative;
+            background: white;
+            transition: border-color 0.2s;
+        }
+
+        .search-box:focus-within {
+            border-color: #FFC107;
+            box-shadow: 0 2px 8px rgba(255, 193, 7, 0.2);
+        }
+
+        .search-input {
+            flex: 1;
+            height: 100%;
+            border: none;
+            outline: none;
+            font-size: 16px;
+            background: transparent;
+            padding: 0 10px;
+        }
+
+        .search-icons {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            padding-right: 5px;
+        }
+
+        .icon {
+            width: 24px;
+            height: 24px;
+            cursor: pointer;
+            opacity: 0.6;
+            transition: opacity 0.2s;
+        }
+
+        .icon:hover {
+            opacity: 1;
+        }
+
+        .search-info {
+            width: 100%;
+            max-width: 750px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 20px;
+            margin-top: 5px;
+        }
+
+        .left-info {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .city-icon {
+            width: 20px;
+            height: 20px;
+            background: #d9d9d9;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 10px;
+            color: #666;
+        }
+
+        .temp {
+            font-size: 14px;
+            font-weight: 500;
+            color: #333;
+        }
+
+        .currency {
+            font-size: 14px;
+            color: #666;
+        }
+
+        .location {
+            font-size: 14px;
+            color: #666;
+        }
+
+        .floating-btn {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #6a1b9a 0%, #4a148c 100%);
+            border: none;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 12px rgba(74, 20, 140, 0.4);
+            transition: transform 0.2s;
+        }
+
+        .floating-btn:hover {
+            transform: scale(1.05);
+        }
+
+        .floating-btn-icon {
+            width: 24px;
+            height: 24px;
+            fill: white;
+        }
+    </style>
+</head>
+<body>
+    <nav class="top-nav">
+        <button class="login-btn">Войти</button>
+        <div class="menu-icon">
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+    </nav>
+
+    <div class="weather-card">
+        <div class="weather-text">
+            Сегодня: сильный дождь · +24...+26° · слабый ветер 3 м/с
+        </div>
+        <div class="weather-icon"></div>
+    </div>
+
+    <main class="main-content">
+        <div class="search-container">
+            <div class="search-box">
+                <input type="text" class="search-input" placeholder="Найдётся всё">
+                <div class="search-icons">
+                    <svg class="icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M12 14C13.6569 14 15 12.6569 15 11V5C15 3.34315 13.6569 2 12 2C10.3431 2 9 3.34315 9 5V11C9 12.6569 10.3431 14 12 14Z" fill="#666"/>
+                        <path d="M17 11C17 13.7614 14.7614 16 12 16C9.23858 16 7 13.7614 7 11H5C5 14.5346 7.61472 17.4183 11 17.9293V21H13V17.9293C16.3853 17.4183 19 14.5346 19 11H17Z" fill="#666"/>
+                    </svg>
+                    <svg class="icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M12 2C6.477 2 2 6.477 2 12C2 17.523 6.477 22 12 22C17.523 22 22 17.523 22 12C22 6.477 17.523 2 12 2ZM12 20C7.582 20 4 16.418 4 12C4 7.582 7.582 4 12 4C16.418 4 20 7.582 20 12C20 16.418 16.418 20 12 20Z" fill="#666"/>
+                        <path d="M12 6C8.686 6 6 8.686 6 12C6 15.314 8.686 18 12 18C15.314 18 18 15.314 18 12C18 8.686 15.314 6 12 6ZM12 16C9.791 16 8 14.209 8 12C8 9.791 9.791 8 12 8C14.209 8 16 9.791 16 12C16 14.209 14.209 16 12 16Z" fill="#666"/>
+                        <circle cx="12" cy="12" r="3" fill="#666"/>
+                    </svg>
+                </div>
+            </div>
+        </div>
+
+        <div class="search-info">
+            <div class="left-info">
+                <div class="city-icon">
+                    <svg width="12" height="12" viewBox="0 0 24 24" fill="#666" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M12 2C8.13 2 5 5.13 5 9C5 14.25 12 22 12 22C12 22 19 14.25 19 9C19 5.13 15.87 2 12 2ZM12 11.5C10.62 11.5 9.5 10.38 9.5 9C9.5 7.62 10.62 6.5 12 6.5C13.38 6.5 14.5 7.62 14.5 9C14.5 10.38 13.38 11.5 12 11.5Z"/>
+                    </svg>
+                </div>
+                <span class="temp">25°</span>
+                <span class="currency">USD 90,25</span>
+                <span class="currency">EUR 97,88</span>
+            </div>
+            <div class="location">Гонконг</div>
+        </div>
+    </main>
+
+    <button class="floating-btn">
+        <svg class="floating-btn-icon" viewBox="0 0 24 24" fill="white" xmlns="http://www.w3.org/2000/svg">
+            <path d="M12 2C6.48 2 2 6.48 2 12C2 17.52 6.48 22 12 22C17.52 22 22 17.52 22 12C22 6.48 17.52 2 12 2ZM12 20C7.59 20 4 16.41 4 12C4 7.59 7.59 4 12 4C16.41 4 20 7.59 20 12C20 16.41 16.41 20 12 20Z"/>
+            <path d="M12 7C9.24 7 7 9.24 7 12C7 14.76 9.24 17 12 17C14.76 17 17 14.76 17 12C17 9.24 14.76 7 12 7ZM12 15C10.34 15 9 13.66 9 12C9 10.34 10.34 9 12 9C13.66 9 15 10.34 15 12C15 13.66 13.66 15 12 15Z"/>
+        </svg>
+    </button>
+
+    <script>
+        // 搜索框交互
+        const searchInput = document.querySelector('.search-input');
+        const searchBox = document.querySelector('.search-box');
+        
+        searchInput.addEventListener('focus', function() {
+            searchBox.style.borderColor = '#FFC107';
+            searchBox.style.boxShadow = '0 2px 8px rgba(255, 193, 7, 0.2)';
+        });
+        
+        searchInput.addEventListener('blur', function() {
+            if (!searchInput.value) {
+                searchBox.style.borderColor = '#FFD54F';
+                searchBox.style.boxShadow = 'none';
+            }
+        });
+        
+        // 搜索框回车键提交
+        searchInput.addEventListener('keypress', function(e) {
+            if (e.key === 'Enter' && searchInput.value.trim()) {
+                alert('搜索: ' + searchInput.value);
+            }
+        });
+        
+        // 浮动按钮交互
+        const floatingBtn = document.querySelector('.floating-btn');
+        floatingBtn.addEventListener('click', function() {
+            alert('点击了浮动按钮');
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,416 @@
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Splunk Community - Multisearch to display Average % CPU Used</title>
+    <style>
+        /* Reset & Base */
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; color: #333; line-height: 1.5; background-color: #f9f9f9; }
+        a { color: #0066cc; text-decoration: none; }
+        a:hover { text-decoration: underline; }
+        img { max-width: 100%; height: auto; }
+        ul { list-style: none; }
+
+        /* Layout */
+        .container { max-width: 1200px; margin: 0 auto; padding: 0 20px; }
+
+        /* Navigation Bar */
+        .navbar { background-color: #242424; color: #fff; padding: 12px 0; }
+        .navbar .container { display: flex; align-items: center; justify-content: space-between; }
+        .navbar-brand { display: flex; align-items: center; color: #fff; font-weight: bold; font-size: 20px; text-decoration: none; margin-right: 30px; }
+        .navbar-brand::after { content: '>'; margin-left: 3px; }
+        .nav-links { display: flex; gap: 20px; }
+        .nav-links a { color: #fff; font-size: 14px; }
+        .nav-links a:hover { color: #ddd; text-decoration: none; }
+        .sign-in-btn { background-color: #e5007d; color: white; border: none; padding: 6px 12px; border-radius: 4px; font-size: 14px; cursor: pointer; text-decoration: none; }
+        .sign-in-btn:hover { background-color: #cc006e; text-decoration: none; }
+
+        /* Search Bar */
+        .search-section { background-color: #ebebeb; padding: 15px 0; border-bottom: 1px solid #ddd; }
+        .search-section .container { display: flex; align-items: center; gap: 15px; flex-wrap: wrap; }
+        .search-input-wrapper { flex-grow: 1; max-width: 600px; position: relative; }
+        .search-icon { position: absolute; left: 10px; top: 50%; transform: translateY(-50%); color: #888; }
+        .search-input { width: 100%; padding: 8px 10px 8px 30px; border: 1px solid #ccc; border-radius: 4px; font-size: 14px; }
+        .search-btn { background-color: #333; color: white; border: none; padding: 8px 15px; border-radius: 4px; cursor: pointer; font-size: 14px; }
+        .ask-btn { background-color: #00a3e0; color: white; border: none; padding: 8px 15px; border-radius: 4px; cursor: pointer; font-size: 14px; }
+
+        /* Breadcrumb & Options */
+        .breadcrumb-options { padding: 15px 0; border-bottom: 1px solid #eee; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px; }
+        .breadcrumb { font-size: 13px; color: #666; }
+        .breadcrumb a { color: #0066cc; }
+        .options-dropdown { font-size: 13px; color: #666; cursor: pointer; }
+
+        /* Main Content Layout */
+        .main-content-wrapper { display: flex; gap: 30px; padding: 30px 0; align-items: flex-start; }
+        .post-content { flex-grow: 1; }
+        .sidebar { width: 300px; flex-shrink: 0; }
+
+        /* Post Content Area */
+        .post-header { margin-bottom: 20px; }
+        .post-solved-badge { color: #00a3e0; font-size: 13px; margin-bottom: 10px; display: inline-flex; align-items: center; gap: 5px; }
+        .solved-icon { width: 16px; height: 16px; background-color: #00a3e0; border-radius: 50%; display: inline-block; color: white; text-align: center; line-height: 16px; font-size: 10px; }
+        .post-title { font-size: 24px; font-weight: bold; margin-bottom: 15px; color: #333; line-height: 1.3; }
+        .user-info { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; font-size: 14px; color: #666; }
+        .user-avatar { width: 40px; height: 40px; border-radius: 50%; background-color: #00a3e0; display: flex; align-items: center; justify-content: center; color: white; font-weight: bold; margin-right: 10px; }
+        .user-details { display: flex; flex-direction: column; }
+        .user-name { color: #0066cc; font-weight: 500; }
+        .user-role { font-size: 12px; color: #888; }
+        .post-date { font-size: 13px; text-align: right; }
+
+        .post-body { margin-bottom: 25px; font-size: 14px; line-height: 1.6; }
+        .code-block { background-color: #f4f4f4; padding: 15px; font-family: 'Courier New', monospace; font-size: 13px; overflow-x: auto; border: 1px solid #ddd; border-radius: 4px; margin: 15px 0; line-height: 1.4; white-space: pre-wrap; }
+
+        .post-tags { margin-bottom: 20px; }
+        .tag { display: inline-block; background-color: #f0f0f0; color: #555; padding: 4px 10px; border-radius: 4px; font-size: 12px; margin-right: 5px; margin-bottom: 5px; border: 1px solid #ddd; }
+        .tag:hover { background-color: #e0e0e0; text-decoration: none; }
+
+        .post-actions { display: flex; justify-content: space-between; align-items: center; border-top: 1px solid #eee; padding-top: 15px; margin-top: 20px; }
+        .karma-group { display: flex; align-items: center; gap: 10px; }
+        .karma-btn { border: 1px solid #ccc; background: white; border-radius: 4px; padding: 6px 10px; cursor: pointer; color: #666; }
+        .karma-count { font-size: 13px; color: #666; }
+        .reply-btn { background-color: #333; color: white; border: none; padding: 8px 20px; border-radius: 4px; cursor: pointer; font-size: 14px; }
+
+        /* Solution Sections */
+        .solutions-header { font-size: 18px; font-weight: bold; margin: 30px 0 15px 0; border-bottom: 1px solid #eee; padding-bottom: 10px; }
+        .solution-box { border: 1px solid #00a3e0; border-radius: 4px; margin-bottom: 25px; overflow: hidden; }
+        .solution-header { background-color: #f0f9ff; padding: 10px 15px; border-bottom: 1px solid #00a3e0; display: flex; justify-content: space-between; align-items: center; }
+        .solution-label { color: #00a3e0; font-size: 14px; font-weight: 500; display: flex; align-items: center; gap: 5px; }
+        .solution-check { width: 16px; height: 16px; background-color: #00a3e0; border-radius: 50%; display: inline-block; color: white; text-align: center; line-height: 16px; font-size: 10px; }
+        .solution-actions { display: flex; gap: 10px; }
+        .solution-action-btn { background: none; border: none; cursor: pointer; color: #666; font-size: 13px; }
+        .solution-body { padding: 20px; background-color: white; }
+        .solution-user { display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; }
+        .solution-link { margin-top: 15px; font-size: 13px; }
+
+        /* Pagination */
+        .pagination { display: flex; justify-content: center; gap: 15px; margin: 20px 0 30px 0; font-size: 14px; }
+        .pagination a { color: #0066cc; }
+
+        /* Sidebar Content */
+        .sidebar-widget { background-color: white; border: 1px solid #ddd; border-radius: 4px; padding: 20px; margin-bottom: 25px; }
+        .widget-title { font-size: 16px; font-weight: bold; margin-bottom: 15px; color: #333; }
+        .community-updates { font-size: 14px; line-height: 1.5; }
+        .community-updates p { margin-bottom: 12px; }
+        .related-tags { display: flex; flex-wrap: wrap; gap: 8px; }
+        .related-tag { background-color: #f5f5f5; border: 1px solid #eee; border-radius: 4px; padding: 5px 10px; font-size: 12px; color: #333; }
+        .related-tag:hover { background-color: #eee; text-decoration: none; }
+        .view-all { font-size: 13px; color: #0066cc; margin-top: 15px; display: inline-block; }
+
+        /* Powered By & Footer */
+        .powered-by { text-align: right; margin: 20px 0; font-size: 12px; color: #888; }
+        .khoros-logo { font-weight: bold; color: #666; font-size: 14px; }
+        .khoros-logo::after { content: ' >>'; }
+
+        .site-footer { background-color: #242424; color: #ccc; padding: 30px 0 10px; margin-top: 40px; font-size: 13px; }
+        .footer-top { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; padding-bottom: 20px; border-bottom: 1px solid #444; }
+        .footer-logo { color: #fff; font-size: 20px; font-weight: bold; }
+        .footer-logo::after { content: '>'; margin-left: 3px; }
+        .social-icons { display: flex; gap: 15px; }
+        .social-icon { width: 20px; height: 20px; background-color: #888; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-size: 10px; text-decoration: none; }
+        .footer-links { display: flex; flex-wrap: wrap; gap: 8px 15px; margin-bottom: 15px; font-size: 12px; }
+        .footer-links a { color: #aaa; }
+        .footer-links a:hover { color: #fff; }
+        .footer-copyright { font-size: 12px; color: #aaa; text-align: right; margin-top: 15px; }
+        .footer-legal { font-size: 11px; color: #777; margin-top: 15px; line-height: 1.6; }
+
+        /* Responsive Design */
+        @media (max-width: 1024px) {
+            .sidebar { width: 250px; }
+            .main-content-wrapper { gap: 20px; }
+        }
+        @media (max-width: 900px) {
+            .main-content-wrapper { flex-direction: column; }
+            .sidebar { width: 100%; }
+            .nav-links { display: none; }
+            .mobile-menu { display: block; }
+        }
+        @media (max-width: 600px) {
+            .search-section .container { flex-direction: column; align-items: stretch; }
+            .search-input-wrapper { max-width: none; }
+            .post-title { font-size: 20px; }
+            .user-info { flex-direction: column; align-items: flex-start; gap: 10px; }
+            .post-date { text-align: left; }
+            .breadcrumb-options { flex-direction: column; align-items: flex-start; }
+            .solution-user { flex-direction: column; align-items: flex-start; gap: 10px; }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation Bar -->
+    <nav class="navbar">
+        <div class="container">
+            <a href="#" class="navbar-brand">splunk</a>
+            <div class="nav-links">
+                <a href="#">Home</a>
+                <a href="#">Join the Community ▾</a>
+                <a href="#">Learn Splunk ▾</a>
+                <a href="#">Find Answers ▾</a>
+                <a href="#">News & Events ▾</a>
+                <a href="#">Resources ▾</a>
+            </div>
+            <a href="#" class="sign-in-btn">Sign In</a>
+        </div>
+    </nav>
+
+    <!-- Search Bar -->
+    <section class="search-section">
+        <div class="container">
+            <div class="search-input-wrapper">
+                <span class="search-icon">🔍</span>
+                <input type="text" class="search-input" placeholder="Search this board">
+            </div>
+            <button class="search-btn">Search</button>
+            <button class="ask-btn">Ask a Question</button>
+        </div>
+    </section>
+
+    <!-- Breadcrumb & Options -->
+    <div class="container">
+        <div class="breadcrumb-options">
+            <div class="breadcrumb">
+                <a href="#">Find Answers</a> / 
+                <a href="#">Splunk Administration</a> / 
+                <a href="#">Monitoring Splunk</a> / 
+                Multisearch to display Average % CPU Used by Proce...
+            </div>
+            <div class="options-dropdown">Options ▾</div>
+        </div>
+    </div>
+
+    <!-- Main Content Wrapper -->
+    <div class="container main-content-wrapper">
+        <!-- Main Post Content -->
+        <div class="post-content">
+            <div class="post-header">
+                <div class="post-solved-badge">
+                    <span class="solved-icon">✓</span> Solved! Jump to solution
+                </div>
+                <h1 class="post-title">Multisearch to display Average % CPU Used by Process by Hosts for both linux and windows servers</h1>
+                <div class="user-info">
+                    <div style="display: flex; align-items: center;">
+                        <div class="user-avatar">J</div>
+                        <div class="user-details">
+                            <a href="#" class="user-name">johnward4</a>
+                            <span class="user-role">Communicator</span>
+                        </div>
+                    </div>
+                    <div class="post-date">10-10-2017 06:07 PM</div>
+                </div>
+            </div>
+
+            <div class="post-body">
+                <p>I've trying to create a multisearch that displays the Average % CPU Used by Process by Hosts for both Linux and Windows Servers. My Linux query works great but I'm having issues outputting the same for my Windows query. Please help!</p>
+                <p>Here's my current query :</p>
+                <div class="code-block">| multisearch
+[ search index=os host=hostname* source=ps process_name!="-bash"] stats avg(process_cpu_used_percent) AS avgCPUUsed by process_name, host | where avgCPUUsed > 50 | rename avgCPUUsed AS "% CPU Used by Process" | rename process_name as "Process Name" | sort - "% CPU Used by Process"]
+[ search index=perfmon host=hostname* (source="Perfmon:Process") counter="% Processor Time" (instance!="_Total" AND instance!="Idle" AND instance!="System") | eventstats avg(Value) as AvgValue by host,instance | where AvgValue > 50 | sort -AvgValue]</div>
+            </div>
+
+            <div class="post-tags">
+                <span>Tags:</span>
+                <a href="#" class="tag">cpu</a>
+                <a href="#" class="tag">perfmon</a>
+                <a href="#" class="tag">performance</a>
+                <a href="#" class="tag">processes</a>
+                <a href="#" class="tag">splunk-cloud</a>
+            </div>
+
+            <div class="post-actions">
+                <div class="karma-group">
+                    <button class="karma-btn">👍</button>
+                    <span class="karma-count">0 Karma</span>
+                </div>
+                <button class="reply-btn">Reply</button>
+            </div>
+        </div>
+
+        <!-- Sidebar -->
+        <div class="sidebar">
+            <div class="sidebar-widget">
+                <h3 class="widget-title">Get Updates on the Splunk Community!</h3>
+                <div class="community-updates">
+                    <p><strong>Splunk Enterprise Security: Your Command Center for PCI DSS Compliance</strong><br>Every security professional knows the drill. The PCI DSS audit is approaching, and suddenly everyone's asking ...</p>
+                    <p><strong>Developer Spotlight with Guilhem Marchand</strong><br>From Splunk Engineer to Founder: The Journey Behind TrackMe  After spending over 12 years working full time ...</p>
+                    <p><strong>Cisco Catalyst Center Meets Splunk ITSI: From 'Payments Are Down' to Root Cause in ...</strong><br>The Problem: When Networks and Services Don't Talk Payment systems fail at a retail location. Customers are ...</p>
+                    <a href="#" style="color: #00a3e0; font-weight: 500;">Read our Community Blog ›</a>
+                </div>
+            </div>
+
+            <div class="sidebar-widget">
+                <h3 class="widget-title">Related Tags</h3>
+                <div class="related-tags">
+                    <a href="#" class="related-tag" style="background-color: #f0f0f0; border-color: #ccc;">splunk-enterprise</a>
+                    <a href="#" class="related-tag">performance</a>
+                    <a href="#" class="related-tag">splunkd</a>
+                    <a href="#" class="related-tag">cpu</a>
+                    <a href="#" class="related-tag">disk-space</a>
+                    <a href="#" class="related-tag">error</a>
+                    <a href="#" class="related-tag">crash</a>
+                    <a href="#" class="related-tag">audit</a>
+                    <a href="#" class="related-tag">splunk</a>
+                    <a href="#" class="related-tag">memory</a>
+                    <a href="#" class="related-tag">index</a>
+                    <a href="#" class="related-tag">splunkd.log</a>
+                    <a href="#" class="related-tag">splunk-cloud</a>
+                    <a href="#" class="related-tag">dmc</a>
+                    <a href="#" class="related-tag">monitoring</a>
+                    <a href="#" class="related-tag">license-usage</a>
+                    <a href="#" class="related-tag">_internal</a>
+                    <a href="#" class="related-tag">monitoring-console</a>
+                    <a href="#" class="related-tag">internal-logs</a>
+                    <a href="#" class="related-tag">Splunk DB Connect 1</a>
+                    <a href="#" class="related-tag">Splunk Administration</a>
+                    <a href="#" class="related-tag">configuration</a>
+                    <a href="#" class="related-tag">distributed-management-...</a>
+                    <a href="#" class="related-tag">troubleshooting</a>
+                    <a href="#" class="related-tag">cli</a>
+                    <a href="#" class="related-tag">btool</a>
+                    <a href="#" class="related-tag">log</a>
+                    <a href="#" class="related-tag">japanese</a>
+                    <a href="#" class="related-tag">Splunk Deployment Monit...</a>
+                    <a href="#" class="related-tag">Splunk health check</a>
+                </div>
+                <a href="#" class="view-all">View All ›</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Solutions Section -->
+    <div class="container">
+        <h2 class="solutions-header">1 Solution</h2>
+
+        <!-- Solution 1 -->
+        <div class="solution-box">
+            <div class="solution-header">
+                <div class="solution-label">
+                    <span class="solution-check">✓</span> Solution
+                </div>
+                <div class="solution-actions">
+                    <button class="solution-action-btn">⋮</button>
+                </div>
+            </div>
+            <div class="solution-body">
+                <div class="solution-user">
+                    <div style="display: flex; align-items: center;">
+                        <div class="user-avatar">J</div>
+                        <div class="user-details">
+                            <a href="#" class="user-name">johnward4</a>
+                            <span class="user-role">Communicator</span>
+                        </div>
+                    </div>
+                    <div class="post-date">03-12-2018 01:46 PM</div>
+                </div>
+                <div class="post-body">
+                    <p><strong>✔ Here's how to display CPU load across OS (linux, windows)</strong></p>
+                    <div class="code-block">|multisearch
+[search index=os host=$Hosts$ sourcetype=cpu cpu="all" |eval cpu_used_percent=100-PercentIdleTime]
+[search index=perfmon host=$Hosts$ source="Perfmon:CPU" counter="% User Time" OR counter="% Processor Time"
+|eval cpu_user_percent=if(counter=="% User Time",round(Value,2),""), cpu_load_percent=if(counter=="% Processor Time",round(Value,"")), cpu_used_percent=user_cpu+proc_cpu]
+|eval lhost=upper(host)
+|bin _time span=10m
+|stats avg(cpu_user_percent) as user_cpu, avg(cpu_load_percent) as proc_cpu by host, _time
+|stats last(user_cpu) as user_cpu, last(proc_cpu) as proc_cpu, sparkline(avg(user_cpu)) as "% User CPU Load", sparkline(avg(proc_cpu)) as "% Processor CPU Load" by host
+|eval user_cpu=round(user_cpu,2), proc_cpu=round(proc_cpu,2)
+|rename user_cpu as "% Current User CPU Load", proc_cpu as "% Current Processor Load"
+| sort - "% Current User CPU Load"</div>
+                    <a href="#" class="solution-link">View solution in original post</a>
+                </div>
+                <div class="post-actions">
+                    <div class="karma-group">
+                        <button class="karma-btn">👍</button>
+                        <span class="karma-count">0 Karma</span>
+                    </div>
+                    <button class="reply-btn">Reply</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Pagination -->
+        <div class="pagination">
+            <a href="#">All forum topics</a>
+            <a href="#">‹ Previous Topic</a>
+            <a href="#">Next Topic ›</a>
+        </div>
+
+        <!-- Solution 2 (Duplicate) -->
+        <div class="solution-box">
+            <div class="solution-header">
+                <div class="solution-label">
+                    <span class="solution-check">✓</span> Solution
+                </div>
+                <div class="solution-actions">
+                    <button class="solution-action-btn">⋮</button>
+                </div>
+            </div>
+            <div class="solution-body">
+                <div class="solution-user">
+                    <div style="display: flex; align-items: center;">
+                        <div class="user-avatar">J</div>
+                        <div class="user-details">
+                            <a href="#" class="user-name">johnward4</a>
+                            <span class="user-role">Communicator</span>
+                        </div>
+                    </div>
+                    <div class="post-date">03-12-2018 01:46 PM</div>
+                </div>
+                <div class="post-body">
+                    <p><strong>✔ Here's how to display CPU load across OS (linux, windows)</strong></p>
+                    <div class="code-block">|multisearch
+[search index=os host=$Hosts$ sourcetype=cpu cpu="all" |eval cpu_used_percent=100-PercentIdleTime]
+[search index=perfmon host=$Hosts$ source="Perfmon:CPU" counter="% User Time" OR counter="% Processor Time"
+|eval cpu_user_percent=if(counter=="% User Time",round(Value,2),""), cpu_load_percent=if(counter=="% Processor Time",round(Value,"")), cpu_used_percent=user_cpu+proc_cpu]
+|eval lhost=upper(host)
+|bin _time span=10m
+|stats avg(cpu_user_percent) as user_cpu, avg(cpu_load_percent) as proc_cpu by host, _time
+|stats last(user_cpu) as user_cpu, last(proc_cpu) as proc_cpu, sparkline(avg(user_cpu)) as "% User CPU Load", sparkline(avg(proc_cpu)) as "% Processor CPU Load" by host
+|eval user_cpu=round(user_cpu,2), proc_cpu=round(proc_cpu,2)
+|rename user_cpu as "% Current User CPU Load", proc_cpu as "% Current Processor Load"
+| sort - "% Current User CPU Load"</div>
+                </div>
+                <div class="post-actions">
+                    <div class="karma-group">
+                        <button class="karma-btn">👍</button>
+                        <span class="karma-count">0 Karma</span>
+                    </div>
+                    <button class="reply-btn">Reply</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Powered By -->
+    <div class="container">
+        <div class="powered-by">Powered by <span class="khoros-logo">Khoros</span></div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="site-footer">
+        <div class="container">
+            <div class="footer-top">
+                <div class="footer-logo">splunk</div>
+                <div class="social-icons">
+                    <a href="#" class="social-icon">f</a>
+                    <a href="#" class="social-icon">t</a>
+                    <a href="#" class="social-icon">in</a>
+                    <a href="#" class="social-icon">g+</a>
+                </div>
+            </div>
+            <div class="footer-links">
+                <a href="#">Sitemap</a>
+                <a href="#">Privacy</a>
+                <a href="#">Website Terms of Use</a>
+                <a href="#">Splunk Licensing Terms</a>
+                <a href="#">Export Control</a>
+                <a href="#">Modern Slavery Statement</a>
+                <a href="#">Splunk Patents</a>
+            </div>
+            <div class="footer-copyright">© 2005-2025 Splunk Inc. All rights reserved.</div>
+            <div class="footer-legal">Splunk, Splunk> Turn Data Into Doing, Data-to-Everything, and D2E are trademarks or registered trademarks of Splunk Inc. in the United States and other countries. All other brand names, product names, or trademarks belong to their respective owners.</div>
+        </div>
+    </footer>
+</body>
+</html>
+```

@@ -1,0 +1,738 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Debian -- The Universal Operating System</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: "Lucida Grande", "Lucida Sans Unicode", "Lucida Sans", Verdana, Tahoma, sans-serif;
+            font-size: 13px;
+            line-height: 1.5;
+            color: #333;
+            background: #fff;
+        }
+
+        a {
+            color: #006;
+            text-decoration: underline;
+        }
+
+        a:hover {
+            color: #006;
+        }
+
+        /* Top Navigation Bar */
+        .top-nav {
+            background: #fff;
+            padding: 4px 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid #ccc;
+        }
+
+        .top-nav-left a {
+            margin-right: 10px;
+            color: #006;
+            text-decoration: underline;
+            font-size: 12px;
+        }
+
+        .top-nav-right {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .top-nav-right input[type="text"] {
+            width: 120px;
+            height: 18px;
+            border: 1px solid #999;
+            font-size: 11px;
+            padding: 1px 3px;
+        }
+
+        .top-nav-right button {
+            background: #eee;
+            border: 1px solid #999;
+            padding: 1px 8px;
+            font-size: 11px;
+            cursor: pointer;
+            height: 20px;
+        }
+
+        /* Red separator */
+        .red-line {
+            height: 3px;
+            background: #c00;
+            width: 100%;
+        }
+
+        /* Header Banner */
+        .header-banner {
+            background: #008080;
+            height: 60px;
+            width: 100%;
+            position: relative;
+        }
+
+        /* Main Content */
+        .main-content {
+            max-width: 100%;
+            padding: 0;
+        }
+
+        .columns-container {
+            display: flex;
+            gap: 0;
+        }
+
+        /* Left Column - Community */
+        .left-column {
+            width: 50%;
+            padding: 20px 15px 20px 30px;
+        }
+
+        /* Right Column - Operating System */
+        .right-column {
+            width: 50%;
+            padding: 20px 30px 20px 15px;
+        }
+
+        .section-title {
+            font-size: 22px;
+            font-weight: bold;
+            color: #000;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 4px;
+        }
+
+        .section-subtitle {
+            font-size: 14px;
+            color: #333;
+            margin-bottom: 15px;
+        }
+
+        /* Carousel */
+        .carousel-container {
+            position: relative;
+            width: 100%;
+            max-width: 450px;
+            margin: 0 auto;
+        }
+
+        .carousel-image {
+            width: 100%;
+            height: 250px;
+            background: linear-gradient(135deg, #b8b8b8 0%, #d0d0d0 30%, #a8a8a8 50%, #c0c0c0 70%, #b0b0b0 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+        }
+
+        .carousel-image::before {
+            content: '';
+            width: 60px;
+            height: 50px;
+            background: linear-gradient(135deg, #ccc, #aaa);
+            border-radius: 3px;
+            position: absolute;
+        }
+
+        .carousel-image::after {
+            content: '';
+            width: 30px;
+            height: 20px;
+            border-bottom: 2px solid #888;
+            border-right: 2px solid #888;
+            transform: rotate(-45deg);
+            position: absolute;
+            left: calc(50% - 20px);
+            top: calc(50% - 5px);
+        }
+
+        .carousel-arrow {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            background: rgba(80, 80, 80, 0.85);
+            color: white;
+            border: none;
+            cursor: pointer;
+            font-size: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 5;
+        }
+
+        .carousel-arrow.left {
+            left: -14px;
+        }
+
+        .carousel-arrow.right {
+            right: -14px;
+        }
+
+        .carousel-dots {
+            display: flex;
+            justify-content: center;
+            gap: 6px;
+            margin-top: 8px;
+        }
+
+        .carousel-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: #ccc;
+            cursor: pointer;
+            border: none;
+        }
+
+        .carousel-dot.active {
+            background: #555;
+        }
+
+        .carousel-caption {
+            text-align: right;
+            font-size: 11px;
+            color: #666;
+            margin-top: 4px;
+            padding-right: 5px;
+            background: #eee;
+            padding: 2px 8px;
+            display: inline-block;
+            margin-left: auto;
+            width: auto;
+            float: right;
+        }
+
+        .carousel-caption-wrapper {
+            display: flex;
+            justify-content: flex-end;
+            margin-top: 4px;
+        }
+
+        /* Feature Links */
+        .feature-list {
+            margin-top: 20px;
+        }
+
+        .feature-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            margin-bottom: 16px;
+        }
+
+        .feature-icon {
+            width: 44px;
+            height: 44px;
+            min-width: 44px;
+            background: linear-gradient(135deg, #d8d8d8, #c0c0c0);
+            border-radius: 3px;
+        }
+
+        .feature-content h3 {
+            font-size: 15px;
+            font-weight: normal;
+            margin-bottom: 2px;
+        }
+
+        .feature-content h3 a {
+            color: #006;
+            text-decoration: underline;
+        }
+
+        .feature-content p {
+            font-size: 12px;
+            color: #333;
+        }
+
+        /* Download Button Section */
+        .download-section {
+            text-align: center;
+            margin-bottom: 10px;
+        }
+
+        .download-image {
+            width: 100%;
+            max-width: 450px;
+            height: 200px;
+            background: linear-gradient(135deg, #606060 0%, #505050 30%, #484848 50%, #585858 70%, #505050 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            margin: 0 auto 15px auto;
+        }
+
+        .download-image::before {
+            content: '';
+            width: 60px;
+            height: 50px;
+            background: linear-gradient(135deg, #888, #666);
+            border-radius: 3px;
+            position: absolute;
+        }
+
+        .download-image::after {
+            content: '';
+            width: 30px;
+            height: 20px;
+            border-bottom: 2px solid #aaa;
+            border-right: 2px solid #aaa;
+            transform: rotate(-45deg);
+            position: absolute;
+            left: calc(50% - 20px);
+            top: calc(50% - 15px);
+        }
+
+        .download-btn {
+            display: block;
+            width: 200px;
+            margin: 0 auto;
+            padding: 18px 0;
+            background: linear-gradient(180deg, #444 0%, #333 100%);
+            color: #fff;
+            text-align: center;
+            font-size: 22px;
+            font-weight: bold;
+            text-decoration: none;
+            border-radius: 6px;
+            border: none;
+            cursor: pointer;
+            position: relative;
+            z-index: 2;
+        }
+
+        .download-btn:hover {
+            background: linear-gradient(180deg, #555 0%, #444 100%);
+            color: #fff;
+        }
+
+        .other-downloads {
+            text-align: center;
+            margin-top: 10px;
+            font-size: 12px;
+        }
+
+        .other-downloads a {
+            color: #006;
+        }
+
+        /* Horizontal Rule */
+        .section-divider {
+            border: none;
+            border-top: 1px solid #ccc;
+            margin: 10px 30px;
+        }
+
+        /* Project News */
+        .project-news {
+            padding: 20px 30px;
+        }
+
+        .project-news-title {
+            text-align: center;
+            font-size: 22px;
+            font-weight: bold;
+            color: #000;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 5px;
+        }
+
+        .project-news-subtitle {
+            text-align: center;
+            font-size: 14px;
+            color: #333;
+            margin-bottom: 20px;
+        }
+
+        .news-list {
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .news-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 12px;
+        }
+
+        .news-date {
+            width: 52px;
+            min-width: 52px;
+            text-align: center;
+            border: 1px solid #999;
+            border-radius: 2px;
+            overflow: hidden;
+            font-size: 10px;
+            line-height: 1.2;
+        }
+
+        .news-date-month {
+            background: #c00;
+            color: #fff;
+            padding: 2px 0;
+            font-size: 8px;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .news-date-day {
+            background: #f0f0f0;
+            color: #333;
+            padding: 3px 0;
+            font-size: 16px;
+            font-weight: bold;
+        }
+
+        .news-date-year {
+            background: #f0f0f0;
+            color: #666;
+            padding: 1px 0;
+            font-size: 9px;
+        }
+
+        .news-link a {
+            color: #006;
+            text-decoration: underline;
+            font-size: 13px;
+        }
+
+        .news-footer {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-top: 15px;
+            justify-content: center;
+        }
+
+        .news-footer .play-icon {
+            width: 0;
+            height: 0;
+            border-top: 8px solid transparent;
+            border-bottom: 8px solid transparent;
+            border-left: 14px solid #999;
+            display: inline-block;
+        }
+
+        .news-footer a {
+            color: #006;
+            font-size: 12px;
+        }
+
+        .rss-icon {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            background: #f60;
+            color: #fff;
+            font-size: 9px;
+            font-weight: bold;
+            padding: 2px 5px;
+            border-radius: 2px;
+            text-decoration: none !important;
+            margin-left: 6px;
+        }
+
+        /* Footer */
+        .footer {
+            border-top: 1px solid #ccc;
+            padding: 12px 20px;
+            font-size: 11px;
+            color: #333;
+            margin-top: 10px;
+        }
+
+        .footer p {
+            margin-bottom: 6px;
+            line-height: 1.6;
+        }
+
+        .footer a {
+            color: #006;
+        }
+
+        .language-links {
+            margin-bottom: 8px;
+        }
+
+        .language-links a {
+            margin-right: 6px;
+            font-size: 11px;
+        }
+
+        .footer-meta {
+            border-top: 1px solid #ccc;
+            padding-top: 8px;
+            margin-top: 8px;
+            font-size: 10px;
+            color: #666;
+        }
+
+        .footer-meta p {
+            margin-bottom: 3px;
+        }
+
+        .footer-meta a {
+            color: #006;
+        }
+    </style>
+</head>
+<body>
+    <!-- Top Navigation -->
+    <div class="top-nav">
+        <div class="top-nav-left">
+            <a href="#">Blog</a>
+            <a href="#">Micronews</a>
+            <a href="#">Planet</a>
+        </div>
+        <div class="top-nav-right">
+            <input type="text" placeholder="">
+            <button>Search</button>
+        </div>
+    </div>
+
+    <!-- Red Line -->
+    <div class="red-line"></div>
+
+    <!-- Header Banner -->
+    <div class="header-banner"></div>
+
+    <!-- Main Content -->
+    <div class="main-content">
+        <div class="columns-container">
+            <!-- Left Column - The Community -->
+            <div class="left-column">
+                <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 4px;">
+                    <div style="width: 50px; height: 40px; background: linear-gradient(135deg, #e0e0e0, #ccc); border-radius: 2px;"></div>
+                    <div>
+                        <h2 class="section-title">THE COMMUNITY</h2>
+                        <p class="section-subtitle">Debian is a Community of People!</p>
+                    </div>
+                </div>
+
+                <!-- Carousel -->
+                <div class="carousel-container">
+                    <div class="carousel-image"></div>
+                    <button class="carousel-arrow left">‹</button>
+                    <button class="carousel-arrow right">›</button>
+                    <div class="carousel-dots">
+                        <button class="carousel-dot active"></button>
+                        <button class="carousel-dot"></button>
+                        <button class="carousel-dot"></button>
+                        <button class="carousel-dot"></button>
+                        <button class="carousel-dot"></button>
+                        <button class="carousel-dot"></button>
+                        <button class="carousel-dot"></button>
+                    </div>
+                    <div class="carousel-caption-wrapper">
+                        <span class="carousel-caption">DC23 Group Photo</span>
+                    </div>
+                </div>
+
+                <!-- Feature Links -->
+                <div class="feature-list">
+                    <div class="feature-item">
+                        <div class="feature-icon"></div>
+                        <div class="feature-content">
+                            <h3><a href="#">People</a></h3>
+                            <p>Who we are and what we do</p>
+                        </div>
+                    </div>
+                    <div class="feature-item">
+                        <div class="feature-icon"></div>
+                        <div class="feature-content">
+                            <h3><a href="#">Our Philosophy</a></h3>
+                            <p>Why we do it, and how we do it</p>
+                        </div>
+                    </div>
+                    <div class="feature-item">
+                        <div class="feature-icon"></div>
+                        <div class="feature-content">
+                            <h3><a href="#">Get Involved, Contribute</a></h3>
+                            <p>How you can join us!</p>
+                        </div>
+                    </div>
+                    <div class="feature-item">
+                        <div class="feature-icon"></div>
+                        <div class="feature-content">
+                            <h3><a href="#">More…</a></h3>
+                            <p>Additional information about the Debian community</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Right Column - The Operating System -->
+            <div class="right-column">
+                <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 4px;">
+                    <div style="width: 50px; height: 40px; background: linear-gradient(135deg, #e0e0e0, #ccc); border-radius: 2px;"></div>
+                    <div>
+                        <h2 class="section-title">THE OPERATING SYSTEM</h2>
+                        <p class="section-subtitle">Debian is a complete Free Operating System!</p>
+                    </div>
+                </div>
+
+                <!-- Download Section -->
+                <div class="download-section">
+                    <div class="download-image"></div>
+                    <a href="#" class="download-btn">Download</a>
+                    <div class="other-downloads">
+                        <a href="#">Other downloads</a>
+                    </div>
+                </div>
+
+                <!-- Feature Links -->
+                <div class="feature-list">
+                    <div class="feature-item">
+                        <div class="feature-icon"></div>
+                        <div class="feature-content">
+                            <h3><a href="#">Why Debian</a></h3>
+                            <p>What makes Debian special</p>
+                        </div>
+                    </div>
+                    <div class="feature-item">
+                        <div class="feature-icon"></div>
+                        <div class="feature-content">
+                            <h3><a href="#">User Support</a></h3>
+                            <p>Getting help and documentation</p>
+                        </div>
+                    </div>
+                    <div class="feature-item">
+                        <div class="feature-icon"></div>
+                        <div class="feature-content">
+                            <h3><a href="#">Security Updates</a></h3>
+                            <p>Debian Security Advisories (DSA)</p>
+                        </div>
+                    </div>
+                    <div class="feature-item">
+                        <div class="feature-icon"></div>
+                        <div class="feature-content">
+                            <h3><a href="#">More…</a></h3>
+                            <p>Further links to downloads and software</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Divider -->
+        <hr class="section-divider">
+
+        <!-- Project News -->
+        <div class="project-news">
+            <h2 class="project-news-title">PROJECT NEWS</h2>
+            <p class="project-news-subtitle">News and Announcements about Debian</p>
+
+            <div class="news-list">
+                <div class="news-item">
+                    <div class="news-date">
+                        <div class="news-date-month">February</div>
+                        <div class="news-date-day">10</div>
+                        <div class="news-date-year">2024</div>
+                    </div>
+                    <div class="news-link"><a href="#">Updated Debian 12: 12.5 released</a></div>
+                </div>
+                <div class="news-item">
+                    <div class="news-date">
+                        <div class="news-date-month">February</div>
+                        <div class="news-date-day">10</div>
+                        <div class="news-date-year">2024</div>
+                    </div>
+                    <div class="news-link"><a href="#">Updated Debian 11: 11.9 released</a></div>
+                </div>
+                <div class="news-item">
+                    <div class="news-date">
+                        <div class="news-date-month">December</div>
+                        <div class="news-date-day">10</div>
+                        <div class="news-date-year">2023</div>
+                    </div>
+                    <div class="news-link"><a href="#">Updated Debian 12: 12.4 released</a></div>
+                </div>
+                <div class="news-item">
+                    <div class="news-date">
+                        <div class="news-date-month">December</div>
+                        <div class="news-date-day">10</div>
+                        <div class="news-date-year">2023</div>
+                    </div>
+                    <div class="news-link"><a href="#">Debian 12.4 to supersede Debian 12.3</a></div>
+                </div>
+                <div class="news-item">
+                    <div class="news-date">
+                        <div class="news-date-month">December</div>
+                        <div class="news-date-day">09</div>
+                        <div class="news-date-year">2023</div>
+                    </div>
+                    <div class="news-link"><a href="#">Debian 12.3 image release delayed</a></div>
+                </div>
+            </div>
+
+            <div class="news-footer">
+                <span class="play-icon"></span>
+                <a href="#">All the news</a>
+                <a href="#" class="rss-icon">RSS</a>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <div class="footer">
+            <p>This page is also available in the following languages:</p>
+            <div class="language-links">
+                <a href="#">арабский (Arabiya)</a>
+                <a href="#">Български (Balgarski)</a>
+                <a href="#">català</a>
+                <a href="#">dansk</a>
+                <a href="#">Deutsch</a>
+                <a href="#">Ελληνικά (Ellinika)</a>
+                <a href="#">español</a>
+                <a href="#">فارسی (Farsi)</a>
+                <a href="#">français</a>
+                <a href="#">Galego</a>
+                <a href="#">Indonesia</a>
+                <a href="#">italiano</a>
+                <a href="#">한국어 (Korean)</a>
+                <a href="#">magyar</a>
+                <a href="#">Nederlands</a>
+                <a href="#">norsk (bokmål)</a>
+                <a href="#">polski</a>
+                <a href="#">Português</a>
+                <a href="#">Русский (Russkij)</a>
+                <a href="#">suomi</a>
+                <a href="#">svenska</a>
+                <a href="#">Tiếng Việt</a>
+                <a href="#">українська (ukrajins'ka)</a>
+                <a href="#">中文(简)</a>
+                <a href="#">中文(繁)</a>
+                <a href="#">中文(HK)</a>
+            </div>
+            <p>How to set <a href="#">the default document language</a></p>
+
+            <div class="footer-meta">
+                <p>See our <a href="#">contact page</a> to get in touch. Web site source code is <a href="#">available</a>.</p>
+                <p>Last Modified: Sat, Sep 16 13:09:56 UTC 2023 &nbsp;&nbsp;&nbsp; Last Built: Sun, May 12 11:27:09 UTC 2024</p>
+                <p>Copyright © 1997-2024 <a href="#">SPI</a> and others. See <a href="#">license terms</a>.</p>
+                <p>Debian is a registered <a href="#">trademark</a> of Software in the Public Interest, Inc.</p>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

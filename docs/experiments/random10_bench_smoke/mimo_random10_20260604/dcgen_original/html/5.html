@@ -1,0 +1,454 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AddToAny</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background-color: #f5f5f5;
+            color: #333;
+            line-height: 1.6;
+        }
+
+        /* 导航栏 */
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 5%;
+            background: white;
+            border-bottom: 1px solid #e0e0e0;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            font-size: 20px;
+            font-weight: 600;
+        }
+
+        .logo-icon {
+            width: 30px;
+            height: 30px;
+            background: #f0f0f0;
+            border-radius: 5px;
+            margin-right: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 25px;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: #555;
+            font-size: 14px;
+        }
+
+        .nav-links a:hover {
+            color: #000;
+        }
+
+        /* 主内容 */
+        .main-content {
+            max-width: 960px;
+            margin: 30px auto;
+            padding: 0 20px;
+        }
+
+        /* 头部卡片 */
+        .hero-card {
+            background: white;
+            border-radius: 8px;
+            padding: 60px 30px;
+            text-align: center;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+            margin-bottom: 30px;
+        }
+
+        .hero-logo {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 48px;
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+
+        .hero-logo-icon {
+            width: 50px;
+            height: 50px;
+            background: #4285F4;
+            border-radius: 8px;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 15px;
+            font-size: 32px;
+        }
+
+        .subtitle {
+            color: #777;
+            font-size: 18px;
+            margin-bottom: 25px;
+        }
+
+        .social-icons {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-bottom: 30px;
+        }
+
+        .social-icon {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 14px;
+        }
+
+        .social-icon.plus { background: #4285F4; }
+        .social-icon.facebook { background: #1877F2; }
+        .social-icon.pinterest { background: #E60023; }
+        .social-icon.reddit { background: #FF5722; }
+        .social-icon.whatsapp { background: #25D366; }
+        .social-icon.threads { background: #000000; }
+
+        .btn-primary {
+            background: #4285F4;
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 4px;
+            font-size: 16px;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .btn-primary:hover {
+            background: #3367D6;
+        }
+
+        /* 特性区域 */
+        .features-card {
+            background: white;
+            border-radius: 8px;
+            padding: 40px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+            margin-bottom: 30px;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+        }
+
+        .feature {
+            text-align: center;
+        }
+
+        .feature h3 {
+            margin-bottom: 15px;
+            font-size: 18px;
+            color: #333;
+        }
+
+        .feature p {
+            color: #666;
+            font-size: 14px;
+            line-height: 1.5;
+        }
+
+        .feature a {
+            color: #4285F4;
+            text-decoration: none;
+        }
+
+        .feature a:hover {
+            text-decoration: underline;
+        }
+
+        /* 通知卡片 */
+        .notification-card {
+            background: white;
+            border-radius: 8px;
+            padding: 30px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+            margin-bottom: 30px;
+            text-align: center;
+        }
+
+        .notification-icon {
+            width: 30px;
+            height: 30px;
+            background: #f0f0f0;
+            border-radius: 5px;
+            margin: 0 auto 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .notification-text {
+            color: #666;
+            font-size: 14px;
+        }
+
+        /* 按钮区域 */
+        .cta-card {
+            background: white;
+            border-radius: 8px;
+            padding: 40px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+            margin-bottom: 30px;
+            text-align: center;
+        }
+
+        /* 页脚链接 */
+        .footer-links {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 30px;
+            margin: 40px 0;
+        }
+
+        .footer-column h4 {
+            margin-bottom: 20px;
+            font-size: 16px;
+            color: #333;
+        }
+
+        .footer-column ul {
+            list-style: none;
+        }
+
+        .footer-column li {
+            margin-bottom: 10px;
+        }
+
+        .footer-column a {
+            color: #666;
+            text-decoration: none;
+            font-size: 14px;
+        }
+
+        .footer-column a:hover {
+            color: #4285F4;
+        }
+
+        /* 页脚版权 */
+        .footer-copyright {
+            text-align: center;
+            padding: 20px;
+            color: #888;
+            font-size: 12px;
+            border-top: 1px solid #e0e0e0;
+            margin-top: 30px;
+        }
+
+        /* 响应式设计 */
+        @media (max-width: 768px) {
+            .features-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .footer-links {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- 导航栏 -->
+    <nav class="navbar">
+        <div class="logo">
+            <div class="logo-icon">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M4 4H10V10H4V4Z" fill="#999"/>
+                    <path d="M14 4H20V10H14V4Z" fill="#999"/>
+                    <path d="M4 14H10V20H4V14Z" fill="#999"/>
+                    <path d="M14 14H20V20H14V14Z" fill="#999"/>
+                </svg>
+            </div>
+        </div>
+        <div class="nav-links">
+            <a href="#">Get</a>
+            <a href="#">Customize</a>
+            <a href="#">Share</a>
+            <a href="#">FAQ</a>
+        </div>
+    </nav>
+
+    <div class="main-content">
+        <!-- 头部卡片 -->
+        <div class="hero-card">
+            <div class="hero-logo">
+                <div class="hero-logo-icon">+</div>
+                AddToAny
+            </div>
+            <div class="subtitle">Universal Sharing</div>
+            <div class="social-icons">
+                <div class="social-icon plus">+</div>
+                <div class="social-icon facebook">f</div>
+                <div class="social-icon pinterest">P</div>
+                <div class="social-icon reddit">R</div>
+                <div class="social-icon whatsapp">W</div>
+                <div class="social-icon threads">T</div>
+            </div>
+            <a href="#" class="btn-primary">Get the Share Buttons</a>
+        </div>
+
+        <!-- 特性卡片 -->
+        <div class="features-card">
+            <div class="features-grid">
+                <div class="feature">
+                    <h3>Share Anywhere</h3>
+                    <p>Share to any service, or add a custom service to share to. AddToAny gets people to the right destination to share or save your content, whether it's in a native app or on the web.</p>
+                </div>
+                <div class="feature">
+                    <h3>Mobile & Responsive</h3>
+                    <p>Universal menus react instantly to taps, clicks, and multiple forms of input and device orientations. Sharing on mobile lets you choose between a service's mobile app or mobile site.</p>
+                </div>
+                <div class="feature">
+                    <h3>Perfect Icons</h3>
+                    <p>AddToAny icons are Scalable Vector Graphics, meaning they load fast, are mathematically precise, scalable to any size, and stunning on High-PPI screens such as Retina displays.</p>
+                </div>
+                <div class="feature">
+                    <h3>Built For Good</h3>
+                    <p>AddToAny's lightweight code follows best practices, and is optimized to load efficiently from locations all around the world. Accessibility, cross-browser compatibility, graceful fallbacks are a few AddToAny staples.</p>
+                </div>
+                <div class="feature">
+                    <h3>Google Analytics Integrated</h3>
+                    <p>Sharing stats automatically roll into your Google Analytics, tying all metrics into <a href="#">one dashboard</a>.</p>
+                </div>
+                <div class="feature">
+                    <h3>No Account Necessary</h3>
+                    <p>AddToAny just works. No registration, and no user accounts to manage.</p>
+                </div>
+                <div class="feature">
+                    <h3>Share Counters</h3>
+                    <p>Official counts alongside your share buttons. <a href="#">AddToAny counters</a> in the same style show numbers directly from major services.</p>
+                </div>
+                <div class="feature">
+                    <h3>Floating Share Bars</h3>
+                    <p>Encourage visitors to share your content with a special <a href="#">share buttons bar</a> that stays in place as you scroll.</p>
+                </div>
+                <div class="feature">
+                    <h3>Plugins That Delight</h3>
+                    <p>Open source plugins for WordPress, Drupal, and other CMSs are tailored to each platform. AddToAny plugins load asynchronously, so your content loads first or in parallel with AddToAny.</p>
+                </div>
+                <div class="feature">
+                    <h3>Highly Customizable</h3>
+                    <p>Designed for customization, AddToAny supports color & style overrides, event handling, service templates, URL shorteners, custom integrations, usually the next big thing, and much more.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- 通知卡片 -->
+        <div class="notification-card">
+            <div class="notification-icon">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M12 22C13.1046 22 14 21.1046 14 20H10C10 21.1046 10.8954 22 12 22ZM18 16V11C18 7.93 16.36 5.36 13.5 4.68V4C13.5 3.17 12.83 2.5 12 2.5C11.17 2.5 10.5 3.17 10.5 4V4.68C7.63 5.36 6 7.92 6 11V16L4 18V19H20V18L18 16Z" fill="#999"/>
+                </svg>
+            </div>
+            <div class="notification-text">
+                Welcome <a href="#">AddThis</a> users! Read the <a href="#">blog post</a> and check out <a href="#">our guide</a> for moving to AddToAny.
+            </div>
+        </div>
+
+        <!-- Threads 通知卡片 -->
+        <div class="notification-card">
+            <div class="notification-icon">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M12 2C6.48 2 2 6.48 2 12C2 17.52 6.48 22 12 22C17.52 22 22 17.52 22 12C22 6.48 17.52 2 12 2ZM12 20C7.59 20 4 16.41 4 12C4 7.59 7.59 4 12 4C16.41 4 20 7.59 20 12C20 16.41 16.41 20 12 20Z" fill="#999"/>
+                </svg>
+            </div>
+            <div class="notification-text">
+                <a href="#">Threads sharing is here!</a> Get your Threads <a href="#">share button</a> and set your Threads <a href="#">follow button</a>.
+            </div>
+        </div>
+
+        <!-- 获取分享按钮卡片 -->
+        <div class="cta-card">
+            <a href="#" class="btn-primary">Get the Share Buttons</a>
+        </div>
+
+        <!-- 获取Chrome按钮卡片 -->
+        <div class="cta-card">
+            <a href="#" class="btn-primary">Get the Chrome Button</a>
+        </div>
+
+        <!-- 页脚链接 -->
+        <div class="footer-links">
+            <div class="footer-column">
+                <h4>Features</h4>
+                <ul>
+                    <li><a href="#">Floating Share Buttons</a></li>
+                    <li><a href="#">Image Share Buttons</a></li>
+                    <li><a href="#">Share Counters</a></li>
+                    <li><a href="#">Share Count Recovery</a></li>
+                    <li><a href="#">Follow Buttons</a></li>
+                    <li><a href="#">Google Analytics</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h4>Plugins</h4>
+                <ul>
+                    <li><a href="#">WordPress Share Plugin</a></li>
+                    <li><a href="#">Drupal Share Module</a></li>
+                    <li><a href="#">Joomla Share Extension</a></li>
+                    <li><a href="#">Cloudflare Share App</a></li>
+                    <li><a href="#">Share Buttons for Sites</a></li>
+                    <li><a href="#">Share Buttons for Email</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h4>Browser Tools</h4>
+                <ul>
+                    <li><a href="#">AddToAny for Firefox</a></li>
+                    <li><a href="#">AddToAny for Chrome</a></li>
+                    <li><a href="#">AddToAny Bookmarklet</a></li>
+                    <li><a href="#">Service Bookmarklets</a></li>
+                    <li><a href="#">Share a URL</a></li>
+                    <li><a href="#">Sharing Preferences</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h4>Resources</h4>
+                <ul>
+                    <li><a href="#">Customize AddToAny</a></li>
+                    <li><a href="#">Service Codes</a></li>
+                    <li><a href="#">JavaScript API</a></li>
+                    <li><a href="#">Questions & Answers</a></li>
+                    <li><a href="#">AddToAny News</a></li>
+                    <li><a href="#">Contact AddToAny</a></li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- 页脚版权 -->
+        <div class="footer-copyright">
+            © 2006–2024 &nbsp; Terms &nbsp; Privacy
+        </div>
+    </div>
+</body>
+</html>

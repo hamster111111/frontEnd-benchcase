@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>ePageSafer Non ActiveX - WhatPulse</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f1f3f5;
+      color: #333;
+    }
+    header {
+      background: white;
+      border-bottom: 1px solid #e0e0e0;
+      display: flex;
+      align-items: center;
+      padding: 10px 20px;
+      justify-content: space-between;
+    }
+    header .left {
+      display: flex;
+      align-items: center;
+    }
+    header .logo {
+      height: 40px;
+      margin-right: 10px;
+    }
+    header nav a {
+      margin: 0 10px;
+      text-decoration: none;
+      color: #444;
+      font-weight: bold;
+    }
+    header .auth-buttons button {
+      border: 1px solid #ccc;
+      background: #fff;
+      margin-left: 10px;
+      padding: 5px 10px;
+      cursor: pointer;
+    }
+    header .auth-buttons .signup {
+      background: #4da5e2;
+      color: white;
+      border: none;
+    }
+    .breadcrumb {
+      background: #e1e6ea;
+      padding: 10px 25px;
+      font-size: 14px;
+    }
+    .breadcrumb a {
+      color: #888;
+      text-decoration: none;
+    }
+    .breadcrumb span {
+      color: #333;
+    }
+    .main-container {
+      display: flex;
+      padding: 20px 25px;
+    }
+    .sidebar {
+      width: 230px;
+      background: #f5f7f9;
+      padding: 20px;
+      border-right: 1px solid #ddd;
+    }
+    .sidebar h3 {
+      margin-bottom: 10px;
+    }
+    .sidebar .section {
+      margin-bottom: 20px;
+    }
+    .sidebar .blue-btn {
+      background: #4da5e2;
+      color: white;
+      border: none;
+      padding: 10px;
+      width: 100%;
+      font-weight: bold;
+      cursor: pointer;
+    }
+    .sidebar .share-icons img {
+      width: 24px;
+      height: 24px;
+      margin-right: 10px;
+      cursor: pointer;
+    }
+    .content {
+      flex: 1;
+      background: white;
+      padding: 25px;
+    }
+    .content h2 {
+      margin-bottom: 20px;
+    }
+    .stats {
+      display: flex;
+      justify-content: space-between;
+    }
+    .stats .left {
+      width: 50%;
+    }
+    .stats .left p {
+      margin-bottom: 8px;
+    }
+    .stats .charts {
+      display: flex;
+      gap: 30px;
+    }
+    .chart {
+      text-align: center;
+    }
+    .chart img {
+      width: 120px;
+      height: 120px;
+      margin-bottom: 10px;
+    }
+    .chart .legend {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 8px;
+      font-size: 14px;
+    }
+    .legend .dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      display: inline-block;
+      margin-right: 5px;
+    }
+    .green { background: #92d050; }
+    .blue { background: #00b0f0; }
+
+    .table-section {
+      background: #f5f5f5;
+      margin-top: 30px;
+      padding: 20px;
+    }
+    .tabs {
+      display: flex;
+      border-bottom: 1px solid #ccc;
+    }
+    .tabs div {
+      padding: 10px 20px;
+      background: white;
+      border: 1px solid #ccc;
+      border-bottom: none;
+      cursor: pointer;
+    }
+    .tabs div.active {
+      background: #fff;
+      font-weight: bold;
+    }
+    .table-controls {
+      display: flex;
+      justify-content: space-between;
+      margin: 10px 0;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      background: white;
+    }
+    th, td {
+      padding: 10px;
+      text-align: left;
+      border: 1px solid #ccc;
+    }
+    th {
+      background: #eee;
+    }
+    
+    /* Dropdown styles */
+    .dropdown-container {
+      position: relative;
+      display: inline-block;
+    }
+    
+    .dropdown-menu {
+      display: none;
+      position: absolute;
+      background-color: white;
+      min-width: 250px;
+      box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+      z-index: 1000;
+      border-radius: 4px;
+      left: 0;
+      top: 100%;
+      padding: 10px 0;
+      margin-top: 5px;
+    }
+    
+    .dropdown-menu.show {
+      display: block;
+    }
+    
+    .dropdown-item {
+      padding: 10px 15px;
+      color: #333;
+      text-decoration: none;
+      display: block;
+      border-bottom: 1px solid #f1f1f1;
+    }
+    
+    .dropdown-item:last-child {
+      border-bottom: none;
+    }
+    
+    .dropdown-item:hover {
+      background-color: #f5f7f9;
+    }
+    
+    .dropdown-header {
+      padding: 10px 15px;
+      color: #999;
+      font-weight: bold;
+      font-size: 0.9em;
+    }
+    
+    h3 {
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="left">
+      <img src="https://raw.githubusercontent.com/Mikivishy/imgs/main/folder1/Logo.jpg" alt="Logo" class="logo">
+      <nav>
+        <a href="#">Home</a>
+        <a href="#">Downloads</a>
+        <a href="#">Statistics</a>
+        <a href="#">Help</a>
+        <a href="#">Premium</a>
+      </nav>
+    </div>
+    <div class="auth-buttons">
+      <button>LOGIN</button>
+      <button class="signup">SIGN UP</button>
+    </div>
+  </header>
+
+  <div class="breadcrumb">
+    <a href="#">Home</a> / 
+    <a href="#">Stats</a> / 
+    <a href="#">Applications</a> / 
+    <span>ePageSafer Non ActiveX</span>
+  </div>
+
+  <div class="main-container">
+    <aside class="sidebar">
+      <div class="dropdown-container">
+        <h3 id="InteractionPart">ePageSafer Non ActiveX</h3>
+        <div class="dropdown-menu">
+          <div class="dropdown-header">Application Information</div>
+          <a href="#" class="dropdown-item">View details</a>
+          <a href="#" class="dropdown-item">Download v2.5.1.66</a>
+          <a href="#" class="dropdown-item">Version history</a>
+          <div class="dropdown-header">Statistics</div>
+          <a href="#" class="dropdown-item">Usage statistics</a>
+          <a href="#" class="dropdown-item">User demographics</a>
+          <a href="#" class="dropdown-item">Compatibility details</a>
+          <div class="dropdown-header">Actions</div>
+          <a href="#" class="dropdown-item">Submit feedback</a>
+          <a href="#" class="dropdown-item">Report a bug</a>
+        </div>
+      </div>
+      <button class="blue-btn">Help Improve</button>
+
+      <div class="section">
+        <h4>CATEGORY</h4>
+        <p>None yet. Help <a href="#">complete this information.</a></p>
+      </div>
+
+      <div class="section">
+        <h4>TAGS</h4>
+        <p>None yet. Help <a href="#">complete this information.</a></p>
+      </div>
+
+      <div class="section">
+        <h4>SHARE</h4>
+        <div class="share-icons">
+          <img src="https://raw.githubusercontent.com/Mikivishy/imgs/main/folder1/Icon.jpg" alt="Facebook">
+          <img src="https://raw.githubusercontent.com/Mikivishy/imgs/main/folder1/Icon.jpg" alt="Twitter">
+          <img src="https://raw.githubusercontent.com/Mikivishy/imgs/main/folder1/Icon.jpg" alt="Pinterest">
+          <img src="https://raw.githubusercontent.com/Mikivishy/imgs/main/folder1/Icon.jpg" alt="Deezer">
+          <img src="https://raw.githubusercontent.com/Mikivishy/imgs/main/folder1/Icon.jpg" alt="LinkedIn">
+        </div>
+      </div>
+    </aside>
+
+    <section class="content">
+      <h2>Stats</h2>
+      <div class="stats">
+        <div class="left">
+          <p>People using it: <strong>21</strong></p>
+          <p>Computers that have it: <strong>21</strong></p>
+          <p>Different versions: <strong>6</strong></p>
+          <p>Latest version: <strong>2.5.1.66</strong></p>
+          <p>Keys: <strong>160</strong></p>
+          <p>Clicks: <strong>609</strong></p>
+          <p>Mouse Scrolls: <strong>247</strong></p>
+          <p>Mouse Distance: <strong>0.014mi</strong></p>
+          <p>Time Used: <strong>2 hours, 24 minutes, 50 seconds</strong></p>
+          <p>Average Time Used: <strong>6 minutes, 54 seconds</strong></p>
+        </div>
+        <div class="charts">
+          <div class="chart">
+            <div>Breakdown by OS</div>
+            <img src="https://raw.githubusercontent.com/Mikivishy/imgs/main/folder1/Chart.jpg" alt="Breakdown Chart">
+            <div class="legend"><span class="dot green"></span> Windows</div>
+          </div>
+          <div class="chart">
+            <div>Keys/Clicks Ratio</div>
+            <img src="https://raw.githubusercontent.com/Mikivishy/imgs/main/folder1/Chart.jpg" alt="Keys/Clicks Chart">
+            <div class="legend">
+              <span class="dot green"></span> Keys
+              <span class="dot blue"></span> Clicks
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="table-section">
+        <div class="tabs">
+          <div class="active">🔧 Versions of Application</div>
+          <div>👥 People Using Application</div>
+        </div>
+        <div class="table-controls">
+          <div>
+            Show 
+            <select>
+              <option>10</option>
+              <option>25</option>
+              <option>50</option>
+              <option>100</option>
+            </select> entries
+          </div>
+          <div>
+            Search: <input type="text"/>
+          </div>
+        </div>
+        <table>
+          <thead>
+            <tr>
+              <th>Version</th>
+              <th>OS</th>
+              <th>Last Seen</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>2.5.1.66</td>
+              <td><img src="https://raw.githubusercontent.com/Mikivishy/imgs/main/folder1/Icon.jpg" width="20" alt="OS Icon"></td>
+              <td>2023-01-25</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+  </div>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      const dropdownTrigger = document.getElementById('InteractionPart');
+      const dropdownMenu = document.querySelector('.dropdown-menu');
+      
+      // Toggle dropdown when clicking on the trigger element
+      dropdownTrigger.addEventListener('click', function(e) {
+        e.stopPropagation();
+        dropdownMenu.classList.toggle('show');
+      });
+      
+      // Close dropdown when clicking anywhere else on the page
+      document.addEventListener('click', function(e) {
+        if (!dropdownMenu.contains(e.target) && e.target !== dropdownTrigger) {
+          dropdownMenu.classList.remove('show');
+        }
+      });
+      
+      // Prevent closing when clicking inside the dropdown
+      dropdownMenu.addEventListener('click', function(e) {
+        e.stopPropagation();
+      });
+    });
+  </script>
+</body>
+</html>

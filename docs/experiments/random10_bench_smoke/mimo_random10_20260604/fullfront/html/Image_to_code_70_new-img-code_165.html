@@ -1,0 +1,860 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Who's Cooking</title>
+    <style>
+        :root {
+            --primary-green: #4A7C59;
+            --dark-green: #3A6346;
+            --light-green: #5C9E70;
+            --bg-gray: #F8F9FA;
+            --text-dark: #333333;
+            --text-muted: #666666;
+            --white: #ffffff;
+            --border-color: #E5E5E5;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-gray);
+            color: var(--text-dark);
+            line-height: 1.5;
+        }
+
+        h1, h2, h3, h4, h5 {
+            font-family: "Georgia", serif;
+        }
+
+        /* Header */
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 5%;
+            background: var(--white);
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .logo-icon {
+            width: 40px;
+            height: 40px;
+            background: #FF6B35;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            font-weight: bold;
+        }
+
+        .logo-text h1 {
+            font-size: 1.25rem;
+            margin: 0;
+        }
+
+        .logo-text p {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+        }
+
+        nav {
+            display: flex;
+            align-items: center;
+            gap: 2rem;
+            font-size: 0.85rem;
+            font-weight: 600;
+        }
+
+        nav a {
+            text-decoration: none;
+            color: var(--text-dark);
+            display: flex;
+            align-items: center;
+            gap: 0.3rem;
+        }
+
+        .btn-order {
+            background: var(--primary-green);
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+        }
+
+        .cart-icon {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        /* Hero Section */
+        .hero {
+            position: relative;
+            height: 300px;
+            background-image: url('https://raw.githubusercontent.com/Mikivishy/imgs/main/folder1/Food.jpg');
+            background-size: cover;
+            background-position: center;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            color: white;
+            padding: 0 20px;
+        }
+
+        .hero::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: rgba(0,0,0,0.4);
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 1;
+            width: 100%;
+            max-width: 600px;
+        }
+
+        .hero h2 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .hero p {
+            font-size: 1.1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .btn-hero {
+            background: var(--primary-green);
+            color: white;
+            padding: 0.75rem 2rem;
+            border: none;
+            border-radius: 4px;
+            font-size: 1rem;
+            cursor: pointer;
+        }
+
+        /* Main Content */
+        main {
+            padding: 2rem 5%;
+            max-width: 1200px;
+            margin: 0 auto;
+            position: relative;
+        }
+
+        /* Info Bar */
+        .info-bar {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin-bottom: 2rem;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        }
+
+        .info-bar h3 {
+            margin-bottom: 0.25rem;
+            font-size: 1.5rem;
+        }
+
+        .info-bar p {
+            color: var(--text-muted);
+            margin-bottom: 1rem;
+        }
+
+        .info-details {
+            display: grid;
+            grid-template-columns: 1fr 1fr auto;
+            gap: 1rem;
+            font-size: 0.9rem;
+        }
+
+        .social-icons {
+            display: flex;
+            gap: 0.5rem;
+            align-items: flex-start;
+        }
+
+        .social-icon {
+            width: 30px;
+            height: 30px;
+            background: var(--border-color);
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        /* Cart Sidebar */
+        .cart-sidebar {
+            position: absolute;
+            top: -100px;
+            right: 0;
+            width: 320px;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            padding: 1.5rem;
+            display: none; /* hidden by default */
+            z-index: 100;
+        }
+
+        .cart-sidebar.active {
+            display: block;
+        }
+
+        .cart-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+            font-weight: bold;
+            font-size: 1.1rem;
+        }
+
+        .cart-empty {
+            text-align: center;
+            padding: 2rem 0;
+            color: var(--text-muted);
+        }
+
+        .cart-empty-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            color: var(--border-color);
+        }
+
+        .cart-actions {
+            margin-top: 1rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .btn-checkout {
+            background: var(--primary-green);
+            color: white;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        /* Ready to Order */
+        .ready-order {
+            text-align: center;
+            padding: 3rem 1rem;
+            background: white;
+            border-radius: 8px;
+            margin-bottom: 3rem;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .ready-order h2 {
+            margin-bottom: 1rem;
+        }
+
+        .btn-availability {
+            background: white;
+            border: 2px solid var(--primary-green);
+            color: var(--primary-green);
+            padding: 0.75rem 1.5rem;
+            border-radius: 20px;
+            margin-top: 1.5rem;
+            cursor: pointer;
+            font-weight: 600;
+        }
+
+        /* Specials */
+        .specials {
+            background: white;
+            padding: 2.5rem;
+            border-radius: 8px;
+            margin-bottom: 3rem;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .section-title::after {
+            content: '';
+            display: block;
+            width: 50px;
+            height: 2px;
+            background: var(--primary-green);
+            margin: 0.5rem auto 0;
+        }
+
+        .specials-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+        }
+
+        .special-card {
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        .card-image {
+            height: 160px;
+            background: #ddd;
+            position: relative;
+            background-size: cover;
+            background-position: center;
+        }
+
+        .badge {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: #E53935;
+            color: white;
+            padding: 2px 8px;
+            font-size: 0.7rem;
+            font-weight: bold;
+            border-radius: 4px;
+        }
+
+        .badge.healthy { background: var(--primary-green); }
+        .badge.new { background: #2196F3; }
+
+        .card-content {
+            padding: 1rem;
+        }
+
+        .card-content h4 {
+            margin-bottom: 0.5rem;
+        }
+
+        .card-content p {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            margin-bottom: 1rem;
+            height: 40px;
+        }
+
+        .card-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .price {
+            color: var(--primary-green);
+            font-weight: bold;
+        }
+
+        .btn-add {
+            background: var(--primary-green);
+            color: white;
+            border: none;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 1.2rem;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        /* Menu Section */
+        .menu-section {
+            background: white;
+            padding: 2.5rem;
+            border-radius: 8px;
+            margin-bottom: 3rem;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        }
+
+        .menu-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .btn-expand {
+            background: none;
+            border: 1px solid var(--border-color);
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 0.85rem;
+        }
+
+        .accordion-item {
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .accordion-header {
+            padding: 1.5rem 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            cursor: pointer;
+            font-weight: 600;
+        }
+
+        .accordion-content {
+            display: none;
+            padding-bottom: 1.5rem;
+        }
+
+        /* Reviews */
+        .reviews {
+            background: white;
+            padding: 2.5rem;
+            border-radius: 8px;
+            margin-bottom: 3rem;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        }
+
+        .reviews-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .review-card {
+            padding: 1.5rem;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            font-style: italic;
+            color: var(--text-muted);
+        }
+
+        .review-card p {
+            margin-bottom: 1.5rem;
+        }
+
+        .reviewer {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .reviewer img {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+        }
+
+        .reviewer-info h5 {
+            font-style: normal;
+            font-size: 0.9rem;
+        }
+
+        .reviewer-info span {
+            font-size: 0.8rem;
+        }
+
+        .stars {
+            color: #FFC107;
+        }
+
+        /* Newsletter */
+        .newsletter {
+            background: var(--primary-green);
+            color: white;
+            padding: 4rem 2rem;
+            text-align: center;
+        }
+
+        .newsletter h2 {
+            margin-bottom: 1rem;
+        }
+
+        .newsletter p {
+            margin-bottom: 2rem;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .newsletter-form {
+            display: flex;
+            max-width: 500px;
+            margin: 0 auto;
+        }
+
+        .newsletter-form input {
+            flex: 1;
+            padding: 0.75rem 1rem;
+            border: none;
+            border-radius: 4px 0 0 4px;
+        }
+
+        .newsletter-form button {
+            background: var(--dark-green);
+            color: white;
+            border: none;
+            padding: 0 1.5rem;
+            cursor: pointer;
+            font-weight: bold;
+            border-radius: 0 4px 4px 0;
+        }
+
+        /* Footer */
+        footer {
+            background: white;
+            padding: 4rem 5% 2rem;
+            border-top: 1px solid var(--border-color);
+        }
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr;
+            gap: 3rem;
+            margin-bottom: 3rem;
+        }
+
+        .footer-about p {
+            color: var(--text-muted);
+            margin: 1rem 0;
+            font-size: 0.9rem;
+        }
+
+        .footer-links h4, .footer-contact h4 {
+            margin-bottom: 1.5rem;
+        }
+
+        .footer-links ul {
+            list-style: none;
+        }
+
+        .footer-links li {
+            margin-bottom: 0.75rem;
+        }
+
+        .footer-links a {
+            text-decoration: none;
+            color: var(--text-muted);
+            font-size: 0.9rem;
+        }
+
+        .contact-item {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 1rem;
+            font-size: 0.9rem;
+            color: var(--text-muted);
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: 2rem;
+            border-top: 1px solid var(--border-color);
+            font-size: 0.85rem;
+            color: var(--text-muted);
+        }
+
+        .footer-links-bottom {
+            margin-top: 1rem;
+        }
+
+        .footer-links-bottom a {
+            color: var(--text-muted);
+            text-decoration: none;
+            margin: 0 0.5rem;
+        }
+
+        /* Image Placeholders */
+        .img-placeholder {
+            width: 100%;
+            height: 100%;
+            background: #ccc;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #888;
+            font-size: 0.8rem;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="logo">
+            <div class="logo-icon">WC</div>
+            <div class="logo-text">
+                <h1>Who's Cooking</h1>
+                <p>Fresh, Local, Delicious</p>
+            </div>
+        </div>
+        <nav>
+            <a href="#">HOME</a>
+            <a href="#">CONTACT US</a>
+            <a href="#">CATERING</a>
+            <a href="#" class="btn-order">ORDER ONLINE</a>
+            <div class="cart-icon" onclick="toggleCart()">
+                🛒 0
+            </div>
+        </nav>
+    </header>
+
+    <div class="hero">
+        <div class="hero-content">
+            <h2>Delicious Food Made Fresh Daily</h2>
+            <p>Experience the finest homemade dishes prepared with locally sourced ingredients.</p>
+            <button class="btn-hero">View Our Menu</button>
+        </div>
+    </div>
+
+    <main>
+        <div class="cart-sidebar" id="cartSidebar">
+            <div class="cart-header">
+                🛒 Your Cart
+            </div>
+            <div class="cart-empty">
+                <div class="cart-empty-icon">🛍️</div>
+                <p>Your cart is empty. Add some delicious items!</p>
+            </div>
+            <div class="cart-actions">
+                <button class="btn-checkout">Checkout</button>
+                <span>$0.00</span>
+            </div>
+        </div>
+
+        <div class="info-bar">
+            <div style="display:flex; justify-content:space-between; align-items:flex-start;">
+                <div>
+                    <h3>Who's Cooking?</h3>
+                    <p>Family owned since 2003</p>
+                    <div class="info-details">
+                        <div>
+                            <p>📍 CROTON FALLS, NY 10519</p>
+                            <p>📞 (914) 277-3210</p>
+                        </div>
+                        <div>
+                            <p>⏰ 7:00 AM - 5:00 PM (Mon-Fri)</p>
+                            <p>⏰ 8:00 AM - 3:00 PM (Sat-Sun)</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="social-icons">
+                    <div class="social-icon">f</div>
+                    <div class="social-icon">ig</div>
+                    <div class="social-icon">t</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="ready-order">
+            <h2>Ready to Order?</h2>
+            <p>Start your carryout order now and enjoy our delicious meals at home.</p>
+            <button class="btn-availability">Check Availability</button>
+        </div>
+
+        <section class="specials">
+            <h2 class="section-title">Today's Specials</h2>
+            <div class="specials-grid">
+                <div class="special-card">
+                    <div class="card-image" style="background-image: url('https://raw.githubusercontent.com/Mikivishy/imgs/main/folder1/Food.jpg')">
+                        <span class="badge">POPULAR</span>
+                    </div>
+                    <div class="card-content">
+                        <h4>Signature Sandwich</h4>
+                        <p>Roasted turkey, avocado, bacon, lettuce, tomato, and our house aioli on artisan bread.</p>
+                        <div class="card-footer">
+                            <span class="price">$12.95</span>
+                            <button class="btn-add">+</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="special-card">
+                    <div class="card-image" style="background-image: url('https://raw.githubusercontent.com/Mikivishy/imgs/main/folder1/Food.jpg')">
+                        <span class="badge healthy">HEALTHY</span>
+                    </div>
+                    <div class="card-content">
+                        <h4>Garden Salad</h4>
+                        <p>Mixed greens, cherry tomatoes, cucumber, carrots, red onion with balsamic vinaigrette.</p>
+                        <div class="card-footer">
+                            <span class="price">$9.95</span>
+                            <button class="btn-add">+</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="special-card">
+                    <div class="card-image" style="background-image: url('https://raw.githubusercontent.com/Mikivishy/imgs/main/folder1/Food.jpg')">
+                        <span class="badge new">NEW</span>
+                    </div>
+                    <div class="card-content">
+                        <h4>Hot Lunch Special</h4>
+                        <p>Chef's selection of proteins and sides that changes daily. Perfect for a hearty lunch.</p>
+                        <div class="card-footer">
+                            <span class="price">$14.95</span>
+                            <button class="btn-add">+</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="special-card">
+                    <div class="card-image" style="background-image: url('https://raw.githubusercontent.com/Mikivishy/imgs/main/folder1/Food.jpg')">
+                    </div>
+                    <div class="card-content">
+                        <h4>Breakfast Sandwich</h4>
+                        <p>Farm fresh eggs, cheddar cheese, and your choice of bacon or sausage on a toasted bagel.</p>
+                        <div class="card-footer">
+                            <span class="price">$7.95</span>
+                            <button class="btn-add">+</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="menu-section">
+            <div class="menu-header">
+                <h2>Our Menu</h2>
+                <button class="btn-expand">+ Expand Full Menu</button>
+            </div>
+            <div class="accordion">
+                <div class="accordion-item">
+                    <div class="accordion-header">SANDWICHES <span>⌃</span></div>
+                </div>
+                <div class="accordion-item">
+                    <div class="accordion-header">🥗 SALADS <span>⌃</span></div>
+                </div>
+                <div class="accordion-item">
+                    <div class="accordion-header">🍽️ HOT LUNCH BUFFET <span>⌃</span></div>
+                </div>
+                <div class="accordion-item">
+                    <div class="accordion-header">BEVERAGES <span>⌃</span></div>
+                </div>
+                <div class="accordion-item">
+                    <div class="accordion-header">☕ BREAKFAST <span>⌃</span></div>
+                </div>
+            </div>
+        </section>
+
+        <section class="reviews">
+            <h2 class="section-title">What Our Customers Say</h2>
+            <div class="reviews-grid">
+                <div class="review-card">
+                    <p>"The sandwiches here are simply amazing! Fresh ingredients and great flavors. I especially love their signature turkey avocado sandwich."</p>
+                    <div class="reviewer">
+                        <div class="img-placeholder" style="width:40px;height:40px;border-radius:50%;background-image:url('https://raw.githubusercontent.com/Mikivishy/imgs/main/folder1/People.jpg');background-size:cover;"></div>
+                        <div class="reviewer-info">
+                            <h5>Sarah Johnson</h5>
+                            <span>Local Customer</span>
+                            <div class="stars">★★★★★</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="review-card">
+                    <p>"Who's Cooking catered our office party and everyone was impressed! The food was delicious and the service was professional and on time."</p>
+                    <div class="reviewer">
+                        <div class="img-placeholder" style="width:40px;height:40px;border-radius:50%;background-image:url('https://raw.githubusercontent.com/Mikivishy/imgs/main/folder1/People.jpg');background-size:cover;"></div>
+                        <div class="reviewer-info">
+                            <h5>Michael Roberts</h5>
+                            <span>Catering Client</span>
+                            <div class="stars">★★★★★</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="review-card">
+                    <p>"The hot lunch buffet is my go-to for a satisfying meal. Great variety and always fresh. Their online ordering system makes it so convenient!"</p>
+                    <div class="reviewer">
+                        <div class="img-placeholder" style="width:40px;height:40px;border-radius:50%;background-image:url('https://raw.githubusercontent.com/Mikivishy/imgs/main/folder1/People.jpg');background-size:cover;"></div>
+                        <div class="reviewer-info">
+                            <h5>Emily Chen</h5>
+                            <span>Regular Customer</span>
+                            <div class="stars">★★★★★</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <section class="newsletter">
+        <h2>Join Our Newsletter</h2>
+        <p>Subscribe to receive special offers, event announcements, and weekly menu updates.</p>
+        <form class="newsletter-form">
+            <input type="email" placeholder="Your email address">
+            <button type="submit">SUBSCRIBE</button>
+        </form>
+    </section>
+
+    <footer>
+        <div class="footer-grid">
+            <div class="footer-about">
+                <div class="logo">
+                    <div class="logo-icon" style="width:30px;height:30px;">WC</div>
+                    <h3>Who's Cooking</h3>
+                </div>
+                <p>We are a family-owned business dedicated to providing fresh, delicious meals using locally sourced ingredients. From breakfast to lunch, we've got you covered.</p>
+                <div class="social-icons" style="margin-top:1rem;">
+                    <div class="social-icon">f</div>
+                    <div class="social-icon">ig</div>
+                    <div class="social-icon">t</div>
+                    <div class="social-icon">in</div>
+                </div>
+            </div>
+            <div class="footer-links">
+                <h4>Quick Links</h4>
+                <ul>
+                    <li><a href="#">&gt; Home</a></li>
+                    <li><a href="#">&gt; Our Menu</a></li>
+                    <li><a href="#">&gt; Catering Services</a></li>
+                    <li><a href="#">&gt; About Us</a></li>
+                    <li><a href="#">&gt; Contact Us</a></li>
+                </ul>
+            </div>
+            <div class="footer-contact">
+                <h4>Contact Information</h4>
+                <div class="contact-item">📍 123 Main Street<br>CROTON FALLS, NY 10519</div>
+                <div class="contact-item">📞 (914) 277-3210</div>
+                <div class="contact-item">✉️ info@whoscooking.com</div>
+                <div class="contact-item">⏰ 7:00 AM - 5:00 PM (Mon-Fri)<br>8:00 AM - 3:00 PM (Sat-Sun)</div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>Powered by Menufy © 2024 | All Rights Reserved</p>
+            <div class="footer-links-bottom">
+                <a href="#">Accessibility</a>
+                <a href="#">Terms of Service</a>
+                <a href="#">Help Center</a>
+                <a href="#">Privacy Policy</a>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        function toggleCart() {
+            const sidebar = document.getElementById('cartSidebar');
+            sidebar.classList.toggle('active');
+        }
+        
+        // Accordion interaction (simple toggle)
+        document.querySelectorAll('.accordion-header').forEach(header => {
+            header.addEventListener('click', () => {
+                header.classList.toggle('active');
+            });
+        });
+    </script>
+</body>
+</html>

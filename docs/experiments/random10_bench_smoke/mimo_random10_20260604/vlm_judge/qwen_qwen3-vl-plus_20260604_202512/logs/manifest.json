@@ -1,0 +1,16 @@
+{
+  "run_dir": "experiments\\random10_bench_smoke\\mimo_random10_20260604",
+  "judge_dir": "experiments\\random10_bench_smoke\\mimo_random10_20260604\\vlm_judge\\qwen_qwen3-vl-plus_20260604_202512",
+  "provider": "qwen",
+  "model": "qwen3-vl-plus",
+  "bypass_proxy": true,
+  "benches": [
+    "design2code",
+    "flame",
+    "fullfront"
+  ],
+  "max_tokens": null,
+  "dry_run": true,
+  "item_count": 30,
+  "started_at": "2026-06-04T20:25:12"
+}

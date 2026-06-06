@@ -1,0 +1,721 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JUGHEADS - Youth Juggling Company</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background-color: #f5f5f5;
+        }
+
+        /* Header */
+        .header {
+            background: linear-gradient(135deg, #1565c0 0%, #2196f3 50%, #42a5f5 100%);
+            text-align: center;
+            padding: 30px 20px 25px;
+        }
+
+        .header h1 {
+            color: white;
+            font-size: 32px;
+            font-weight: 800;
+            letter-spacing: 3px;
+            margin-bottom: 8px;
+        }
+
+        .header p {
+            color: rgba(255, 255, 255, 0.95);
+            font-size: 14px;
+        }
+
+        /* Navigation */
+        .nav {
+            background: white;
+            border-bottom: 1px solid #e0e0e0;
+            padding: 0 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 5px;
+        }
+
+        .nav-links a {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            padding: 15px 12px;
+            text-decoration: none;
+            color: #333;
+            font-size: 14px;
+            font-weight: 500;
+        }
+
+        .nav-links a:hover {
+            color: #2196f3;
+        }
+
+        .nav-links a .icon {
+            font-size: 12px;
+        }
+
+        .search-box {
+            display: flex;
+            align-items: center;
+        }
+
+        .search-box input {
+            padding: 8px 12px;
+            border: 1px solid #ddd;
+            border-radius: 4px 0 0 4px;
+            outline: none;
+            font-size: 14px;
+            width: 180px;
+        }
+
+        .search-box button {
+            padding: 8px 14px;
+            background: #2196f3;
+            border: none;
+            border-radius: 0 4px 4px 0;
+            color: white;
+            cursor: pointer;
+            font-size: 14px;
+        }
+
+        .search-box button:hover {
+            background: #1976d2;
+        }
+
+        /* Main Container */
+        .container {
+            max-width: 1100px;
+            margin: 20px auto;
+            padding: 0 20px;
+            display: grid;
+            grid-template-columns: 1fr 320px;
+            gap: 25px;
+        }
+
+        /* Main Content */
+        .main-content {
+            background: white;
+            border-radius: 4px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        }
+
+        .post-header {
+            padding: 25px 30px;
+            border-bottom: 1px solid #eee;
+        }
+
+        .post-category {
+            display: inline-block;
+            color: #2196f3;
+            font-size: 12px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 12px;
+        }
+
+        .post-title {
+            font-size: 26px;
+            font-weight: 700;
+            color: #1a1a1a;
+            margin-bottom: 15px;
+            line-height: 1.3;
+        }
+
+        .post-meta {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            font-size: 13px;
+            color: #666;
+        }
+
+        .post-meta span {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .post-meta .icon {
+            color: #2196f3;
+        }
+
+        /* Hero Image */
+        .hero-image {
+            position: relative;
+        }
+
+        .hero-image img {
+            width: 100%;
+            height: 400px;
+            object-fit: cover;
+            display: block;
+        }
+
+        .image-caption {
+            background: rgba(0,0,0,0.7);
+            color: white;
+            padding: 12px 20px;
+            font-size: 13px;
+        }
+
+        /* Article Content */
+        .article-content {
+            padding: 30px;
+        }
+
+        .article-content p {
+            margin-bottom: 18px;
+            font-size: 15px;
+            line-height: 1.8;
+            color: #444;
+        }
+
+        .block-quote {
+            border-left: 4px solid #4caf50;
+            padding: 20px 25px;
+            margin: 25px 0;
+            background: #f9f9f9;
+        }
+
+        .block-quote p {
+            font-style: italic;
+            color: #555;
+            margin-bottom: 10px;
+        }
+
+        .block-quote .author {
+            text-align: right;
+            font-style: normal;
+            font-weight: 600;
+            color: #333;
+        }
+
+        .continue-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: #2196f3;
+            color: white;
+            padding: 12px 24px;
+            border: none;
+            border-radius: 4px;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            margin-top: 15px;
+            margin-bottom: 20px;
+        }
+
+        .continue-btn:hover {
+            background: #1976d2;
+        }
+
+        /* Tags */
+        .tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-bottom: 25px;
+        }
+
+        .tag {
+            padding: 6px 16px;
+            background: #f0f0f0;
+            border-radius: 20px;
+            font-size: 13px;
+            color: #555;
+            text-decoration: none;
+            border: 1px solid #ddd;
+        }
+
+        .tag:hover {
+            background: #e0e0e0;
+        }
+
+        /* Author Box */
+        .author-box {
+            background: #f5f7fa;
+            padding: 20px;
+            border-radius: 4px;
+            display: flex;
+            gap: 15px;
+            align-items: flex-start;
+        }
+
+        .author-avatar {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #ff9800, #f57c00);
+            flex-shrink: 0;
+        }
+
+        .author-info h4 {
+            font-size: 16px;
+            color: #2196f3;
+            margin-bottom: 5px;
+        }
+
+        .author-info p {
+            font-size: 13px;
+            color: #666;
+            line-height: 1.5;
+        }
+
+        /* Sidebar */
+        .sidebar {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .sidebar-widget {
+            background: white;
+            border-radius: 4px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+
+        .widget-header {
+            background: #2196f3;
+            color: white;
+            padding: 12px 18px;
+            font-size: 16px;
+            font-weight: 600;
+        }
+
+        .widget-content {
+            padding: 15px;
+        }
+
+        /* Categories */
+        .category-list {
+            list-style: none;
+        }
+
+        .category-list li {
+            padding: 10px 0;
+            border-bottom: 1px solid #eee;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 14px;
+            color: #444;
+            cursor: pointer;
+        }
+
+        .category-list li:last-child {
+            border-bottom: none;
+        }
+
+        .category-list li:hover {
+            color: #2196f3;
+        }
+
+        .category-list li::before {
+            content: "›";
+            color: #2196f3;
+            font-size: 18px;
+            font-weight: bold;
+        }
+
+        /* Popular Posts */
+        .popular-post {
+            display: flex;
+            gap: 12px;
+            padding: 12px 0;
+            border-bottom: 1px solid #eee;
+        }
+
+        .popular-post:last-child {
+            border-bottom: none;
+        }
+
+        .popular-post-thumb {
+            width: 70px;
+            height: 55px;
+            border-radius: 4px;
+            flex-shrink: 0;
+            background: linear-gradient(135deg, #4db6ac, #26a69a);
+        }
+
+        .popular-post-thumb.orange {
+            background: linear-gradient(135deg, #ff9800, #f57c00);
+        }
+
+        .popular-post-thumb.blue {
+            background: linear-gradient(135deg, #42a5f5, #1e88e5);
+        }
+
+        .popular-post-info h4 {
+            font-size: 13px;
+            font-weight: 600;
+            color: #333;
+            line-height: 1.4;
+            margin-bottom: 5px;
+        }
+
+        .popular-post-info .date {
+            font-size: 11px;
+            color: #888;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        /* Events */
+        .event-item {
+            padding: 12px 0;
+            border-bottom: 1px solid #eee;
+            display: flex;
+            gap: 10px;
+        }
+
+        .event-item:last-child {
+            border-bottom: none;
+        }
+
+        .event-icon {
+            color: #2196f3;
+            font-size: 16px;
+            flex-shrink: 0;
+            margin-top: 2px;
+        }
+
+        .event-text {
+            font-size: 13px;
+            color: #444;
+            line-height: 1.5;
+        }
+
+        /* Footer */
+        .footer {
+            background: #1a1a2e;
+            color: #ccc;
+            padding: 50px 0 0;
+            margin-top: 40px;
+        }
+
+        .footer-content {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 0 20px;
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 40px;
+        }
+
+        .footer-section h3 {
+            color: white;
+            font-size: 18px;
+            margin-bottom: 15px;
+            font-weight: 600;
+        }
+
+        .footer-section p {
+            font-size: 14px;
+            line-height: 1.7;
+            color: #aaa;
+        }
+
+        .social-icons {
+            display: flex;
+            gap: 12px;
+            margin-top: 20px;
+        }
+
+        .social-icon {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            background: #2a2a4a;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            text-decoration: none;
+            font-size: 14px;
+            transition: background 0.3s;
+        }
+
+        .social-icon:hover {
+            background: #2196f3;
+        }
+
+        .footer-links {
+            list-style: none;
+        }
+
+        .footer-links li {
+            margin-bottom: 10px;
+        }
+
+        .footer-links a {
+            color: #aaa;
+            text-decoration: none;
+            font-size: 14px;
+            transition: color 0.3s;
+        }
+
+        .footer-links a:hover {
+            color: #2196f3;
+        }
+
+        .contact-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+            margin-bottom: 12px;
+            font-size: 14px;
+        }
+
+        .contact-icon {
+            color: #2196f3;
+            margin-top: 2px;
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding: 20px;
+            margin-top: 40px;
+            border-top: 1px solid #2a2a4a;
+            font-size: 13px;
+            color: #888;
+        }
+
+        /* Responsive */
+        @media (max-width: 900px) {
+            .container {
+                grid-template-columns: 1fr;
+            }
+
+            .footer-content {
+                grid-template-columns: 1fr;
+                gap: 30px;
+            }
+
+            .nav {
+                flex-direction: column;
+                padding: 10px;
+                gap: 10px;
+            }
+
+            .nav-links {
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <h1>JUGHEADS</h1>
+        <p>Youth Juggling Company - Developing Youth Through Juggling Since 1994</p>
+    </header>
+
+    <!-- Navigation -->
+    <nav class="nav">
+        <div class="nav-links">
+            <a href="#"><span class="icon">🏠</span> Home</a>
+            <a href="#"><span class="icon">📄</span> Blog</a>
+            <a href="#"><span class="icon">📅</span> Events</a>
+            <a href="#"><span class="icon">🖼</span> Gallery</a>
+            <a href="#"><span class="icon">ℹ</span> About</a>
+            <a href="#"><span class="icon">✉</span> Contact</a>
+        </div>
+        <div class="search-box">
+            <input type="text" placeholder="Search...">
+            <button>🔍</button>
+        </div>
+    </nav>
+
+    <!-- Main Container -->
+    <div class="container">
+        <!-- Main Content -->
+        <main class="main-content">
+            <div class="post-header">
+                <span class="post-category">JUGGLE JAM SERIES</span>
+                <h1 class="post-title">Coaches & Champions: Reflecting on Juggle Jams 11-15</h1>
+                <div class="post-meta">
+                    <span><span class="icon">👤</span> Paul Arneberg</span>
+                    <span><span class="icon">📅</span> April 24, 2018</span>
+                    <span><span class="icon">📁</span> JUGHEADS Director Insights</span>
+                    <span><span class="icon">💬</span> 8 Comments</span>
+                </div>
+            </div>
+
+            <div class="hero-image">
+                <img src="https://raw.githubusercontent.com/Mikivishy/imgs/main/folder1/Landscape.jpg" alt="JUGHEADS team celebrating" style="background: linear-gradient(135deg, #4fc3f7, #0288d1, #2e7d32, #f57c00);">
+                <div class="image-caption">The JUGHEADS team celebrating during Juggle Jam 14, May 2012</div>
+            </div>
+
+            <div class="article-content">
+                <p>Our 2nd half of our 1st 20 JJs started with a bang, with JJ11 swelling to 140 members, including 12 seniors! With the addition of weekly paid coaches from among former and current Jugheads, our numbers grew along with our talents, abilities, and sense of company camaraderie.</p>
+
+                <p>The introduction of specialized coaching led to several breakthroughs in technical performance. While our Ultimate Club had always featured high-level juggling, our other clubs began closing the gap. The Thursday Rec. Club (later renamed Advanced Club) started producing complex club-passing patterns, while our Monday Rec and Elite Clubs incorporated more challenging choreographed sequences.</p>
+
+                <div class="block-quote">
+                    <p>"The growth of JUGHEADS wasn't just in our numbers, but in the depth of character, leadership, and technical ability demonstrated by our youth. The passing of the torch to student leaders created a legacy that continues today."</p>
+                    <div class="author">— Paul Arneberg, JUGHEADS Founder</div>
+                </div>
+
+                <p>The years 2008-2012 also saw our competitive presence grow nationally. Our teams and individuals regularly placed among the top finishers at the IJA (International Jugglers' Association) Youth Showcase and Teams Competitions. More importantly, our alumni began transitioning to coaching roles, creating a sustainable cycle of mentorship that enriched the program beyond measure.</p>
+
+                <p>JJ15 marked a special milestone as we celebrated 15 years of growth, with many of our original members returning as guest performers. The special JJ15 retrospective video highlighted just how far we'd come from our humble beginnings in 1994.</p>
+
+                <button class="continue-btn">📖 Continue Reading</button>
+
+                <div class="tags">
+                    <a href="#" class="tag">Juggle Jam</a>
+                    <a href="#" class="tag">Youth Development</a>
+                    <a href="#" class="tag">Performance</a>
+                    <a href="#" class="tag">Coaching</a>
+                    <a href="#" class="tag">Legacy</a>
+                </div>
+
+                <div class="author-box">
+                    <div class="author-avatar"></div>
+                    <div class="author-info">
+                        <h4>Paul Arneberg</h4>
+                        <p>Founder and Director of JUGHEADS Youth Juggling Company since 1994. Paul has dedicated his career to developing youth through the art and sport of juggling.</p>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <!-- Categories -->
+            <div class="sidebar-widget">
+                <div class="widget-header">Categories</div>
+                <div class="widget-content">
+                    <ul class="category-list">
+                        <li>JUGHEADS Director Insights</li>
+                        <li>Paul's Poetic Platform Series</li>
+                        <li>Reflecting on 20 Juggle Jams</li>
+                        <li>The Concession Stand Series</li>
+                        <li>The Importance and Proper Use of Words</li>
+                        <li>The Margin Series</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Popular Posts -->
+            <div class="sidebar-widget">
+                <div class="widget-header">Popular Posts</div>
+                <div class="widget-content">
+                    <div class="popular-post">
+                        <div class="popular-post-thumb" style="background: linear-gradient(135deg, #4db6ac, #00897b);"></div>
+                        <div class="popular-post-info">
+                            <h4>The Evolution of Juggle Jam: 20 Years of Growth</h4>
+                            <span class="date">📅 May 15, 2018</span>
+                        </div>
+                    </div>
+                    <div class="popular-post">
+                        <div class="popular-post-thumb orange"></div>
+                        <div class="popular-post-info">
+                            <h4>Leadership Through Juggling: Building Character</h4>
+                            <span class="date">📅 March 3, 2018</span>
+                        </div>
+                    </div>
+                    <div class="popular-post">
+                        <div class="popular-post-thumb blue"></div>
+                        <div class="popular-post-info">
+                            <h4>The Ultimate Club: Training Champions</h4>
+                            <span class="date">📅 February 18, 2018</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Upcoming Events -->
+            <div class="sidebar-widget">
+                <div class="widget-header">Upcoming Events</div>
+                <div class="widget-content">
+                    <div class="event-item">
+                        <span class="event-icon">📅</span>
+                        <span class="event-text">Juggle Jam 23 - May 20, 2022</span>
+                    </div>
+                    <div class="event-item">
+                        <span class="event-icon">📅</span>
+                        <span class="event-text">Summer Juggling Camp - July 10-14, 2022</span>
+                    </div>
+                    <div class="event-item">
+                        <span class="event-icon">📅</span>
+                        <span class="event-text">IJA Festival - July 25-31, 2022</span>
+                    </div>
+                    <div class="event-item">
+                        <span class="event-icon">📅</span>
+                        <span class="event-text">Fall Season Begins - September 12, 2022</span>
+                    </div>
+                </div>
+            </div>
+        </aside>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>About JUGHEADS</h3>
+                <p>JUGHEADS Youth Juggling Company was founded in 1994 by Paul Arneberg. We aim to develop youth through the art and sport of juggling in a safe, fun learning environment.</p>
+                <div class="social-icons">
+                    <a href="#" class="social-icon">f</a>
+                    <a href="#" class="social-icon">𝕏</a>
+                    <a href="#" class="social-icon">📷</a>
+                    <a href="#" class="social-icon">▶</a>
+                </div>
+            </div>
+            <div class="footer-section">
+                <h3>Quick Links</h3>
+                <ul class="footer-links">
+                    <li><a href="#">Home</a></li>
+                    <li><a href="#">About Us</a></li>
+                    <li><a href="#">Programs</a></li>
+                    <li><a href="#">Gallery</a></li>
+                    <li><a href="#">Events</a></li>
+                    <li><a href="#">Contact</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h3>Contact Us</h3>
+                <div class="contact-item">
+                    <span class="contact-icon">📍</span>
+                    <span>5905 Concord Avenue, Edina, MN 55424</span>
+                </div>
+                <div class="contact-item">
+                    <span class="contact-icon">📞</span>
+                    <span>(952) 926-0896</span>
+                </div>
+                <div class="contact-item">
+                    <span class="contact-icon">✉</span>
+                    <span>info@jugheads.com</span>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            © 2022 JUGHEADS Youth Juggling Company. All Rights Reserved.
+        </div>
+    </footer>
+</body>
+</html>

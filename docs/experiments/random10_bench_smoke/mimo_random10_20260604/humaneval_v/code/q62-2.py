@@ -1,0 +1,29 @@
+class Node:
+    def __init__(self, val = 0, left = None, right = None):
+        self.left = left
+        self.right = right
+        self.val = val
+
+def solution(root: Node) -> Node:
+    """
+    Transforms a binary tree according to the illustrated rule by manipulating its nodes.
+
+    Parameters:
+        root (Node): The root node of the input binary tree.
+
+    Returns:
+        Node: The root node of the transformed binary tree.
+    """
+    if root is None:
+        return None
+
+    # Check if the node has exactly one null child.
+    # (root.left is None) != (root.right is None) performs an XOR check.
+    if (root.left is None) != (root.right is None):
+        root.val = -root.val
+
+    # Recursively traverse and transform the left and right subtrees
+    solution(root.left)
+    solution(root.right)
+
+    return root

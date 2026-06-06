@@ -1,0 +1,288 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>humaneval_v / q25 预览</title>
+    <style>
+      :root {
+        color-scheme: light;
+        --bg: #f4f1ea;
+        --panel: #ffffff;
+        --ink: #1f242b;
+        --muted: #66707c;
+        --line: #d7d2c8;
+        --accent: #0f766e;
+        --accent-2: #b45309;
+        font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      }
+      * { box-sizing: border-box; }
+      body {
+        margin: 0;
+        background: var(--bg);
+        color: var(--ink);
+      }
+      main {
+        width: 1280px;
+        min-height: 900px;
+        padding: 26px;
+      }
+      header {
+        display: flex;
+        justify-content: space-between;
+        gap: 20px;
+        align-items: flex-end;
+        padding-bottom: 16px;
+        border-bottom: 1px solid var(--line);
+        margin-bottom: 18px;
+      }
+      h1 {
+        margin: 0;
+        font-size: 28px;
+        line-height: 1.15;
+        letter-spacing: 0;
+      }
+      .meta {
+        margin: 6px 0 0;
+        color: var(--muted);
+        font-size: 13px;
+      }
+      .badge {
+        border: 1px solid var(--line);
+        border-radius: 999px;
+        padding: 7px 10px;
+        color: var(--accent);
+        font-weight: 700;
+        font-size: 12px;
+        white-space: nowrap;
+      }
+      .grid {
+        display: grid;
+        grid-template-columns: 0.9fr 1.1fr;
+        gap: 18px;
+        align-items: start;
+      }
+      section {
+        min-width: 0;
+        background: var(--panel);
+        border: 1px solid var(--line);
+        border-radius: 8px;
+        overflow: hidden;
+      }
+      h2 {
+        margin: 0;
+        padding: 12px 14px;
+        border-bottom: 1px solid var(--line);
+        font-size: 14px;
+        line-height: 1.2;
+        color: var(--accent-2);
+        background: #fbfaf7;
+      }
+      .body {
+        padding: 14px;
+      }
+      figure {
+        margin: 0 0 12px;
+      }
+      figcaption {
+        margin-bottom: 6px;
+        color: var(--muted);
+        font-size: 12px;
+      }
+      img {
+        width: 100%;
+        max-height: 520px;
+        object-fit: contain;
+        border: 1px solid var(--line);
+        background: white;
+      }
+      pre {
+        margin: 0;
+        white-space: pre-wrap;
+        overflow-wrap: anywhere;
+        font: 12px/1.55 "Cascadia Mono", Consolas, "SFMono-Regular", monospace;
+      }
+      .two-stack {
+        display: grid;
+        gap: 18px;
+      }
+      .empty {
+        margin: 0;
+        color: var(--muted);
+      }
+    </style>
+  </head>
+  <body>
+    <main>
+      <header>
+        <div>
+          <h1>humaneval_v / q25</h1>
+          <p class="meta">非 HTML 输出预览渲染：输入图、任务提示、metadata/reference 和模型输出放在同一张图中。</p>
+        </div>
+        <span class="badge">diagram_to_python_code</span>
+      </header>
+      <div class="grid">
+        <div class="two-stack">
+          <section>
+            <h2>输入图片</h2>
+            <div class="body">
+            <figure>
+              <figcaption>输入图 1 · 1024 x 764</figcaption>
+              <img src="file:///D:/Code/frontEnd-direction/experiments/random10_bench_smoke/mimo_random10_20260604/humaneval_v/inputs/images/q25_0.png" alt="input image 1" />
+            </figure>
+            </div>
+          </section>
+          <section>
+            <h2>任务提示</h2>
+            <div class="body"><pre>你会看到一张编码题相关的图。请结合图像和函数签名，补全 Python 解法。
+
+要求：
+1. 只输出一个 fenced code block，格式为 ```python ... ```。
+2. 必须实现给定的 `solution` 函数签名。
+3. 不要输出解释。
+
+函数签名：
+```python
+from typing import Dict, List, Tuple
+
+def solution(rectangles: Dict[int, List[Tuple[int, int]]], rectangle_id: int) -&gt; int:    
+    &quot;&quot;&quot;
+    Calculate the trimmed area of a specified rectangle within a grid.
+
+    Args:
+        rectangles: A dictionary mapping rectangle IDs (int) to their corner coordinates.
+                   Each value is a list containing two (column, row) tuples representing 
+                   the bottom-left and top-right corners respectively.
+                   Example: {1: [(0, 0), (2, 2)], 2: [(2, 0), (4, 2)]}
+        rectangle_id: The ID of the target rectangle to calculate the trimmed area for.  
+
+    Returns:
+        The trimmed area of the specified rectangle.
+    &quot;&quot;&quot;
+
+```
+
+任务类型：Aggregation
+能力标签：{&quot;Common Sense&quot;: null, &quot;Data Structures&quot;: [&quot;Matrix&quot;], &quot;Dynamic Patterns&quot;: null, &quot;Geometric Objects&quot;: [&quot;Rectangle&quot;, &quot;Grid&quot;], &quot;Mathematical Operations&quot;: [&quot;Value Comparison&quot;], &quot;Spatial Transformations&quot;: [&quot;Truncation&quot;, &quot;Filtering&quot;], &quot;Topological Relations&quot;: [&quot;Overlap&quot;, &quot;Boundary&quot;]}
+</pre></div>
+          </section>
+        </div>
+        <div class="two-stack">
+          <section>
+            <h2>模型代码输出</h2>
+            <div class="body"><pre>from typing import Dict, List, Tuple
+
+def solution(rectangles: Dict[int, List[Tuple[int, int]]], rectangle_id: int) -&gt; int:
+    &quot;&quot;&quot;
+    Calculate the trimmed area of a specified rectangle within a grid.
+    &quot;&quot;&quot;
+    if rectangle_id not in rectangles:
+        return 0
+
+    # Get the target rectangle coordinates
+    target_coords = rectangles[rectangle_id]
+    tx1, ty1 = target_coords[0]
+    tx2, ty2 = target_coords[1]
+
+    # Calculate the full area of the target rectangle
+    target_area = (tx2 - tx1) * (ty2 - ty1)
+
+    # Identify higher priority rectangles (lower ID) that overlap with the target
+    # We clip these occluders to the target&#x27;s bounds since we only care about the area inside target
+    occluders = []
+    
+    for r_id, coords in rectangles.items():
+        if r_id &lt; rectangle_id:
+            rx1, ry1 = coords[0]
+            rx2, ry2 = coords[1]
+            
+            # Calculate intersection
+            ix1 = max(tx1, rx1)
+            iy1 = max(ty1, ry1)
+            ix2 = min(tx2, rx2)
+            iy2 = min(ty2, ry2)
+            
+            if ix1 &lt; ix2 and iy1 &lt; iy2:
+                occluders.append((ix1, iy1, ix2, iy2))
+
+    # If no occluders, return the full area
+    if not occluders:
+        return target_area
+
+    # Calculate the area of the union of all occluders using Plane Sweep algorithm
+    x_vals = set()
+    for occ in occluders:
+        x_vals.add(occ[0])
+        x_vals.add(occ[2])
+    
+    x_list = sorted(x_vals)
+    total_occluded_area = 0
+    
+    # Sweep through x intervals
+    for i in range(len(x_list) - 1):
+        x_curr = x_list[i]
+        x_next = x_list[i+1]
+        strip_width = x_next - x_curr
+        
+        # Collect active y-intervals for this x-strip
+        y_intervals = []
+        for occ in occluders:
+            ox1, oy1, ox2, oy2 = occ
+            if ox1 &lt;= x_curr and ox2 &gt;= x_next:
+                y_intervals.append((oy1, oy2))
+        
+        if y_intervals:
+            # Merge y-intervals
+            y_intervals.sort()
+            merged_y = []
+            curr_s, curr_e = y_intervals[0]
+            
+            for s, e in y_intervals[1:]:
+                if s &lt;= curr_e:
+                    curr_e = max(curr_e, e)
+                else:
+                    merged_y.append((curr_s, curr_e))
+                    curr_s, curr_e = s, e
+            merged_y.append((curr_s, curr_e))
+            
+            # Calculate covered height
+            covered_height = sum(e - s for s, e in merged_y)
+            total_occluded_area += strip_width * covered_height
+            
+    return target_area - total_occluded_area</pre></div>
+          </section>
+          <section>
+            <h2>参考信息 / Metadata</h2>
+            <div class="body"><pre>{
+  &quot;qid&quot;: &quot;q25&quot;,
+  &quot;task_type&quot;: &quot;Aggregation&quot;,
+  &quot;capability_aspects&quot;: {
+    &quot;Common Sense&quot;: null,
+    &quot;Data Structures&quot;: [
+      &quot;Matrix&quot;
+    ],
+    &quot;Dynamic Patterns&quot;: null,
+    &quot;Geometric Objects&quot;: [
+      &quot;Rectangle&quot;,
+      &quot;Grid&quot;
+    ],
+    &quot;Mathematical Operations&quot;: [
+      &quot;Value Comparison&quot;
+    ],
+    &quot;Spatial Transformations&quot;: [
+      &quot;Truncation&quot;,
+      &quot;Filtering&quot;
+    ],
+    &quot;Topological Relations&quot;: [
+      &quot;Overlap&quot;,
+      &quot;Boundary&quot;
+    ]
+  },
+  &quot;function_signature&quot;: &quot;from typing import Dict, List, Tuple\n\ndef solution(rectangles: Dict[int, List[Tuple[int, int]]], rectangle_id: int) -&gt; int:    \n    \&quot;\&quot;\&quot;\n    Calculate the trimmed area of a specified rectangle within a grid.\n\n    Args:\n        rectangles: A dictionary mapping rectangle IDs (int) to their corner coordinates.\n                   Each value is a list containing two (column, row) tuples representing \n                   the bottom-left and top-right corners respectively.\n                   Example: {1: [(0, 0), (2, 2)], 2: [(2, 0), (4, 2)]}\n        rectangle_id: The ID of the target rectangle to calculate the trimmed area for.  \n\n    Returns:\n        The trimmed area of the specified rectangle.\n    \&quot;\&quot;\&quot;\n&quot;
+}</pre></div>
+          </section>
+        </div>
+      </div>
+    </main>
+  </body>
+</html>

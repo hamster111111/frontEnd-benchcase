@@ -1,0 +1,682 @@
+```html
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>How to fold a shirt - 百度搜索</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: "Microsoft YaHei", "PingFang SC", "Helvetica Neue", Arial, sans-serif;
+            background: #fff;
+            color: #333;
+            font-size: 14px;
+            line-height: 1.5;
+        }
+
+        a {
+            color: #1a0dab;
+            text-decoration: none;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+
+        /* 顶部导航 */
+        .header {
+            padding: 15px 20px 0;
+            display: flex;
+            align-items: center;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            margin-right: 25px;
+        }
+
+        .logo-icon {
+            width: 100px;
+            height: 40px;
+            background: linear-gradient(135deg, #4e6ef2 0%, #3b7dff 100%);
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 16px;
+            font-weight: bold;
+            letter-spacing: 2px;
+        }
+
+        .search-box {
+            display: flex;
+            flex: 1;
+            max-width: 580px;
+            height: 40px;
+            border: 2px solid #4e6ef2;
+            border-radius: 20px;
+            overflow: hidden;
+        }
+
+        .search-input {
+            flex: 1;
+            border: none;
+            outline: none;
+            padding: 0 15px;
+            font-size: 14px;
+        }
+
+        .search-btn {
+            background: #4e6ef2;
+            color: white;
+            border: none;
+            padding: 0 20px;
+            cursor: pointer;
+            font-size: 14px;
+        }
+
+        .header-right {
+            margin-left: auto;
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            font-size: 13px;
+        }
+
+        .header-right a {
+            color: #333;
+        }
+
+        .login-btn {
+            background: #4e6ef2;
+            color: white !important;
+            padding: 6px 16px;
+            border-radius: 4px;
+        }
+
+        /* 筛选栏 */
+        .filter-bar {
+            padding: 10px 20px;
+            border-bottom: 1px solid #e8e8e8;
+            display: flex;
+            align-items: center;
+            gap: 25px;
+            font-size: 14px;
+        }
+
+        .filter-item {
+            color: #333;
+            cursor: pointer;
+            padding-bottom: 5px;
+        }
+
+        .filter-item.active {
+            color: #4e6ef2;
+            border-bottom: 2px solid #4e6ef2;
+        }
+
+        .filter-item span {
+            font-size: 12px;
+            color: #999;
+            margin-left: 3px;
+        }
+
+        /* 主容器 */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 15px 20px;
+            display: flex;
+            gap: 30px;
+        }
+
+        /* 主内容区 */
+        .main-content {
+            flex: 1;
+            max-width: 680px;
+        }
+
+        /* 搜索结果项 */
+        .search-result {
+            margin-bottom: 25px;
+        }
+
+        .result-title {
+            font-size: 16px;
+            margin-bottom: 5px;
+        }
+
+        .result-title a {
+            color: #1a0dab;
+        }
+
+        .result-title .icon {
+            display: inline-block;
+            width: 16px;
+            height: 16px;
+            background: #4e6ef2;
+            border-radius: 3px;
+            margin-right: 5px;
+            vertical-align: middle;
+        }
+
+        .result-meta {
+            font-size: 12px;
+            color: #999;
+            margin-bottom: 5px;
+        }
+
+        .result-snippet {
+            font-size: 13px;
+            color: #555;
+            line-height: 1.7;
+        }
+
+        .result-snippet .keyword {
+            color: #c00;
+        }
+
+        .result-source {
+            font-size: 12px;
+            color: #999;
+            margin-top: 5px;
+        }
+
+        /* 图片搜索结果 */
+        .result-with-image {
+            display: flex;
+            gap: 15px;
+        }
+
+        .result-image {
+            width: 130px;
+            height: 90px;
+            background: linear-gradient(135deg, #f5f5f5 0%, #e0e0e0 100%);
+            border-radius: 4px;
+            flex-shrink: 0;
+        }
+
+        .result-image-content {
+            flex: 1;
+        }
+
+        /* 大家还在搜 */
+        .related-search {
+            margin: 30px 0;
+        }
+
+        .related-title {
+            font-size: 14px;
+            color: #333;
+            margin-bottom: 12px;
+        }
+
+        .related-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .related-tag {
+            display: flex;
+            align-items: center;
+            padding: 8px 15px;
+            background: #f5f5f5;
+            border-radius: 20px;
+            font-size: 13px;
+            color: #333;
+        }
+
+        .related-tag::before {
+            content: "🔍";
+            font-size: 12px;
+            margin-right: 6px;
+        }
+
+        /* 右侧边栏 */
+        .sidebar {
+            width: 350px;
+            flex-shrink: 0;
+        }
+
+        /* 百度AI+ */
+        .ai-card {
+            background: linear-gradient(135deg, #f0f5ff 0%, #e8f0fe 100%);
+            border-radius: 12px;
+            padding: 15px;
+            margin-bottom: 25px;
+        }
+
+        .ai-card-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 10px;
+        }
+
+        .ai-card-title {
+            display: flex;
+            align-items: center;
+            font-size: 14px;
+            color: #333;
+        }
+
+        .ai-icon {
+            background: linear-gradient(135deg, #4e6ef2 0%, #7b61ff 100%);
+            color: white;
+            padding: 2px 8px;
+            border-radius: 10px;
+            font-size: 12px;
+            margin-right: 8px;
+        }
+
+        .ai-query {
+            font-size: 13px;
+            color: #666;
+        }
+
+        .ai-btn {
+            background: #4e6ef2;
+            color: white;
+            border: none;
+            padding: 6px 15px;
+            border-radius: 15px;
+            font-size: 12px;
+            cursor: pointer;
+        }
+
+        /* 相关搜索 */
+        .sidebar-section {
+            margin-bottom: 25px;
+        }
+
+        .sidebar-title {
+            font-size: 14px;
+            color: #333;
+            margin-bottom: 12px;
+            font-weight: bold;
+        }
+
+        .sidebar-search-item {
+            display: flex;
+            align-items: center;
+            padding: 8px 0;
+            font-size: 13px;
+            color: #333;
+        }
+
+        .sidebar-search-item::before {
+            content: "🔍";
+            font-size: 11px;
+            margin-right: 8px;
+            color: #999;
+        }
+
+        /* 百度热搜 */
+        .hot-search {
+            margin-top: 20px;
+        }
+
+        .hot-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 12px;
+        }
+
+        .hot-tabs {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 12px;
+        }
+
+        .hot-tab {
+            font-size: 13px;
+            color: #666;
+            padding-bottom: 5px;
+            cursor: pointer;
+        }
+
+        .hot-tab.active {
+            color: #333;
+            font-weight: bold;
+            border-bottom: 2px solid #333;
+        }
+
+        .hot-list {
+            list-style: none;
+        }
+
+        .hot-item {
+            display: flex;
+            align-items: flex-start;
+            padding: 8px 0;
+            font-size: 13px;
+            color: #333;
+            line-height: 1.5;
+        }
+
+        .hot-rank {
+            width: 18px;
+            height: 18px;
+            background: #999;
+            color: white;
+            border-radius: 3px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 11px;
+            margin-right: 10px;
+            flex-shrink: 0;
+            margin-top: 2px;
+        }
+
+        .hot-rank.top {
+            background: #ff6b6b;
+        }
+
+        .hot-tag {
+            display: inline-block;
+            background: #ff4d4d;
+            color: white;
+            font-size: 10px;
+            padding: 1px 4px;
+            border-radius: 2px;
+            margin-left: 5px;
+        }
+
+        .hot-tag.new {
+            background: #ff8c00;
+        }
+
+        .refresh-btn {
+            font-size: 12px;
+            color: #666;
+            cursor: pointer;
+        }
+
+        .refresh-btn:hover {
+            color: #4e6ef2;
+        }
+
+        /* 返回顶部按钮 */
+        .back-to-top {
+            position: fixed;
+            bottom: 40px;
+            right: 30px;
+            width: 40px;
+            height: 40px;
+            background: #fff;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+    </style>
+</head>
+<body>
+    <!-- 顶部导航 -->
+    <div class="header">
+        <div class="logo">
+            <div class="logo-icon">Baidu</div>
+        </div>
+        <div class="search-box">
+            <input type="text" class="search-input" value="How to fold a shirt">
+            <button class="search-btn">百度一下</button>
+        </div>
+        <div class="header-right">
+            <a href="#">百度首页</a>
+            <a href="#">设置</a>
+            <a href="#" class="login-btn">登录</a>
+        </div>
+    </div>
+
+    <!-- 筛选栏 -->
+    <div class="filter-bar">
+        <span class="filter-item active">网页<span>1</span></span>
+        <span class="filter-item">AI+</span>
+        <span class="filter-item">图片</span>
+        <span class="filter-item">资讯</span>
+        <span class="filter-item">视频</span>
+        <span class="filter-item">笔记</span>
+        <span class="filter-item">地图</span>
+        <span class="filter-item">贴吧</span>
+        <span class="filter-item">文库</span>
+        <span class="filter-item">更多</span>
+        <span class="filter-item">筛选</span>
+    </div>
+
+    <div class="container">
+        <!-- 主内容区 -->
+        <div class="main-content">
+            <!-- 搜索结果1 -->
+            <div class="search-result">
+                <div class="result-title">
+                    <span class="icon"></span>
+                    <a href="#">实用少儿英语口语300句</a>
+                </div>
+                <div class="result-meta">2020年11月30日 11. Fold up your quilt. 叠被子。 12. Do your buttons. 扣扣子。 13. Tuck your shirt into you</div>
+                <div class="result-snippet">r pants.把衣服掖进裤子里。 14. Comb your hair. 梳头。 15. Please eat some snack.请吃些点心。 16. ...</div>
+                <div class="result-source">个人图书馆</div>
+            </div>
+
+            <!-- 搜索结果2 -->
+            <div class="search-result">
+                <div class="result-title">
+                    <a href="#">小学英语课程表</a>
+                </div>
+                <div class="result-with-image">
+                    <div class="result-image"></div>
+                    <div class="result-image-content">
+                        <div class="result-meta">2019年7月15日 have a fever /fi:və/ 发高烧 hurt /hə:t/ 疼痛 have a cold /kəul</div>
+                        <div class="result-snippet">u感冒 have a toothache /tu:θeik/ 牙疼 have a headache /hedeik/头痛 have a sore thr</div>
+                        <div class="result-snippet">oat /sɔ:r/ 喉咙疼 have a stomachache /stʌmakeik/胃疼 19. 敏词(number) ...</div>
+                        <div class="result-source">美篇</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 搜索结果3 -->
+            <div class="search-result">
+                <div class="result-title">
+                    <span class="icon" style="background: #4caf50;"></span>
+                    <a href="#">叠衬衫的步骤英语作文 - 百度文库</a>
+                </div>
+                <div class="result-meta">3页 发布时间：2024年04月11日</div>
+                <div class="result-snippet"><span class="keyword">How to Fold</span> a Dress <span class="keyword">Shirt</span>.Materials: Dress <span class="keyword">shirt</span>.Instructions:1. Lay the shirt flat; Unbutton the shirt and lay it flat on a table or bed with the back facing up and the collar at the bottom.2. Fold the sleeves: Cross one ...</div>
+                <div class="result-source">百度文库</div>
+            </div>
+
+            <!-- 大家还在搜 -->
+            <div class="related-search">
+                <div class="related-title">大家还在搜</div>
+                <div class="related-tags">
+                    <span class="related-tag">freshman方领短袖</span>
+                    <span class="related-tag">fold a card</span>
+                    <span class="related-tag">that coat cost her a week</span>
+                    <span class="related-tag">fold</span>
+                    <span class="related-tag">fold into</span>
+                    <span class="related-tag">fold翻译</span>
+                    <span class="related-tag">trend to</span>
+                    <span class="related-tag">whycinthua衣服</span>
+                    <span class="related-tag">greatoutdoors衣服</span>
+                    <span class="related-tag">fold怎么发音</span>
+                </div>
+            </div>
+
+            <!-- 搜索结果4 -->
+            <div class="search-result">
+                <div class="result-title">
+                    <a href="#">用英文教宝宝叠衣服、裤子、袜子_Clothes</a>
+                </div>
+                <div class="result-meta">2021年1月5日 One <span class="keyword">fold</span> will be little to the left ofthe collar. 一下叠到领子左边一点,and the other foldwill be</div>
+                <div class="result-snippet">a little to the right of the collar. 另一下叠到领子右边一点. Then, fold the sleevesdown the length ofthe s...</div>
+                <div class="result-source">搜狐网</div>
+            </div>
+
+            <!-- 搜索结果5 -->
+            <div class="search-result">
+                <div class="result-title">
+                    <a href="#">How to Fold Clothes: 11 Steps (with Pictures) - wikiHow</a>
+                </div>
+                <div class="result-meta">2025年4月29日 How toFold a Shirt How toFold Long Sleeve <span class="keyword">Shirts</span> How tofold T Shirts for Travel The Best Ways to Pack Clothes for Travel: Rolling, Bundling & More Featured Articles How toUndo a Repost on In...</div>
+                <div class="result-source">www.wikihow.com/Fold-C1...</div>
+            </div>
+
+            <!-- 搜索结果6 -->
+            <div class="search-result">
+                <div class="result-title">
+                    <a href="#">用英文教宝宝叠衣服、裤子、袜子 - 百度宝宝知道</a>
+                </div>
+                <div class="result-meta">2021年1月5日 and <span class="keyword">fold</span> it up one-third of the way. 往上叠到三分之一的地方。 Now fold the top of your pant</div>
+                <div class="result-snippet">s down to the fold you just made. 现在把裤子的上半部分叠到你刚才叠好的地方。 II. Folding A Shirt 叠衣...</div>
+                <div class="result-source">宝宝知道</div>
+            </div>
+
+            <!-- 搜索结果7 -->
+            <div class="search-result">
+                <div class="result-title">
+                    <a href="#">How to Make a Pocket Square: 15 Easy DIY Pocket Square Ideas</a>
+                </div>
+                <div class="result-meta">2024年3月13日 12. How to Fold a Pocket Square Mastering the art of pocket square <span class="keyword">folding</span> can elevate yo</div>
+                <div class="result-snippet">ur formal attire to new heights, and YouTube provides an invaluable tutorial covering the Three Stairs ...</div>
+            </div>
+        </div>
+
+        <!-- 右侧边栏 -->
+        <div class="sidebar">
+            <!-- 百度AI+ -->
+            <div class="ai-card">
+                <div class="ai-card-header">
+                    <div class="ai-card-title">
+                        <span class="ai-icon">百度AI+</span>
+                        <span>How to fold a shirt</span>
+                    </div>
+                    <button class="ai-btn">问AI</button>
+                </div>
+            </div>
+
+            <!-- 相关搜索 -->
+            <div class="sidebar-section">
+                <div class="sidebar-title">相关搜索</div>
+                <div class="sidebar-search-item">freshman方领短袖</div>
+                <div class="sidebar-search-item">fold a card</div>
+                <div class="sidebar-search-item">that coat cost her a week</div>
+                <div class="sidebar-search-item">fold</div>
+                <div class="sidebar-search-item">fold into</div>
+                <div class="sidebar-search-item">fold翻译</div>
+            </div>
+
+            <!-- 百度热搜 -->
+            <div class="sidebar-section hot-search">
+                <div class="hot-header">
+                    <div class="sidebar-title" style="margin-bottom: 0;">百度热搜</div>
+                    <span class="refresh-btn">🔄 换一换</span>
+                </div>
+                <div class="hot-tabs">
+                    <span class="hot-tab active">热搜榜</span>
+                    <span class="hot-tab">民生榜</span>
+                    <span class="hot-tab">财经榜</span>
+                </div>
+                <ul class="hot-list">
+                    <li class="hot-item">
+                        <span class="hot-rank top">1</span>
+                        <span>"红月亮"来了<span class="hot-tag">沸</span></span>
+                    </li>
+                    <li class="hot-item">
+                        <span class="hot-rank">2</span>
+                        <span>月全食时间表请收好<span class="hot-tag">沸</span></span>
+                    </li>
+                    <li class="hot-item">
+                        <span class="hot-rank">3</span>
+                        <span>@2026届毕业生 你有求职补贴待领取</span>
+                    </li>
+                    <li class="hot-item">
+                        <span class="hot-rank">4</span>
+                        <span>多地停航、停运、停课、关闭景区<span class="hot-tag new">新</span></span>
+                    </li>
+                    <li class="hot-item">
+                        <span class="hot-rank">5</span>
+                        <span>美国打美国？华盛顿芝加哥都怒了</span>
+                    </li>
+                    <li class="hot-item">
+                        <span class="hot-rank">6</span>
+                        <span>"血月"现身 它对人体有害吗</span>
+                    </li>
+                    <li class="hot-item">
+                        <span class="hot-rank">7</span>
+                        <span>考科目二把考场围墙撞塌了</span>
+                    </li>
+                    <li class="hot-item">
+                        <span class="hot-rank">8</span>
+                        <span>俄罗斯发动大规模袭击</span>
+                    </li>
+                    <li class="hot-item">
+                        <span class="hot-rank">9</span>
+                        <span>央视曝光身边的"毒"玩具<span class="hot-tag new">新</span></span>
+                    </li>
+                    <li class="hot-item">
+                        <span class="hot-rank">10</span>
+                        <span>多个视频平台被曝"偷时间"</span>
+                    </li>
+                    <li class="hot-item">
+                        <span class="hot-rank">11</span>
+                        <span>女子嫌外国贫民窟求助回国系摆拍</span>
+                    </li>
+                    <li class="hot-item">
+                        <span class="hot-rank">12</span>
+                        <span>警方通报"女子遭前夫殴打致死"</span>
+                    </li>
+                    <li class="hot-item">
+                        <span class="hot-rank">13</span>
+                        <span>微软：红海海底光缆"被切断"</span>
+                    </li>
+                    <li class="hot-item">
+                        <span class="hot-rank">14</span>
+                        <span>美国开出近18亿美元彩票头奖</span>
+                    </li>
+                    <li class="hot-item">
+                        <span class="hot-rank">15</span>
+                        <span>小米回应交付"测试车"给用户</span>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // 返回顶部
+        document.querySelector('.back-to-top')?.addEventListener('click', () => {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+
+        // 筛选栏交互
+        document.querySelectorAll('.filter-item').forEach(item => {
+            item.addEventListener('click', function() {
+                document.querySelectorAll('.filter-item').forEach(i => i.classList.remove('active'));
+                this.classList.add('active');
+            });
+        });
+
+        // 热搜榜切换
+        document.querySelectorAll('.hot-tab').forEach(tab => {
+            tab.addEventListener('click', function() {
+                document.querySelectorAll('.hot-tab').forEach(t => t.classList.remove('active'));
+                this.classList.add('active');
+            });
+        });
+    </script>
+</body>
+</html>
+```

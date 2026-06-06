@@ -1,0 +1,162 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>visualwebbench / webqa_208 预览</title>
+    <style>
+      :root {
+        color-scheme: light;
+        --bg: #f4f1ea;
+        --panel: #ffffff;
+        --ink: #1f242b;
+        --muted: #66707c;
+        --line: #d7d2c8;
+        --accent: #0f766e;
+        --accent-2: #b45309;
+        font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      }
+      * { box-sizing: border-box; }
+      body {
+        margin: 0;
+        background: var(--bg);
+        color: var(--ink);
+      }
+      main {
+        width: 1280px;
+        min-height: 900px;
+        padding: 26px;
+      }
+      header {
+        display: flex;
+        justify-content: space-between;
+        gap: 20px;
+        align-items: flex-end;
+        padding-bottom: 16px;
+        border-bottom: 1px solid var(--line);
+        margin-bottom: 18px;
+      }
+      h1 {
+        margin: 0;
+        font-size: 28px;
+        line-height: 1.15;
+        letter-spacing: 0;
+      }
+      .meta {
+        margin: 6px 0 0;
+        color: var(--muted);
+        font-size: 13px;
+      }
+      .badge {
+        border: 1px solid var(--line);
+        border-radius: 999px;
+        padding: 7px 10px;
+        color: var(--accent);
+        font-weight: 700;
+        font-size: 12px;
+        white-space: nowrap;
+      }
+      .grid {
+        display: grid;
+        grid-template-columns: 0.9fr 1.1fr;
+        gap: 18px;
+        align-items: start;
+      }
+      section {
+        min-width: 0;
+        background: var(--panel);
+        border: 1px solid var(--line);
+        border-radius: 8px;
+        overflow: hidden;
+      }
+      h2 {
+        margin: 0;
+        padding: 12px 14px;
+        border-bottom: 1px solid var(--line);
+        font-size: 14px;
+        line-height: 1.2;
+        color: var(--accent-2);
+        background: #fbfaf7;
+      }
+      .body {
+        padding: 14px;
+      }
+      figure {
+        margin: 0 0 12px;
+      }
+      figcaption {
+        margin-bottom: 6px;
+        color: var(--muted);
+        font-size: 12px;
+      }
+      img {
+        width: 100%;
+        max-height: 520px;
+        object-fit: contain;
+        border: 1px solid var(--line);
+        background: white;
+      }
+      pre {
+        margin: 0;
+        white-space: pre-wrap;
+        overflow-wrap: anywhere;
+        font: 12px/1.55 "Cascadia Mono", Consolas, "SFMono-Regular", monospace;
+      }
+      .two-stack {
+        display: grid;
+        gap: 18px;
+      }
+      .empty {
+        margin: 0;
+        color: var(--muted);
+      }
+    </style>
+  </head>
+  <body>
+    <main>
+      <header>
+        <div>
+          <h1>visualwebbench / webqa_208</h1>
+          <p class="meta">非 HTML 输出预览渲染：输入图、任务提示、metadata/reference 和模型输出放在同一张图中。</p>
+        </div>
+        <span class="badge">webqa</span>
+      </header>
+      <div class="grid">
+        <div class="two-stack">
+          <section>
+            <h2>输入图片</h2>
+            <div class="body">
+            <figure>
+              <figcaption>输入图 1 · 1280 x 1144</figcaption>
+              <img src="file:///D:/Code/frontEnd-direction/experiments/random10_bench_smoke/mimo_random10_20260604/visualwebbench/inputs/images/webqa_208_0.png" alt="input image 1" />
+            </figure>
+            </div>
+          </section>
+          <section>
+            <h2>任务提示</h2>
+            <div class="body"><pre>What is the price of the Elm 6PC dining set?
+请结合网页截图直接回答，尽量少词，不要解释。</pre></div>
+          </section>
+        </div>
+        <div class="two-stack">
+          <section>
+            <h2>模型文本输出</h2>
+            <div class="body"><pre>$999</pre></div>
+          </section>
+          <section>
+            <h2>参考信息 / Metadata</h2>
+            <div class="body"><pre>{
+  &quot;id&quot;: &quot;webqa_208&quot;,
+  &quot;task_type&quot;: &quot;webqa&quot;,
+  &quot;website&quot;: &quot;www.mybobs.com&quot;,
+  &quot;answer&quot;: [
+    &quot;$999&quot;,
+    &quot;999&quot;
+  ]
+}</pre></div>
+          </section>
+        </div>
+      </div>
+    </main>
+  </body>
+</html>

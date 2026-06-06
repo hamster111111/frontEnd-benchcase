@@ -1,0 +1,30 @@
+你会看到一张编码题相关的图。请结合图像和函数签名，补全 Python 解法。
+
+要求：
+1. 只输出一个 fenced code block，格式为 ```python ... ```。
+2. 必须实现给定的 `solution` 函数签名。
+3. 不要输出解释。
+
+函数签名：
+```python
+class Node:
+    def __init__(self, val = 0, left = None, right = None):
+        self.left = left
+        self.right = right
+        self.val = val
+
+def solution(root: Node) -> Node:
+    """
+    Transforms a binary tree according to the illustrated rule by manipulating its nodes.
+
+    Parameters:
+        root (Node): The root node of the input binary tree.
+
+    Returns:
+        Node: The root node of the transformed binary tree.
+    """
+
+```
+
+任务类型：Direct Calculation
+能力标签：{"Common Sense": null, "Data Structures": ["Binary Tree"], "Dynamic Patterns": null, "Geometric Objects": null, "Mathematical Operations": ["Basic Arithmetic", "Conditional Branching"], "Spatial Transformations": null, "Topological Relations": ["Connection", "Connectivity"]}

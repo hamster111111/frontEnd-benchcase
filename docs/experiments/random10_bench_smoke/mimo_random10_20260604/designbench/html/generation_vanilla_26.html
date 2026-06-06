@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>UNC Global Affairs Newsletter</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+            background-color: #7da9cc;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+            padding-bottom: 40px;
+        }
+
+        h1 {
+            color: white;
+            font-size: 32px;
+            font-weight: bold;
+            margin-top: 40px;
+            margin-bottom: 30px;
+            text-align: center;
+        }
+
+        .form-container {
+            background-color: white;
+            width: 580px;
+            padding: 40px 40px 50px 40px;
+            border-radius: 4px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+        }
+
+        .intro-text {
+            font-size: 14px;
+            color: #333;
+            margin-bottom: 15px;
+        }
+
+        .input-group {
+            display: flex;
+            flex-direction: column;
+            margin-bottom: 20px;
+        }
+
+        .input-group.hidden-top {
+            margin-bottom: 0;
+        }
+
+        .input-group label {
+            font-size: 16px;
+            font-weight: bold;
+            margin-bottom: 8px;
+            color: #222;
+        }
+
+        .input-group input[type="text"],
+        .input-group input[type="email"] {
+            width: 100%;
+            height: 35px;
+            padding: 5px;
+            border: 1px solid #b5b5b5;
+            border-radius: 1px;
+            box-sizing: border-box;
+        }
+
+        .checkbox-group {
+            margin-top: 15px;
+            margin-bottom: 40px;
+        }
+
+        .checkbox-group .group-title {
+            font-size: 16px;
+            font-weight: bold;
+            margin-bottom: 15px;
+            color: #222;
+        }
+
+        .checkbox-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+
+        .checkbox-item input[type="checkbox"] {
+            width: 110px;
+            height: 25px;
+            border: 1px solid #b5b5b5;
+            background-color: white;
+            margin: 0 10px 0 0;
+            appearance: none;
+            border-radius: 1px;
+        }
+
+        .checkbox-item label {
+            font-size: 14px;
+            font-weight: normal;
+            color: #333;
+        }
+
+        .submit-section {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin-top: auto;
+        }
+
+        .submit-btn {
+            width: 100%;
+            height: 45px;
+            background-color: white;
+            border: 1px solid #b5b5b5;
+            cursor: pointer;
+            font-size: 16px;
+        }
+    </style>
+</head>
+<body>
+    <h1>UNC Global Affairs Newsletter</h1>
+
+    <div class="form-container">
+        <p class="intro-text">Sign up for global news and events from the University of North Carolina at Chapel Hill.</p>
+        
+        <div class="input-group hidden-top">
+            <input type="text" aria-label="Hidden field 1">
+        </div>
+        
+        <div class="input-group hidden-top">
+            <input type="text" aria-label="Hidden field 2">
+        </div>
+
+        <div class="input-group">
+            <label>Email Address</label>
+            <input type="email">
+        </div>
+
+        <div class="input-group">
+            <label>First Name</label>
+            <input type="text">
+        </div>
+
+        <div class="input-group">
+            <label>Last Name</label>
+            <input type="text">
+        </div>
+
+        <div class="input-group">
+            <label>Title/Role</label>
+            <input type="text">
+        </div>
+
+        <div class="input-group">
+            <label>Dept, School or Company</label>
+            <input type="text">
+        </div>
+
+        <div class="checkbox-group">
+            <div class="group-title">UNC-Chapel Hill Affiliation</div>
+            
+            <div class="checkbox-item">
+                <input type="checkbox" id="aff1">
+                <label for="aff1">UNC Undergraduate Student</label>
+            </div>
+            <div class="checkbox-item">
+                <input type="checkbox" id="aff2">
+                <label for="aff2">UNC Graduate Student</label>
+            </div>
+            <div class="checkbox-item">
+                <input type="checkbox" id="aff3">
+                <label for="aff3">UNC Staff</label>
+            </div>
+            <div class="checkbox-item">
+                <input type="checkbox" id="aff4">
+                <label for="aff4">UNC Faculty</label>
+            </div>
+            <div class="checkbox-item">
+                <input type="checkbox" id="aff5">
+                <label for="aff5">UNC Alumni</label>
+            </div>
+            <div class="checkbox-item">
+                <input type="checkbox" id="aff6">
+                <label for="aff6">Community Member</label>
+            </div>
+            <div class="checkbox-item">
+                <input type="checkbox" id="aff7">
+                <label for="aff7">Other</label>
+            </div>
+        </div>
+
+        <div class="submit-section">
+            <button type="button" class="submit-btn"></button>
+            <button type="button" class="submit-btn"></button>
+        </div>
+    </div>
+</body>
+</html>

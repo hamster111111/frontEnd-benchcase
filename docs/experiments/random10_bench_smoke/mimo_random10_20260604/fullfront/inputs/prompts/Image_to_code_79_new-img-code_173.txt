@@ -1,0 +1,18 @@
+你是一个严谨的前端工程师。请根据输入材料生成一个完整、可直接运行的单文件 HTML。
+
+要求：
+1. 输出必须包含 <!DOCTYPE html>、<html>、<head>、<style>、<body>。
+2. CSS 写在 <style> 中，不要依赖外部 CSS、JS、图片、字体或网络资源。
+3. 尽可能还原截图或描述中的布局、颜色、字号、间距、组件层级和视觉密度。
+4. 如果截图中有真实图片、头像、图标或复杂素材，无法复用原图时用 CSS 色块/渐变/简化图形占位，但尺寸和位置要对齐。
+5. 如果任务涉及交互，请在单文件内写必要的 JavaScript。
+6. 只输出一个 fenced code block，格式为 ```html ... ```，不要输出额外解释。
+
+Benchmark：fullfront
+任务类型：Image_to_code
+原始任务提示：
+
+The user will provide you with a screenshot of a webpage. Please generate the corresponding HTML, CSS, and JavaScript code based on the image to fully replicate the webpage.
+If any images are required in the page code, you must classify each image into one of the following categories: People, Animal, Food, Plant, Landscape, Icon, Logo, Architecture, Technology, Transportation, Map, Texture, Art, Movie, Other. The URL for each image is in the format: https://raw.githubusercontent.com/Mikivishy/imgs/main/folder1/{category}.jpg. For example, if you want to use an image from the Animal category, the image URL would be: https://raw.githubusercontent.com/Mikivishy/imgs/main/folder1/Animal.jpg. Since the width and height of each image in the URLs are unknown, you need to set the image sizes manually in the HTML code to ensure that the rendered result matches the layout requirements of the webpage image.
+Please place the HTML, CSS, and JavaScript code in a single file, and your response must be a code that starts with `<!DOCTYPE html>` and ends with `</html>`, without any other content.
+

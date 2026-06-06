@@ -1,0 +1,628 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Firefox Add-ons</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            background-color: #f9f9fb;
+            color: #333;
+        }
+
+        .banner {
+            background-color: #ffeb3b;
+            padding: 12px 20px;
+            text-align: center;
+            font-size: 14px;
+            position: relative;
+        }
+
+        .banner a {
+            color: #0060df;
+            text-decoration: underline;
+        }
+
+        .banner .close-btn {
+            position: absolute;
+            right: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: none;
+            border: none;
+            font-size: 20px;
+            cursor: pointer;
+            color: #333;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .intro-section {
+            display: flex;
+            gap: 30px;
+            margin-bottom: 30px;
+        }
+
+        .intro-left {
+            flex: 1;
+        }
+
+        .intro-left p {
+            font-size: 14px;
+            line-height: 1.5;
+            margin-bottom: 15px;
+            color: #333;
+        }
+
+        .intro-left a {
+            color: #0060df;
+            text-decoration: none;
+            font-size: 14px;
+        }
+
+        .intro-left a:hover {
+            text-decoration: underline;
+        }
+
+        .intro-right {
+            display: flex;
+            gap: 15px;
+            flex: 2;
+        }
+
+        .category-card {
+            background: white;
+            border: 1px solid #e0e0e0;
+            border-radius: 8px;
+            padding: 20px;
+            text-align: center;
+            flex: 1;
+        }
+
+        .category-card h3 {
+            font-size: 14px;
+            font-weight: 600;
+            margin-bottom: 10px;
+            color: #15141a;
+        }
+
+        .category-card a {
+            color: #0060df;
+            text-decoration: none;
+            font-size: 13px;
+        }
+
+        .category-card a:hover {
+            text-decoration: underline;
+        }
+
+        .section {
+            background: white;
+            border: 1px solid #e0e0e0;
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .section-header h2 {
+            font-size: 16px;
+            font-weight: 600;
+            color: #15141a;
+        }
+
+        .section-header a {
+            color: #0060df;
+            text-decoration: none;
+            font-size: 13px;
+        }
+
+        .section-header a:hover {
+            text-decoration: underline;
+        }
+
+        .extensions-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 20px;
+        }
+
+        .extension-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            padding: 10px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background-color 0.2s;
+        }
+
+        .extension-item:hover {
+            background-color: #f5f5f5;
+        }
+
+        .extension-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 8px;
+            flex-shrink: 0;
+        }
+
+        .extension-info {
+            flex: 1;
+            min-width: 0;
+        }
+
+        .extension-name {
+            font-size: 14px;
+            font-weight: 500;
+            color: #15141a;
+            margin-bottom: 4px;
+            transition: color 0.2s;
+        }
+
+        .extension-item:hover .extension-name {
+            color: #0060df;
+        }
+
+        .extension-users {
+            font-size: 12px;
+            color: #666;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .extension-rating {
+            font-size: 12px;
+            color: #666;
+            display: none;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .extension-item:hover .extension-users {
+            display: none;
+        }
+
+        .extension-item:hover .extension-rating {
+            display: flex;
+        }
+
+        .stars {
+            display: flex;
+            gap: 1px;
+        }
+
+        .star {
+            color: #ccc;
+            font-size: 14px;
+        }
+
+        .star.filled {
+            color: #f5a623;
+        }
+
+        .user-icon {
+            width: 12px;
+            height: 12px;
+        }
+
+        .themes-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+        }
+
+        .theme-item {
+            cursor: pointer;
+        }
+
+        .theme-preview {
+            width: 100%;
+            height: 80px;
+            border-radius: 8px;
+            margin-bottom: 10px;
+            overflow: hidden;
+        }
+
+        .theme-info h4 {
+            font-size: 14px;
+            font-weight: 500;
+            color: #15141a;
+            margin-bottom: 4px;
+        }
+
+        .theme-info p {
+            font-size: 12px;
+            color: #666;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .theme-1 {
+            background: linear-gradient(135deg, #1a237e 0%, #0d47a1 50%, #01579b 100%);
+        }
+
+        .theme-2 {
+            background: linear-gradient(180deg, #212121 0%, #424242 100%);
+        }
+
+        .theme-3 {
+            background: linear-gradient(180deg, #1a1a1a 0%, #2d2d2d 100%);
+        }
+
+        .theme-toolbar {
+            background: #333;
+            height: 8px;
+            border-radius: 4px;
+            margin: 8px 10px;
+        }
+
+        .tineye-icon {
+            background: linear-gradient(135deg, #f5a623, #d4890f);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 16px;
+        }
+
+        .turbo-icon {
+            background: linear-gradient(135deg, #607d8b, #455a64);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 16px;
+        }
+
+        .feedbro-icon {
+            background: linear-gradient(135deg, #f57c00, #e65100);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 14px;
+        }
+
+        .user-agent-icon {
+            background: linear-gradient(135deg, #78909c, #546e7a);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 14px;
+        }
+
+        .privacy-icon {
+            background: linear-gradient(135deg, #e91e63, #c2185b);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 16px;
+        }
+
+        .enhancer-icon {
+            background: linear-gradient(135deg, #f44336, #d32f2f);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 12px;
+        }
+
+        .grammar-icon {
+            background: linear-gradient(135deg, #2196f3, #1565c0);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 14px;
+            font-weight: bold;
+        }
+
+        .search-icon {
+            background: linear-gradient(135deg, #4caf50, #388e3c);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 14px;
+        }
+    </style>
+</head>
+<body>
+    <div class="banner">
+        To use these add-ons, you'll need to <a href="#">download Firefox</a>.
+        <button class="close-btn">×</button>
+    </div>
+
+    <div class="container">
+        <div class="intro-section">
+            <div class="intro-left">
+                <p>They add features to Firefox that make browsing faster, safer, or just plain fun.</p>
+                <a href="#">See all extensions</a>
+            </div>
+            <div class="intro-right">
+                <div class="category-card">
+                    <h3>Privacy & Security extensions</h3>
+                    <a href="#">See staff picks</a>
+                </div>
+                <div class="category-card">
+                    <h3>Tab managers</h3>
+                    <a href="#">See staff picks</a>
+                </div>
+                <div class="category-card">
+                    <h3>Spotlight: Adaptive Tab Bar Colour</h3>
+                    <a href="#">Learn more</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="section">
+            <div class="section-header">
+                <h2>Recommended extensions</h2>
+                <a href="#">See more recommended extensions</a>
+            </div>
+            <div class="extensions-grid">
+                <div class="extension-item">
+                    <div class="extension-icon tineye-icon">🔍</div>
+                    <div class="extension-info">
+                        <div class="extension-name">TinEye Reverse Image Search</div>
+                        <div class="extension-users">
+                            <svg class="user-icon" viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/>
+                            </svg>
+                            60,092 users
+                        </div>
+                        <div class="extension-rating">
+                            <div class="stars">
+                                <span class="star filled">★</span>
+                                <span class="star filled">★</span>
+                                <span class="star filled">★</span>
+                                <span class="star filled">★</span>
+                                <span class="star">★</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="extension-item">
+                    <div class="extension-icon turbo-icon">↓</div>
+                    <div class="extension-info">
+                        <div class="extension-name">Turbo Download Manager</div>
+                        <div class="extension-users">
+                            <svg class="user-icon" viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/>
+                            </svg>
+                            62,839 users
+                        </div>
+                        <div class="extension-rating">
+                            <div class="stars">
+                                <span class="star filled">★</span>
+                                <span class="star filled">★</span>
+                                <span class="star filled">★</span>
+                                <span class="star filled">★</span>
+                                <span class="star">★</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="extension-item">
+                    <div class="extension-icon feedbro-icon">📡</div>
+                    <div class="extension-info">
+                        <div class="extension-name">Feedbro - RSS Feed Reader</div>
+                        <div class="extension-users">
+                            <svg class="user-icon" viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/>
+                            </svg>
+                            47,590 users
+                        </div>
+                        <div class="extension-rating">
+                            <div class="stars">
+                                <span class="star filled">★</span>
+                                <span class="star filled">★</span>
+                                <span class="star filled">★</span>
+                                <span class="star filled">★</span>
+                                <span class="star">★</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="extension-item">
+                    <div class="extension-icon user-agent-icon">🦊</div>
+                    <div class="extension-info">
+                        <div class="extension-name">User-Agent Switcher and Manager</div>
+                        <div class="extension-users">
+                            <svg class="user-icon" viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/>
+                            </svg>
+                            99,237 users
+                        </div>
+                        <div class="extension-rating">
+                            <div class="stars">
+                                <span class="star filled">★</span>
+                                <span class="star filled">★</span>
+                                <span class="star filled">★</span>
+                                <span class="star filled">★</span>
+                                <span class="star">★</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="section">
+            <div class="section-header">
+                <h2>Trending themes</h2>
+                <a href="#">See more trending themes</a>
+            </div>
+            <div class="themes-grid">
+                <div class="theme-item">
+                    <div class="theme-preview theme-1"></div>
+                    <div class="theme-info">
+                        <h4>C.E.Coral Reef 3</h4>
+                        <p>
+                            <svg class="user-icon" viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/>
+                            </svg>
+                            341 users
+                        </p>
+                    </div>
+                </div>
+                <div class="theme-item">
+                    <div class="theme-preview theme-2">
+                        <div class="theme-toolbar"></div>
+                    </div>
+                    <div class="theme-info">
+                        <h4>Dark Carbon 1717 v.2</h4>
+                        <p>
+                            <svg class="user-icon" viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/>
+                            </svg>
+                            256 users
+                        </p>
+                    </div>
+                </div>
+                <div class="theme-item">
+                    <div class="theme-preview theme-3">
+                        <div class="theme-toolbar"></div>
+                    </div>
+                    <div class="theme-info">
+                        <h4>Dark Metall 1717</h4>
+                        <p>
+                            <svg class="user-icon" viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/>
+                            </svg>
+                            1,757 users
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="section">
+            <div class="section-header">
+                <h2>Extension starter pack</h2>
+                <a href="#">See more starter extension staff picks</a>
+            </div>
+            <div class="extensions-grid">
+                <div class="extension-item">
+                    <div class="extension-icon privacy-icon">🛡️</div>
+                    <div class="extension-info">
+                        <div class="extension-name">Privacy Badger</div>
+                        <div class="extension-users">
+                            <svg class="user-icon" viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/>
+                            </svg>
+                            1,728,607 users
+                        </div>
+                        <div class="extension-rating">
+                            <div class="stars">
+                                <span class="star filled">★</span>
+                                <span class="star filled">★</span>
+                                <span class="star filled">★</span>
+                                <span class="star filled">★</span>
+                                <span class="star">★</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="extension-item">
+                    <div class="extension-icon enhancer-icon">▶️</div>
+                    <div class="extension-info">
+                        <div class="extension-name">Enhancer for YouTube™</div>
+                        <div class="extension-users">
+                            <svg class="user-icon" viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/>
+                            </svg>
+                            664,061 users
+                        </div>
+                        <div class="extension-rating">
+                            <div class="stars">
+                                <span class="star filled">★</span>
+                                <span class="star filled">★</span>
+                                <span class="star filled">★</span>
+                                <span class="star filled">★</span>
+                                <span class="star">★</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="extension-item">
+                    <div class="extension-icon grammar-icon">LT</div>
+                    <div class="extension-info">
+                        <div class="extension-name">Grammar and Spell Checker - LanguageTool</div>
+                        <div class="extension-users">
+                            <svg class="user-icon" viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/>
+                            </svg>
+                            305,995 users
+                        </div>
+                        <div class="extension-rating">
+                            <div class="stars">
+                                <span class="star filled">★</span>
+                                <span class="star filled">★</span>
+                                <span class="star filled">★</span>
+                                <span class="star filled">★</span>
+                                <span class="star">★</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="extension-item">
+                    <div class="extension-icon search-icon">📷</div>
+                    <div class="extension-info">
+                        <div class="extension-name">Search by Image</div>
+                        <div class="extension-users">
+                            <svg class="user-icon" viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/>
+                            </svg>
+                            386,491 users
+                        </div>
+                        <div class="extension-rating">
+                            <div class="stars">
+                                <span class="star filled">★</span>
+                                <span class="star filled">★</span>
+                                <span class="star filled">★</span>
+                                <span class="star filled">★</span>
+                                <span class="star">★</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.querySelector('.close-btn').addEventListener('click', function() {
+            document.querySelector('.banner').style.display = 'none';
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,22 @@
+{
+  "run_dir": "experiments\\random10_bench_smoke\\mimo_random10_20260604",
+  "judge_dir": "experiments\\random10_bench_smoke\\mimo_random10_20260604\\vlm_judge\\qwen3-vl-plus_visual_judge_20260604",
+  "provider": "qwen",
+  "model": "qwen3-vl-plus",
+  "bypass_proxy": true,
+  "benches": [
+    "ui2code_real",
+    "uipolish_real",
+    "uipolish_synthetic",
+    "web2code",
+    "dcgen_original",
+    "interaction2code",
+    "designbench",
+    "screencoder_screenbench",
+    "vision2web"
+  ],
+  "max_tokens": null,
+  "dry_run": false,
+  "item_count": 90,
+  "started_at": "2026-06-04T21:27:08"
+}

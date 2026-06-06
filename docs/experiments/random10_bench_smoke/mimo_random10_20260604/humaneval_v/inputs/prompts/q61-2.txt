@@ -1,0 +1,27 @@
+你会看到一张编码题相关的图。请结合图像和函数签名，补全 Python 解法。
+
+要求：
+1. 只输出一个 fenced code block，格式为 ```python ... ```。
+2. 必须实现给定的 `solution` 函数签名。
+3. 不要输出解释。
+
+函数签名：
+```python
+def solution(m: int, n: int, k: int) -> list[int, int]:        
+    """
+    Given an m×n matrix, determine the coordinates after k steps, starting from position (1,1) (top-left corner).
+    Each step can only move to an adjacent cell following a specific movement pattern.
+
+    Parameters:
+        m (int): Number of rows in the matrix.
+        n (int): Number of columns in the matrix.
+        k (int): Number of steps to move.
+
+    Returns:
+        list[int, int]: Final coordinates [row, column] after k steps.
+    """
+
+```
+
+任务类型：Transformation
+能力标签：{"Common Sense": null, "Data Structures": ["Matrix", "Path"], "Dynamic Patterns": ["Alternation", "Zigzag"], "Geometric Objects": ["Point", "Grid", "Arrow"], "Mathematical Operations": null, "Spatial Transformations": null, "Topological Relations": ["Adjacency", "Connectivity"]}

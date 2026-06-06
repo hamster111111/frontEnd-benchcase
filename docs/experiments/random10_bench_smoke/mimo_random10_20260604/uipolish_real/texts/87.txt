@@ -1,0 +1,455 @@
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Product Listing</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+            font-size: 14px;
+            color: #333;
+            background-color: #fff;
+            line-height: 1.4;
+        }
+        
+        .container {
+            display: flex;
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 20px;
+            gap: 20px;
+        }
+        
+        /* Sidebar */
+        .sidebar {
+            width: 280px;
+            min-width: 280px;
+            flex-shrink: 0;
+        }
+        
+        .sidebar-section {
+            margin-bottom: 30px;
+        }
+        
+        .sidebar-section h3 {
+            font-size: 18px;
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 10px;
+        }
+        
+        .sidebar-section p {
+            font-size: 14px;
+            color: #666;
+        }
+        
+        /* Product Grid */
+        .product-grid {
+            flex: 1;
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 20px;
+        }
+        
+        .product-card {
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .product-image {
+            width: 100%;
+            aspect-ratio: 1;
+            background-color: #f5f5f5;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 12px;
+            overflow: hidden;
+        }
+        
+        .product-image img {
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: contain;
+        }
+        
+        /* Product image placeholders with gradients */
+        .product-image.placeholder-1 {
+            background: radial-gradient(circle at 30% 30%, #e8d4c8 0%, #d4a574 50%, #c9956c 100%);
+            position: relative;
+        }
+        
+        .product-image.placeholder-1::after {
+            content: '';
+            width: 70%;
+            height: 70%;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #e8d4c8 0%, #c9956c 100%);
+            border: 2px solid #d4a574;
+        }
+        
+        .product-image.placeholder-2 {
+            background: linear-gradient(180deg, #ffffff 0%, #f0f0f0 20%, #e8e8e8 100%);
+            position: relative;
+        }
+        
+        .product-image.placeholder-2::after {
+            content: '';
+            width: 30%;
+            height: 60%;
+            background: linear-gradient(180deg, #d0d0d0 0%, #f0f0f0 50%, #d0d0d0 100%);
+            border-radius: 4px;
+        }
+        
+        .product-image.placeholder-3 {
+            background: linear-gradient(180deg, #fff 0%, #fce4ec 50%, #f8bbd9 100%);
+            position: relative;
+        }
+        
+        .product-image.placeholder-3::after {
+            content: '';
+            width: 15%;
+            height: 70%;
+            background: linear-gradient(180deg, #f48fb1 0%, #ec407a 100%);
+            border-radius: 8px;
+        }
+        
+        .product-image.placeholder-4 {
+            background: linear-gradient(180deg, #f5f5f5 0%, #e8e8e8 100%);
+            position: relative;
+            display: flex;
+            gap: 4px;
+        }
+        
+        .product-image.placeholder-4::after {
+            content: '';
+            width: 50%;
+            height: 70%;
+            background: linear-gradient(135deg, #7986cb 25%, #7c4dff 25%, #7c4dff 50%, #b39ddb 50%, #b39ddb 75%, #9575cd 75%);
+            background-size: 10px 10px;
+            border-radius: 50%;
+        }
+        
+        .product-image.placeholder-5 {
+            background: linear-gradient(180deg, #fff 0%, #f5f5f5 100%);
+            position: relative;
+        }
+        
+        .product-image.placeholder-5::after {
+            content: '';
+            width: 60%;
+            height: 60%;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #c0c0c0 0%, #a0a0a0 50%, #d0d0d0 100%);
+            border: 2px solid #b0b0b0;
+        }
+        
+        .product-image.placeholder-6 {
+            background: linear-gradient(180deg, #e3f2fd 0%, #bbdefb 50%, #90caf9 100%);
+            position: relative;
+        }
+        
+        .product-image.placeholder-6::after {
+            content: '';
+            width: 40%;
+            height: 60%;
+            background: linear-gradient(180deg, #80cbc4 0%, #4db6ac 50%, #26a69a 100%);
+            border-radius: 4px;
+        }
+        
+        .product-image.placeholder-7 {
+            background: linear-gradient(180deg, #fff 0%, #f5f5f5 100%);
+            position: relative;
+        }
+        
+        .product-image.placeholder-7::after {
+            content: '';
+            width: 40%;
+            height: 65%;
+            background: linear-gradient(180deg, #e0e0e0 0%, #f5f5f5 50%, #e0e0e0 100%);
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        
+        .product-image.placeholder-8 {
+            background: linear-gradient(180deg, #fff 0%, #f5f5f5 100%);
+            position: relative;
+        }
+        
+        .product-image.placeholder-8::after {
+            content: '';
+            width: 25%;
+            height: 70%;
+            background: linear-gradient(180deg, #1565c0 0%, #42a5f5 100%);
+            border-radius: 8px 8px 4px 4px;
+        }
+        
+        .product-title {
+            font-size: 13px;
+            color: #333;
+            line-height: 1.4;
+            margin-bottom: 8px;
+            display: -webkit-box;
+            -webkit-line-clamp: 3;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+            min-height: 55px;
+        }
+        
+        .product-rating {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            margin-bottom: 6px;
+        }
+        
+        .stars {
+            display: flex;
+            gap: 1px;
+        }
+        
+        .star {
+            color: #ffc107;
+            font-size: 14px;
+        }
+        
+        .star.half {
+            position: relative;
+            color: #ddd;
+        }
+        
+        .star.half::before {
+            content: '★';
+            position: absolute;
+            color: #ffc107;
+            overflow: hidden;
+            width: 50%;
+        }
+        
+        .star.empty {
+            color: #ddd;
+        }
+        
+        .review-count {
+            font-size: 12px;
+            color: #1976d2;
+            text-decoration: underline;
+            cursor: pointer;
+        }
+        
+        .product-price {
+            font-size: 16px;
+            font-weight: 700;
+            color: #333;
+            margin-bottom: 12px;
+        }
+        
+        .product-actions {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-top: auto;
+        }
+        
+        .add-to-cart-btn {
+            background-color: #0d6efd;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            font-size: 14px;
+            cursor: pointer;
+            border-radius: 4px;
+            font-weight: 500;
+        }
+        
+        .add-to-cart-btn:hover {
+            background-color: #0b5ed7;
+        }
+        
+        .action-icon {
+            width: 32px;
+            height: 32px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #666;
+            cursor: pointer;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            background: #fff;
+            font-size: 16px;
+        }
+        
+        .action-icon:hover {
+            background-color: #f5f5f5;
+        }
+        
+        /* Heart icon */
+        .heart-icon::before {
+            content: '♡';
+        }
+        
+        /* Compare icon */
+        .compare-icon::before {
+            content: '⊞';
+        }
+        
+        .rating-count {
+            font-size: 12px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <div class="sidebar-section">
+                <h3>Compare Products</h3>
+                <p>You have no items to compare.</p>
+            </div>
+            <div class="sidebar-section">
+                <h3>My Wish List</h3>
+                <p>You have no items in your wish list.</p>
+            </div>
+        </aside>
+        
+        <!-- Product Grid -->
+        <main class="product-grid">
+            <!-- Product 1 -->
+            <div class="product-card">
+                <div class="product-image placeholder-1"></div>
+                <p class="product-title">Mom Birthday Gifts for Mom, Useful Gifts for Mom from Daughter - Rose Gold Compact Mirror, Meaningful Gift Ideas Presents for Mom</p>
+                <div class="product-rating">
+                    <div class="stars">
+                        <span class="star">★</span>
+                        <span class="star">★</span>
+                        <span class="star">★</span>
+                        <span class="star">★</span>
+                        <span class="star">★</span>
+                    </div>
+                    <span class="review-count rating-count">4 Reviews</span>
+                </div>
+                <p class="product-price">$16.99</p>
+                <div class="product-actions">
+                    <button class="add-to-cart-btn">Add to Cart</button>
+                    <span class="action-icon heart-icon"></span>
+                    <span class="action-icon compare-icon"></span>
+                </div>
+            </div>
+            
+            <!-- Product 2 -->
+            <div class="product-card">
+                <div class="product-image placeholder-2"></div>
+                <p class="product-title">Bonwete Empty Spray Bottle Refillable Container for Essential Oils Cleaning Products 150ml</p>
+                <div class="product-price">$6.99</div>
+                <div class="product-actions">
+                    <button class="add-to-cart-btn">Add to Cart</button>
+                    <span class="action-icon heart-icon"></span>
+                    <span class="action-icon compare-icon"></span>
+                </div>
+            </div>
+            
+            <!-- Product 3 -->
+            <div class="product-card">
+                <div class="product-image placeholder-3"></div>
+                <p class="product-title">2 Pieces Lash Shampoo Brushes LVOUIF Lash Cleanser Brush Peel Off Blackhead Brush Remover Tool Nose Pore Deep Cleaning Brush Facial Cleansing Brush Eyelash Extensions Brush Pink</p>
+                <p class="product-price">$4.99</p>
+                <div class="product-actions">
+                    <button class="add-to-cart-btn">Add to Cart</button>
+                    <span class="action-icon heart-icon"></span>
+                    <span class="action-icon compare-icon"></span>
+                </div>
+            </div>
+            
+            <!-- Product 4 -->
+            <div class="product-card">
+                <div class="product-image placeholder-4"></div>
+                <p class="product-title">Constore 5 PCS 10ML Gemstone Roller Bottles, Refillable Roll On Bottles with Bamboo Lids Healing Crystal Chips Inside for Perfumes Aromatherapy Oils</p>
+                <div class="product-rating">
+                    <div class="stars">
+                        <span class="star">★</span>
+                        <span class="star">★</span>
+                        <span class="star">★</span>
+                        <span class="star">★</span>
+                        <span class="star half">★</span>
+                    </div>
+                    <span class="review-count rating-count">12 Reviews</span>
+                </div>
+                <p class="product-price">$11.99</p>
+                <div class="product-actions">
+                    <button class="add-to-cart-btn">Add to Cart</button>
+                    <span class="action-icon heart-icon"></span>
+                    <span class="action-icon compare-icon"></span>
+                </div>
+            </div>
+            
+            <!-- Product 5 -->
+            <div class="product-card">
+                <div class="product-image placeholder-5"></div>
+                <p class="product-title">3 pc Silver Chrome Girls Vanity Set Comb Brush Mirror.</p>
+                <p class="product-price">$39.87</p>
+                <div class="product-actions">
+                    <button class="add-to-cart-btn">Add to Cart</button>
+                    <span class="action-icon heart-icon"></span>
+                    <span class="action-icon compare-icon"></span>
+                </div>
+            </div>
+            
+            <!-- Product 6 -->
+            <div class="product-card">
+                <div class="product-image placeholder-6"></div>
+                <p class="product-title">Empty Plastic Spray Bottles, AIMITE 3 Pieces Adjustable Trigger Refillable Sprayer for Hair, Cleaning, Gardening and Multi Purpose Use Durable</p>
+                <div class="product-rating">
+                    <div class="stars">
+                        <span class="star">★</span>
+                        <span class="star">★</span>
+                        <span class="star empty">★</span>
+                        <span class="star empty">★</span>
+                        <span class="star empty">★</span>
+                    </div>
+                    <span class="review-count rating-count">2 Reviews</span>
+                </div>
+                <p class="product-price">$10.99</p>
+                <div class="product-actions">
+                    <button class="add-to-cart-btn">Add to Cart</button>
+                    <span class="action-icon heart-icon"></span>
+                    <span class="action-icon compare-icon"></span>
+                </div>
+            </div>
+            
+            <!-- Product 7 -->
+            <div class="product-card">
+                <div class="product-image placeholder-7"></div>
+                <p class="product-title">PANA Brand 7oz. Professional Push Down Liquid Pumping Empty Bottle Dispenser (Clear, NO Wording!!)</p>
+                <p class="product-price">$6.99</p>
+                <div class="product-actions">
+                    <button class="add-to-cart-btn">Add to Cart</button>
+                    <span class="action-icon heart-icon"></span>
+                    <span class="action-icon compare-icon"></span>
+                </div>
+            </div>
+            
+            <!-- Product 8 -->
+            <div class="product-card">
+                <div class="product-image placeholder-8"></div>
+                <p class="product-title">Bio-Therapeutic bt-sonic 2.0 microsonic facial cleansing brush</p>
+                <p class="product-price">$68.00</p>
+                <div class="product-actions">
+                    <button class="add-to-cart-btn">Add to Cart</button>
+                    <span class="action-icon heart-icon"></span>
+                    <span class="action-icon compare-icon"></span>
+                </div>
+            </div>
+        </main>
+    </div>
+</body>
+</html>
+```

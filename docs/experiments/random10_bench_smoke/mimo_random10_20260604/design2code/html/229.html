@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Monarda fistulosa Raspberry Wine' Wine-red Bee Balm</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+            color: #333;
+            background-color: #fff;
+        }
+        .top-bar {
+            background-color: #4ade80;
+            color: #fff;
+            display: flex;
+            justify-content: flex-end;
+            align-items: center;
+            padding: 8px 20px;
+            font-size: 14px;
+        }
+        .top-bar a {
+            color: #fff;
+            text-decoration: none;
+            margin-left: 20px;
+        }
+        .top-bar .search-container {
+            display: flex;
+            align-items: center;
+            margin-right: auto;
+        }
+        .top-bar .search-icon {
+            margin-right: 5px;
+        }
+        .top-bar input[type="text"] {
+            border: 1px solid #fff;
+            background: transparent;
+            padding: 5px 10px;
+            border-radius: 4px;
+            width: 200px;
+            color: #fff;
+        }
+        .top-bar input[type="text"]::placeholder {
+            color: #fff;
+        }
+        .nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 40px;
+            border-bottom: 1px solid #eee;
+        }
+        .nav .logo {
+            font-size: 24px;
+            color: #22c55e;
+            font-weight: bold;
+        }
+        .nav ul {
+            list-style: none;
+            display: flex;
+            margin: 0;
+            padding: 0;
+        }
+        .nav ul li {
+            margin-left: 30px;
+        }
+        .nav ul li a {
+            text-decoration: none;
+            color: #333;
+            font-size: 16px;
+        }
+        .breadcrumb {
+            padding: 15px 40px;
+            font-size: 14px;
+            color: #666;
+        }
+        .breadcrumb a {
+            color: #22c55e;
+            text-decoration: none;
+        }
+        .breadcrumb .separator {
+            margin: 0 10px;
+        }
+        .product-container {
+            display: flex;
+            padding: 20px 40px;
+            gap: 40px;
+        }
+        .product-image {
+            width: 50%;
+        }
+        .product-image .image-placeholder {
+            width: 100%;
+            height: 300px;
+            background-color: blue;
+        }
+        .product-info {
+            width: 50%;
+        }
+        .product-info .vendor {
+            font-size: 18px;
+            color: #22c55e;
+            margin-bottom: 10px;
+        }
+        .product-info h1 {
+            font-size: 28px;
+            margin: 0 0 15px 0;
+            color: #000;
+        }
+        .product-info .price {
+            font-size: 24px;
+            color: #22c55e;
+            margin-bottom: 20px;
+        }
+        .product-info .size-label {
+            font-size: 14px;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+        .product-info .size-value {
+            font-size: 14px;
+            margin-bottom: 20px;
+        }
+        .product-info .add-to-cart {
+            background-color: #22c55e;
+            color: #fff;
+            border: none;
+            padding: 12px 24px;
+            font-size: 16px;
+            cursor: pointer;
+            border-radius: 4px;
+        }
+        .product-description {
+            padding: 20px 40px;
+            line-height: 1.6;
+        }
+        .product-description p {
+            margin-bottom: 20px;
+        }
+        .share-product {
+            padding: 20px 40px;
+        }
+        .share-product .share-label {
+            font-size: 14px;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+        .share-buttons {
+            display: flex;
+            gap: 10px;
+        }
+        .share-buttons a {
+            display: inline-flex;
+            align-items: center;
+            padding: 6px 12px;
+            color: #fff;
+            text-decoration: none;
+            border-radius: 4px;
+            font-size: 12px;
+        }
+        .share-buttons .facebook {
+            background-color: #3b5998;
+        }
+        .share-buttons .twitter {
+            background-color: #00aced;
+        }
+        .share-buttons .google {
+            background-color: #dd4b39;
+        }
+        .collection {
+            padding: 20px 40px;
+        }
+        .collection h2 {
+            color: #22c55e;
+            font-size: 20px;
+            margin-bottom: 20px;
+        }
+        .collection-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 20px;
+        }
+        .collection-item {
+            text-align: left;
+        }
+        .collection-item .item-image {
+            width: 100%;
+            height: 150px;
+            background-color: blue;
+            margin-bottom: 10px;
+        }
+        .collection-item .item-title {
+            font-size: 14px;
+            margin-bottom: 5px;
+        }
+        .collection-item .item-price {
+            font-size: 14px;
+            color: #666;
+        }
+        .footer {
+            background-color: #4ade80;
+            color: #fff;
+            padding: 40px;
+            margin-top: 40px;
+        }
+        .footer-content {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 30px;
+        }
+        .footer-section h3 {
+            font-size: 18px;
+            margin-bottom: 15px;
+        }
+        .footer-section ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+        .footer-section ul li {
+            margin-bottom: 10px;
+        }
+        .footer-section ul li a {
+            color: #fff;
+            text-decoration: none;
+        }
+        .newsletter input[type="email"] {
+            padding: 10px;
+            border: none;
+            width: 250px;
+            margin-bottom: 10px;
+            border-radius: 4px;
+        }
+        .newsletter button {
+            background-color: #fff;
+            color: #4ade80;
+            border: none;
+            padding: 10px 20px;
+            cursor: pointer;
+            border-radius: 4px;
+            font-weight: bold;
+        }
+        .footer-bottom {
+            text-align: center;
+            font-size: 14px;
+        }
+        .footer-bottom p {
+            margin: 5px 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="top-bar">
+        <div class="search-container">
+            <span class="search-icon">🔍</span>
+            <input type="text" placeholder="Search">
+        </div>
+        <a href="#">Log in</a>
+        <a href="#">Cart</a>
+    </div>
+    <nav class="nav">
+        <div class="logo">Earthly Pursuits, Inc.</div>
+        <ul>
+            <li><a href="#">Shop by Plant</a></li>
+            <li><a href="#">Shop by Zone</a></li>
+            <li><a href="#">Blog</a></li>
+            <li><a href="#">About Us</a></li>
+        </ul>
+    </nav>
+    <div class="breadcrumb">
+        <a href="#">Home</a>
+        <span class="separator">›</span>
+        <a href="#">Zone 5</a>
+        <span class="separator">›</span>
+        <span>Monarda fistulosa Raspberry Wine' Wine-red Bee Balm</span>
+    </div>
+    <div class="product-container">
+        <div class="product-image">
+            <div class="image-placeholder"></div>
+        </div>
+        <div class="product-info">
+            <div class="vendor">Earthly Pursuits, Inc.</div>
+            <h1>Monarda fistulosa Raspberry Wine' Wine-red Bee Balm</h1>
+            <div class="price">$ 8.00</div>
+            <div class="size-label">SIZE</div>
+            <div class="size-value">Size based on availability</div>
+            <button class="add-to-cart">Add to Cart</button>
+        </div>
+    </div>
+    <div class="product-description">
+        <p>Monarda fistulosa Raspberry Wine' | Wine-red Bee Balm | Zone: 4-9 | Size: 3-4' | Sun: Y | Shade/Partial Sun: N | Tolerance(s): | Season(s): Summer | Native: Y | Ground Cover: N</p>
+        <p>DESCRIPTION: Clear -red-wine flowers with buds resembling raspberries and very mildew resistant. Attracts Hummingbirds and Butterflies.</p>
+    </div>
+    <div class="share-product">
+        <div class="share-label">Share this Product</div>
+        <div class="share-buttons">
+            <a href="#" class="facebook">f Share</a>
+            <a href="#" class="twitter">T Tweet</a>
+            <a href="#" class="google">g +1</a>
+        </div>
+    </div>
+    <div class="collection">
+        <h2>More from this collection</h2>
+        <div class="collection-grid">
+            <div class="collection-item">
+                <div class="item-image"></div>
+                <div class="item-title">Acanthus hungaricus Bear's Breeches</div>
+                <div class="item-price">$ 14.50</div>
+            </div>
+            <div class="collection-item">
+                <div class="item-image"></div>
+                <div class="item-title">Achillea clypeolata Coronation Gold' Yarrow</div>
+                <div class="item-price">$ 8.50</div>
+            </div>
+            <div class="collection-item">
+                <div class="item-image"></div>
+                <div class="item-title">Achillea millefolium Feuerland' Yarrow</div>
+                <div class="item-price">$ 8.50</div>
+            </div>
+            <div class="collection-item">
+                <div class="item-image"></div>
+                <div class="item-title">Achillea millefolium Moonshine' Yarrow</div>
+                <div class="item-price">$ 9.50</div>
+            </div>
+        </div>
+    </div>
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-section quick-links">
+                <h3>Quick Links</h3>
+                <ul>
+                    <li><a href="#">Search</a></li>
+                    <li><a href="#">About Us</a></li>
+                </ul>
+            </div>
+            <div class="footer-section follow-us">
+                <h3>Follow Us</h3>
+                <ul>
+                    <li><a href="#">f</a></li>
+                </ul>
+            </div>
+            <div class="footer-section newsletter">
+                <h3>Newsletter</h3>
+                <p>Sign up for the latest news, offers and styles</p>
+                <input type="email" placeholder="Your email">
+                <button>Subscribe</button>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>Copyright © 2023, Earthly Pursuits, Inc. .</p>
+            <p>Tel: [PHONE REDACTED]</p>
+            <p>A c D</p>
+        </div>
+    </footer>
+</body>
+</html>

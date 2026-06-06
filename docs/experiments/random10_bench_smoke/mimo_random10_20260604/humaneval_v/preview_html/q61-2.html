@@ -1,0 +1,215 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>humaneval_v / q61-2 预览</title>
+    <style>
+      :root {
+        color-scheme: light;
+        --bg: #f4f1ea;
+        --panel: #ffffff;
+        --ink: #1f242b;
+        --muted: #66707c;
+        --line: #d7d2c8;
+        --accent: #0f766e;
+        --accent-2: #b45309;
+        font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      }
+      * { box-sizing: border-box; }
+      body {
+        margin: 0;
+        background: var(--bg);
+        color: var(--ink);
+      }
+      main {
+        width: 1280px;
+        min-height: 900px;
+        padding: 26px;
+      }
+      header {
+        display: flex;
+        justify-content: space-between;
+        gap: 20px;
+        align-items: flex-end;
+        padding-bottom: 16px;
+        border-bottom: 1px solid var(--line);
+        margin-bottom: 18px;
+      }
+      h1 {
+        margin: 0;
+        font-size: 28px;
+        line-height: 1.15;
+        letter-spacing: 0;
+      }
+      .meta {
+        margin: 6px 0 0;
+        color: var(--muted);
+        font-size: 13px;
+      }
+      .badge {
+        border: 1px solid var(--line);
+        border-radius: 999px;
+        padding: 7px 10px;
+        color: var(--accent);
+        font-weight: 700;
+        font-size: 12px;
+        white-space: nowrap;
+      }
+      .grid {
+        display: grid;
+        grid-template-columns: 0.9fr 1.1fr;
+        gap: 18px;
+        align-items: start;
+      }
+      section {
+        min-width: 0;
+        background: var(--panel);
+        border: 1px solid var(--line);
+        border-radius: 8px;
+        overflow: hidden;
+      }
+      h2 {
+        margin: 0;
+        padding: 12px 14px;
+        border-bottom: 1px solid var(--line);
+        font-size: 14px;
+        line-height: 1.2;
+        color: var(--accent-2);
+        background: #fbfaf7;
+      }
+      .body {
+        padding: 14px;
+      }
+      figure {
+        margin: 0 0 12px;
+      }
+      figcaption {
+        margin-bottom: 6px;
+        color: var(--muted);
+        font-size: 12px;
+      }
+      img {
+        width: 100%;
+        max-height: 520px;
+        object-fit: contain;
+        border: 1px solid var(--line);
+        background: white;
+      }
+      pre {
+        margin: 0;
+        white-space: pre-wrap;
+        overflow-wrap: anywhere;
+        font: 12px/1.55 "Cascadia Mono", Consolas, "SFMono-Regular", monospace;
+      }
+      .two-stack {
+        display: grid;
+        gap: 18px;
+      }
+      .empty {
+        margin: 0;
+        color: var(--muted);
+      }
+    </style>
+  </head>
+  <body>
+    <main>
+      <header>
+        <div>
+          <h1>humaneval_v / q61-2</h1>
+          <p class="meta">非 HTML 输出预览渲染：输入图、任务提示、metadata/reference 和模型输出放在同一张图中。</p>
+        </div>
+        <span class="badge">diagram_to_python_code</span>
+      </header>
+      <div class="grid">
+        <div class="two-stack">
+          <section>
+            <h2>输入图片</h2>
+            <div class="body">
+            <figure>
+              <figcaption>输入图 1 · 1024 x 646</figcaption>
+              <img src="file:///D:/Code/frontEnd-direction/experiments/random10_bench_smoke/mimo_random10_20260604/humaneval_v/inputs/images/q61-2_0.png" alt="input image 1" />
+            </figure>
+            </div>
+          </section>
+          <section>
+            <h2>任务提示</h2>
+            <div class="body"><pre>你会看到一张编码题相关的图。请结合图像和函数签名，补全 Python 解法。
+
+要求：
+1. 只输出一个 fenced code block，格式为 ```python ... ```。
+2. 必须实现给定的 `solution` 函数签名。
+3. 不要输出解释。
+
+函数签名：
+```python
+def solution(m: int, n: int, k: int) -&gt; list[int, int]:        
+    &quot;&quot;&quot;
+    Given an m×n matrix, determine the coordinates after k steps, starting from position (1,1) (top-left corner).
+    Each step can only move to an adjacent cell following a specific movement pattern.
+
+    Parameters:
+        m (int): Number of rows in the matrix.
+        n (int): Number of columns in the matrix.
+        k (int): Number of steps to move.
+
+    Returns:
+        list[int, int]: Final coordinates [row, column] after k steps.
+    &quot;&quot;&quot;
+
+```
+
+任务类型：Transformation
+能力标签：{&quot;Common Sense&quot;: null, &quot;Data Structures&quot;: [&quot;Matrix&quot;, &quot;Path&quot;], &quot;Dynamic Patterns&quot;: [&quot;Alternation&quot;, &quot;Zigzag&quot;], &quot;Geometric Objects&quot;: [&quot;Point&quot;, &quot;Grid&quot;, &quot;Arrow&quot;], &quot;Mathematical Operations&quot;: null, &quot;Spatial Transformations&quot;: null, &quot;Topological Relations&quot;: [&quot;Adjacency&quot;, &quot;Connectivity&quot;]}
+</pre></div>
+          </section>
+        </div>
+        <div class="two-stack">
+          <section>
+            <h2>模型代码输出</h2>
+            <div class="body"><pre>def solution(m: int, n: int, k: int) -&gt; list[int, int]:
+    total = m * n
+    k %= total
+    row_idx = k // n
+    offset = k % n
+    if row_idx % 2 == 0:
+        col_idx = offset
+    else:
+        col_idx = n - 1 - offset
+    return [row_idx + 1, col_idx + 1]</pre></div>
+          </section>
+          <section>
+            <h2>参考信息 / Metadata</h2>
+            <div class="body"><pre>{
+  &quot;qid&quot;: &quot;q61-2&quot;,
+  &quot;task_type&quot;: &quot;Transformation&quot;,
+  &quot;capability_aspects&quot;: {
+    &quot;Common Sense&quot;: null,
+    &quot;Data Structures&quot;: [
+      &quot;Matrix&quot;,
+      &quot;Path&quot;
+    ],
+    &quot;Dynamic Patterns&quot;: [
+      &quot;Alternation&quot;,
+      &quot;Zigzag&quot;
+    ],
+    &quot;Geometric Objects&quot;: [
+      &quot;Point&quot;,
+      &quot;Grid&quot;,
+      &quot;Arrow&quot;
+    ],
+    &quot;Mathematical Operations&quot;: null,
+    &quot;Spatial Transformations&quot;: null,
+    &quot;Topological Relations&quot;: [
+      &quot;Adjacency&quot;,
+      &quot;Connectivity&quot;
+    ]
+  },
+  &quot;function_signature&quot;: &quot;def solution(m: int, n: int, k: int) -&gt; list[int, int]:        \n    \&quot;\&quot;\&quot;\n    Given an m×n matrix, determine the coordinates after k steps, starting from position (1,1) (top-left corner).\n    Each step can only move to an adjacent cell following a specific movement pattern.\n\n    Parameters:\n        m (int): Number of rows in the matrix.\n        n (int): Number of columns in the matrix.\n        k (int): Number of steps to move.\n\n    Returns:\n        list[int, int]: Final coordinates [row, column] after k steps.\n    \&quot;\&quot;\&quot;\n&quot;
+}</pre></div>
+          </section>
+        </div>
+      </div>
+    </main>
+  </body>
+</html>

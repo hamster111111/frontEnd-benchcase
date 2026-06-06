@@ -1,0 +1,667 @@
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PagerDuty | ServiceNow Cloud Observability Integration</title>
+    <style>
+        :root {
+            --pd-green: #00805a;
+            --pd-green-dark: #006648;
+            --pd-black: #2a2f36;
+            --pd-gray-dark: #53585f;
+            --pd-gray-medium: #8c929a;
+            --pd-gray-light: #f5f5f5;
+            --pd-white: #ffffff;
+            --pd-border: #e0e0e0;
+            --resource-report: #0070f0;
+            --resource-datasheet: #00805a;
+            --resource-solutions: #1a237e;
+            --resource-video: #f8bbd0;
+            --resource-resource: #bbdefb;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            color: var(--pd-black);
+            line-height: 1.5;
+            background-color: var(--pd-white);
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        ul {
+            list-style: none;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Top Banner */
+        .top-banner {
+            background-color: var(--pd-green);
+            color: var(--pd-white);
+            text-align: center;
+            padding: 10px 20px;
+            font-size: 14px;
+            position: relative;
+        }
+
+        .top-banner a {
+            color: var(--pd-white);
+            text-decoration: underline;
+            margin-left: 10px;
+            font-weight: 500;
+        }
+
+        .banner-close {
+            position: absolute;
+            right: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: none;
+            border: none;
+            color: var(--pd-white);
+            font-size: 20px;
+            cursor: pointer;
+        }
+
+        /* Header */
+        header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 15px 20px;
+            border-bottom: 1px solid var(--pd-border);
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: 700;
+            color: var(--pd-black);
+        }
+
+        .main-nav {
+            display: flex;
+            gap: 25px;
+        }
+
+        .main-nav a {
+            font-size: 14px;
+            font-weight: 500;
+            color: var(--pd-black);
+        }
+
+        .main-nav a:hover {
+            color: var(--pd-green);
+        }
+
+        .header-actions {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .icon-btn {
+            background: none;
+            border: none;
+            font-size: 18px;
+            cursor: pointer;
+            color: var(--pd-black);
+        }
+
+        .btn-primary {
+            background-color: var(--pd-green);
+            color: var(--pd-white);
+            padding: 10px 16px;
+            border: none;
+            border-radius: 4px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background-color 0.2s;
+        }
+
+        .btn-primary:hover {
+            background-color: var(--pd-green-dark);
+        }
+
+        .btn-outline {
+            background-color: transparent;
+            color: var(--pd-white);
+            padding: 10px 16px;
+            border: 1px solid var(--pd-white);
+            border-radius: 4px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background-color 0.2s, color 0.2s;
+        }
+
+        .btn-outline:hover {
+            background-color: var(--pd-white);
+            color: var(--pd-green);
+        }
+
+        /* Hero Section */
+        .hero {
+            display: flex;
+            background-color: #dce6dc; /* Light greenish background */
+        }
+
+        .hero-left {
+            flex: 1;
+            background-color: var(--pd-white);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 40px;
+        }
+
+        .servicenow-logo {
+            font-size: 40px;
+            font-weight: 700;
+            color: #83c9a8; /* Green logo color */
+            letter-spacing: -1px;
+        }
+
+        .hero-right {
+            flex: 1;
+            background-color: var(--pd-green);
+            color: var(--pd-white);
+            padding: 60px 40px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .hero-right h1 {
+            font-size: 36px;
+            font-weight: 400;
+            margin-bottom: 20px;
+        }
+
+        .hero-right p {
+            font-size: 16px;
+            margin-bottom: 30px;
+            line-height: 1.6;
+        }
+
+        /* Benefits Section */
+        .benefits {
+            padding: 80px 20px;
+        }
+
+        .benefits h2 {
+            font-size: 36px;
+            font-weight: 400;
+            text-align: center;
+            margin-bottom: 60px;
+        }
+
+        .benefits-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 40px;
+        }
+
+        .benefit-item h3 {
+            font-size: 24px;
+            font-weight: 400;
+            margin-bottom: 20px;
+        }
+
+        .benefit-item p {
+            color: var(--pd-gray-dark);
+            font-size: 15px;
+        }
+
+        /* About Section */
+        .about {
+            background-color: var(--pd-black);
+            color: var(--pd-white);
+            padding: 80px 20px;
+        }
+
+        .about h2 {
+            font-size: 36px;
+            font-weight: 400;
+            margin-bottom: 20px;
+        }
+
+        .about p {
+            font-size: 16px;
+            margin-bottom: 30px;
+            max-width: 800px;
+        }
+
+        /* Resources Section */
+        .resources {
+            padding: 80px 20px;
+        }
+
+        .resources h2 {
+            font-size: 36px;
+            font-weight: 400;
+            margin-bottom: 40px;
+        }
+
+        .resources-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 30px;
+        }
+
+        .resource-card {
+            border-top: 4px solid transparent;
+            padding-top: 15px;
+        }
+
+        .resource-card.report { border-color: var(--resource-report); }
+        .resource-card.datasheet { border-color: var(--resource-datasheet); }
+        .resource-card.solutions { border-color: var(--resource-solutions); }
+        .resource-card.video { border-color: var(--resource-video); }
+        .resource-card.resource { border-color: var(--resource-resource); }
+
+        .resource-type {
+            font-size: 12px;
+            font-weight: 700;
+            text-transform: uppercase;
+            margin-bottom: 10px;
+            color: var(--pd-gray-dark);
+        }
+
+        .resource-title {
+            font-size: 16px;
+            font-weight: 500;
+        }
+
+        /* CTA Section */
+        .cta {
+            background-color: var(--pd-green);
+            color: var(--pd-white);
+            padding: 80px 20px;
+        }
+
+        .cta h2 {
+            font-size: 36px;
+            font-weight: 400;
+            margin-bottom: 30px;
+        }
+
+        .cta-actions {
+            display: flex;
+            gap: 15px;
+        }
+
+        /* Footer */
+        footer {
+            padding: 60px 20px 30px;
+            border-top: 1px solid var(--pd-border);
+        }
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 30px;
+            margin-bottom: 60px;
+        }
+
+        .footer-column h3 {
+            font-size: 16px;
+            font-weight: 600;
+            margin-bottom: 20px;
+        }
+
+        .footer-column ul li {
+            margin-bottom: 10px;
+        }
+
+        .footer-column ul li a {
+            font-size: 14px;
+            color: var(--pd-gray-dark);
+        }
+
+        .footer-column ul li a:hover {
+            color: var(--pd-green);
+        }
+
+        .footer-bottom {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-top: 30px;
+            border-top: 1px solid var(--pd-border);
+            font-size: 14px;
+            color: var(--pd-gray-medium);
+        }
+
+        .footer-links {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+
+        .footer-links a {
+            color: var(--pd-gray-medium);
+        }
+
+        .social-links {
+            display: flex;
+            gap: 15px;
+        }
+
+        /* Mobile Menu Button */
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            font-size: 24px;
+            cursor: pointer;
+        }
+
+        /* Responsive Styles */
+        @media (max-width: 992px) {
+            .main-nav {
+                display: none;
+            }
+
+            .mobile-menu-btn {
+                display: block;
+            }
+
+            .hero {
+                flex-direction: column;
+            }
+
+            .hero-left, .hero-right {
+                padding: 40px;
+            }
+
+            .benefits-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .resources-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .footer-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .hero {
+                flex-direction: column;
+            }
+
+            .hero-left, .hero-right {
+                padding: 30px 20px;
+            }
+
+            .benefits-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .resources-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .footer-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .footer-bottom {
+                flex-direction: column;
+                gap: 20px;
+                text-align: center;
+            }
+
+            .footer-links {
+                justify-content: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="top-banner">
+        Connect, Learn, Innovate. Join us for PagerDuty on Tour.
+        <a href="#">Register now</a>
+        <button class="banner-close">×</button>
+    </div>
+
+    <header class="container">
+        <div class="logo">PagerDuty</div>
+        <nav class="main-nav">
+            <a href="#">Products</a>
+            <a href="#">Solutions</a>
+            <a href="#">Pricing</a>
+            <a href="#">Company</a>
+            <a href="#">Resources</a>
+        </nav>
+        <div class="header-actions">
+            <button class="icon-btn">🔍</button>
+            <button class="icon-btn">🌐</button>
+            <a href="#" class="icon-btn">Contact Us</a>
+            <a href="#" class="icon-btn">Log In</a>
+            <button class="btn-primary">START FOR FREE</button>
+            <button class="mobile-menu-btn">☰</button>
+        </div>
+    </header>
+
+    <section class="hero">
+        <div class="hero-left">
+            <div class="servicenow-logo">servicenow</div>
+        </div>
+        <div class="hero-right">
+            <div class="container">
+                <h1>Cloud Observability</h1>
+                <p>Traditional monitoring tools can't keep pace with the growing complexity, scale, and volume of data in cloud-native environments. Without end-to-end visibility, silos remain, redundancy persists, and resources are wasted as teams try to manually resolve problems. Cloud Observability breaks down organizational silos and empowers IT Ops and DevOps teams with a unified view that connects and contextualizes cloud-native apps with the services and infrastructure they run on. With this integration, teams don't have to jump between platforms to track and triage alerts. They can reduce MTTR and get back to doing what they do best: delivering exceptional software and experiences.</p>
+                <button class="btn-outline">VIEW DOCUMENTATION</button>
+            </div>
+        </div>
+    </section>
+
+    <section class="benefits">
+        <div class="container">
+            <h2>Benefits of ServiceNow Cloud Observability and PagerDuty Integration</h2>
+            <div class="benefits-grid">
+                <div class="benefit-item">
+                    <h3>Improve productivity</h3>
+                    <p>Empower dev teams with visibility into dependencies when they push code changes. Apply insights to plan around possible fallout before the code deploys.</p>
+                </div>
+                <div class="benefit-item">
+                    <h3>Reduce MTTR</h3>
+                    <p>Remove guesswork from managing complicated and distributed tech estates. Identify a spike's root cause by analyzing logs, metrics, and traces relative to affected services.</p>
+                </div>
+                <div class="benefit-item">
+                    <h3>Increase reliability</h3>
+                    <p>Detect issues before they can reach production and impact your customers. When issues do happen, learn where they exist, quantify their impact, and resolve them quickly.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="about">
+        <div class="container">
+            <h2>About ServiceNow Cloud Observability</h2>
+            <p>ServiceNow Cloud Observability breaks down organizational silos and empowers IT Ops and DevOps teams with a unified platform that connects cloud-native apps to the services and infrastructure they run on.</p>
+            <button class="btn-outline">LEARN MORE</button>
+        </div>
+    </section>
+
+    <section class="resources">
+        <div class="container">
+            <h2>Resources</h2>
+            <div class="resources-grid">
+                <div class="resource-card report">
+                    <div class="resource-type">REPORTS</div>
+                    <div class="resource-title">2023 Gartner® Magic Quadrant™ for APM and Observability</div>
+                </div>
+                <div class="resource-card datasheet">
+                    <div class="resource-type">DATASHEET</div>
+                    <div class="resource-title">ServiceNow Cloud Observability</div>
+                </div>
+                <div class="resource-card solutions">
+                    <div class="resource-type">SOLUTIONS-BRIEF</div>
+                    <div class="resource-title">Accelerate Software Innovation with Cloud Observability and DevOps</div>
+                </div>
+                <div class="resource-card video">
+                    <div class="resource-type">VIDEO</div>
+                    <div class="resource-title">Cloud Observability Explainer</div>
+                </div>
+                <div class="resource-card resource">
+                    <div class="resource-type">RESOURCE</div>
+                    <div class="resource-title">PagerDuty Integration Docs</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="cta">
+        <div class="container">
+            <h2>Start your FREE PagerDuty trial today or request a demo</h2>
+            <div class="cta-actions">
+                <button class="btn-outline">GET STARTED</button>
+                <button class="btn-outline">CONTACT US</button>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-column">
+                    <h3>PLATFORM</h3>
+                    <ul>
+                        <li><a href="#">Incident Management</a></li>
+                        <li><a href="#">AIOps</a></li>
+                        <li><a href="#">Automation</a></li>
+                        <li><a href="#">Business Operations</a></li>
+                        <li><a href="#">Developer Platform</a></li>
+                        <li><a href="#">Enterprise-Class Platform</a></li>
+                        <li><a href="#">Digital Operations Management</a></li>
+                        <li><a href="#">Generative AI</a></li>
+                        <li><a href="#">What's New</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>SOLUTIONS</h3>
+                    <ul>
+                        <li><a href="#">Incident Management Transformation</a></li>
+                        <li><a href="#">Operations Center Modernization</a></li>
+                        <li><a href="#">Automation Standardization</a></li>
+                        <li><a href="#">Customer Experience Operations</a></li>
+                        <li><a href="#">Digital Operations Resiliency</a></li>
+                        <li><a href="#">Scaled Service Ownership</a></li>
+                        <li><a href="#">Remote-Location Operations</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>RESOURCES</h3>
+                    <ul>
+                        <li><a href="#">Resources Library</a></li>
+                        <li><a href="#">Community Forum</a></li>
+                        <li><a href="#">PagerDuty On Tour</a></li>
+                        <li><a href="#">Customer Stories</a></li>
+                        <li><a href="#">Integration Guides</a></li>
+                        <li><a href="#">Automation Library</a></li>
+                        <li><a href="#">Blog</a></li>
+                        <li><a href="#">Watch Demo</a></li>
+                        <li><a href="#">Request a Demo</a></li>
+                        <li><a href="#">Use Cases</a></li>
+                        <li><a href="#">Events</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>COMPANY</h3>
+                    <ul>
+                        <li><a href="#">About PagerDuty</a></li>
+                        <li><a href="#">Thought Leadership</a></li>
+                        <li><a href="#">Newsroom</a></li>
+                        <li><a href="#">Events</a></li>
+                        <li><a href="#">PagerDuty.org</a></li>
+                        <li><a href="#">Investor Relations</a></li>
+                        <li><a href="#">Leadership</a></li>
+                        <li><a href="#">Suppliers</a></li>
+                        <li><a href="#">Careers</a></li>
+                        <li><a href="#">Awards</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>SUPPORT</h3>
+                    <ul>
+                        <li><a href="#">System Status</a></li>
+                        <li><a href="#">Help & Support</a></li>
+                        <li><a href="#">Partner with PagerDuty</a></li>
+                        <li><a href="#">Contact Us</a></li>
+                        <li><a href="#">Legal</a></li>
+                        <li><a href="#">Services</a></li>
+                        <li><a href="#">FAQs</a></li>
+                        <li><a href="#">Accessibility</a></li>
+                        <li><a href="#">Ops Guides</a></li>
+                        <li><a href="#">PagerDuty University</a></li>
+                        <li><a href="#">Knowledge Base</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <div>© 2025 PagerDuty, Inc. All rights reserved.</div>
+                <div class="footer-links">
+                    <a href="#">Privacy policy</a>
+                    <a href="#">Website Terms of Use</a>
+                    <a href="#">California Privacy Notice</a>
+                    <a href="#">Modern Slavery Act</a>
+                    <a href="#">CCPA</a>
+                    <a href="#">Cookies Settings</a>
+                </div>
+                <div class="social-links">
+                    <a href="#">f</a>
+                    <a href="#">𝕏</a>
+                    <a href="#">📷</a>
+                    <a href="#">in</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Banner close functionality
+        document.querySelector('.banner-close').addEventListener('click', function() {
+            this.parentElement.style.display = 'none';
+        });
+
+        // Mobile menu toggle (basic functionality)
+        document.querySelector('.mobile-menu-btn').addEventListener('click', function() {
+            const nav = document.querySelector('.main-nav');
+            if (nav.style.display === 'block') {
+                nav.style.display = 'none';
+            } else {
+                nav.style.display = 'block';
+                nav.style.position = 'absolute';
+                nav.style.top = '60px';
+                nav.style.left = '0';
+                nav.style.right = '0';
+                nav.style.backgroundColor = 'white';
+                nav.style.padding = '20px';
+                nav.style.boxShadow = '0 4px 8px rgba(0,0,0,0.1)';
+            }
+        });
+    </script>
+</body>
+</html>
+```

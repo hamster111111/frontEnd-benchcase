@@ -1,0 +1,35 @@
+```python
+from typing import List
+
+def solution(colors: List[int], line_position: int) -> List[int]:
+    """
+    Transforms a 1D color array based on a given dashed line position.
+
+    Args:
+        colors (List[int]): A 1D array representing colors where:
+            - 0 = white
+            - 1 = light blue  
+            - 2 = dark blue
+        line_position (int): The position of the dashed line used for transformation
+
+    Returns:
+        List[int]: A new 1D array with transformed colors where:
+            - 0 = white
+            - 1 = light blue
+            - 2 = dark blue
+    """
+    n = len(colors)
+    L = max(line_position, n - line_position)
+    result = [0] * L
+    for i in range(L):
+        left = line_position - 1 - i
+        right = line_position + i
+        if 0 <= left < n and 0 <= right < n:
+            result[i] = max(colors[left], colors[right])
+        elif 0 <= left < n:
+            result[i] = colors[left]
+        elif 0 <= right < n:
+            result[i] = colors[right]
+        # else case not possible as L ensures at least one index is valid
+    return result
+```

@@ -1,0 +1,586 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Firefox Add-ons</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+        }
+        
+        body {
+            background: #f0f0f0;
+            color: #333;
+        }
+        
+        /* 主页面样式 */
+        #addons-page {
+            background: #fff;
+            min-height: 100vh;
+            position: relative;
+        }
+        
+        /* 顶部导航栏 */
+        .header {
+            background: #20123a;
+            padding: 20px 40px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            color: white;
+        }
+        
+        .logo-area {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        
+        .firefox-logo {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, #ff7139 0%, #ff3750 100%);
+            border-radius: 12px;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .firefox-logo::after {
+            content: '';
+            width: 30px;
+            height: 30px;
+            background: #20123a;
+            border-radius: 50%;
+            position: absolute;
+        }
+        
+        .brand-text {
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .brand-small {
+            font-size: 14px;
+            font-weight: 500;
+        }
+        
+        .brand-large {
+            font-size: 24px;
+            font-weight: 700;
+            letter-spacing: 1px;
+        }
+        
+        .nav-links {
+            display: flex;
+            gap: 20px;
+            align-items: center;
+        }
+        
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            font-size: 16px;
+            font-weight: 500;
+        }
+        
+        .nav-links a:hover {
+            text-decoration: underline;
+        }
+        
+        .nav-links .dropdown {
+            position: relative;
+        }
+        
+        .nav-links .dropdown::after {
+            content: '▼';
+            font-size: 8px;
+            margin-left: 4px;
+        }
+        
+        .search-area {
+            display: flex;
+            align-items: center;
+        }
+        
+        .search-box {
+            background: white;
+            border-radius: 4px;
+            padding: 8px 15px;
+            width: 300px;
+            display: flex;
+            align-items: center;
+        }
+        
+        .search-icon {
+            color: #666;
+            margin-right: 10px;
+            font-size: 14px;
+        }
+        
+        .search-input {
+            border: none;
+            outline: none;
+            width: 100%;
+            font-size: 14px;
+        }
+        
+        .login-link {
+            position: absolute;
+            top: 20px;
+            right: 40px;
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            cursor: pointer;
+        }
+        
+        .login-link:hover {
+            text-decoration: underline;
+        }
+        
+        /* 主要内容区域 */
+        .main-content {
+            background: #2c2c4d;
+            padding: 60px 40px;
+            display: flex;
+            gap: 40px;
+            align-items: center;
+            min-height: 400px;
+        }
+        
+        .featured-image {
+            width: 450px;
+            height: 300px;
+            background: linear-gradient(135deg, #1a1a3b 0%, #333366 100%);
+            border-radius: 4px;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        /* 模拟建筑图案 */
+        .building-pattern {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: 
+                linear-gradient(45deg, #4a4a6a 25%, transparent 25%) -50px 0,
+                linear-gradient(-45deg, #4a4a6a 25%, transparent 25%) -50px 0,
+                linear-gradient(45deg, transparent 75%, #4a4a6a 75%),
+                linear-gradient(-45deg, transparent 75%, #4a4a6a 75%);
+            background-size: 50px 50px;
+            opacity: 0.3;
+        }
+        
+        .orange-elements {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: 
+                radial-gradient(circle at 20% 30%, #ff5722 8px, transparent 8px),
+                radial-gradient(circle at 70% 70%, #ff5722 12px, transparent 12px),
+                radial-gradient(circle at 40% 60%, #ff5722 6px, transparent 6px),
+                radial-gradient(circle at 80% 20%, #ff5722 10px, transparent 10px);
+        }
+        
+        .glass-bridge {
+            position: absolute;
+            top: 60%;
+            left: 20%;
+            width: 60%;
+            height: 3px;
+            background: rgba(255, 255, 255, 0.5);
+            transform: rotate(15deg);
+        }
+        
+        .feature-details {
+            flex: 1;
+            color: white;
+        }
+        
+        .recommend-label {
+            color: #8a7f99;
+            font-size: 14px;
+            font-weight: 600;
+            letter-spacing: 1px;
+            margin-bottom: 10px;
+        }
+        
+        .feature-title {
+            font-size: 36px;
+            font-weight: 600;
+            margin-bottom: 15px;
+            line-height: 1.2;
+        }
+        
+        .feature-description {
+            font-size: 18px;
+            color: #c7c1d4;
+            margin-bottom: 30px;
+            line-height: 1.4;
+        }
+        
+        .cta-button {
+            background: transparent;
+            color: white;
+            border: 2px solid white;
+            padding: 12px 30px;
+            font-size: 16px;
+            font-weight: 500;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background 0.3s, color 0.3s;
+        }
+        
+        .cta-button:hover {
+            background: white;
+            color: #2c2c4d;
+        }
+        
+        /* 分类区域 */
+        .categories-section {
+            padding: 60px 40px;
+            background: #f9f9f9;
+        }
+        
+        .section-title {
+            font-size: 28px;
+            font-weight: 600;
+            margin-bottom: 10px;
+            color: #333;
+        }
+        
+        .section-subtitle {
+            font-size: 16px;
+            color: #666;
+            margin-bottom: 40px;
+            max-width: 400px;
+            line-height: 1.5;
+        }
+        
+        .categories-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 30px;
+        }
+        
+        .category-card {
+            background: white;
+            border-radius: 8px;
+            padding: 30px;
+            text-align: center;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        
+        .category-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+        
+        .category-icon {
+            font-size: 40px;
+            margin-bottom: 15px;
+        }
+        
+        .category-title {
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 10px;
+            color: #333;
+        }
+        
+        .category-link {
+            color: #1a0dab;
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 500;
+        }
+        
+        .category-link:hover {
+            text-decoration: underline;
+        }
+        
+        /* 登录页面样式 */
+        #login-page {
+            display: none;
+            min-height: 100vh;
+            background: #f9f9f9;
+            padding: 40px;
+            position: relative;
+        }
+        
+        .moz-logo {
+            font-size: 24px;
+            font-weight: 700;
+            color: #333;
+            letter-spacing: -1px;
+        }
+        
+        .login-container {
+            max-width: 500px;
+            margin: 100px auto;
+            background: white;
+            border-radius: 8px;
+            padding: 40px;
+            box-shadow: 0 2px 12px rgba(0, 0, 0, 0.1);
+        }
+        
+        .login-title {
+            font-size: 24px;
+            font-weight: 600;
+            margin-bottom: 5px;
+            color: #333;
+        }
+        
+        .login-subtitle {
+            font-size: 16px;
+            color: #666;
+            margin-bottom: 30px;
+        }
+        
+        .email-input {
+            width: 100%;
+            padding: 14px 16px;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            font-size: 16px;
+            margin-bottom: 16px;
+            outline: none;
+        }
+        
+        .email-input:focus {
+            border-color: #0a84ff;
+            box-shadow: 0 0 0 2px rgba(10, 132, 255, 0.2);
+        }
+        
+        .primary-button {
+            width: 100%;
+            background: #0a84ff;
+            color: white;
+            border: none;
+            padding: 14px;
+            border-radius: 6px;
+            font-size: 16px;
+            font-weight: 500;
+            cursor: pointer;
+            margin-bottom: 24px;
+        }
+        
+        .primary-button:hover {
+            background: #0070e0;
+        }
+        
+        .divider {
+            text-align: center;
+            position: relative;
+            margin-bottom: 24px;
+            color: #999;
+            font-size: 14px;
+        }
+        
+        .divider::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            right: 0;
+            top: 50%;
+            height: 1px;
+            background: #ddd;
+            z-index: 1;
+        }
+        
+        .divider span {
+            background: white;
+            padding: 0 12px;
+            position: relative;
+            z-index: 2;
+        }
+        
+        .social-buttons {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            margin-bottom: 24px;
+        }
+        
+        .social-button {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            background: white;
+            font-size: 16px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+        
+        .social-button:hover {
+            background: #f5f5f5;
+        }
+        
+        .social-icon {
+            font-size: 18px;
+        }
+        
+        .terms-text {
+            font-size: 13px;
+            color: #666;
+            text-align: center;
+            line-height: 1.5;
+        }
+        
+        .terms-text a {
+            color: #0a84ff;
+            text-decoration: none;
+        }
+        
+        .terms-text a:hover {
+            text-decoration: underline;
+        }
+        
+        /* 页面切换逻辑 */
+        body.login-mode #addons-page {
+            display: none;
+        }
+        
+        body.login-mode #login-page {
+            display: block;
+        }
+    </style>
+</head>
+<body>
+    <!-- 第一张图：Firefox Add-ons页面 -->
+    <div id="addons-page">
+        <div class="header">
+            <div class="logo-area">
+                <div class="firefox-logo"></div>
+                <div class="brand-text">
+                    <span class="brand-small">Firefox Browser</span>
+                    <span class="brand-large">ADD-ONS</span>
+                </div>
+            </div>
+            
+            <div class="nav-links">
+                <a href="#">Extensions</a>
+                <a href="#">Themes</a>
+                <a href="#" class="dropdown">More...</a>
+            </div>
+            
+            <div class="search-area">
+                <div class="search-box">
+                    <span class="search-icon">🔍</span>
+                    <input type="text" class="search-input" placeholder="Find add-ons">
+                </div>
+            </div>
+            
+            <a class="login-link" id="login-button">Log in</a>
+        </div>
+        
+        <div class="main-content">
+            <div class="featured-image">
+                <div class="building-pattern"></div>
+                <div class="orange-elements"></div>
+                <div class="glass-bridge"></div>
+            </div>
+            
+            <div class="feature-details">
+                <div class="recommend-label">RECOMMENDED</div>
+                <h1 class="feature-title">Tab Reloader (page auto refresh)</h1>
+                <p class="feature-description">Automatically reload tabs based on time intervals you set.</p>
+                <button class="cta-button">Get the extension</button>
+            </div>
+        </div>
+        
+        <div class="categories-section">
+            <h2 class="section-title">Extensions are like apps for Firefox.</h2>
+            <p class="section-subtitle">They add features to Firefox to make browsing faster, safer, or just plain fun.</p>
+            
+            <div class="categories-grid">
+                <div class="category-card">
+                    <div class="category-icon">🔒</div>
+                    <h3 class="category-title">Privacy & Security extensions</h3>
+                    <a href="#" class="category-link">See staff picks</a>
+                </div>
+                
+                <div class="category-card">
+                    <div class="category-icon">🗂️</div>
+                    <h3 class="category-title">Tab managers</h3>
+                    <a href="#" class="category-link">See staff picks</a>
+                </div>
+                
+                <div class="category-card">
+                    <div class="category-icon">✨</div>
+                    <h3 class="category-title">Spotlight: Adaptive Tab Bar Colour</h3>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- 第二张图：Mozilla登录页面 -->
+    <div id="login-page">
+        <div class="moz-logo">moz://a</div>
+        
+        <div class="login-container">
+            <h1 class="login-title">Enter your email</h1>
+            <p class="login-subtitle">Continue to Add-ons</p>
+            
+            <input type="email" class="email-input" placeholder="Enter your email">
+            
+            <button class="primary-button">Sign up or sign in</button>
+            
+            <div class="divider"><span>or</span></div>
+            
+            <div class="social-buttons">
+                <button class="social-button">
+                    <span class="social-icon">G</span>
+                    Continue with Google
+                </button>
+                
+                <button class="social-button">
+                    <span class="social-icon">🍎</span>
+                    Continue with Apple
+                </button>
+            </div>
+            
+            <p class="terms-text">
+                By proceeding, you agree to the <a href="#">Terms of Service</a> and <a href="#">Privacy Notice</a>.
+            </p>
+        </div>
+    </div>
+    
+    <script>
+        // 获取登录按钮和页面元素
+        const loginButton = document.getElementById('login-button');
+        const body = document.body;
+        
+        // 点击登录按钮切换到登录页面
+        loginButton.addEventListener('click', function() {
+            body.classList.add('login-mode');
+            window.scrollTo(0, 0); // 滚动到顶部
+        });
+        
+        // 登录页面返回功能（可选）
+        const mozLogo = document.querySelector('.moz-logo');
+        if (mozLogo) {
+            mozLogo.style.cursor = 'pointer';
+            mozLogo.addEventListener('click', function() {
+                body.classList.remove('login-mode');
+                window.scrollTo(0, 0);
+            });
+        }
+    </script>
+</body>
+</html>

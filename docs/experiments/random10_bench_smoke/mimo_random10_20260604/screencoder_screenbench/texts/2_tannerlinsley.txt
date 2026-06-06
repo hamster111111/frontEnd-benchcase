@@ -1,0 +1,710 @@
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>tannerlinsley · GitHub</title>
+    <style>
+        /* Reset & Base Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Noto Sans", Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji";
+            line-height: 1.5;
+            color: #1f2328;
+            background-color: #ffffff;
+            font-size: 14px;
+        }
+        a {
+            color: #0969da;
+            text-decoration: none;
+        }
+        a:hover {
+            text-decoration: underline;
+        }
+
+        /* Top Navigation Bar */
+        .top-nav {
+            background-color: #24292f;
+            color: #ffffff;
+            padding: 0 32px;
+            height: 62px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        .nav-left {
+            display: flex;
+            align-items: center;
+            gap: 32px;
+        }
+        .github-logo {
+            width: 32px;
+            height: 32px;
+            fill: #ffffff;
+        }
+        .nav-links {
+            display: flex;
+            gap: 24px;
+        }
+        .nav-link {
+            color: #ffffff;
+            font-size: 14px;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            padding: 8px 0;
+        }
+        .nav-link:hover {
+            text-decoration: none;
+            opacity: 0.85;
+        }
+        .dropdown-arrow {
+            font-size: 10px;
+            margin-top: 1px;
+        }
+        .nav-right {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+        .search-box {
+            position: relative;
+            width: 320px;
+        }
+        .search-box input {
+            width: 100%;
+            padding: 5px 12px 5px 32px;
+            border: 1px solid #3d444d;
+            border-radius: 6px;
+            background-color: #0d1117;
+            color: #c9d1d9;
+            font-size: 14px;
+            height: 32px;
+        }
+        .search-box input::placeholder {
+            color: #8b949e;
+        }
+        .search-icon {
+            position: absolute;
+            left: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #8b949e;
+            font-size: 14px;
+        }
+        .search-shortcut {
+            position: absolute;
+            right: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+            border: 1px solid #3d444d;
+            border-radius: 4px;
+            padding: 0 5px;
+            font-size: 12px;
+            color: #8b949e;
+            background: #161b22;
+        }
+        .nav-button {
+            padding: 5px 16px;
+            border-radius: 6px;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+        }
+        .nav-button-secondary {
+            background: transparent;
+            border: 1px solid #ffffff;
+            color: #ffffff;
+        }
+        .nav-button-primary {
+            background: #ffffff;
+            color: #24292f;
+            border: 1px solid #ffffff;
+        }
+        .avatar-small {
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: #0969da;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 10px;
+            color: white;
+            font-weight: bold;
+        }
+
+        /* Sub Navigation (Tabs) */
+        .sub-nav {
+            border-bottom: 1px solid #d1d9e0;
+            padding: 0 32px;
+            background-color: #ffffff;
+        }
+        .sub-nav-container {
+            max-width: 1280px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: center;
+            gap: 0;
+        }
+        .sub-nav-item {
+            padding: 16px;
+            color: #656d76;
+            font-size: 14px;
+            font-weight: 400;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            border-bottom: 2px solid transparent;
+            margin-bottom: -1px;
+        }
+        .sub-nav-item.active {
+            color: #1f2328;
+            font-weight: 600;
+            border-bottom-color: #fd8c73;
+        }
+        .sub-nav-item:hover {
+            text-decoration: none;
+        }
+        .badge {
+            display: inline-block;
+            padding: 0 6px;
+            font-size: 12px;
+            font-weight: 500;
+            line-height: 18px;
+            border-radius: 10px;
+            background-color: #eff1f3;
+            color: #656d76;
+        }
+
+        /* Main Content Layout */
+        .main-container {
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 32px;
+            display: flex;
+            gap: 32px;
+            align-items: flex-start;
+        }
+        .profile-sidebar {
+            width: 296px;
+            flex-shrink: 0;
+            position: sticky;
+            top: 94px; /* 62px nav + 32px padding */
+        }
+        .main-content {
+            flex: 1;
+            min-width: 0;
+            background-color: #ffffff;
+            border: 1px solid #d1d9e0;
+            border-radius: 6px;
+            padding: 32px;
+        }
+
+        /* Profile Sidebar Styles */
+        .avatar-large {
+            width: 296px;
+            height: 296px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #3a8f97, #6db3b8, #8fcac7); /* Approximate colors from photo */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 16px;
+            overflow: hidden;
+            position: relative;
+        }
+        /* Simplified face shape placeholder */
+        .avatar-large::after {
+            content: '';
+            width: 120px;
+            height: 160px;
+            background: #f0e0d0;
+            border-radius: 60px 60px 70px 70px;
+            position: absolute;
+            top: 40%;
+        }
+        .avatar-large::before {
+            content: '';
+            width: 180px;
+            height: 100px;
+            background: #4a6a70;
+            border-radius: 50% 50% 0 0;
+            position: absolute;
+            top: 25%;
+            transform: rotate(-5deg);
+        }
+        .profile-name {
+            font-size: 26px;
+            font-weight: 300;
+            line-height: 1.25;
+            margin-bottom: 4px;
+        }
+        .profile-username {
+            font-size: 20px;
+            font-weight: 300;
+            color: #656d76;
+            line-height: 1.25;
+            margin-bottom: 16px;
+        }
+        .action-buttons {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 16px;
+        }
+        .btn-follow {
+            flex: 1;
+            padding: 5px 16px;
+            border: 1px solid #d1d9e0;
+            border-radius: 6px;
+            background-color: #f6f8fa;
+            color: #24292f;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            line-height: 20px;
+        }
+        .btn-sponsor {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            padding: 5px 16px;
+            border: 1px solid #d1d9e0;
+            border-radius: 6px;
+            background-color: #f6f8fa;
+            color: #24292f;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            line-height: 20px;
+        }
+        .sponsor-icon {
+            font-size: 16px;
+        }
+        .profile-bio {
+            margin-bottom: 16px;
+            font-size: 14px;
+            line-height: 1.5;
+        }
+        .profile-stats {
+            display: flex;
+            gap: 4px;
+            margin-bottom: 16px;
+            font-size: 14px;
+            color: #656d76;
+        }
+        .profile-stats a {
+            color: #656d76;
+        }
+        .profile-stats a:hover {
+            color: #0969da;
+        }
+        .profile-meta {
+            margin-bottom: 16px;
+        }
+        .meta-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 8px;
+            font-size: 14px;
+            color: #1f2328;
+        }
+        .meta-icon {
+            color: #656d76;
+            width: 16px;
+            text-align: center;
+        }
+        .meta-item a {
+            color: #1f2328;
+        }
+        .meta-item a:hover {
+            color: #0969da;
+        }
+
+        /* Sponsors Section */
+        .sponsors-section {
+            margin-bottom: 16px;
+        }
+        .section-title {
+            font-size: 14px;
+            font-weight: 600;
+            margin-bottom: 8px;
+            border-bottom: 1px solid #d1d9e0;
+            padding-bottom: 8px;
+        }
+        .sponsors-grid {
+            display: grid;
+            grid-template-columns: repeat(8, 1fr);
+            gap: 4px;
+        }
+        .sponsor-avatar {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            background: #f0f0f0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            color: #666;
+            font-weight: bold;
+            border: 1px solid #eaeaea;
+        }
+        .sponsor-more {
+            background-color: #eff1f3;
+            color: #656d76;
+            font-size: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* Main Content (README) Styles */
+        .readme-path {
+            font-family: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, "Liberation Mono", monospace;
+            color: #656d76;
+            font-size: 14px;
+            margin-bottom: 8px;
+        }
+        .readme-path a {
+            color: #0969da;
+        }
+        .readme-heading {
+            font-size: 32px;
+            font-weight: 300;
+            line-height: 1.25;
+            margin-bottom: 16px;
+            border-bottom: 1px solid #d1d9e0;
+            padding-bottom: 16px;
+        }
+        .readme-heading a {
+            color: #0969da;
+        }
+        .project-list {
+            margin-bottom: 32px;
+        }
+        .project-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 6px;
+            list-style: none;
+            padding-left: 2em;
+            text-indent: -1em;
+        }
+        .project-item::before {
+            content: '•';
+            display: inline-block;
+            width: 1em;
+            margin-left: -1em;
+        }
+        .project-icon {
+            width: 16px;
+            height: 16px;
+            border-radius: 2px;
+            display: inline-block;
+            vertical-align: middle;
+        }
+        .icon-ts { background: linear-gradient(45deg, #3178c6, #235a97); }
+        .icon-table { background: linear-gradient(45deg, #e44d26, #f16529); }
+        .icon-router { background: linear-gradient(45deg, #61dafb, #0d9b8a); }
+        .icon-start { background: linear-gradient(45deg, #764abc, #9575cd); }
+        .icon-virtual { background: linear-gradient(45deg, #4caf50, #66bb6a); }
+        .icon-form { background: linear-gradient(45deg, #f44336, #ef5350); }
+        .icon-charts { background: linear-gradient(45deg, #ff9800, #ffa726); }
+        .icon-swimmer { background: linear-gradient(45deg, #00bcd4, #26c6da); }
+
+        .previously-section {
+            padding: 16px;
+            border-left: 4px solid #d1d9e0;
+            margin-bottom: 32px;
+            color: #656d76;
+            font-size: 14px;
+            line-height: 1.5;
+        }
+        .previously-section a {
+            color: #0969da;
+            font-weight: 500;
+        }
+        .readme-text {
+            margin-bottom: 16px;
+            line-height: 1.6;
+            font-size: 14px;
+        }
+        .readme-text strong {
+            font-weight: 600;
+        }
+        .readme-h2 {
+            font-size: 24px;
+            font-weight: 600;
+            line-height: 1.25;
+            margin-top: 24px;
+            margin-bottom: 16px;
+            border-bottom: 1px solid #d1d9e0;
+            padding-bottom: 8px;
+        }
+        .readme-h3 {
+            font-size: 18px;
+            font-weight: 600;
+            margin-top: 24px;
+            margin-bottom: 16px;
+        }
+        .stats-list {
+            margin-top: 8px;
+            margin-left: 2em;
+        }
+        .stats-list li {
+            margin-bottom: 8px;
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 1024px) {
+            .main-container {
+                flex-direction: column;
+            }
+            .profile-sidebar {
+                width: 100%;
+                position: static;
+                display: flex;
+                flex-wrap: wrap;
+                gap: 24px;
+                align-items: flex-start;
+            }
+            .avatar-large {
+                width: 200px;
+                height: 200px;
+            }
+            .profile-info {
+                flex: 1;
+                min-width: 300px;
+            }
+            .profile-actions {
+                width: 100%;
+            }
+            .sponsors-section {
+                width: 100%;
+            }
+        }
+        @media (max-width: 768px) {
+            .top-nav {
+                padding: 0 16px;
+            }
+            .nav-links {
+                display: none;
+            }
+            .search-box {
+                width: 160px;
+            }
+            .main-container {
+                padding: 16px;
+            }
+            .main-content {
+                padding: 16px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav class="top-nav">
+        <div class="nav-left">
+            <svg class="github-logo" viewBox="0 0 16 16">
+                <path fill-rule="evenodd" d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"></path>
+            </svg>
+            <div class="nav-links">
+                <a href="#" class="nav-link">Platform <span class="dropdown-arrow">▾</span></a>
+                <a href="#" class="nav-link">Solutions <span class="dropdown-arrow">▾</span></a>
+                <a href="#" class="nav-link">Resources <span class="dropdown-arrow">▾</span></a>
+                <a href="#" class="nav-link">Open Source <span class="dropdown-arrow">▾</span></a>
+                <a href="#" class="nav-link">Enterprise <span class="dropdown-arrow">▾</span></a>
+                <a href="#" class="nav-link">Pricing</a>
+            </div>
+        </div>
+        <div class="nav-right">
+            <div class="search-box">
+                <span class="search-icon">🔍</span>
+                <input type="text" placeholder="Search or jump to...">
+                <span class="search-shortcut">/</span>
+            </div>
+            <button class="nav-button nav-button-secondary">Sign in</button>
+            <button class="nav-button nav-button-primary">Sign up</button>
+            <div class="avatar-small">T</div>
+        </div>
+    </nav>
+
+    <div class="sub-nav">
+        <div class="sub-nav-container">
+            <a href="#" class="sub-nav-item active">📦 Overview</a>
+            <a href="#" class="sub-nav-item">📦 Repositories <span class="badge">122</span></a>
+            <a href="#" class="sub-nav-item">📁 Projects</a>
+            <a href="#" class="sub-nav-item">📦 Packages</a>
+            <a href="#" class="sub-nav-item">⭐ Stars <span class="badge">256</span></a>
+            <a href="#" class="sub-nav-item">💖 Sponsoring <span class="badge">10</span></a>
+        </div>
+    </div>
+
+    <div class="main-container">
+        <aside class="profile-sidebar">
+            <div class="avatar-large"></div>
+            <div class="profile-info">
+                <h1 class="profile-name">Tanner Linsley</h1>
+                <div class="profile-username">tannerlinsley</div>
+                <div class="profile-actions">
+                    <div class="action-buttons">
+                        <button class="btn-follow">Follow</button>
+                        <button class="btn-sponsor">
+                            <span class="sponsor-icon">💜</span>
+                            <span>Sponsor</span>
+                        </button>
+                    </div>
+                </div>
+                <div class="profile-bio">
+                    🔭 TypeScript + React 📦 Open Source 🔮 UI/UX 👨‍💻 Co-Founder @NozzleIO 🏊<br>
+                    Owner @TanStack - #ReactQuery<br>
+                    #ReactTable #ReactLocation #ReactCharts
+                </div>
+                <div class="profile-stats">
+                    👥 <a href="#"><strong>13.3k</strong> followers</a> · <a href="#"><strong>13</strong> following</a>
+                </div>
+                <div class="profile-meta">
+                    <div class="meta-item">
+                        <span class="meta-icon">💼</span>
+                        <span>@TanStack & @nozzle</span>
+                    </div>
+                    <div class="meta-item">
+                        <span class="meta-icon">📍</span>
+                        <span>Utah</span>
+                    </div>
+                    <div class="meta-item">
+                        <span class="meta-icon">🔗</span>
+                        <a href="#">https://tanstack.com</a>
+                    </div>
+                    <div class="meta-item">
+                        <span class="meta-icon">𝕏</span>
+                        <a href="#">@tannerlinsley</a>
+                    </div>
+                </div>
+                <div class="sponsors-section">
+                    <div class="section-title">Sponsors</div>
+                    <div class="sponsors-grid">
+                        <div class="sponsor-avatar" style="background:#4285f4; color:white;">G</div>
+                        <div class="sponsor-avatar" style="background:#ff4081; color:white;">M</div>
+                        <div class="sponsor-avatar" style="background:#ff6e40; color:white;">V</div>
+                        <div class="sponsor-avatar" style="background:#4285f4; color:white;">H</div>
+                        <div class="sponsor-avatar" style="background:#00c853; color:white;">A</div>
+                        <div class="sponsor-avatar" style="background:#536dfe; color:white;">M</div>
+                        <div class="sponsor-avatar" style="background:#ff5722; color:white;">U</div>
+                        <div class="sponsor-avatar" style="background:#7c4dff; color:white;">K</div>
+                        <div class="sponsor-avatar" style="background:#448aff; color:white;">B</div>
+                        <div class="sponsor-avatar" style="background:#18ffff; color:#333;">C</div>
+                        <div class="sponsor-avatar" style="background:#ffab40; color:#333;">O</div>
+                        <div class="sponsor-avatar" style="background:#64ffda; color:#333;">W</div>
+                        <div class="sponsor-avatar" style="background:#ffd740; color:#333;">S</div>
+                        <div class="sponsor-avatar" style="background:#69f0ae; color:#333;">Y</div>
+                        <div class="sponsor-avatar" style="background:#40c4ff; color:#333;">Z</div>
+                        <div class="sponsor-avatar sponsor-more">+161</div>
+                    </div>
+                </div>
+                <div class="sponsors-section">
+                    <div class="section-title">Sponsoring</div>
+                    <div class="sponsors-grid">
+                        <div class="sponsor-avatar" style="background:#5c6bc0; color:white;">A</div>
+                        <div class="sponsor-avatar" style="background:#26c6da; color:white;">B</div>
+                        <div class="sponsor-avatar" style="background:#ffa726; color:white;">C</div>
+                        <div class="sponsor-avatar" style="background:#ef5350; color:white;">D</div>
+                        <div class="sponsor-avatar" style="background:#66bb6a; color:white;">E</div>
+                        <div class="sponsor-avatar" style="background:#7e57c2; color:white;">F</div>
+                        <div class="sponsor-avatar" style="background:#42a5f5; color:white;">G</div>
+                        <div class="sponsor-avatar" style="background:#ec407a; color:white;">H</div>
+                        <div class="sponsor-avatar" style="background:#26a69a; color:white;">I</div>
+                        <div class="sponsor-avatar" style="background:#78909c; color:white;">J</div>
+                        <div class="sponsor-avatar" style="background:#ab47bc; color:white;">K</div>
+                    </div>
+                </div>
+            </div>
+        </aside>
+
+        <main class="main-content">
+            <div class="readme-path">
+                <a href="#">tannerlinsley</a> / <a href="#">README.md</a>
+            </div>
+            <h1 class="readme-heading">
+                Supercharging the React ecosystem via <a href="#">TanStack</a> with projects and products like:
+            </h1>
+            <ul class="project-list">
+                <li class="project-item">
+                    <span class="project-icon icon-ts"></span>
+                    <a href="#">TanStack Query</a>
+                </li>
+                <li class="project-item">
+                    <span class="project-icon icon-table"></span>
+                    <a href="#">TanStack Table</a>
+                </li>
+                <li class="project-item">
+                    <span class="project-icon icon-router"></span>
+                    <a href="#">TanStack Router</a>
+                </li>
+                <li class="project-item">
+                    <span class="project-icon icon-start"></span>
+                    <a href="#">TanStack Start</a>
+                </li>
+                <li class="project-item">
+                    <span class="project-icon icon-virtual"></span>
+                    <a href="#">TanStack Virtual</a>
+                </li>
+                <li class="project-item">
+                    <span class="project-icon icon-form"></span>
+                    <a href="#">TanStack Form</a>
+                </li>
+                <li class="project-item">
+                    <span class="project-icon icon-charts"></span>
+                    <a href="#">React Charts</a>
+                </li>
+                <li class="project-item">
+                    <span class="project-icon icon-swimmer"></span>
+                    <a href="#">Swimmer JS</a>
+                </li>
+            </ul>
+
+            <div class="previously-section">
+                Previously <a href="#">📊 Chart.js</a>, <a href="#">⚛️ React Static</a> and <a href="#">🔀 Crossfilter</a>
+            </div>
+
+            <div class="readme-text">
+                <p>Hello! I build open source software that is currently used by hundreds of thousands of developers at companies ranging from fortune 500 companies like Apple, Google, Facebook, Amazon, Netflix, Walmart, and Target all the way down to startups and indie developers.</p>
+                <p>Most of my open source software is written in Javascript and focused on Headless UI, State Management, Data Viz, and Enterprise Application Architecture.</p>
+            </div>
+
+            <h2 class="readme-h2">For Developers</h2>
+            <div class="readme-text">
+                <p>By helping your company become a Github Sponsor, you will not only feel great about giving back to the open source tools that run your business, but also get some awesome perks! Each of the sponsorship tiers on this page have their perks listed on them. If you believe your company could become a sponsor, then please reach out!</p>
+            </div>
+
+            <h2 class="readme-h2">For Companies and Businesses</h2>
+            <div class="readme-text">
+                <p>By becoming a Github Sponsor, your company and brand will be recognized as a one that gives back to the open source tools that run your business and one that respects your developers time and your customers' experience. You also receive premium perks based on your sponsorship tier for things like free advertising on my web properties, free course vouchers, exclusive access to private repos and tools, free consultation hours with yours truly, and even on-demand support!</p>
+            </div>
+
+            <h3 class="readme-h3">Perks</h3>
+            <div class="readme-text">
+                <p>To see all available perks, refer to the sponsorship tiers on this page :)</p>
+                <p>The latest recorded stats for all TanStack properties:</p>
+                <ul class="stats-list">
+                    <li>90,000+ Unique Monthly Visitors</li>
+                </ul>
+            </div>
+        </main>
+    </div>
+</body>
+</html>
+```

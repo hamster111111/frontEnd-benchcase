@@ -1,0 +1,399 @@
+```html
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>书法成语大挑战</title>
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body { font-family: -apple-system, "Microsoft YaHei", "PingFang SC", sans-serif; background: #f5f5f5; color: #333; font-size: 14px; line-height: 1.6; }
+
+/* Header */
+.header { background: #c0392b; color: #fff; padding: 0 20px; height: 40px; display: flex; align-items: center; justify-content: space-between; }
+.header-left { display: flex; align-items: center; gap: 10px; }
+.header-icon { width: 16px; height: 12px; background: #e74c3c; border: 1px solid #fff; display: inline-block; }
+.header-title { font-size: 14px; font-weight: bold; }
+.header-right { font-size: 12px; }
+
+/* Nav */
+.nav { background: #fdf6e3; border-bottom: 1px solid #e8e0c8; padding: 0 20px; height: 36px; display: flex; align-items: center; gap: 4px; }
+.nav-item { padding: 6px 12px; border-radius: 4px; cursor: pointer; font-size: 13px; color: #555; display: flex; align-items: center; gap: 4px; text-decoration: none; }
+.nav-item.active { background: #c0392b; color: #fff; }
+.nav-item:not(.active):hover { background: #f0e6c8; }
+
+/* Main Layout */
+.main { max-width: 1200px; margin: 0 auto; padding: 15px; display: flex; gap: 15px; }
+
+/* Left Sidebar */
+.sidebar-left { width: 180px; flex-shrink: 0; }
+.sidebar-card { background: #fff; border-radius: 8px; padding: 15px; margin-bottom: 15px; border: 1px solid #eee; }
+.sidebar-card h3 { font-size: 14px; margin-bottom: 12px; color: #333; }
+.nav-link { display: flex; align-items: center; gap: 8px; padding: 8px 10px; border-radius: 6px; margin-bottom: 4px; font-size: 13px; color: #333; cursor: pointer; text-decoration: none; transition: background 0.2s; }
+.nav-link:hover { background: #f8f8f8; }
+.nav-link.active { background: #fff8e1; }
+.nav-link-icon { font-size: 16px; width: 20px; text-align: center; }
+.daily-card { background: #fff; border-radius: 8px; padding: 15px; margin-bottom: 15px; border: 1px solid #eee; }
+.daily-title { color: #c0392b; font-size: 14px; font-weight: bold; margin-bottom: 8px; }
+.daily-text { font-size: 12px; color: #666; line-height: 1.8; }
+.secretary-title { color: #c0392b; font-size: 14px; font-weight: bold; margin-bottom: 8px; }
+
+/* Center Content */
+.content-center { flex: 1; min-width: 0; }
+
+/* Section */
+.section { background: #fff; border-radius: 8px; padding: 18px; margin-bottom: 15px; border: 1px solid #eee; }
+.section-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 15px; }
+.section-title { font-size: 15px; font-weight: bold; display: flex; align-items: center; gap: 6px; }
+.btn-add { background: #c0392b; color: #fff; border: none; padding: 6px 14px; border-radius: 4px; cursor: pointer; font-size: 12px; }
+.btn-add:hover { background: #a93226; }
+
+/* Idiom Cards */
+.idiom-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }
+.idiom-card { border: 1px solid #eee; border-radius: 6px; padding: 12px; }
+.idiom-card-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 10px; }
+.idiom-name { font-size: 14px; font-weight: bold; }
+.idiom-edit { color: #999; cursor: pointer; font-size: 14px; }
+.idiom-desc { font-size: 12px; color: #666; margin-bottom: 12px; line-height: 1.6; }
+.idiom-footer { display: flex; justify-content: space-between; align-items: center; border-top: 1px solid #f0f0f0; padding-top: 10px; }
+.idiom-tag { font-size: 12px; color: #666; display: flex; align-items: center; gap: 4px; }
+.idiom-delete { color: #c0392b; font-size: 12px; cursor: pointer; }
+
+/* Edit Area */
+.practice-tips { margin-bottom: 15px; }
+.practice-label { font-size: 14px; font-weight: bold; margin-bottom: 8px; }
+.practice-item { font-size: 13px; color: #555; margin-bottom: 4px; padding-left: 10px; }
+.practice-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-top: 15px; }
+.practice-card { border: 1px solid #eee; border-radius: 6px; padding: 15px; }
+.practice-card-title { font-size: 14px; font-weight: bold; margin-bottom: 10px; }
+.practice-options { display: flex; justify-content: space-around; text-align: center; }
+.practice-opt { font-size: 12px; color: #666; }
+.practice-opt-label { font-weight: bold; color: #333; margin-bottom: 4px; }
+
+/* Stats */
+.stats-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 15px; margin-bottom: 20px; }
+.stat-card { border: 1px solid #eee; border-radius: 6px; padding: 15px; text-align: center; }
+.stat-label { font-size: 13px; color: #666; margin-bottom: 5px; }
+.stat-value { font-size: 28px; font-weight: bold; color: #333; margin-bottom: 5px; }
+.stat-value.rank { color: #c0392b; }
+.stat-sub { font-size: 11px; color: #999; }
+.progress-bar { height: 10px; background: #eee; border-radius: 5px; overflow: hidden; margin-top: 8px; }
+.progress-fill { height: 100%; background: #c0392b; border-radius: 5px; }
+.progress-text { font-size: 13px; text-align: right; margin-top: 4px; }
+
+/* Chart */
+.chart-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; }
+.chart-title { font-weight: bold; font-size: 14px; }
+.chart-select { border: 1px solid #ddd; border-radius: 4px; padding: 4px 8px; font-size: 12px; background: #fff; }
+.chart-container { display: flex; align-items: flex-end; justify-content: space-around; height: 120px; padding: 0 10px; margin-bottom: 10px; }
+.chart-bar-group { display: flex; flex-direction: column; align-items: center; gap: 4px; flex: 1; }
+.chart-bar { width: 35px; border-radius: 3px 3px 0 0; }
+.chart-bar.light { background: #ddd; }
+.chart-bar.dark { background: #c0392b; }
+.chart-label { font-size: 11px; color: #999; }
+.chart-stats { display: flex; gap: 20px; font-size: 12px; color: #666; margin-top: 10px; }
+
+/* Bottom Input */
+.input-bar { display: flex; gap: 10px; align-items: center; margin-top: 15px; }
+.input-bar input { flex: 1; border: 1px solid #ddd; border-radius: 6px; padding: 10px 14px; font-size: 13px; outline: none; }
+.input-bar input:focus { border-color: #c0392b; }
+.btn-red { background: #c0392b; color: #fff; border: none; padding: 10px 18px; border-radius: 6px; cursor: pointer; font-size: 13px; }
+.btn-red:hover { background: #a93226; }
+.btn-outline { background: #fff; color: #333; border: 1px solid #ddd; padding: 10px 18px; border-radius: 6px; cursor: pointer; font-size: 13px; display: flex; align-items: center; gap: 4px; }
+.btn-outline:hover { background: #f5f5f5; }
+
+/* Right Sidebar */
+.sidebar-right { width: 220px; flex-shrink: 0; }
+.sidebar-right .sidebar-card { margin-bottom: 15px; }
+.recent-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; }
+.recent-icon { color: #c0392b; }
+.recent-item { display: flex; align-items: center; gap: 10px; padding: 8px 0; border-bottom: 1px solid #f5f5f5; }
+.recent-avatar { width: 36px; height: 36px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 12px; }
+.recent-name { font-size: 13px; font-weight: bold; }
+.recent-sub { font-size: 11px; color: #999; }
+.quiz-item { display: flex; align-items: center; gap: 8px; margin-bottom: 8px; font-size: 13px; }
+.quiz-dot { width: 8px; height: 8px; border-radius: 50%; }
+.quiz-dot.green { background: #27ae60; }
+.quiz-dot.blue { background: #3498db; }
+.quiz-dot.gray { background: #999; }
+.quiz-badge { font-size: 11px; padding: 1px 6px; border-radius: 3px; margin-left: 4px; }
+.quiz-badge.green { background: #d5f5e3; color: #27ae60; }
+.quiz-badge.blue { background: #d6eaf8; color: #2980b9; }
+.quiz-desc { font-size: 12px; color: #666; margin-bottom: 4px; }
+.log-item { display: flex; align-items: center; gap: 8px; margin-bottom: 8px; font-size: 13px; }
+
+/* Footer */
+.footer { background: #5d4037; color: #ccc; padding: 40px 20px 20px; margin-top: 20px; }
+.footer-content { max-width: 1200px; margin: 0 auto; display: grid; grid-template-columns: 2fr 1fr 1fr; gap: 40px; }
+.footer-title { font-size: 15px; font-weight: bold; color: #fff; margin-bottom: 12px; }
+.footer-desc { font-size: 12px; color: #aaa; line-height: 1.8; }
+.footer-link { font-size: 13px; color: #bbb; text-decoration: none; display: block; margin-bottom: 6px; }
+.footer-link:hover { color: #fff; }
+.footer-social { display: flex; gap: 12px; margin-top: 8px; }
+.footer-social-icon { width: 28px; height: 28px; border-radius: 50%; background: #795548; display: flex; align-items: center; justify-content: center; color: #fff; font-size: 14px; cursor: pointer; }
+.footer-bottom { max-width: 1200px; margin: 30px auto 0; padding-top: 15px; border-top: 1px solid #6d4c41; text-align: center; font-size: 12px; color: #999; }
+</style>
+</head>
+<body>
+
+<!-- Header -->
+<div class="header">
+  <div class="header-left">
+    <span class="header-icon"></span>
+    <span class="header-title">书法成语大挑战</span>
+  </div>
+  <div class="header-right">欢迎来到书法成语大挑战，探索你的汉字能力！</div>
+</div>
+
+<!-- Nav -->
+<div class="nav">
+  <a class="nav-item active" href="#">🏠 首页</a>
+  <a class="nav-item" href="#">⚖️ 法律咨询</a>
+  <a class="nav-item" href="#">⭐ 评价系统</a>
+  <a class="nav-item" href="#">👨‍🏫 专家咨询</a>
+</div>
+
+<!-- Main -->
+<div class="main">
+  <!-- Left Sidebar -->
+  <div class="sidebar-left">
+    <div class="sidebar-card">
+      <h3>快速导航</h3>
+      <a class="nav-link active" href="#"><span class="nav-link-icon">🌐</span> 快速导航</a>
+      <a class="nav-link" href="#"><span class="nav-link-icon">🖥️</span> 展示区</a>
+      <a class="nav-link" href="#"><span class="nav-link-icon">✏️</span> 编辑区</a>
+      <a class="nav-link" href="#"><span class="nav-link-icon">📊</span> 统计区</a>
+    </div>
+    <div class="daily-card">
+      <div class="daily-title">每日一章</div>
+      <div class="daily-text">练习提示：行云流水，触类 旁通需要长上心。</div>
+    </div>
+    <div class="daily-card">
+      <div class="secretary-title">小秘书</div>
+      <div class="daily-text">温馨提示：可以体试视频学习，提升书法的技能水平！</div>
+    </div>
+  </div>
+
+  <!-- Center Content -->
+  <div class="content-center">
+    <!-- Idiom Display -->
+    <div class="section">
+      <div class="section-header">
+        <div class="section-title">📋 成语展示区</div>
+        <button class="btn-add">+ 添加成语</button>
+      </div>
+      <div class="idiom-grid">
+        <div class="idiom-card">
+          <div class="idiom-card-header">
+            <div class="idiom-name">返朴归真</div>
+            <span class="idiom-edit">✏️</span>
+          </div>
+          <div class="idiom-desc">着力历目意远，造形类敏和分类原式。</div>
+          <div class="idiom-footer">
+            <span class="idiom-tag">✏️ 行书</span>
+            <span class="idiom-delete">删除</span>
+          </div>
+        </div>
+        <div class="idiom-card">
+          <div class="idiom-card-header">
+            <div class="idiom-name">四面楚歌</div>
+            <span class="idiom-edit">✏️</span>
+          </div>
+          <div class="idiom-desc">比喻陷于困境，被人众叛亲离的艰难处境。</div>
+          <div class="idiom-footer">
+            <span class="idiom-tag">✏️ 行书</span>
+            <span class="idiom-delete">删除</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Edit Area -->
+    <div class="section">
+      <div class="section-header">
+        <div class="section-title">📝 编辑区</div>
+      </div>
+      <div class="practice-tips">
+        <div class="practice-label">练习提示：</div>
+        <div class="practice-item">• 控制力度：老在上下均匀，行笔要规范，触类影要有力</div>
+        <div class="practice-item">• 精神入门：音译整修字来，做姿有力</div>
+        <div class="practice-item">• 行笔优序：注意走向，一笔成线，做好临摹</div>
+        <div class="practice-item">• 基建喜高：平衡高的，一气呵成</div>
+      </div>
+      <div class="practice-grid">
+        <div class="practice-card">
+          <div class="practice-card-title">今日练习项目</div>
+          <div class="practice-options">
+            <div class="practice-opt">
+              <div class="practice-opt-label">初入道路</div>
+              <div>相关基础练习</div>
+            </div>
+          </div>
+        </div>
+        <div class="practice-card">
+          <div class="practice-card-title">临摹演示</div>
+          <div class="practice-options">
+            <div class="practice-opt">
+              <div class="practice-opt-label">精</div>
+              <div>相关练习</div>
+            </div>
+            <div class="practice-opt">
+              <div class="practice-opt-label">意</div>
+              <div>中等练习</div>
+            </div>
+            <div class="practice-opt">
+              <div class="practice-opt-label">神</div>
+              <div>提高练习</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Stats Area -->
+    <div class="section">
+      <div class="section-header">
+        <div class="section-title">📊 统计区</div>
+      </div>
+      <div class="stats-grid">
+        <div class="stat-card">
+          <div class="stat-label">完成课题</div>
+          <div class="stat-value">30</div>
+          <div class="stat-sub">超过840位的同学</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label">当前排名</div>
+          <div class="stat-value rank">#5</div>
+          <div class="stat-sub">共2096位学生参与</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label">今日进度</div>
+          <div class="progress-bar"><div class="progress-fill" style="width:70%"></div></div>
+          <div class="progress-text">70%</div>
+        </div>
+      </div>
+
+      <!-- Chart -->
+      <div class="chart-header">
+        <div class="chart-title">学习趋势</div>
+        <select class="chart-select"><option>本周</option></select>
+      </div>
+      <div class="chart-container">
+        <div class="chart-bar-group">
+          <div class="chart-bar dark" style="height:30px"></div>
+          <span class="chart-label">周一</span>
+        </div>
+        <div class="chart-bar-group">
+          <div class="chart-bar light" style="height:10px"></div>
+          <div class="chart-bar dark" style="height:55px"></div>
+          <span class="chart-label">周二</span>
+        </div>
+        <div class="chart-bar-group">
+          <div class="chart-bar light" style="height:20px"></div>
+          <div class="chart-bar dark" style="height:60px"></div>
+          <span class="chart-label">周三</span>
+        </div>
+        <div class="chart-bar-group">
+          <div class="chart-bar light" style="height:10px"></div>
+          <div class="chart-bar dark" style="height:50px"></div>
+          <span class="chart-label">周四</span>
+        </div>
+        <div class="chart-bar-group">
+          <div class="chart-bar light" style="height:15px"></div>
+          <div class="chart-bar dark" style="height:55px"></div>
+          <span class="chart-label">周五</span>
+        </div>
+        <div class="chart-bar-group">
+          <div class="chart-bar dark" style="height:35px"></div>
+          <span class="chart-label">周六</span>
+        </div>
+        <div class="chart-bar-group">
+          <div class="chart-bar light" style="height:10px"></div>
+          <div class="chart-bar dark" style="height:45px"></div>
+          <span class="chart-label">周日</span>
+        </div>
+      </div>
+      <div class="chart-stats">
+        <span>🏆 每日一赛：已完成 4个</span>
+        <span>📝 默写词汇：3次</span>
+        <span>⏱️ 解题时间：5/72</span>
+      </div>
+    </div>
+
+    <!-- Input Bar -->
+    <div class="input-bar">
+      <input type="text" placeholder="输入成语内容...">
+      <button class="btn-red">添加成语</button>
+      <button class="btn-outline">📥 批量导入</button>
+      <button class="btn-outline">📤 导出成语</button>
+    </div>
+  </div>
+
+  <!-- Right Sidebar -->
+  <div class="sidebar-right">
+    <div class="sidebar-card">
+      <div class="recent-header">
+        <h3>最近更新</h3>
+        <span class="recent-icon">📊</span>
+      </div>
+      <div class="recent-item">
+        <div class="recent-avatar" style="background:#e74c3c;color:#fff;font-size:14px;">3</div>
+        <div>
+          <div class="recent-name">初级书法练</div>
+          <div class="recent-sub">基础笔画</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="sidebar-card">
+      <h3 style="margin-bottom:12px;">解题选择</h3>
+      <div class="quiz-item">
+        <span class="quiz-dot green"></span>
+        控制语量 <span class="quiz-badge green">已启用</span>
+      </div>
+      <div class="quiz-item">
+        <span class="quiz-dot blue"></span>
+        综合三个解题 <span class="quiz-badge blue">已配置</span>
+      </div>
+      <div class="quiz-desc" style="margin-top:8px;">一日于字基础中等</div>
+      <div class="quiz-desc">读习辉迭未配置</div>
+    </div>
+
+    <div class="sidebar-card">
+      <h3 style="margin-bottom:12px;">看日日志</h3>
+      <div class="log-item"><span class="quiz-dot green"></span> 英语二完高通</div>
+      <div class="log-item"><span class="quiz-dot blue"></span> 综合三个解题练</div>
+      <div class="log-item"><span class="quiz-dot gray"></span> 分级一天等级</div>
+    </div>
+  </div>
+</div>
+
+<!-- Footer -->
+<div class="footer">
+  <div class="footer-content">
+    <div>
+      <div class="footer-title">书法成语大挑战</div>
+      <div class="footer-desc">挥毫泼墨练字文，感受传承文化的为水学问。</div>
+    </div>
+    <div>
+      <div class="footer-title">快速链接</div>
+      <a class="footer-link" href="#">帮助中心</a>
+      <a class="footer-link" href="#">意见反馈</a>
+      <a class="footer-link" href="#">隐私条款</a>
+      <a class="footer-link" href="#">使用条款</a>
+    </div>
+    <div>
+      <div class="footer-title">关注我们</div>
+      <div class="footer-social">
+        <span class="footer-social-icon">📱</span>
+        <span class="footer-social-icon">💬</span>
+        <span class="footer-social-icon">📞</span>
+      </div>
+    </div>
+  </div>
+  <div class="footer-bottom">© 2023 书法成语大挑战 | 版权所有 ~ 隐私条款</div>
+</div>
+
+</body>
+</html>
+```

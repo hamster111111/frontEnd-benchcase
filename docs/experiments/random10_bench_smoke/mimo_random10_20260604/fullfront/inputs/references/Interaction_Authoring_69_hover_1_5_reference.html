@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Accounting Placement Services</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      margin: 0;
+      padding: 0;
+      background: #f5f5f5;
+    }
+
+    header {
+      background-color: #fff;
+      padding: 10px 40px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+    }
+
+    .logo img {
+      width: 60px;
+      margin-right: 10px;
+    }
+
+    nav {
+      display: flex;
+      align-items: center;
+      gap: 30px;
+    }
+
+    nav a {
+      text-decoration: none;
+      color: #222;
+      font-weight: 500;
+      position: relative;
+    }
+
+    nav a:hover {
+      color: #007bff;
+    }
+
+    .dropdown::after {
+      content: " ▼";
+      font-size: 0.6em;
+    }
+
+    .btn-job {
+      padding: 8px 16px;
+      background-color: #007bff;
+      color: white;
+      border-radius: 20px;
+      text-decoration: none;
+      font-weight: bold;
+    }
+
+    .container {
+      max-width: 1100px;
+      margin: 40px auto;
+      padding: 0 20px;
+      background-color: #fff;
+      padding: 40px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+    }
+
+    h1 {
+      font-size: 32px;
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    .divider {
+      border-top: 1px solid #ddd;
+      margin: 20px 0;
+    }
+
+    .section-text {
+      font-size: 16px;
+      line-height: 1.6;
+      margin-bottom: 30px;
+    }
+
+    .content-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 40px;
+    }
+
+    .text-col {
+      flex: 1;
+      min-width: 300px;
+    }
+
+    .image-col {
+      flex: 1;
+      min-width: 300px;
+      position: relative;
+    }
+
+    .image-col img {
+      width: 100%;
+      height: auto;
+      border-radius: 5px;
+    }
+
+    .overlay-text {
+      position: absolute;
+      bottom: 20px;
+      left: 20px;
+      color: #fff;
+      font-size: 20px;
+      font-weight: bold;
+      text-shadow: 1px 1px 3px rgba(0,0,0,0.7);
+    }
+
+    h2 {
+      font-size: 22px;
+      margin-top: 20px;
+      margin-bottom: 12px;
+    }
+
+    ul {
+      list-style: disc;
+      padding-left: 20px;
+    }
+
+    /* Dropdown styles */
+    .dropdown-container {
+      position: relative;
+      display: inline-block;
+    }
+
+    .dropdown-menu {
+      display: none;
+      position: absolute;
+      background-color: white;
+      min-width: 250px;
+      box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+      z-index: 1;
+      border-radius: 4px;
+      padding: 12px;
+      top: calc(100% + 5px);
+      left: 0;
+    }
+
+    .dropdown-menu a {
+      color: #333;
+      padding: 8px 10px;
+      text-decoration: none;
+      display: block;
+      font-size: 14px;
+      border-bottom: 1px solid #eee;
+    }
+
+    .dropdown-menu a:last-child {
+      border-bottom: none;
+    }
+
+    .dropdown-menu a:hover {
+      background-color: #f8f9fa;
+      color: #007bff;
+    }
+
+    .dropdown-title {
+      font-weight: bold;
+      font-size: 16px;
+      margin-bottom: 8px;
+      color: #007bff;
+    }
+
+    @media(max-width: 768px) {
+      .content-row {
+        flex-direction: column;
+      }
+      
+      .dropdown-menu {
+        width: 100%;
+        left: 0;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="logo">
+      <img src="https://raw.githubusercontent.com/Mikivishy/imgs/main/folder1/Logo.jpg" alt="Logo"/>
+      <div>
+        <strong>SEARCHLOGIC</strong><br/>
+        <span style="font-size: 12px;">RECRUITING, LLC</span>
+      </div>
+    </div>
+    <nav>
+      <a href="#">Home</a>
+      <a href="#">About Us</a>
+      <a href="#" class="dropdown" id="InteractionPart">Placement Specialties</a>
+      <div class="dropdown-menu" id="placementDropdown">
+        <div class="dropdown-title">Our Placement Specialties</div>
+        <a href="#">Controller & Assistant Controller</a>
+        <a href="#">General Ledger Staff & Senior Accountants</a>
+        <a href="#">Financial Analysis</a>
+        <a href="#">Financial Planning & Budgeting</a>
+        <a href="#">Permanent Placement Services</a>
+        <a href="#">Temporary Staffing Solutions</a>
+      </div>
+      <a href="#" class="dropdown">For Employers</a>
+      <a href="#" class="dropdown">For Candidates</a>
+      <a href="#">Contact Us</a>
+      <a href="#" class="btn-job">Find a Job</a>
+    </nav>
+  </header>
+
+  <div class="container">
+    <h1>Accounting Placement Services</h1>
+    <div class="divider"></div>
+
+    <div class="content-row">
+      <div class="text-col">
+        <p class="section-text">
+          Recognition. Personalization. Flexibility. These are the qualities that SearchLogic Recruiting utilizes to meet the ever-changing requirements of your complex business environment. We take the time to recognize your goals, personalize each solution, and remain flexible in providing diverse staffing options to keep you on the leading edge of your market. Plus, our services are contingency-based, meaning there's no investment until you identify the right candidate.
+        </p>
+        <h2>Permanent Placement: Networking for Blue Chip Prospects</h2>
+        <p class="section-text">
+          Hiring the right employee is one of the most critical elements in building a successful company. Despite the fact that competing for top talent is both complicated and time consuming, we combine our extensive professional network with a thorough prescreening process to identify those hard-to-find candidates.
+        </p>
+      </div>
+
+      <div class="image-col">
+        <img src="https://raw.githubusercontent.com/Mikivishy/imgs/main/folder1/People.jpg" alt="Success Stories">
+        <div class="overlay-text">Success Stories</div>
+      </div>
+    </div>
+
+    <div class="content-row">
+      <div class="text-col">
+        <h2>Temporary Placement: The 'Quick Fix' Done Right</h2>
+        <p class="section-text">
+          We understand that your staffing needs can shift due to seasonal trends, special projects, or unanticipated absences—and temporary employment can be the ideal solution. Whether you need help for a day, a month, or longer, we'll provide skilled professionals ready to jump in and produce results.
+        </p>
+      </div>
+
+      <div class="text-col">
+        <h2>Placement Specialties:</h2>
+        <ul>
+          <li>Controller, Asst. Controller</li>
+          <li>General Ledger (Staff & Sr. Accnt)</li>
+          <li>Financial Analysis</li>
+          <li>Financial Planning & Budgeting</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Handle dropdown interactions
+    document.addEventListener('DOMContentLoaded', function() {
+      const interactionElement = document.getElementById('InteractionPart');
+      const dropdownMenu = document.getElementById('placementDropdown');
+      
+      // Function to position the dropdown
+      function positionDropdown() {
+        const rect = interactionElement.getBoundingClientRect();
+        dropdownMenu.style.top = rect.bottom + 'px';
+        
+        // If the dropdown would go off the right edge of the screen, align it differently
+        if (rect.left + dropdownMenu.offsetWidth > window.innerWidth) {
+          dropdownMenu.style.left = 'auto';
+          dropdownMenu.style.right = '0';
+        } else {
+          dropdownMenu.style.left = rect.left + 'px';
+          dropdownMenu.style.right = 'auto';
+        }
+      }
+      
+      // Show dropdown on hover
+      interactionElement.addEventListener('mouseenter', function() {
+        positionDropdown();
+        dropdownMenu.style.display = 'block';
+      });
+      
+      // Keep dropdown visible when hovering over it
+      dropdownMenu.addEventListener('mouseenter', function() {
+        dropdownMenu.style.display = 'block';
+      });
+      
+      // Hide dropdown when mouse leaves
+      interactionElement.addEventListener('mouseleave', function(e) {
+        // Check if the mouse is moving toward the dropdown
+        if (e.relatedTarget !== dropdownMenu && !dropdownMenu.contains(e.relatedTarget)) {
+          dropdownMenu.style.display = 'none';
+        }
+      });
+      
+      dropdownMenu.addEventListener('mouseleave', function() {
+        dropdownMenu.style.display = 'none';
+      });
+      
+      // Reposition dropdown on window resize
+      window.addEventListener('resize', function() {
+        if (dropdownMenu.style.display === 'block') {
+          positionDropdown();
+        }
+      });
+      
+      // Handle clicks on other dropdowns
+      document.querySelectorAll('.dropdown:not(#InteractionPart)').forEach(item => {
+        item.addEventListener('click', (e) => {
+          e.preventDefault();
+          alert('Dropdown functionality not implemented.');
+        });
+      });
+    });
+  </script>
+</body>
+</html>

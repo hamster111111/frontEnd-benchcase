@@ -1,0 +1,591 @@
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Book of Common Prayer - The Church of England</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+            color: #333;
+            background-color: #fff;
+            min-height: 100vh;
+        }
+
+        /* Header */
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 30px;
+            background-color: #fff;
+            border-bottom: 1px solid #ddd;
+            position: relative;
+            z-index: 100;
+        }
+
+        .header-left {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 12px;
+            font-weight: bold;
+            color: #1a1a1a;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .logo-icon {
+            width: 40px;
+            height: 40px;
+            background-color: #1a1a1a;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .logo-icon svg {
+            width: 24px;
+            height: 24px;
+            fill: #fff;
+        }
+
+        .logo-text {
+            line-height: 1.2;
+        }
+
+        .logo-text span {
+            display: block;
+            font-size: 14px;
+        }
+
+        .tagline {
+            font-size: 13px;
+            color: #666;
+            font-style: italic;
+        }
+
+        .header-nav {
+            display: flex;
+            gap: 30px;
+            align-items: center;
+        }
+
+        .header-nav a {
+            text-decoration: none;
+            color: #1a1a1a;
+            font-size: 14px;
+            font-weight: 500;
+        }
+
+        /* Main Layout */
+        .main-container {
+            display: flex;
+            min-height: calc(100vh - 70px);
+        }
+
+        /* Sidebar */
+        .sidebar {
+            width: 200px;
+            background-color: #f5f0e8;
+            padding: 20px 15px;
+            flex-shrink: 0;
+            border-right: 1px solid #ddd;
+        }
+
+        .sidebar-title {
+            font-size: 14px;
+            font-weight: bold;
+            color: #1a1a1a;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid #ccc;
+        }
+
+        .sidebar-section-title {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            font-size: 14px;
+            font-weight: bold;
+            color: #1a1a1a;
+            margin-bottom: 15px;
+            padding: 8px 0;
+            border-bottom: 1px solid #ccc;
+        }
+
+        .sidebar-section-title .arrow {
+            font-size: 12px;
+            color: #666;
+        }
+
+        .sidebar-links {
+            list-style: none;
+        }
+
+        .sidebar-links li {
+            margin-bottom: 12px;
+        }
+
+        .sidebar-links li a {
+            font-size: 13px;
+            color: #333;
+            text-decoration: none;
+            line-height: 1.4;
+        }
+
+        .sidebar-links li a:hover {
+            text-decoration: underline;
+        }
+
+        /* Content */
+        .content {
+            flex: 1;
+            padding: 30px 40px;
+            max-width: 900px;
+        }
+
+        .attribution {
+            font-size: 12px;
+            color: #666;
+            margin-bottom: 30px;
+            text-align: right;
+        }
+
+        .attribution a {
+            color: #333;
+            text-decoration: underline;
+        }
+
+        .copy-btn {
+            display: block;
+            width: 200px;
+            padding: 12px 20px;
+            background-color: #fff;
+            border: 2px solid #1a1a1a;
+            color: #1a1a1a;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            margin: 0 auto 40px;
+            text-align: center;
+        }
+
+        .copy-btn:hover {
+            background-color: #f5f5f5;
+        }
+
+        /* Prayer Cards Section */
+        .prayer-section {
+            display: flex;
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+
+        .prayer-card {
+            background-color: #4a5a6a;
+            padding: 25px;
+            color: #fff;
+            flex: 1;
+            min-height: 180px;
+        }
+
+        .prayer-card h3 {
+            font-size: 18px;
+            font-weight: 400;
+            margin-bottom: 5px;
+        }
+
+        .prayer-card p {
+            font-size: 14px;
+            opacity: 0.9;
+        }
+
+        .prayer-image {
+            flex: 1;
+            background-color: #7a8a9a;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .tablet-mockup {
+            width: 120px;
+            height: 160px;
+            background-color: #3a4a5a;
+            border-radius: 8px;
+            border: 4px solid #2a3a4a;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+        }
+
+        .tablet-screen {
+            width: 100px;
+            height: 140px;
+            background: linear-gradient(135deg, #5a8a9a, #4a7a8a);
+            border-radius: 2px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #fff;
+            font-size: 12px;
+            text-align: center;
+            padding: 10px;
+        }
+
+        /* Prayer Info Section */
+        .prayer-info {
+            padding: 0 30px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .prayer-info .join-link {
+            font-size: 13px;
+            color: #333;
+            text-decoration: underline;
+            margin-bottom: 10px;
+            display: block;
+        }
+
+        .prayer-info h2 {
+            font-size: 22px;
+            font-weight: 400;
+            color: #1a1a1a;
+            line-height: 1.4;
+        }
+
+        /* Share Section */
+        .share-section {
+            display: flex;
+            gap: 30px;
+            justify-content: center;
+            margin: 40px 0;
+            padding-top: 30px;
+            border-top: 1px solid #ddd;
+        }
+
+        .share-section a {
+            font-size: 14px;
+            color: #1a1a1a;
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        .share-section a:hover {
+            text-decoration: underline;
+        }
+
+        /* Newsletter Section */
+        .newsletter-section {
+            text-align: center;
+            padding: 40px 0;
+            border-top: 1px solid #ddd;
+            margin-top: 40px;
+        }
+
+        .newsletter-section h2 {
+            font-size: 28px;
+            font-weight: 600;
+            color: #1a1a1a;
+            margin-bottom: 15px;
+        }
+
+        .newsletter-section p {
+            font-size: 15px;
+            color: #666;
+            margin-bottom: 25px;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .newsletter-btn {
+            display: inline-block;
+            padding: 14px 40px;
+            background-color: #fff;
+            border: 2px solid #1a1a1a;
+            color: #1a1a1a;
+            font-size: 15px;
+            font-weight: 500;
+            cursor: pointer;
+            text-decoration: none;
+        }
+
+        .newsletter-btn:hover {
+            background-color: #f5f5f5;
+        }
+
+        /* Cookie Banner */
+        .cookie-banner {
+            position: fixed;
+            top: 0;
+            right: 0;
+            width: 380px;
+            height: 100vh;
+            background-color: #fff;
+            box-shadow: -4px 0 20px rgba(0,0,0,0.15);
+            z-index: 1000;
+            padding: 25px;
+            overflow-y: auto;
+        }
+
+        .cookie-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 20px;
+        }
+
+        .cookie-header h2 {
+            font-size: 20px;
+            font-weight: 600;
+            color: #1a1a1a;
+        }
+
+        .cookie-close {
+            background: none;
+            border: none;
+            font-size: 24px;
+            cursor: pointer;
+            color: #666;
+            padding: 0;
+            line-height: 1;
+        }
+
+        .cookie-text {
+            font-size: 14px;
+            color: #333;
+            line-height: 1.6;
+            margin-bottom: 20px;
+        }
+
+        .cookie-text a {
+            color: #333;
+            text-decoration: underline;
+        }
+
+        .cookie-accept-btn {
+            display: block;
+            width: 100%;
+            padding: 14px 20px;
+            background-color: #fff;
+            border: 2px solid #1a1a1a;
+            color: #1a1a1a;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            margin-bottom: 30px;
+        }
+
+        .cookie-accept-btn:hover {
+            background-color: #f5f5f5;
+        }
+
+        .cookie-section-title {
+            font-size: 16px;
+            font-weight: 600;
+            color: #1a1a1a;
+            margin-bottom: 10px;
+        }
+
+        .cookie-section-text {
+            font-size: 13px;
+            color: #666;
+            line-height: 1.6;
+        }
+
+        /* Settings Button */
+        .settings-btn {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            width: 50px;
+            height: 50px;
+            background-color: #1a1a1a;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            z-index: 999;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+        }
+
+        .settings-btn svg {
+            width: 24px;
+            height: 24px;
+            fill: #fff;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="header-left">
+            <div class="logo">
+                <div class="logo-icon">
+                    <svg viewBox="0 0 24 24">
+                        <circle cx="12" cy="12" r="10" fill="none" stroke="#fff" stroke-width="1.5"/>
+                        <line x1="12" y1="4" x2="12" y2="20" stroke="#fff" stroke-width="1.5"/>
+                        <line x1="6" y1="10" x2="18" y2="10" stroke="#fff" stroke-width="1.5"/>
+                    </svg>
+                </div>
+                <div class="logo-text">
+                    <span>THE CHURCH</span>
+                    <span>OF ENGLAND</span>
+                </div>
+            </div>
+            <span class="tagline">A Christian presence in every community</span>
+        </div>
+        <nav class="header-nav">
+            <a href="#">Faith & Life</a>
+            <a href="#">Life Events</a>
+            <a href="#">Prayer</a>
+        </nav>
+    </header>
+
+    <!-- Main Container -->
+    <div class="main-container">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <div class="sidebar-title">Worship texts and resources</div>
+            
+            <div class="sidebar-section-title">
+                <span>Book of Common Prayer</span>
+                <span class="arrow">▼</span>
+            </div>
+            
+            <ul class="sidebar-links">
+                <li><a href="#">Tables</a></li>
+                <li><a href="#">The Preface</a></li>
+                <li><a href="#">Concerning the Service of the Church</a></li>
+                <li><a href="#">Concerning Ceremonies, why some be abolished, and some retained</a></li>
+                <li><a href="#">Rules to Order the Service</a></li>
+                <li><a href="#">The Order how the Psalter is appointed to be read</a></li>
+                <li><a href="#">The Order how the rest of Holy Scripture is appointed to be read</a></li>
+                <li><a href="#">A Table of Proper Lessons and Psalms</a></li>
+                <li><a href="#">Tables and Rules for the Feasts and Fasts through the whole Year</a></li>
+                <li><a href="#">The Order for Morning Prayer</a></li>
+                <li><a href="#">The Order for Morning and Evening Prayer</a></li>
+                <li><a href="#">The Creed of S. Athanasius</a></li>
+                <li><a href="#">The Litany</a></li>
+                <li><a href="#">Prayers and Thanksgivings</a></li>
+                <li>
+                    <a href="#">Collects Epistles and Gospels</a>
+                    <span class="arrow">▼</span>
+                </li>
+            </ul>
+        </aside>
+
+        <!-- Content -->
+        <main class="content">
+            <p class="attribution">
+                Text from The Book of Common Prayer, the rights in which are vested in the Crown, 
+                is reproduced by permission of the Crown's Patentee, <a href="#">Cambridge University Press</a>.
+            </p>
+
+            <button class="copy-btn">Copy to clipboard</button>
+
+            <!-- Prayer Cards -->
+            <div class="prayer-section">
+                <div class="prayer-card">
+                    <h3>Prayer During the Day</h3>
+                    <p>Common Worship</p>
+                </div>
+
+                <div class="prayer-info">
+                    <a href="#" class="join-link">Join us in Daily Prayer</a>
+                    <h2>Find Morning, Evening and Night Prayer in traditional forms</h2>
+                </div>
+
+                <div class="prayer-image">
+                    <div class="tablet-mockup">
+                        <div class="tablet-screen">Daily Prayer</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Share Section -->
+            <div class="share-section">
+                <a href="#">Share this page</a>
+                <a href="#">Email this page</a>
+                <a href="#">Print this page</a>
+            </div>
+
+            <!-- Newsletter Section -->
+            <section class="newsletter-section">
+                <h2>Sign up for our newsletter</h2>
+                <p>Stay connected and get the latest updates about the Church of England straight to your inbox.</p>
+                <a href="#" class="newsletter-btn">Join our mailing list</a>
+            </section>
+        </main>
+    </div>
+
+    <!-- Cookie Banner -->
+    <div class="cookie-banner" id="cookieBanner">
+        <div class="cookie-header">
+            <h2>Our use of cookies</h2>
+            <button class="cookie-close" onclick="closeCookieBanner()">×</button>
+        </div>
+
+        <p class="cookie-text">
+            We use necessary cookies to make our site work. We'd also like to set 
+            optional analytics and marketing cookies to help us improve it and 
+            show you relevant content. These are our "Recommended Settings". 
+            We won't set optional cookies unless you enable them. Using this tool 
+            will set a cookie on your device to remember your preferences.
+        </p>
+
+        <p class="cookie-text">
+            For more detailed information, please check our For more 
+            information about the cookies we use, see our <a href="#">Cookies page</a>.
+        </p>
+
+        <button class="cookie-accept-btn" onclick="closeCookieBanner()">
+            Accept Recommended Settings
+        </button>
+
+        <h3 class="cookie-section-title">Necessary Cookies</h3>
+        <p class="cookie-section-text">
+            Necessary cookies enable core functionality such as security, network 
+            management and accessibility. You may disable these by changing 
+            your browser settings, but this may affect how the website functions.
+        </p>
+    </div>
+
+    <!-- Settings Button -->
+    <div class="settings-btn">
+        <svg viewBox="0 0 24 24">
+            <circle cx="12" cy="12" r="3" fill="none" stroke="#fff" stroke-width="2"/>
+            <path d="M12 1v4M12 19v4M4.22 4.22l2.83 2.83M16.95 16.95l2.83 2.83M1 12h4M19 12h4M4.22 19.78l2.83-2.83M16.95 7.05l2.83-2.83" stroke="#fff" stroke-width="2"/>
+        </svg>
+    </div>
+
+    <script>
+        function closeCookieBanner() {
+            document.getElementById('cookieBanner').style.display = 'none';
+        }
+    </script>
+</body>
+</html>
+```

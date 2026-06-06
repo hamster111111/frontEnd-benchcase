@@ -1,0 +1,65 @@
+[1/30] design2code 256 http=200
+[2/30] design2code 378 http=200
+[3/30] design2code 335 http=200
+[4/30] design2code 416 http=200
+[5/30] design2code 278 http=200
+[6/30] design2code 332 http=200
+[7/30] design2code 193 http=200
+[8/30] design2code 105 http=200
+[9/30] design2code 229 http=200
+[10/30] design2code 125 http=200
+[11/30] flame 38 http=200
+[12/30] flame 17 http=200
+[13/30] flame 42 http=200
+[14/30] flame 51 http=200
+[15/30] flame 66 http=200
+[16/30] flame 31 http=200
+[17/30] flame 33 http=200
+[18/30] flame 50 http=200
+[19/30] flame 61 http=200
+[20/30] flame 74 http=200
+[21/30] fullfront Interaction_Authoring_59_click_6_6 http=200
+[22/30] fullfront Interaction_Authoring_69_hover_1_5 http=200
+[23/30] fullfront Interaction_Authoring_72_hover_2_14 http=200
+[24/30] fullfront Text_to_code_14_new-img-code_127 http=200
+[25/30] fullfront Interaction_Authoring_62_hover_1_13 http=200
+[26/30] fullfront Interaction_Authoring_82_hover_3_15 http=200
+[27/30] fullfront Image_to_code_79_new-img-code_173 http=200
+[28/30] fullfront Interaction_Authoring_9_click_1_55 http=200
+[29/30] fullfront Image_to_code_175_new-img-code_521 http=200
+[30/30] fullfront Image_to_code_70_new-img-code_165 http=200
+{
+  "run_dir": "experiments\\random10_bench_smoke\\mimo_random10_20260604",
+  "judge_dir": "experiments\\random10_bench_smoke\\mimo_random10_20260604\\vlm_judge\\qwen3-vl-plus_visual_judge_20260604",
+  "judge_provider": "qwen",
+  "judge_model": "qwen3-vl-plus",
+  "bypass_proxy": true,
+  "scoring_note": "VLM judge visual score; for FullFront interaction samples, generated screenshot is initial static render and reference_2 is interaction context only.",
+  "total_scored": 30,
+  "total_errors": 0,
+  "overall_mean": 91.0,
+  "bench_stats": {
+    "design2code": {
+      "count": 10,
+      "mean": 92.9,
+      "min": 88.0,
+      "max": 96.0,
+      "low_score_count_lt_60": 0
+    },
+    "flame": {
+      "count": 10,
+      "mean": 91.5,
+      "min": 85.0,
+      "max": 98.0,
+      "low_score_count_lt_60": 0
+    },
+    "fullfront": {
+      "count": 10,
+      "mean": 88.6,
+      "min": 78.0,
+      "max": 96.0,
+      "low_score_count_lt_60": 0
+    }
+  },
+  "finished_at": "2026-06-04T20:28:47"
+}

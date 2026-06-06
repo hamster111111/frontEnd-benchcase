@@ -1,0 +1,98 @@
+{
+  "run_dir": "experiments\\random10_bench_smoke\\mimo_random10_20260604",
+  "judge_dir": "experiments\\random10_bench_smoke\\mimo_random10_20260604\\vlm_judge\\qwen3-vl-plus_visual_judge_20260604",
+  "judge_provider": "qwen",
+  "judge_model": "qwen3-vl-plus",
+  "bypass_proxy": true,
+  "scoring_note": "VLM judge visual score; for FullFront interaction samples, generated screenshot is initial static render and reference_2 is interaction context only.",
+  "total_scored": 120,
+  "total_errors": 0,
+  "overall_mean": 84.43,
+  "bench_stats": {
+    "design2code": {
+      "count": 10,
+      "mean": 92.9,
+      "min": 88.0,
+      "max": 96.0,
+      "low_score_count_lt_60": 0
+    },
+    "flame": {
+      "count": 10,
+      "mean": 91.5,
+      "min": 85.0,
+      "max": 98.0,
+      "low_score_count_lt_60": 0
+    },
+    "fullfront": {
+      "count": 10,
+      "mean": 88.6,
+      "min": 78.0,
+      "max": 96.0,
+      "low_score_count_lt_60": 0
+    },
+    "ui2code_real": {
+      "count": 10,
+      "mean": 75.9,
+      "min": 42.0,
+      "max": 94.0,
+      "low_score_count_lt_60": 1
+    },
+    "uipolish_real": {
+      "count": 10,
+      "mean": 80.8,
+      "min": 68.0,
+      "max": 94.0,
+      "low_score_count_lt_60": 0
+    },
+    "uipolish_synthetic": {
+      "count": 10,
+      "mean": 78.2,
+      "min": 58.0,
+      "max": 94.0,
+      "low_score_count_lt_60": 1
+    },
+    "web2code": {
+      "count": 10,
+      "mean": 92.0,
+      "min": 78.0,
+      "max": 98.0,
+      "low_score_count_lt_60": 0
+    },
+    "dcgen_original": {
+      "count": 10,
+      "mean": 86.2,
+      "min": 78.0,
+      "max": 94.0,
+      "low_score_count_lt_60": 0
+    },
+    "interaction2code": {
+      "count": 10,
+      "mean": 78.8,
+      "min": 68.0,
+      "max": 88.0,
+      "low_score_count_lt_60": 0
+    },
+    "designbench": {
+      "count": 10,
+      "mean": 88.1,
+      "min": 82.0,
+      "max": 95.0,
+      "low_score_count_lt_60": 0
+    },
+    "screencoder_screenbench": {
+      "count": 10,
+      "mean": 80.0,
+      "min": 68.0,
+      "max": 96.0,
+      "low_score_count_lt_60": 0
+    },
+    "vision2web": {
+      "count": 10,
+      "mean": 80.2,
+      "min": 68.0,
+      "max": 88.0,
+      "low_score_count_lt_60": 0
+    }
+  },
+  "finished_at": "2026-06-04T21:40:06"
+}

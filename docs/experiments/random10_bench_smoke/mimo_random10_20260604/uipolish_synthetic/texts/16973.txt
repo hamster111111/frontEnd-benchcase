@@ -1,0 +1,708 @@
+```html
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>动漫剪辑汇</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "Helvetica Neue", Helvetica, Arial, sans-serif;
+            background-color: #f5f5f5;
+            color: #333;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Top Navigation Bar */
+        .top-nav {
+            background-color: #fff;
+            height: 48px;
+            display: flex;
+            align-items: center;
+            padding: 0 20px;
+            border-bottom: 1px solid #eee;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .nav-logo {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            margin-right: 16px;
+        }
+
+        .nav-logo-icon {
+            width: 28px;
+            height: 28px;
+            background: linear-gradient(135deg, #333, #555);
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .nav-logo-icon svg {
+            width: 18px;
+            height: 18px;
+            fill: #fff;
+        }
+
+        .nav-logo-text {
+            font-size: 16px;
+            font-weight: 700;
+            color: #333;
+        }
+
+        .nav-login-btn {
+            background-color: #ff6600;
+            color: #fff;
+            border: none;
+            padding: 4px 12px;
+            border-radius: 4px;
+            font-size: 13px;
+            cursor: pointer;
+            margin-right: 20px;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 20px;
+            margin-right: auto;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: #555;
+            font-size: 14px;
+            line-height: 48px;
+        }
+
+        .nav-links a:hover {
+            color: #ff6600;
+        }
+
+        .nav-search {
+            display: flex;
+            align-items: center;
+            background-color: #f5f5f5;
+            border: 1px solid #ddd;
+            border-radius: 20px;
+            padding: 4px 12px;
+            margin-right: 16px;
+            width: 200px;
+        }
+
+        .nav-search svg {
+            width: 14px;
+            height: 14px;
+            fill: #999;
+            margin-right: 6px;
+        }
+
+        .nav-search input {
+            border: none;
+            background: transparent;
+            outline: none;
+            font-size: 13px;
+            color: #999;
+            width: 100%;
+        }
+
+        .nav-user-icon {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #ff6600, #ff8533);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+        }
+
+        .nav-user-icon svg {
+            width: 18px;
+            height: 18px;
+            fill: #fff;
+        }
+
+        /* Main Layout */
+        .main-layout {
+            display: flex;
+            flex: 1;
+        }
+
+        /* Left Sidebar */
+        .sidebar {
+            width: 170px;
+            background-color: #fff;
+            border-right: 1px solid #eee;
+            padding: 12px 0;
+            flex-shrink: 0;
+            height: calc(100vh - 48px);
+            position: sticky;
+            top: 48px;
+            display: flex;
+            flex-direction: column;
+            overflow-y: auto;
+        }
+
+        .sidebar-menu {
+            list-style: none;
+            flex: 1;
+        }
+
+        .sidebar-menu li {
+            padding: 10px 20px;
+            cursor: pointer;
+            font-size: 14px;
+            color: #555;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: background-color 0.2s;
+        }
+
+        .sidebar-menu li:hover {
+            background-color: #f8f8f8;
+        }
+
+        .sidebar-menu li.active {
+            color: #ff6600;
+            background-color: #fff8f0;
+        }
+
+        .sidebar-menu li svg {
+            width: 18px;
+            height: 18px;
+            fill: currentColor;
+            flex-shrink: 0;
+        }
+
+        .sidebar-tip {
+            margin: 16px;
+            background: linear-gradient(135deg, #ff6600, #ff8533);
+            border-radius: 8px;
+            padding: 16px;
+            color: #fff;
+        }
+
+        .sidebar-tip-title {
+            font-size: 16px;
+            font-weight: 600;
+            margin-bottom: 6px;
+        }
+
+        .sidebar-tip-desc {
+            font-size: 12px;
+            line-height: 1.5;
+            opacity: 0.9;
+        }
+
+        /* Content Area */
+        .content {
+            flex: 1;
+            padding: 24px 28px;
+            min-width: 0;
+        }
+
+        .content-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 16px;
+        }
+
+        .content-title {
+            font-size: 20px;
+            font-weight: 700;
+            color: #333;
+        }
+
+        .add-btn {
+            background-color: #ff6600;
+            color: #fff;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 6px;
+            font-size: 14px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            transition: background-color 0.2s;
+        }
+
+        .add-btn:hover {
+            background-color: #e55d00;
+        }
+
+        /* Tip Banner */
+        .tip-banner {
+            background-color: #fffae6;
+            border: 1px solid #ffe58f;
+            border-radius: 6px;
+            padding: 12px 16px;
+            margin-bottom: 20px;
+            font-size: 13px;
+            color: #b27300;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .tip-banner span {
+            color: #ff6600;
+            font-weight: 600;
+        }
+
+        /* Video Cards Grid */
+        .cards-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+        }
+
+        .video-card {
+            background-color: #fff;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 1px 4px rgba(0, 0, 0, 0.08);
+            transition: box-shadow 0.2s;
+        }
+
+        .video-card:hover {
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
+        }
+
+        .card-thumbnail {
+            position: relative;
+            width: 100%;
+            height: 0;
+            padding-bottom: 56.25%;
+            overflow: hidden;
+        }
+
+        .card-thumbnail-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+        }
+
+        .play-btn {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 48px;
+            height: 48px;
+            background-color: rgba(0, 0, 0, 0.55);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: background-color 0.2s;
+        }
+
+        .play-btn:hover {
+            background-color: rgba(0, 0, 0, 0.7);
+        }
+
+        .play-btn svg {
+            width: 20px;
+            height: 20px;
+            fill: #fff;
+            margin-left: 2px;
+        }
+
+        .card-info {
+            padding: 12px 14px;
+        }
+
+        .card-title {
+            font-size: 14px;
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 8px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .card-tags {
+            display: flex;
+            gap: 6px;
+            margin-bottom: 8px;
+            flex-wrap: wrap;
+        }
+
+        .tag {
+            padding: 2px 8px;
+            border-radius: 3px;
+            font-size: 12px;
+            border: 1px solid;
+        }
+
+        .tag-red {
+            color: #ff4d4f;
+            border-color: #ffccc7;
+            background-color: #fff1f0;
+        }
+
+        .tag-orange {
+            color: #ff6600;
+            border-color: #ffccc7;
+            background-color: #fff7e6;
+        }
+
+        .tag-blue {
+            color: #1890ff;
+            border-color: #91d5ff;
+            background-color: #e6f7ff;
+        }
+
+        .tag-purple {
+            color: #722ed1;
+            border-color: #d3adf7;
+            background-color: #f9f0ff;
+        }
+
+        .tag-green {
+            color: #52c41a;
+            border-color: #b7eb8f;
+            background-color: #f6ffed;
+        }
+
+        .card-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .card-date {
+            font-size: 12px;
+            color: #999;
+        }
+
+        .card-actions {
+            display: flex;
+            gap: 10px;
+        }
+
+        .card-actions svg {
+            width: 16px;
+            height: 16px;
+            cursor: pointer;
+            transition: opacity 0.2s;
+        }
+
+        .card-actions svg:hover {
+            opacity: 0.7;
+        }
+
+        .edit-icon {
+            fill: #1890ff;
+        }
+
+        .delete-icon {
+            fill: #ff4d4f;
+        }
+
+        /* Footer */
+        .footer {
+            background-color: #fff;
+            border-top: 1px solid #eee;
+            padding: 36px 40px 0;
+            margin-top: 40px;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 40px;
+            margin-bottom: 24px;
+        }
+
+        .footer-section h4 {
+            font-size: 15px;
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 12px;
+        }
+
+        .footer-section p {
+            font-size: 13px;
+            color: #888;
+            line-height: 1.8;
+        }
+
+        .footer-section a {
+            text-decoration: none;
+            color: #888;
+            font-size: 13px;
+            line-height: 2;
+            display: block;
+        }
+
+        .footer-section a:hover {
+            color: #ff6600;
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding: 16px 0;
+            border-top: 1px solid #eee;
+            font-size: 13px;
+            color: #999;
+        }
+
+        /* Thumbnail backgrounds */
+        .thumb-1 {
+            background: linear-gradient(135deg, #5a5a5a 0%, #3a3a3a 40%, #6a6a6a 100%);
+        }
+        .thumb-2 {
+            background: linear-gradient(180deg, #9eaab5 0%, #7a8a95 50%, #5a6a75 100%);
+        }
+        .thumb-3 {
+            background: linear-gradient(135deg, #c4a882 0%, #d4b892 50%, #a49872 100%);
+        }
+        .thumb-4 {
+            background: linear-gradient(180deg, #b0b5ba 0%, #8a8f94 50%, #6a6f74 100%);
+        }
+        .thumb-5 {
+            background: linear-gradient(135deg, #8a9095 0%, #6a7075 50%, #4a5055 100%);
+        }
+    </style>
+</head>
+<body>
+    <!-- Top Navigation -->
+    <nav class="top-nav">
+        <div class="nav-logo">
+            <div class="nav-logo-icon">
+                <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 14.5v-9l6 4.5-6 4.5z"/></svg>
+            </div>
+            <span class="nav-logo-text">动漫剪辑汇</span>
+        </div>
+        <button class="nav-login-btn">首页登录</button>
+        <div class="nav-links">
+            <a href="#">我的剪辑</a>
+            <a href="#">素材库</a>
+            <a href="#">个人中心</a>
+        </div>
+        <div class="nav-search">
+            <svg viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/></svg>
+            <input type="text" placeholder="搜索剪辑...">
+        </div>
+        <div class="nav-user-icon">
+            <svg viewBox="0 0 24 24"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg>
+        </div>
+    </nav>
+
+    <!-- Main Layout -->
+    <div class="main-layout">
+        <!-- Left Sidebar -->
+        <aside class="sidebar">
+            <ul class="sidebar-menu">
+                <li class="active">
+                    <svg viewBox="0 0 24 24"><path d="M20 2H4c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm0 18H4V4h16v16zM6 6h5v5H6V6zm7 0h5v5h-5V6zm-7 7h5v5H6v-5zm7 0h5v5h-5v-5z"/></svg>
+                    展示区
+                </li>
+                <li>
+                    <svg viewBox="0 0 24 24"><path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34c-.39-.39-1.02-.39-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"/></svg>
+                    编辑区
+                </li>
+                <li>
+                    <svg viewBox="0 0 24 24"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zM9 17H7v-7h2v7zm4 0h-2V7h2v10zm4 0h-2v-4h2v4z"/></svg>
+                    密计区
+                </li>
+                <li>
+                    <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 17h-2v-2h2v2zm2.07-7.75l-.9.92C13.45 12.9 13 13.5 13 15h-2v-.5c0-1.1.45-2.1 1.17-2.83l1.24-1.26c.37-.36.59-.86.59-1.41 0-1.1-.9-2-2-2s-2 .9-2 2H8c0-2.21 1.79-4 4-4s4 1.79 4 4c0 .88-.36 1.68-.93 2.25z"/></svg>
+                    帮助说明
+                </li>
+                <li>
+                    <svg viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                    主题特色
+                </li>
+            </ul>
+            <div class="sidebar-tip">
+                <div class="sidebar-tip-title">贴士</div>
+                <div class="sidebar-tip-desc">创建自己的剪辑精编，记录精彩瞬间!</div>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="content">
+            <div class="content-header">
+                <h1 class="content-title">我的剪辑集</h1>
+                <button class="add-btn">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="#fff"><path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/></svg>
+                    添加新剪辑
+                </button>
+            </div>
+
+            <div class="tip-banner">
+                <span>Tip:</span> 点击卡片上的编辑按钮可以预览剪辑内容，添加标签可以让你的剪辑更容易被发现!
+            </div>
+
+            <div class="cards-grid">
+                <!-- Card 1 -->
+                <div class="video-card">
+                    <div class="card-thumbnail">
+                        <div class="card-thumbnail-bg thumb-1"></div>
+                        <div class="play-btn">
+                            <svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+                        </div>
+                    </div>
+                    <div class="card-info">
+                        <div class="card-title">热血高校·逆转胜利</div>
+                        <div class="card-tags">
+                            <span class="tag tag-red">热血</span>
+                            <span class="tag tag-orange">校园</span>
+                        </div>
+                        <div class="card-footer">
+                            <span class="card-date">2023-10-15</span>
+                            <div class="card-actions">
+                                <svg class="edit-icon" viewBox="0 0 24 24"><path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34c-.39-.39-1.02-.39-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"/></svg>
+                                <svg class="delete-icon" viewBox="0 0 24 24"><path d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z"/></svg>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Card 2 -->
+                <div class="video-card">
+                    <div class="card-thumbnail">
+                        <div class="card-thumbnail-bg thumb-2"></div>
+                        <div class="play-btn">
+                            <svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+                        </div>
+                    </div>
+                    <div class="card-info">
+                        <div class="card-title">千与千寻·神秘世界</div>
+                        <div class="card-tags">
+                            <span class="tag tag-purple">奇幻</span>
+                            <span class="tag tag-orange">冒险</span>
+                        </div>
+                        <div class="card-footer">
+                            <span class="card-date">2023-10-12</span>
+                            <div class="card-actions">
+                                <svg class="edit-icon" viewBox="0 0 24 24"><path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34c-.39-.39-1.02-.39-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"/></svg>
+                                <svg class="delete-icon" viewBox="0 0 24 24"><path d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z"/></svg>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Card 3 -->
+                <div class="video-card">
+                    <div class="card-thumbnail">
+                        <div class="card-thumbnail-bg thumb-3"></div>
+                        <div class="play-btn">
+                            <svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+                        </div>
+                    </div>
+                    <div class="card-info">
+                        <div class="card-title">鬼灭之刃·最终决战</div>
+                        <div class="card-tags">
+                            <span class="tag tag-blue">战斗</span>
+                            <span class="tag tag-red">热血</span>
+                        </div>
+                        <div class="card-footer">
+                            <span class="card-date">2023-10-08</span>
+                            <div class="card-actions">
+                                <svg class="edit-icon" viewBox="0 0 24 24"><path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34c-.39-.39-1.02-.39-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"/></svg>
+                                <svg class="delete-icon" viewBox="0 0 24 24"><path d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z"/></svg>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Card 4 -->
+                <div class="video-card">
+                    <div class="card-thumbnail">
+                        <div class="card-thumbnail-bg thumb-4"></div>
+                        <div class="play-btn">
+                            <svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+                        </div>
+                    </div>
+                    <div class="card-info">
+                        <div class="card-title">你的名字·星空信道</div>
+                        <div class="card-tags">
+                            <span class="tag tag-red">爱情</span>
+                            <span class="tag tag-purple">奇幻</span>
+                        </div>
+                        <div class="card-footer">
+                            <span class="card-date">2023-10-05</span>
+                            <div class="card-actions">
+                                <svg class="edit-icon" viewBox="0 0 24 24"><path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34c-.39-.39-1.02-.39-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"/></svg>
+                                <svg class="delete-icon" viewBox="0 0 24 24"><path d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z"/></svg>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Card 5 -->
+                <div class="video-card">
+                    <div class="card-thumbnail">
+                        <div class="card-thumbnail-bg thumb-5"></div>
+                        <div class="play-btn">
+                            <svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+                        </div>
+                    </div>
+                    <div class="card-info">
+                        <div class="card-title">进击的巨人·自由之翼</div>
+                        <div class="card-tags">
+                            <span class="tag tag-red">热血</span>
+                            <span class="tag tag-blue">战斗</span>
+                        </div>
+                        <div class="card-footer">
+                            <span class="card-date">2023-10-01</span>
+                            <div class="card-actions">
+                                <svg class="edit-icon" viewBox="0 0 24 24"><path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34c-.39-.39-1.02-.39-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"/></svg>
+                                <svg class="delete-icon" viewBox="0 0 24 24"><path d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z"/></svg>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Footer -->
+            <footer class="footer">
+                <div class="footer-content">
+                    <div class="footer-section">
+                        <h4>动漫剪辑汇</h4>
+                        <p>记录每一个精彩的二次元瞬间，让精彩片段永存。</p>
+                    </div>
+                    <div class="footer-section">
+                        <h4>友情链接</h4>
+                        <a href="#">动漫资源站</a>
+                        <a href="#">二次元壁纸</a>
+                        <a href="#">弹幕社区</a>
+                    </div>
+                    <div class="footer-section">
+                        <h4>联系我们</h4>
+                        <p>有任何问题或建议，请随时联系我们!</p>
+                        <p style="margin-top: 4px;">support@animecut.com</p>
+                    </div>
+                </div>
+                <div class="footer-bottom">
+                    © 2023 动漫剪辑汇 版权所有
+                </div>
+            </footer>
+        </main>
+    </div>
+</body>
+</html>
+```

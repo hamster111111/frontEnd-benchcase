@@ -1,0 +1,26 @@
+你会看到一张编码题相关的图。请结合图像和函数签名，补全 Python 解法。
+
+要求：
+1. 只输出一个 fenced code block，格式为 ```python ... ```。
+2. 必须实现给定的 `solution` 函数签名。
+3. 不要输出解释。
+
+函数签名：
+```python
+from typing import List
+
+def solution(L: List[int]) -> List[int]:
+    """
+    Processes the input array according to a specific pattern.
+
+    Parameters:
+        L (List[int]): The source array to be processed       
+
+    Returns:
+        List[int]: The processed array
+    """
+
+```
+
+任务类型：Aggregation
+能力标签：{"Common Sense": null, "Data Structures": ["Sequence"], "Dynamic Patterns": null, "Geometric Objects": null, "Mathematical Operations": ["Counting", "Value Comparison", "Aggregation"], "Spatial Transformations": ["Grouping", "Filtering"], "Topological Relations": ["Boundary", "Adjacency"]}

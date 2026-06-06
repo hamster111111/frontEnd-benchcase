@@ -1,0 +1,735 @@
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Adobe Creative Cloud</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            line-height: 1.6;
+            color: #1b1b1b;
+        }
+
+        /* Header */
+        .header {
+            background: #fff;
+            padding: 12px 24px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            border-bottom: 1px solid #e8e8e8;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .header-left {
+            display: flex;
+            align-items: center;
+            gap: 32px;
+        }
+
+        .logo {
+            width: 32px;
+            height: 32px;
+            background: #eb1000;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            font-size: 14px;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 24px;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: #1b1b1b;
+            font-size: 14px;
+            font-weight: 500;
+        }
+
+        .nav-links a:hover {
+            color: #1473e6;
+        }
+
+        .header-right {
+            display: flex;
+            align-items: center;
+            gap: 24px;
+        }
+
+        .app-launcher {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 14px;
+            color: #1b1b1b;
+            cursor: pointer;
+        }
+
+        .app-launcher-icon {
+            display: grid;
+            grid-template-columns: repeat(2, 6px);
+            gap: 2px;
+        }
+
+        .app-launcher-icon span {
+            width: 6px;
+            height: 6px;
+            background: #1b1b1b;
+            border-radius: 1px;
+        }
+
+        .sign-in-btn {
+            background: #1473e6;
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .sign-in-btn:hover {
+            background: #0c5bbd;
+        }
+
+        .user-icon {
+            width: 16px;
+            height: 16px;
+            border: 2px solid white;
+            border-radius: 50%;
+            position: relative;
+        }
+
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(135deg, #3b5998 0%, #5b7bb5 30%, #7b8ec9 50%, #b8a9d4 70%, #d4b8d4 100%);
+            padding: 60px 20px 80px;
+            text-align: center;
+        }
+
+        .hero-label {
+            color: #1b1b1b;
+            font-size: 12px;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            margin-bottom: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+        }
+
+        .hero-label::before,
+        .hero-label::after {
+            content: '';
+            width: 40px;
+            height: 1px;
+            background: #1b1b1b;
+        }
+
+        .hero-title {
+            font-size: 52px;
+            font-weight: 700;
+            color: #1b1b1b;
+            margin-bottom: 24px;
+            line-height: 1.1;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .hero-subtitle {
+            font-size: 18px;
+            color: #1b1b1b;
+            margin-bottom: 32px;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .hero-actions {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 24px;
+        }
+
+        .free-trial-btn {
+            background: #1473e6;
+            color: white;
+            border: none;
+            padding: 14px 28px;
+            border-radius: 24px;
+            font-size: 16px;
+            font-weight: 500;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .free-trial-btn:hover {
+            background: #0c5bbd;
+        }
+
+        .see-plans-link {
+            color: #1b1b1b;
+            text-decoration: none;
+            font-size: 16px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            border-bottom: 1px solid #1b1b1b;
+            padding-bottom: 2px;
+        }
+
+        .see-plans-link:hover {
+            color: #1473e6;
+            border-bottom-color: #1473e6;
+        }
+
+        /* Products Section */
+        .products-section {
+            background: linear-gradient(180deg, #d4b8d4 0%, #e8e8f0 100%);
+            padding: 0 20px 60px;
+        }
+
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 24px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .product-card {
+            background: white;
+            border-radius: 12px;
+            padding: 28px;
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
+        }
+
+        .product-label {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 12px;
+        }
+
+        .product-icon {
+            width: 20px;
+            height: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 14px;
+        }
+
+        .product-icon.photoshop {
+            color: #31a8ff;
+        }
+
+        .product-icon.express {
+            color: #ff61f6;
+        }
+
+        .product-icon.premiere {
+            color: #9999ff;
+        }
+
+        .product-name {
+            font-size: 12px;
+            font-weight: 700;
+            letter-spacing: 1px;
+            color: #1b1b1b;
+        }
+
+        .product-title {
+            font-size: 24px;
+            font-weight: 700;
+            color: #1b1b1b;
+            margin-bottom: 20px;
+            line-height: 1.3;
+        }
+
+        .product-image {
+            width: 100%;
+            height: 180px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            overflow: hidden;
+        }
+
+        .product-image.photoshop {
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+        }
+
+        .product-image.express {
+            background: linear-gradient(135deg, #e94560 0%, #ff6b6b 50%, #feca57 100%);
+        }
+
+        .product-image.premiere {
+            background: linear-gradient(135deg, #1a1a2e 0%, #2d3436 50%, #636e72 100%);
+        }
+
+        .product-description {
+            font-size: 14px;
+            color: #6e6e6e;
+            margin-bottom: 24px;
+            line-height: 1.6;
+        }
+
+        .product-btn {
+            background: transparent;
+            border: 1px solid #1b1b1b;
+            padding: 10px 20px;
+            border-radius: 20px;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            color: #1b1b1b;
+        }
+
+        .product-btn:hover {
+            background: #1b1b1b;
+            color: white;
+        }
+
+        /* Why Choose Section */
+        .why-choose {
+            padding: 80px 20px;
+            background: #f5f5f5;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 36px;
+            font-weight: 700;
+            color: #1b1b1b;
+            margin-bottom: 60px;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 40px;
+            max-width: 1100px;
+            margin: 0 auto;
+        }
+
+        .feature-item {
+            text-align: center;
+            padding: 20px;
+        }
+
+        .feature-icon {
+            width: 64px;
+            height: 64px;
+            border-radius: 50%;
+            background: #e8f0fe;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 20px;
+            color: #1473e6;
+            font-size: 28px;
+        }
+
+        .feature-title {
+            font-size: 18px;
+            font-weight: 700;
+            color: #1b1b1b;
+            margin-bottom: 12px;
+        }
+
+        .feature-description {
+            font-size: 14px;
+            color: #6e6e6e;
+            line-height: 1.6;
+        }
+
+        /* Testimonial Section */
+        .testimonial {
+            padding: 80px 20px;
+            background: linear-gradient(135deg, #e8f0fe 0%, #f0e8f5 100%);
+        }
+
+        .testimonial-card {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 16px;
+            padding: 48px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.08);
+            text-align: center;
+        }
+
+        .testimonial-quote {
+            font-size: 20px;
+            font-style: italic;
+            color: #1b1b1b;
+            line-height: 1.7;
+            margin-bottom: 32px;
+        }
+
+        .testimonial-author {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 16px;
+        }
+
+        .author-avatar {
+            width: 56px;
+            height: 56px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #ff9a9e 0%, #fecfef 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            font-size: 20px;
+        }
+
+        .author-info {
+            text-align: left;
+        }
+
+        .author-name {
+            font-size: 16px;
+            font-weight: 700;
+            color: #1b1b1b;
+        }
+
+        .author-role {
+            font-size: 14px;
+            color: #6e6e6e;
+        }
+
+        /* Footer */
+        .footer {
+            background: #1b1b1b;
+            padding: 60px 40px 24px;
+            color: white;
+        }
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 40px;
+            max-width: 1200px;
+            margin: 0 auto 48px;
+        }
+
+        .footer-column h3 {
+            font-size: 14px;
+            font-weight: 700;
+            margin-bottom: 16px;
+            color: white;
+        }
+
+        .footer-column ul {
+            list-style: none;
+        }
+
+        .footer-column ul li {
+            margin-bottom: 10px;
+        }
+
+        .footer-column ul li a {
+            color: #b3b3b3;
+            text-decoration: none;
+            font-size: 13px;
+        }
+
+        .footer-column ul li a:hover {
+            color: white;
+            text-decoration: underline;
+        }
+
+        .footer-social {
+            display: flex;
+            justify-content: center;
+            gap: 24px;
+            padding: 24px 0;
+            border-top: 1px solid #444;
+            margin-top: 24px;
+        }
+
+        .social-icon {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            background: #333;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            text-decoration: none;
+            font-size: 14px;
+        }
+
+        .social-icon:hover {
+            background: #444;
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: 24px;
+            border-top: 1px solid #444;
+        }
+
+        .footer-bottom p {
+            font-size: 12px;
+            color: #888;
+        }
+
+        .footer-bottom a {
+            color: #1473e6;
+            text-decoration: none;
+        }
+
+        .footer-bottom a:hover {
+            text-decoration: underline;
+        }
+
+        /* Responsive */
+        @media (max-width: 900px) {
+            .products-grid,
+            .features-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .hero-title {
+                font-size: 36px;
+            }
+
+            .footer-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="header-left">
+            <div class="logo">A</div>
+            <nav class="nav-links">
+                <a href="#">Creativity & Design</a>
+                <a href="#">PDF & E-signatures</a>
+                <a href="#">Marketing & Commerce</a>
+                <a href="#">Help & Support</a>
+            </nav>
+        </div>
+        <div class="header-right">
+            <div class="app-launcher">
+                <div class="app-launcher-icon">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+                <span>App launcher</span>
+            </div>
+            <button class="sign-in-btn">
+                Sign in
+                <span class="user-icon"></span>
+            </button>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <p class="hero-label">ADOBE CREATIVE CLOUD</p>
+        <h1 class="hero-title">Begin your Creative Cloud journey today.</h1>
+        <p class="hero-subtitle">Bring your best ideas to life with 20+ apps and generative AI tools in the All Apps plan. Unleash creativity without limits.</p>
+        <div class="hero-actions">
+            <button class="free-trial-btn">Free trial →</button>
+            <a href="#" class="see-plans-link">See all plans ↗</a>
+        </div>
+    </section>
+
+    <!-- Products Section -->
+    <section class="products-section">
+        <div class="products-grid">
+            <!-- Photoshop Card -->
+            <div class="product-card">
+                <div class="product-label">
+                    <span class="product-icon photoshop">✏️</span>
+                    <span class="product-name">ADOBE PHOTOSHOP</span>
+                </div>
+                <h2 class="product-title">Create at the speed of imagination.</h2>
+                <div class="product-image photoshop">
+                    <img src="https://raw.githubusercontent.com/Mikivishy/imgs/main/folder1/Technology.jpg" alt="Adobe Photoshop" style="width: 100%; height: 100%; object-fit: cover;">
+                </div>
+                <p class="product-description">Fire up your imagination with the most powerful Photoshop yet. Create stunning images, graphics, and art with AI-powered tools.</p>
+                <button class="product-btn">Learn more ›</button>
+            </div>
+
+            <!-- Express Card -->
+            <div class="product-card">
+                <div class="product-label">
+                    <span class="product-icon express">✨</span>
+                    <span class="product-name">ADOBE EXPRESS</span>
+                </div>
+                <h2 class="product-title">The quick and easy create-anything app.</h2>
+                <div class="product-image express">
+                    <img src="https://raw.githubusercontent.com/Mikivishy/imgs/main/folder1/Art.jpg" alt="Adobe Express" style="width: 100%; height: 100%; object-fit: cover;">
+                </div>
+                <p class="product-description">Create standout social posts, videos, flyers and more with intuitive tools and thousands of templates.</p>
+                <button class="product-btn">Get Adobe Express free ›</button>
+            </div>
+
+            <!-- Premiere Pro Card -->
+            <div class="product-card">
+                <div class="product-label">
+                    <span class="product-icon premiere">🎬</span>
+                    <span class="product-name">ADOBE PREMIERE PRO</span>
+                </div>
+                <h2 class="product-title">Professional video editing made simple.</h2>
+                <div class="product-image premiere">
+                    <img src="https://raw.githubusercontent.com/Mikivishy/imgs/main/folder1/Movie.jpg" alt="Adobe Premiere Pro" style="width: 100%; height: 100%; object-fit: cover;">
+                </div>
+                <p class="product-description">Edit footage with powerful tools and AI capabilities that help you craft polished videos faster than ever.</p>
+                <button class="product-btn">Discover more ›</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Why Choose Section -->
+    <section class="why-choose">
+        <h2 class="section-title">Why Choose Creative Cloud?</h2>
+        <div class="features-grid">
+            <div class="feature-item">
+                <div class="feature-icon">🤖</div>
+                <h3 class="feature-title">AI-Powered Tools</h3>
+                <p class="feature-description">Leverage the power of Adobe Firefly and other AI technologies to enhance your creative workflow and generate stunning content.</p>
+            </div>
+            <div class="feature-item">
+                <div class="feature-icon">🔄</div>
+                <h3 class="feature-title">Seamless Integration</h3>
+                <p class="feature-description">Work seamlessly across desktop and mobile apps with cloud storage that keeps your projects accessible anywhere.</p>
+            </div>
+            <div class="feature-item">
+                <div class="feature-icon">📚</div>
+                <h3 class="feature-title">Continuous Learning</h3>
+                <p class="feature-description">Access thousands of tutorials and learning resources to master new skills and enhance your creative abilities.</p>
+            </div>
+            <div class="feature-item">
+                <div class="feature-icon">👥</div>
+                <h3 class="feature-title">Collaborate Effortlessly</h3>
+                <p class="feature-description">Share your work, get feedback, and collaborate with team members in real-time across all Creative Cloud apps.</p>
+            </div>
+            <div class="feature-item">
+                <div class="feature-icon">🎨</div>
+                <h3 class="feature-title">Creative Assets Library</h3>
+                <p class="feature-description">Access millions of stock photos, videos, illustrations, fonts, and templates to enhance your projects.</p>
+            </div>
+            <div class="feature-item">
+                <div class="feature-icon">🔒</div>
+                <h3 class="feature-title">Secure Cloud Storage</h3>
+                <p class="feature-description">Keep your creative work safe with 100GB of cloud storage included in your Creative Cloud subscription.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonial Section -->
+    <section class="testimonial">
+        <div class="testimonial-card">
+            <p class="testimonial-quote">"Adobe Creative Cloud has completely transformed how I work as a designer. The integration between apps and the new AI features have cut my production time in half while allowing me to create things I never thought possible."</p>
+            <div class="testimonial-author">
+                <div class="author-avatar">
+                    <img src="https://raw.githubusercontent.com/Mikivishy/imgs/main/folder1/People.jpg" alt="Sarah Johnson" style="width: 100%; height: 100%; object-fit: cover; border-radius: 50%;">
+                </div>
+                <div class="author-info">
+                    <p class="author-name">Sarah Johnson</p>
+                    <p class="author-role">Creative Director, Design Studio NYC</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-grid">
+            <div class="footer-column">
+                <h3>Products</h3>
+                <ul>
+                    <li><a href="#">Creative Cloud</a></li>
+                    <li><a href="#">Photoshop</a></li>
+                    <li><a href="#">Illustrator</a></li>
+                    <li><a href="#">Premiere Pro</a></li>
+                    <li><a href="#">Adobe Express</a></li>
+                    <li><a href="#">Acrobat</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>Learn & Support</h3>
+                <ul>
+                    <li><a href="#">Getting Started</a></li>
+                    <li><a href="#">Tutorials</a></li>
+                    <li><a href="#">User Guide</a></li>
+                    <li><a href="#">Community Forums</a></li>
+                    <li><a href="#">Contact Support</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>Company</h3>
+                <ul>
+                    <li><a href="#">About Adobe</a></li>
+                    <li><a href="#">Careers</a></li>
+                    <li><a href="#">Newsroom</a></li>
+                    <li><a href="#">Corporate Responsibility</a></li>
+                    <li><a href="#">Investor Relations</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>Resources</h3>
+                <ul>
+                    <li><a href="#">Adobe Blog</a></li>
+                    <li><a href="#">Creative Cloud Blog</a></li>
+                    <li><a href="#">Events</a></li>
+                    <li><a href="#">Certification</a></li>
+                    <li><a href="#">Adobe Max</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-social">
+            <a href="#" class="social-icon">f</a>
+            <a href="#" class="social-icon">𝕏</a>
+            <a href="#" class="social-icon">📷</a>
+            <a href="#" class="social-icon">▶</a>
+            <a href="#" class="social-icon">in</a>
+        </div>
+        <div class="footer-bottom">
+            <p>Copyright © 2023 Adobe. All rights reserved. | <a href="#">Privacy</a> | <a href="#">Terms of Use</a> | <a href="#">Cookie preferences</a></p>
+        </div>
+    </footer>
+</body>
+</html>
+```

@@ -1,0 +1,524 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Eventgroove - Baseball Camp Event Ticket</title>
+<style>
+  :root {
+    --primary-blue: #0066b2;
+    --accent-orange: #ff9900;
+    --banner-green: #78b255;
+    --light-gray: #f4f4f4;
+    --text-dark: #333;
+    --text-gray: #666;
+    --border-color: #ddd;
+  }
+
+  * {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+  }
+
+  body {
+    font-family: Arial, sans-serif;
+    color: var(--text-dark);
+    line-height: 1.5;
+    background-color: #fff;
+  }
+
+  a {
+    text-decoration: none;
+    color: inherit;
+  }
+
+  /* Top Nav */
+  .top-nav {
+    background: #fff;
+    border-bottom: 1px solid #eee;
+    font-size: 12px;
+    padding: 5px 20px;
+    text-align: center;
+  }
+  .top-nav a { margin: 0 10px; color: #333; }
+  .top-nav a.active { color: var(--primary-blue); text-decoration: underline; }
+
+  /* Main Header */
+  .main-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 20px;
+    border-bottom: 1px solid #eee;
+  }
+  .logo {
+    color: var(--primary-blue);
+    font-size: 24px;
+    font-weight: bold;
+  }
+  .logo span { font-size: 12px; color: var(--text-gray); display: block; }
+  .header-utils {
+    display: flex;
+    gap: 15px;
+    align-items: center;
+    font-size: 14px;
+  }
+  .header-utils div { display: flex; align-items: center; gap: 5px; }
+
+  /* Banner */
+  .rewards-banner {
+    background-color: var(--banner-green);
+    color: #fff;
+    text-align: center;
+    padding: 12px;
+    font-size: 18px;
+  }
+  .rewards-banner a { text-decoration: underline; font-weight: bold; }
+
+  /* Category Nav */
+  .category-nav {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    padding: 15px 20px;
+    border-bottom: 1px solid #eee;
+    font-size: 14px;
+  }
+  .cat-item { color: #333; }
+  .cat-item::after { content: " ▾"; font-size: 10px; }
+
+  /* Steps */
+  .steps-bar {
+    display: flex;
+    align-items: center;
+    padding: 15px 20px;
+    gap: 15px;
+    border-bottom: 1px solid #eee;
+    flex-wrap: wrap;
+  }
+  .step {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 14px;
+    color: var(--text-gray);
+  }
+  .step.active {
+    background: var(--primary-blue);
+    color: #fff;
+    padding: 5px 15px;
+    border-radius: 20px;
+    font-weight: bold;
+  }
+  .steps-actions { margin-left: auto; display: flex; gap: 10px; }
+  .btn {
+    padding: 8px 20px;
+    border: 1px solid #ccc;
+    background: #fff;
+    cursor: pointer;
+    font-size: 14px;
+  }
+  .btn-orange { background: var(--accent-orange); color: #fff; border-color: var(--accent-orange); }
+
+  /* Content Container */
+  .container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+  }
+
+  /* Product Section */
+  .product-section {
+    display: grid;
+    grid-template-columns: 1fr 350px;
+    gap: 40px;
+    margin-bottom: 40px;
+  }
+  .product-info h1 { font-size: 28px; margin-bottom: 20px; font-weight: normal; }
+  .product-desc { font-size: 14px; color: #555; margin-bottom: 15px; }
+  .product-list { margin: 20px 0 20px 20px; font-size: 14px; }
+  .product-list li { margin-bottom: 5px; }
+
+  /* Pricing Table */
+  .pricing-table { width: 100%; border-collapse: collapse; margin-top: 20px; font-size: 14px; }
+  .pricing-table th { text-align: left; padding: 10px; border-bottom: 1px solid #ddd; font-weight: normal; }
+  .pricing-table td { padding: 10px; border-bottom: 1px solid #eee; text-align: center; }
+  .pricing-table td:first-child { text-align: left; }
+  .pricing-note { font-style: italic; font-size: 12px; color: #666; margin-top: 10px; }
+
+  /* Product Image */
+  .product-image-container {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+  }
+  .ticket-image {
+    height: 500px;
+    background: linear-gradient(135deg, #a87c4d, #d4a76a, #8b5e3c);
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #fff;
+    text-shadow: 1px 1px 3px rgba(0,0,0,0.5);
+    text-align: center;
+    padding: 20px;
+  }
+  .ticket-image h2 { font-family: "Times New Roman", serif; font-size: 32px; }
+  .ticket-image h3 { font-family: cursive; font-style: italic; }
+  .product-actions { display: flex; gap: 10px; justify-content: center; }
+
+  /* Sections */
+  .section-title {
+    color: var(--primary-blue);
+    font-size: 16px;
+    margin-bottom: 15px;
+  }
+  .products-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 15px;
+    margin-bottom: 15px;
+  }
+  .product-card {
+    height: 80px;
+    background: #eee;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 12px;
+    color: #666;
+    border: 1px solid #ddd;
+  }
+  .show-more {
+    display: block;
+    width: 100%;
+    text-align: center;
+    padding: 10px;
+    border: 1px solid #ddd;
+    background: #fff;
+    color: #555;
+    cursor: pointer;
+    margin-bottom: 40px;
+  }
+
+  /* Favorites */
+  .favorites-box {
+    background: #fffae6;
+    border: 1px solid #ffe58f;
+    padding: 15px;
+    margin: 20px 0;
+    font-size: 14px;
+  }
+
+  /* Footer */
+  .trust-badges {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    padding: 30px 20px;
+    border-top: 1px solid #eee;
+    margin-top: 40px;
+  }
+  .badge {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    background: #ddd;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 10px;
+    text-align: center;
+    padding: 5px;
+  }
+  .footer-links {
+    background: var(--light-gray);
+    padding: 40px 20px;
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    gap: 20px;
+    font-size: 13px;
+  }
+  .footer-col h4 { margin-bottom: 15px; color: #333; }
+  .footer-col ul { list-style: none; }
+  .footer-col li { margin-bottom: 8px; color: #555; cursor: pointer; }
+  .footer-col li:hover { color: var(--primary-blue); }
+  .copyright {
+    text-align: center;
+    padding: 20px;
+    font-size: 12px;
+    color: #888;
+    border-top: 1px solid #ddd;
+  }
+
+  /* Cookie Policy */
+  .cookie-policy {
+    position: fixed;
+    left: 0;
+    bottom: 100px;
+    background: #0070b3;
+    color: #fff;
+    padding: 10px 20px;
+    font-size: 14px;
+    cursor: pointer;
+    border-radius: 0 4px 4px 0;
+    z-index: 100;
+  }
+
+  /* Mobile / Tablet Responsive */
+  @media (max-width: 900px) {
+    .category-nav { display: none; }
+    .product-section { grid-template-columns: 1fr; }
+    .products-grid { grid-template-columns: repeat(2, 1fr); }
+    .footer-links { grid-template-columns: repeat(3, 1fr); }
+    .steps-actions { width: 100%; justify-content: flex-end; }
+  }
+  
+  @media (max-width: 600px) {
+    .header-utils { display: none; }
+    .footer-links { grid-template-columns: repeat(2, 1fr); }
+    .product-image-container { order: -1; }
+    .steps-bar { justify-content: space-around; }
+    .step { display: none; }
+    .step.active { display: flex; font-size: 12px; }
+  }
+</style>
+</head>
+<body>
+
+  <!-- Top Navigation -->
+  <div class="top-nav">
+    <a href="#" class="active">Products</a>
+    <a href="#">Online Events</a>
+    <a href="#">Perforated Paper</a>
+  </div>
+
+  <!-- Main Header -->
+  <div class="main-header">
+    <div class="logo">
+      Eventgroove<span>Products</span>
+    </div>
+    <div class="header-utils">
+      <div>🔍 Search</div>
+      <div>👤 My Account ▾</div>
+      <div>🛒 Cart</div>
+      <div>💬 Chat</div>
+      <div>📞 888.771.0809</div>
+      <div>❤️</div>
+      <div>🇺🇸 ▾</div>
+    </div>
+  </div>
+
+  <!-- Rewards Banner -->
+  <div class="rewards-banner">
+    Join the best <a href="#">printing rewards program</a>-it's free!
+  </div>
+
+  <!-- Category Nav -->
+  <div class="category-nav">
+    <a href="#" class="cat-item">Design Your Own</a>
+    <a href="#" class="cat-item">Tickets</a>
+    <a href="#" class="cat-item">Wristbands</a>
+    <a href="#" class="cat-item">Posters & Flyers</a>
+    <a href="#" class="cat-item">Event Badges</a>
+    <a href="#" class="cat-item">Merchandise</a>
+    <a href="#" class="cat-item">Stickers</a>
+    <a href="#" class="cat-item">Postcard Mailers</a>
+    <a href="#" class="cat-item">Envelopes</a>
+    <a href="#" class="cat-item" style="margin-left: auto;">More Products</a>
+  </div>
+
+  <!-- Steps Bar -->
+  <div class="steps-bar">
+    <div class="step active">1. Product Info</div>
+    <div class="step">2. Customize</div>
+    <div class="step">3. Finishing Options</div>
+    <div class="step">4. Review & Approve</div>
+    <div class="steps-actions">
+      <button class="btn">Keep Shopping</button>
+      <button class="btn btn-orange">Customize ⚙</button>
+    </div>
+  </div>
+
+  <div class="container">
+    <!-- Main Product Section -->
+    <div class="product-section">
+      <div class="product-info">
+        <h1>Baseball Camp Event Ticket</h1>
+        <p class="product-desc">
+          Hand out the <strong>Cracker Jack</strong>! Attendees will be ready for a great game when they receive the <strong>Baseball Camp Event Ticket</strong>. Capturing the essence of this <strong>all-American</strong> sport via a distressed background photo of everything you need to play ball, this ticket template has plenty of space for all your event's details. Printed on <strong>top-notch</strong> ticket stock, each one comes with a detachable stub, ensuring easy re-entry.
+        </p>
+        <ul class="product-list">
+          <li>Baseball Camp Event Ticket</li>
+          <li>Measurements are approx. 1.97" by 5.63"</li>
+          <li>17 text fields to fill with your event info</li>
+          <li>Optional booklet binding</li>
+          <li>Matching #6 1/2 envelopes can be added to your order</li>
+        </ul>
+        <p class="product-desc">Get in the game with Eventgroove!</p>
+
+        <table class="pricing-table">
+          <thead>
+            <tr>
+              <th>QTY</th>
+              <th>PRICE / ITEM</th>
+              <th>PRICE<br><small>(taxes not incl.)</small></th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td>50</td><td>$0.88</td><td>$44.01</td></tr>
+            <tr><td>300</td><td>$0.37</td><td>$112.41</td></tr>
+            <tr><td>500</td><td>$0.26</td><td>$130.65</td></tr>
+            <tr><td>1000</td><td>$0.16</td><td>$156.20</td></tr>
+            <tr><td>2500</td><td>$0.09</td><td>$226.50</td></tr>
+            <tr><td>5000</td><td>$0.08</td><td>$387.57</td></tr>
+          </tbody>
+        </table>
+        <p class="pricing-note">Available in any quantity above 50</p>
+      </div>
+
+      <div class="product-image-container">
+        <div class="ticket-image">
+          <div>
+            <div style="font-size: 10px; margin-bottom: 10px;">LOCAL RECREATION CENTER PRESENTS</div>
+            <h2>BASEBALL</h2>
+            <h3>Camp</h3>
+            <div style="font-size: 12px; margin-top: 20px; border-bottom: 1px solid #fff; padding-bottom: 5px;">WWW.LOCALRECENTER.COM</div>
+            <div style="display: flex; justify-content: space-between; margin-top: 10px; font-weight: bold;">
+              <span>001</span>
+              <span>$200</span>
+            </div>
+          </div>
+        </div>
+        <div class="product-actions">
+          <button class="btn">Keep Shopping</button>
+          <button class="btn">♡ Add to Favorites</button>
+          <button class="btn btn-orange">Customize ⚙</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Similar Products -->
+    <div>
+      <h4 class="section-title">Similar Products</h4>
+      <div class="products-grid">
+        <div class="product-card">Ticket 1</div>
+        <div class="product-card">Ticket 2</div>
+        <div class="product-card">Ticket 3</div>
+        <div class="product-card">Ticket 4</div>
+      </div>
+      <button class="show-more">▾Show More</button>
+    </div>
+
+    <!-- Themed Products -->
+    <div>
+      <h4 class="section-title">Themed Products</h4>
+      <div class="products-grid">
+        <div class="product-card">Theme 1</div>
+        <div class="product-card">Theme 2</div>
+        <div class="product-card">Theme 3</div>
+        <div class="product-card">Theme 4</div>
+      </div>
+      <button class="show-more">▾Show More</button>
+    </div>
+
+    <!-- Favorites -->
+    <div>
+      <h4 class="section-title">Favorites</h4>
+      <div class="favorites-box">No designs have been added to your favorites.</div>
+      <button class="btn">Keep Shopping</button>
+    </div>
+  </div>
+
+  <!-- Trust Badges -->
+  <div class="trust-badges">
+    <div class="badge">Veteran Owned</div>
+    <div class="badge">10% Discount</div>
+    <div class="badge">Made in USA</div>
+    <div class="badge">Secure</div>
+    <div class="badge">BBB</div>
+  </div>
+
+  <!-- Footer -->
+  <div class="footer-links">
+    <div class="footer-col">
+      <h4>CUSTOMER SUPPORT</h4>
+      <ul>
+        <li>📞 888.771.0809</li>
+        <li>Chat</li>
+        <li>Contact Us</li>
+        <li>Satisfaction Guarantee</li>
+        <li>FAQ</li>
+        <li>Find an Answer</li>
+        <li>Help Videos</li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>ACCOUNT</h4>
+      <ul>
+        <li>Track Order</li>
+        <li>Sign-in</li>
+        <li>My Account</li>
+        <li>Get New Password</li>
+        <li>Shopping Cart</li>
+        <li>Order History</li>
+        <li>Reorder Products</li>
+        <li>Order Processing Details</li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>PRODUCTS</h4>
+      <ul>
+        <li>Event Tickets</li>
+        <li>Raffle Tickets</li>
+        <li>Wristbands</li>
+        <li>Free Sample Kits</li>
+        <li>Security Features</li>
+        <li>Request New Product</li>
+        <li>Products Blog</li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>SERVICES</h4>
+      <ul>
+        <li>Custom Design</li>
+        <li>Design-Your-Own</li>
+        <li>Online Ticket Sales</li>
+        <li>Postcard Mailing</li>
+        <li>Online Fundraising</li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>CUSTOMERS + US</h4>
+      <ul>
+        <li>Customer Reviews</li>
+        <li>Customer Videos</li>
+        <li>Customer Survey</li>
+        <li>Conservation</li>
+        <li>History</li>
+        <li>Sitemap</li>
+        <li>Request a Demo</li>
+        <li>Rewards Program</li>
+        <li>Affiliate Program</li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>MORE</h4>
+      <ul>
+        <li>Terms of Use</li>
+        <li>Terms of Sale</li>
+        <li>Privacy</li>
+        <li>Cookies</li>
+        <li>Returns</li>
+      </ul>
+    </div>
+  </div>
+  <div class="copyright">©2026 Elk River Systems</div>
+
+  <!-- Floating Cookie Policy -->
+  <div class="cookie-policy">Cookie Policy</div>
+
+</body>
+</html>

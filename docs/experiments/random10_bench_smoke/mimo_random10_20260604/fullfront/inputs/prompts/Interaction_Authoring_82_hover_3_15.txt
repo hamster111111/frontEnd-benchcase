@@ -1,0 +1,329 @@
+你是一个严谨的前端工程师。请根据输入材料生成一个完整、可直接运行的单文件 HTML。
+
+要求：
+1. 输出必须包含 <!DOCTYPE html>、<html>、<head>、<style>、<body>。
+2. CSS 写在 <style> 中，不要依赖外部 CSS、JS、图片、字体或网络资源。
+3. 尽可能还原截图或描述中的布局、颜色、字号、间距、组件层级和视觉密度。
+4. 如果截图中有真实图片、头像、图标或复杂素材，无法复用原图时用 CSS 色块/渐变/简化图形占位，但尺寸和位置要对齐。
+5. 如果任务涉及交互，请在单文件内写必要的 JavaScript。
+6. 只输出一个 fenced code block，格式为 ```html ... ```，不要输出额外解释。
+
+Benchmark：fullfront
+任务类型：Interaction_Authoring
+原始任务提示：
+
+You are a web developer proficient in HTML, CSS, and JavaScript. The user will provide you with two web page screenshots. The first screenshot shows the original state of the web page, while the second screenshot shows the result after the user has performed a specific operation on a particular element on the page. Please carefully analyze the differences between the two images and determine the type of interaction. You must set the ID of the interactive element to "#InteractionPart", so please ensure that this ID is unique and that the element is interactive. The possible types of interactions and the requirements for each type are as follows:
+
+**Interaction_hover_1**
+- Function Description: Implement an interactive element (id="InteractionPart") that displays a dropdown box when the mouse hovers over it. The content of the dropdown should be generated based on the understanding of the page content, and its position and display effect should adapt to the page layout.
+- When hovering, an element that matches one of the following selectors must be displayed: .dropdown-menu, .dropdown-content, [role='menu'], or the element with the ID placementDropdown.
+- The dropdown element must be hidden before hovering.
+**Interaction_hover_2**
+- Function Description: Implement an interactive element (id="InteractionPart") containing text that becomes bold when the mouse hovers over it. Ensure that the bold effect is clearly displayed.
+- When hovering, the text must become bold, with a fontWeight value of ≥600 or set to bold/bolder.
+**Interaction_hover_3**
+- Function Description: Implement an interactive element (id="InteractionPart") containing text that adds an underline when the mouse hovers over it. The underline effect should be consistent with the page style.
+- When hovering, the computed style of the element's textDecoration must include "underline".
+**Interaction_hover_4**
+- Function Description: Implement an interactive element (id="InteractionPart") that displays a tooltip when the mouse hovers over it, providing additional information or explanation. The content and style of the tooltip should be adapted according to the page context.
+- When hovering, at least one of the following elements must be displayed: an element with the class .tooltip or .tip; a direct child element of the interactive element (#InteractionPart) with the class .tooltip-text; an element with the attribute [role='tooltip']; an element with the attribute [data-tooltip].
+- The tooltip element must be invisible before hovering.
+
+You need to decide for yourself what kind of interaction to use, and you must meet the requirements for the implementation of each type of interaction.
+If any images are required in the page code, you must classify each image into one of the following categories: People, Animal, Food, Plant, Landscape, Icon, Logo, Architecture, Technology, Transportation, Map, Texture, Art, Movie, Other. The URL for each image is in the format: https://raw.githubusercontent.com/Mikivishy/imgs/main/folder1/{category}.jpg. For example, if you want to use an image from the Animal category, the image URL would be: https://raw.githubusercontent.com/Mikivishy/imgs/main/folder1/Animal.jpg. Since the width and height of each image in the URLs are unknown, you need to set the image sizes manually in the HTML code to ensure that the rendered result matches the layout requirements of the webpage image.
+Your code should accurately reflect the interaction and restore the overall static appearance of the page, ensuring the changes in the screenshots are faithfully reproduced. Please place the HTML, CSS, and JavaScript code in a single file, and your response must be a code that starts with `<!DOCTYPE html>` and ends with `</html>`, without any other content.
+
+
+Interaction type: hover_3
+
+Current HTML:
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Product Page</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Arial', sans-serif;
+    }
+
+    body {
+      background-color: #fff;
+      color: #000;
+    }
+
+    header {
+      background-color: #000;
+      color: #fff;
+      padding: 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+    }
+
+    .logo img {
+      height: 40px;
+      margin-right: 10px;
+    }
+
+    nav {
+      display: flex;
+      gap: 25px;
+      align-items: center;
+    }
+
+    nav a {
+      color: white;
+      text-decoration: none;
+      font-weight: bold;
+      transition: text-decoration 0.3s ease;
+    }
+
+    #InteractionPart {
+      position: relative;
+      transition: text-decoration 0.3s ease;
+    }
+
+    #InteractionPart:hover {
+      text-decoration: underline;
+    }
+
+    .icons {
+      display: flex;
+      gap: 20px;
+    }
+
+    .icons div {
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      border: 1px solid white;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .breadcrumb {
+      padding: 20px;
+      font-size: 14px;
+    }
+
+    .breadcrumb span {
+      color: gray;
+    }
+
+    .main {
+      display: flex;
+      padding: 20px;
+    }
+
+    .filters {
+      width: 200px;
+      padding-right: 20px;
+      border-right: 1px solid #eee;
+    }
+
+    .filters h4 {
+      font-size: 13px;
+      margin-bottom: 10px;
+    }
+
+    .filters button {
+      margin-top: 20px;
+      padding: 10px 20px;
+      background-color: #eee;
+      border: none;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    .content {
+      flex-grow: 1;
+      padding-left: 20px;
+    }
+
+    .alert {
+      background-color: #e0ad43;
+      color: white;
+      padding: 15px;
+      margin-bottom: 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .search-bar {
+      display: flex;
+      align-items: center;
+      border: 1px solid #ddd;
+      border-radius: 30px;
+      padding: 10px 20px;
+      max-width: 500px;
+    }
+
+    .search-bar input {
+      border: none;
+      width: 100%;
+      outline: none;
+      font-size: 16px;
+    }
+
+    .search-bar button {
+      border: none;
+      background: none;
+      cursor: pointer;
+    }
+
+    footer {
+      background-color: #000;
+      color: white;
+      padding: 40px 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+    }
+
+    .footer-left {
+      max-width: 200px;
+      font-size: 24px;
+      line-height: 1.4;
+    }
+
+    .footer-center {
+      text-align: center;
+    }
+
+    .footer-center p {
+      margin-bottom: 10px;
+      font-weight: bold;
+    }
+
+    .footer-center .social-icons {
+      display: flex;
+      gap: 20px;
+      justify-content: center;
+    }
+
+    .footer-center .social-icons img {
+      width: 24px;
+      height: 24px;
+    }
+
+    .footer-right {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .footer-right p {
+      margin-bottom: 10px;
+      font-weight: bold;
+    }
+
+    .newsletter {
+      display: flex;
+      border: 1px solid #fff;
+      border-radius: 5px;
+      overflow: hidden;
+      margin-top: 5px;
+    }
+
+    .newsletter input {
+      padding: 10px;
+      border: none;
+      flex: 1;
+      outline: none;
+    }
+
+    .newsletter button {
+      padding: 10px 20px;
+      background-color: white;
+      color: black;
+      border: none;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    /* Placeholder icon representation */
+    .icon-placeholder {
+      background-color: white;
+      color: black;
+      font-size: 12px;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="logo">
+      <img src="https://raw.githubusercontent.com/Mikivishy/imgs/main/folder1/Logo.jpg" alt="Logo" />
+      <strong>BODY POLITIX</strong>
+    </div>
+    <nav>
+      <a href="#">HOME</a>
+      <a id="InteractionPart" href="#">SHOP</a>
+      <a href="#">NEW</a>
+      <a href="#">COLLECTIONS</a>
+      <a href="#">SHOP IG</a>
+      <a href="#">SALE</a>
+      <a href="#">WHO IS BP</a>
+    </nav>
+    <div class="icons">
+      <div class="icon-placeholder">👤</div>
+      <div class="icon-placeholder">♡</div>
+      <div class="icon-placeholder">👜</div>
+    </div>
+  </header>
+
+  <div class="breadcrumb">
+    <span>Home</span> / <strong>Product size S/M</strong>
+  </div>
+
+  <div class="main">
+    <div class="filters">
+      <h4>PRICE +</h4>
+      <h4>AVAILABILITY +</h4>
+      <button>FILTER</button>
+    </div>
+    <div class="content">
+      <div class="alert">
+        <span>⚠️ No products were found matching your selection.</span>
+      </div>
+      <div class="search-bar">
+        <input type="text" placeholder="Search for products" />
+        <button>🔍</button>
+      </div>
+    </div>
+  </div>
+
+  <footer>
+    <div class="footer-left">
+      Let Your<br/>Body Do<br/>The Talking
+    </div>
+    <div class="footer-center">
+      <p>FOLLOW US</p>
+      <div class="social-icons">
+        <img src="https://raw.githubusercontent.com/Mikivishy/imgs/main/folder1/Icon.jpg" alt="Instagram" title="Instagram"/>
+        <img src="https://raw.githubusercontent.com/Mikivishy/imgs/main/folder1/Icon.jpg" alt="Facebook" title="Facebook"/>
+        <img src="https://raw.githubusercontent.com/Mikivishy/imgs/main/folder1/Icon.jpg" alt="TikTok" title="TikTok"/>
+      </div>
+    </div>
+    <div class="footer-right">
+      <p>NEWSLETTER</p>
+      <div class="newsletter">
+        <input type="email" placeholder="Your email address" />
+        <button>SIGN UP</button>
+      </div>
+    </div>
+  </footer>
+</body>
+</html>
+```

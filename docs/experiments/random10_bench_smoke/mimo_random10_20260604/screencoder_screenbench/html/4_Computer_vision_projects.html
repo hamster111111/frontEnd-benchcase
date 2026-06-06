@@ -1,0 +1,608 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bing 搜索结果</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            background: #fff;
+            color: #202124;
+            font-size: 14px;
+            line-height: 1.5;
+        }
+
+        /* Header */
+        .header {
+            display: flex;
+            align-items: center;
+            padding: 12px 20px;
+            border-bottom: 1px solid #e0e0e0;
+        }
+
+        .bing-logo {
+            display: flex;
+            align-items: center;
+            margin-right: 20px;
+        }
+
+        .bing-logo-icon {
+            width: 32px;
+            height: 32px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .bing-logo-icon svg {
+            width: 32px;
+            height: 32px;
+        }
+
+        .search-container {
+            flex: 1;
+            max-width: 600px;
+        }
+
+        .search-box {
+            display: flex;
+            align-items: center;
+            border: 1px solid #ccc;
+            border-radius: 24px;
+            padding: 8px 16px;
+            background: #fff;
+            height: 44px;
+        }
+
+        .search-icon {
+            color: #999;
+            margin-right: 10px;
+        }
+
+        .search-input {
+            flex: 1;
+            border: none;
+            outline: none;
+            font-size: 16px;
+            color: #202124;
+        }
+
+        .camera-icon {
+            color: #4285f4;
+            cursor: pointer;
+            padding: 4px;
+        }
+
+        .header-right {
+            display: flex;
+            align-items: center;
+            margin-left: auto;
+            gap: 16px;
+        }
+
+        .rewards-link {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            color: #444;
+            text-decoration: none;
+            font-size: 13px;
+        }
+
+        .rewards-icon {
+            width: 20px;
+            height: 20px;
+            background: #5f6368;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .rewards-icon svg {
+            fill: white;
+        }
+
+        .login-btn {
+            padding: 8px 16px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            background: #fff;
+            color: #333;
+            font-size: 13px;
+            cursor: pointer;
+        }
+
+        .hamburger {
+            cursor: pointer;
+            padding: 8px;
+        }
+
+        .hamburger span {
+            display: block;
+            width: 18px;
+            height: 2px;
+            background: #333;
+            margin: 4px 0;
+        }
+
+        /* Navigation Tabs */
+        .nav-tabs {
+            display: flex;
+            padding: 0 20px;
+            border-bottom: 1px solid #e0e0e0;
+            gap: 0;
+        }
+
+        .nav-tab {
+            padding: 12px 16px;
+            font-size: 13px;
+            color: #5f6368;
+            cursor: pointer;
+            border-bottom: 2px solid transparent;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            white-space: nowrap;
+        }
+
+        .nav-tab.active {
+            color: #202124;
+            border-bottom-color: #00809d;
+            font-weight: 500;
+        }
+
+        .nav-tab:hover {
+            color: #202124;
+        }
+
+        .tab-icon {
+            width: 16px;
+            height: 16px;
+        }
+
+        /* Results Section */
+        .results-section {
+            padding: 16px 180px;
+        }
+
+        .results-count {
+            color: #70757a;
+            font-size: 13px;
+            margin-bottom: 16px;
+        }
+
+        /* Search Result */
+        .search-result {
+            margin-bottom: 28px;
+        }
+
+        .result-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 4px;
+        }
+
+        .result-favicon {
+            width: 26px;
+            height: 26px;
+            border-radius: 50%;
+            background: #f1f3f4;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 10px;
+            font-size: 12px;
+            color: #666;
+        }
+
+        .result-url-info {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .result-domain {
+            font-size: 13px;
+            color: #202124;
+        }
+
+        .result-url {
+            font-size: 12px;
+            color: #70757a;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+
+        .result-title {
+            font-size: 18px;
+            color: #1a0dab;
+            text-decoration: none;
+            cursor: pointer;
+            display: block;
+            margin-bottom: 4px;
+            line-height: 1.3;
+        }
+
+        .result-title:hover {
+            text-decoration: underline;
+        }
+
+        .result-description {
+            font-size: 14px;
+            color: #4d5156;
+            line-height: 1.5;
+            max-width: 600px;
+        }
+
+        /* Bottom Verification Bar */
+        .verification-bar {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: #fff;
+            border-top: 1px solid #e0e0e0;
+            padding: 12px 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 16px;
+            z-index: 100;
+        }
+
+        .verify-logo {
+            width: 36px;
+            height: 36px;
+            background: linear-gradient(135deg, #0078d4, #50e6ff);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .verify-logo svg {
+            width: 20px;
+            height: 20px;
+            fill: white;
+        }
+
+        .verify-text {
+            font-size: 14px;
+            color: #333;
+        }
+
+        .verify-btn {
+            padding: 8px 24px;
+            background: #0078d4;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            font-size: 14px;
+            cursor: pointer;
+        }
+
+        .verify-btn:hover {
+            background: #006cbe;
+        }
+
+        /* Tab icons using CSS */
+        .search-tab-icon {
+            width: 16px;
+            height: 16px;
+            position: relative;
+        }
+
+        .search-tab-icon::before {
+            content: "";
+            display: block;
+            width: 10px;
+            height: 10px;
+            border: 2px solid #999;
+            border-radius: 50%;
+            position: absolute;
+            top: 1px;
+            left: 1px;
+        }
+
+        .search-tab-icon::after {
+            content: "";
+            display: block;
+            width: 6px;
+            height: 2px;
+            background: #999;
+            position: absolute;
+            bottom: 2px;
+            right: 0;
+            transform: rotate(45deg);
+        }
+
+        .image-icon {
+            width: 16px;
+            height: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .image-icon-box {
+            width: 14px;
+            height: 12px;
+            border: 1.5px solid #999;
+            border-radius: 1px;
+            position: relative;
+        }
+
+        .image-icon-circle {
+            width: 4px;
+            height: 4px;
+            background: #999;
+            border-radius: 50%;
+            position: absolute;
+            top: 2px;
+            left: 2px;
+        }
+
+        .image-icon-triangle {
+            width: 0;
+            height: 0;
+            border-left: 4px solid transparent;
+            border-right: 4px solid transparent;
+            border-bottom: 6px solid #999;
+            position: absolute;
+            bottom: 2px;
+            right: 2px;
+        }
+
+        .video-icon {
+            width: 16px;
+            height: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .video-icon-triangle {
+            width: 0;
+            height: 0;
+            border-top: 6px solid transparent;
+            border-bottom: 6px solid transparent;
+            border-left: 10px solid #999;
+        }
+
+        .map-icon {
+            width: 16px;
+            height: 16px;
+            position: relative;
+        }
+
+        .map-icon-dot {
+            width: 8px;
+            height: 8px;
+            background: #999;
+            border-radius: 50% 50% 50% 0;
+            transform: rotate(-45deg);
+            position: absolute;
+            top: 4px;
+            left: 4px;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <div class="header">
+        <div class="bing-logo">
+            <div class="bing-logo-icon">
+                <svg viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
+                    <rect x="0" y="0" width="14" height="14" fill="#F25022"/>
+                    <rect x="18" y="0" width="14" height="14" fill="#7FBA00"/>
+                    <rect x="0" y="18" width="14" height="14" fill="#00A4EF"/>
+                    <rect x="18" y="18" width="14" height="14" fill="#FFB900"/>
+                </svg>
+            </div>
+        </div>
+        <div class="search-container">
+            <div class="search-box">
+                <svg class="search-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#999" stroke-width="2">
+                    <circle cx="11" cy="11" r="8"/>
+                    <path d="m21 21-4.35-4.35"/>
+                </svg>
+                <input type="text" class="search-input" value="Computer vision projects">
+                <div class="camera-icon">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#4285f4" stroke-width="2">
+                        <rect x="3" y="3" width="18" height="18" rx="2"/>
+                        <circle cx="12" cy="12" r="4"/>
+                    </svg>
+                </div>
+            </div>
+        </div>
+        <div class="header-right">
+            <a href="#" class="rewards-link">
+                <span>Rewards</span>
+                <div class="rewards-icon">
+                    <svg width="12" height="12" viewBox="0 0 24 24">
+                        <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
+                    </svg>
+                </div>
+            </a>
+            <button class="login-btn">登录</button>
+            <div class="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Navigation Tabs -->
+    <div class="nav-tabs">
+        <div class="nav-tab active">
+            全部
+        </div>
+        <div class="nav-tab">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#5f6368" stroke-width="2">
+                <circle cx="11" cy="11" r="8"/>
+                <path d="m21 21-4.35-4.35"/>
+            </svg>
+            搜索
+        </div>
+        <div class="nav-tab">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#5f6368" stroke-width="2">
+                <rect x="3" y="3" width="18" height="18" rx="2"/>
+                <circle cx="9" cy="9" r="2"/>
+                <path d="m21 15-3.086-3.086a2 2 0 0 0-2.828 0L6 21"/>
+            </svg>
+            图片
+        </div>
+        <div class="nav-tab">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#5f6368" stroke-width="2">
+                <polygon points="5 3 19 12 5 21 5 3"/>
+            </svg>
+            视频
+        </div>
+        <div class="nav-tab">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#5f6368" stroke-width="2">
+                <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"/>
+                <circle cx="12" cy="9" r="2.5"/>
+            </svg>
+            地图
+        </div>
+        <div class="nav-tab">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#5f6368" stroke-width="2">
+                <circle cx="12" cy="5" r="1"/>
+                <circle cx="12" cy="12" r="1"/>
+                <circle cx="12" cy="19" r="1"/>
+            </svg>
+            更多
+        </div>
+        <div class="nav-tab">
+            工具
+        </div>
+    </div>
+
+    <!-- Results Section -->
+    <div class="results-section">
+        <div class="results-count">约 16,800,000 个结果</div>
+
+        <!-- Result 1 -->
+        <div class="search-result">
+            <div class="result-header">
+                <div class="result-favicon">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="#666">
+                        <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.93c-3.95-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z"/>
+                    </svg>
+                </div>
+                <div class="result-url-info">
+                    <span class="result-domain">google.com</span>
+                    <span class="result-url">https://support.google.com › calendar › answer</span>
+                </div>
+            </div>
+            <a href="#" class="result-title">Willkommen bei Google Kalender</a>
+            <p class="result-description">Tipp: Sie können Google Kalender zwar nicht auf Ihrem Computer herunterladen und installieren, aber dafür offline verwenden. Weitere Informationen zur Verwendung von Google Kalender im ...</p>
+        </div>
+
+        <!-- Result 2 -->
+        <div class="search-result">
+            <div class="result-header">
+                <div class="result-favicon">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="#666">
+                        <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.93c-3.95-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z"/>
+                    </svg>
+                </div>
+                <div class="result-url-info">
+                    <span class="result-domain">google.com</span>
+                    <span class="result-url">https://support.google.com › mail › answer</span>
+                </div>
+            </div>
+            <a href="#" class="result-title">Log ind på Gmail - Computer - Hjælp til Gmail - Google Help</a>
+            <p class="result-description">Gå til Gmail på din computer. Angiv mailadressen eller telefonnummeret og adgangskoden til din Google-konto. Hvis oplysningerne allerede er udfyldt, og du skal logge ind på en anden konto, ...</p>
+        </div>
+
+        <!-- Result 3 -->
+        <div class="search-result">
+            <div class="result-header">
+                <div class="result-favicon">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="#666">
+                        <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.93c-3.95-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z"/>
+                    </svg>
+                </div>
+                <div class="result-url-info">
+                    <span class="result-domain">google.com</span>
+                    <span class="result-url">https://support.google.com › mail › answer</span>
+                </div>
+            </div>
+            <a href="#" class="result-title">Sign in to Gmail - Computer - Gmail Help</a>
+            <p class="result-description">On your computer, go to gmail.com. Enter your Google Account email address or phone number and password. If information is already filled in and you need to sign in to a different account, ...</p>
+        </div>
+
+        <!-- Result 4 -->
+        <div class="search-result">
+            <div class="result-header">
+                <div class="result-favicon">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="#666">
+                        <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.93c-3.95-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z"/>
+                    </svg>
+                </div>
+                <div class="result-url-info">
+                    <span class="result-domain">google.com</span>
+                    <span class="result-url">https://support.google.com › mail › answer</span>
+                </div>
+            </div>
+            <a href="#" class="result-title">Sign in to Gmail - Computer - Gmail Help</a>
+            <p class="result-description">On your computer, go to Gmail. Enter your Google Account email or phone number and password. If information is already filled in and you have to sign in to a different account, click ...</p>
+        </div>
+
+        <!-- Result 5 -->
+        <div class="search-result">
+            <div class="result-header">
+                <div class="result-favicon">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="#666">
+                        <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.93c-3.95-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z"/>
+                    </svg>
+                </div>
+                <div class="result-url-info">
+                    <span class="result-domain">google.com</span>
+                    <span class="result-url">https://support.google.com › mail › answer</span>
+                </div>
+            </div>
+            <a href="#" class="result-title">Accedere a Gmail - Computer - Guida di Gmail</a>
+            <p class="result-description">Apri Gmail sul computer. Inserisci l'indirizzo email o il numero di telefono e la password del tuo Account Google. Se le informazioni sono già inserite e devi accedere a un altro account, fai clic ...</p>
+        </div>
+
+        <!-- Result 6 -->
+        <div class="search-result">
+            <div class="result-header">
+                <div class="result-favicon">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="#666">
+                        <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.93c-3.95-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z"/>
+                    </svg>
+                </div>
+                <div class="result-url-info">
+                    <span class="result-domain">google.com</span>
+                    <span class="result-url">https://support.google.com › meet › answer</span>
+                </div>
+            </div>
+            <a href="#" class="result-title">Download the Google Meet app - Computer - Google Meet Help</a>
+            <p class="result-description">With the Google Meet app, you can: Create or join scheduled or instant cloud-encrypted Google Meet meetings with a link. Ring directly to a Google Workspace, personal account, or phone ...</p>
+        </div>
+    </div>
+
+    <!-- Bottom Verification Bar -->
+    <div class="verification-bar">
+        <div class="verify-logo">
+            <svg viewBox="0 0 24 24" fill="white">
+                <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.93c-3.95-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z"/>
+            </svg>
+        </div>
+        <span class="verify-text">通过快速验证增强搜索体验。</span>
+        <button class="verify-btn">验证</button>
+    </div>
+</body>
+</html>

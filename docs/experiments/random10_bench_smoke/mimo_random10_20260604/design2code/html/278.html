@@ -1,0 +1,690 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Question & Answer School</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
+            background-color: #f5f5f5;
+            color: #333;
+            line-height: 1.6;
+        }
+
+        /* Header */
+        .header {
+            background-color: #6c3ce0;
+            padding: 12px 40px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .header-left {
+            display: flex;
+            align-items: center;
+            gap: 25px;
+        }
+
+        .logo {
+            color: white;
+            font-size: 20px;
+            font-weight: bold;
+            text-decoration: none;
+        }
+
+        .nav-link {
+            color: white;
+            text-decoration: none;
+            font-size: 15px;
+        }
+
+        .search-container {
+            display: flex;
+            flex: 1;
+            max-width: 650px;
+            margin: 0 50px;
+        }
+
+        .search-input {
+            flex: 1;
+            padding: 10px 14px;
+            border: none;
+            border-radius: 4px 0 0 4px;
+            font-size: 14px;
+            outline: none;
+        }
+
+        .search-button {
+            background-color: #f5a623;
+            color: white;
+            border: none;
+            padding: 10px 22px;
+            border-radius: 0 4px 4px 0;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 500;
+        }
+
+        .search-button:hover {
+            background-color: #e6951a;
+        }
+
+        .login-link {
+            color: white;
+            text-decoration: none;
+            font-size: 15px;
+        }
+
+        /* Banner */
+        .banner {
+            background-color: #ede7fa;
+            padding: 28px 40px;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .banner h1 {
+            color: #6c3ce0;
+            font-size: 28px;
+            font-weight: 400;
+            margin-bottom: 4px;
+        }
+
+        .banner p {
+            color: #555;
+            font-size: 14px;
+        }
+
+        /* Main Content */
+        .main-container {
+            max-width: 1250px;
+            margin: 0 auto;
+            padding: 30px 20px;
+            display: flex;
+            gap: 30px;
+        }
+
+        .content-area {
+            flex: 1;
+        }
+
+        .sidebar {
+            width: 290px;
+            flex-shrink: 0;
+        }
+
+        .section-title {
+            font-size: 24px;
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 20px;
+        }
+
+        /* Question Card */
+        .question-card {
+            background: white;
+            border: 1px solid #e0e0e0;
+            border-radius: 6px;
+            padding: 20px;
+            margin-bottom: 16px;
+        }
+
+        .question-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 14px;
+        }
+
+        .user-info {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .avatar {
+            width: 38px;
+            height: 38px;
+            background-color: #2196F3;
+            border-radius: 50%;
+        }
+
+        .username {
+            color: #666;
+            font-size: 14px;
+        }
+
+        .tags {
+            display: flex;
+            gap: 10px;
+        }
+
+        .tag {
+            font-size: 12px;
+            padding: 4px 12px;
+            border-radius: 3px;
+            font-weight: 500;
+        }
+
+        .tag-subject {
+            color: #4CAF50;
+            background-color: #e8f5e9;
+        }
+
+        .tag-grade {
+            color: #e57373;
+            background-color: #ffebee;
+        }
+
+        .question-text {
+            font-size: 15px;
+            color: #333;
+            line-height: 1.6;
+            margin-bottom: 14px;
+        }
+
+        .question-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .timestamp {
+            color: #999;
+            font-size: 12px;
+            background: #f5f5f5;
+            padding: 4px 10px;
+            border-radius: 3px;
+            border: 1px solid #e8e8e8;
+        }
+
+        .answers-button {
+            border: 1px solid #6c3ce0;
+            color: #6c3ce0;
+            background: transparent;
+            padding: 8px 24px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 13px;
+            font-weight: 500;
+            transition: all 0.2s;
+        }
+
+        .answers-button:hover {
+            background-color: #6c3ce0;
+            color: white;
+        }
+
+        /* Sidebar Sections */
+        .sidebar-section {
+            background: white;
+            border: 1px solid #e0e0e0;
+            border-radius: 6px;
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+
+        .sidebar-title {
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 16px;
+            color: #333;
+        }
+
+        .sidebar-title .icon {
+            margin-right: 6px;
+        }
+
+        .subject-list {
+            list-style: none;
+        }
+
+        .subject-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 9px 0;
+            border-bottom: 1px dashed #e8e8e8;
+        }
+
+        .subject-item:last-child {
+            border-bottom: none;
+        }
+
+        .subject-name {
+            color: #6c3ce0;
+            text-decoration: none;
+            font-size: 14px;
+            flex: 1;
+        }
+
+        .subject-name:hover {
+            text-decoration: underline;
+        }
+
+        .subject-count {
+            background-color: #e8d8f8;
+            color: #6c3ce0;
+            font-size: 11px;
+            padding: 3px 10px;
+            border-radius: 12px;
+            font-weight: 500;
+        }
+
+        /* Pagination */
+        .pagination {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 30px;
+        }
+
+        .pagination button {
+            border: 1px solid #6c3ce0;
+            color: #6c3ce0;
+            background: transparent;
+            padding: 10px 30px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 500;
+            transition: all 0.2s;
+        }
+
+        .pagination button:hover {
+            background-color: #6c3ce0;
+            color: white;
+        }
+
+        /* Footer */
+        .footer {
+            background-color: #6c3ce0;
+            color: white;
+            text-align: center;
+            padding: 25px 40px;
+            margin-top: 40px;
+        }
+
+        .footer-links {
+            margin-bottom: 18px;
+        }
+
+        .footer-links a {
+            color: white;
+            text-decoration: none;
+            margin: 0 18px;
+            font-size: 14px;
+        }
+
+        .footer-links a:hover {
+            text-decoration: underline;
+        }
+
+        .footer-divider {
+            border-top: 1px solid rgba(255, 255, 255, 0.5);
+            margin: 0 100px 18px;
+        }
+
+        .footer-copyright {
+            font-size: 14px;
+            opacity: 0.95;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Header -->
+    <header class="header">
+        <div class="header-left">
+            <a href="#" class="logo">Sheriffali</a>
+            <a href="#" class="nav-link">Home</a>
+        </div>
+        <div class="search-container">
+            <input type="text" class="search-input" placeholder="Search">
+            <button class="search-button">Search</button>
+        </div>
+        <a href="#" class="login-link">Login</a>
+    </header>
+
+    <!-- Banner -->
+    <section class="banner">
+        <h1>Question & Answer</h1>
+        <p>Question & Answer School</p>
+    </section>
+
+    <!-- Main Content -->
+    <div class="main-container">
+        <div class="content-area">
+            <h2 class="section-title">Latest Questions</h2>
+
+            <!-- Question 1 -->
+            <div class="question-card">
+                <div class="question-header">
+                    <div class="user-info">
+                        <div class="avatar"></div>
+                        <span class="username">admin</span>
+                    </div>
+                    <div class="tags">
+                        <span class="tag tag-subject">Mathematics</span>
+                        <span class="tag tag-grade">Middle School</span>
+                    </div>
+                </div>
+                <p class="question-text">two chefs are trying to break world record for the longest spaghetti. chef a measures his spaghetti strand to be 503 2/3 ft chef b measures his spaghetti strand be 503.66 ft.</p>
+                <div class="question-footer">
+                    <span class="timestamp">1 month ago</span>
+                    <button class="answers-button">Answers</button>
+                </div>
+            </div>
+
+            <!-- Question 2 -->
+            <div class="question-card">
+                <div class="question-header">
+                    <div class="user-info">
+                        <div class="avatar"></div>
+                        <span class="username">admin</span>
+                    </div>
+                    <div class="tags">
+                        <span class="tag tag-subject">Mathematics</span>
+                        <span class="tag tag-grade">Middle School</span>
+                    </div>
+                </div>
+                <p class="question-text">find the square root by factor21904</p>
+                <div class="question-footer">
+                    <span class="timestamp">1 month ago</span>
+                    <button class="answers-button">Answers</button>
+                </div>
+            </div>
+
+            <!-- Question 3 -->
+            <div class="question-card">
+                <div class="question-header">
+                    <div class="user-info">
+                        <div class="avatar"></div>
+                        <span class="username">admin</span>
+                    </div>
+                    <div class="tags">
+                        <span class="tag tag-subject">Mathematics</span>
+                        <span class="tag tag-grade">Middle School</span>
+                    </div>
+                </div>
+                <p class="question-text">Terry has between 50 and 100 pennies and her piggy bank. She can count them two at a time and come out even.</p>
+                <div class="question-footer">
+                    <span class="timestamp">1 month ago</span>
+                    <button class="answers-button">Answers</button>
+                </div>
+            </div>
+
+            <!-- Question 4 -->
+            <div class="question-card">
+                <div class="question-header">
+                    <div class="user-info">
+                        <div class="avatar"></div>
+                        <span class="username">admin</span>
+                    </div>
+                    <div class="tags">
+                        <span class="tag tag-subject">Mathematics</span>
+                        <span class="tag tag-grade">High School</span>
+                    </div>
+                </div>
+                <p class="question-text">Find the pattern: 3*4 = 6 4*7 = 8 8*4 = 8 1*3 = 2 Now complete: 5*5 = 6*2 =</p>
+                <div class="question-footer">
+                    <span class="timestamp">1 month ago</span>
+                    <button class="answers-button">Answers</button>
+                </div>
+            </div>
+
+            <!-- Question 5 -->
+            <div class="question-card">
+                <div class="question-header">
+                    <div class="user-info">
+                        <div class="avatar"></div>
+                        <span class="username">admin</span>
+                    </div>
+                    <div class="tags">
+                        <span class="tag tag-subject">Social Studies</span>
+                        <span class="tag tag-grade">Middle School</span>
+                    </div>
+                </div>
+                <p class="question-text">List each of the five themes of geography and explain how geographers use these themes to organize information about the earth.</p>
+                <div class="question-footer">
+                    <span class="timestamp">1 month ago</span>
+                    <button class="answers-button">Answers</button>
+                </div>
+            </div>
+
+            <!-- Question 6 -->
+            <div class="question-card">
+                <div class="question-header">
+                    <div class="user-info">
+                        <div class="avatar"></div>
+                        <span class="username">admin</span>
+                    </div>
+                    <div class="tags">
+                        <span class="tag tag-subject">Biology</span>
+                        <span class="tag tag-grade">High School</span>
+                    </div>
+                </div>
+                <p class="question-text">Why is it important that scientific investigation be repeated? What happens when other scientists achieve different results when repeating an investigation?</p>
+                <div class="question-footer">
+                    <span class="timestamp">1 month ago</span>
+                    <button class="answers-button">Answers</button>
+                </div>
+            </div>
+
+            <!-- Question 7 -->
+            <div class="question-card">
+                <div class="question-header">
+                    <div class="user-info">
+                        <div class="avatar"></div>
+                        <span class="username">admin</span>
+                    </div>
+                    <div class="tags">
+                        <span class="tag tag-subject">Mathematics</span>
+                        <span class="tag tag-grade">High School</span>
+                    </div>
+                </div>
+                <p class="question-text">Re-write the set W by listing its elements. Use the appropriate set notation.</p>
+                <div class="question-footer">
+                    <span class="timestamp">1 month ago</span>
+                    <button class="answers-button">Answers</button>
+                </div>
+            </div>
+
+            <!-- Question 8 -->
+            <div class="question-card">
+                <div class="question-header">
+                    <div class="user-info">
+                        <div class="avatar"></div>
+                        <span class="username">admin</span>
+                    </div>
+                    <div class="tags">
+                        <span class="tag tag-subject">Mathematics</span>
+                        <span class="tag tag-grade">High School</span>
+                    </div>
+                </div>
+                <p class="question-text">I need help with this problem. 2.9 10 ^11 - 3.7 10^13</p>
+                <div class="question-footer">
+                    <span class="timestamp">1 month ago</span>
+                    <button class="answers-button">Answers</button>
+                </div>
+            </div>
+
+            <!-- Question 9 -->
+            <div class="question-card">
+                <div class="question-header">
+                    <div class="user-info">
+                        <div class="avatar"></div>
+                        <span class="username">admin</span>
+                    </div>
+                    <div class="tags">
+                        <span class="tag tag-subject">Mathematics</span>
+                        <span class="tag tag-grade">Middle School</span>
+                    </div>
+                </div>
+                <p class="question-text">816mm=____ cmConvert 816mm=____ cm</p>
+                <div class="question-footer">
+                    <span class="timestamp">1 month ago</span>
+                    <button class="answers-button">Answers</button>
+                </div>
+            </div>
+
+            <!-- Question 10 -->
+            <div class="question-card">
+                <div class="question-header">
+                    <div class="user-info">
+                        <div class="avatar"></div>
+                        <span class="username">admin</span>
+                    </div>
+                    <div class="tags">
+                        <span class="tag tag-subject">Mathematics</span>
+                        <span class="tag tag-grade">High School</span>
+                    </div>
+                </div>
+                <p class="question-text">I know how to do equivalent fractions but idk how to do this one</p>
+                <div class="question-footer">
+                    <span class="timestamp">1 month ago</span>
+                    <button class="answers-button">Answers</button>
+                </div>
+            </div>
+
+            <!-- Pagination -->
+            <div class="pagination">
+                <button>Previous</button>
+                <button>Next</button>
+            </div>
+        </div>
+
+        <!-- Sidebar -->
+        <div class="sidebar">
+            <!-- Subjects -->
+            <div class="sidebar-section">
+                <h3 class="sidebar-title"><span class="icon">📚</span> Subjects</h3>
+                <ul class="subject-list">
+                    <li class="subject-item">
+                        <a href="#" class="subject-name">Mathematics</a>
+                        <span class="subject-count">2647929</span>
+                    </li>
+                    <li class="subject-item">
+                        <a href="#" class="subject-name">History</a>
+                        <span class="subject-count">842281</span>
+                    </li>
+                    <li class="subject-item">
+                        <a href="#" class="subject-name">English</a>
+                        <span class="subject-count">748681</span>
+                    </li>
+                    <li class="subject-item">
+                        <a href="#" class="subject-name">Biology</a>
+                        <span class="subject-count">586256</span>
+                    </li>
+                    <li class="subject-item">
+                        <a href="#" class="subject-name">Social Studies</a>
+                        <span class="subject-count">406852</span>
+                    </li>
+                    <li class="subject-item">
+                        <a href="#" class="subject-name">Chemistry</a>
+                        <span class="subject-count">368373</span>
+                    </li>
+                    <li class="subject-item">
+                        <a href="#" class="subject-name">Business</a>
+                        <span class="subject-count">348603</span>
+                    </li>
+                    <li class="subject-item">
+                        <a href="#" class="subject-name">Physics</a>
+                        <span class="subject-count">324927</span>
+                    </li>
+                    <li class="subject-item">
+                        <a href="#" class="subject-name">Health</a>
+                        <span class="subject-count">199835</span>
+                    </li>
+                    <li class="subject-item">
+                        <a href="#" class="subject-name">Spanish</a>
+                        <span class="subject-count">130075</span>
+                    </li>
+                    <li class="subject-item">
+                        <a href="#" class="subject-name">Geography</a>
+                        <span class="subject-count">112100</span>
+                    </li>
+                    <li class="subject-item">
+                        <a href="#" class="subject-name">Computers and Technology</a>
+                        <span class="subject-count">106146</span>
+                    </li>
+                    <li class="subject-item">
+                        <a href="#" class="subject-name">Arts</a>
+                        <span class="subject-count">77164</span>
+                    </li>
+                    <li class="subject-item">
+                        <a href="#" class="subject-name">Advanced Placement (AP)</a>
+                        <span class="subject-count">23675</span>
+                    </li>
+                    <li class="subject-item">
+                        <a href="#" class="subject-name">World Languages</a>
+                        <span class="subject-count">23213</span>
+                    </li>
+                    <li class="subject-item">
+                        <a href="#" class="subject-name">French</a>
+                        <span class="subject-count">22589</span>
+                    </li>
+                    <li class="subject-item">
+                        <a href="#" class="subject-name">Engineering</a>
+                        <span class="subject-count">19607</span>
+                    </li>
+                    <li class="subject-item">
+                        <a href="#" class="subject-name">Law</a>
+                        <span class="subject-count">17108</span>
+                    </li>
+                    <li class="subject-item">
+                        <a href="#" class="subject-name">Medicine</a>
+                        <span class="subject-count">13966</span>
+                    </li>
+                    <li class="subject-item">
+                        <a href="#" class="subject-name">SAT</a>
+                        <span class="subject-count">10987</span>
+                    </li>
+                    <li class="subject-item">
+                        <a href="#" class="subject-name">German</a>
+                        <span class="subject-count">3389</span>
+                    </li>
+                </ul>
+            </div>
+
+            <!-- Grades -->
+            <div class="sidebar-section">
+                <h3 class="sidebar-title"><span class="icon">📚</span> Grades</h3>
+                <ul class="subject-list">
+                    <li class="subject-item">
+                        <a href="#" class="subject-name">High School</a>
+                        <span class="subject-count">3423409</span>
+                    </li>
+                    <li class="subject-item">
+                        <a href="#" class="subject-name">Middle School</a>
+                        <span class="subject-count">2092250</span>
+                    </li>
+                    <li class="subject-item">
+                        <a href="#" class="subject-name">College</a>
+                        <span class="subject-count">1518097</span>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-links">
+            <a href="#">About</a>
+            <a href="#">Privacy Policy</a>
+            <a href="#">Terms and Conditions</a>
+            <a href="#">Disclaimer</a>
+        </div>
+        <div class="footer-divider"></div>
+        <p class="footer-copyright">© 2023 Sheriffali.com</p>
+    </footer>
+
+</body>
+</html>

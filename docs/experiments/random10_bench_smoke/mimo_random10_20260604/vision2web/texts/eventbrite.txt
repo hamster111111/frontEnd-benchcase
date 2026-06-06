@@ -1,0 +1,1078 @@
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Eventbrite</title>
+<style>
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+  color: #1e0a3c;
+  background: #f8f7fa;
+  line-height: 1.5;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+/* Header */
+.header {
+  background: #fff;
+  border-bottom: 1px solid #eeedf2;
+  padding: 0 24px;
+  display: flex;
+  align-items: center;
+  height: 60px;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  margin-right: 16px;
+}
+
+.logo-icon {
+  width: 28px;
+  height: 28px;
+  background: #f05537;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-weight: bold;
+  font-size: 18px;
+}
+
+.logo-text {
+  color: #39364f;
+  font-size: 14px;
+  font-weight: 700;
+  margin-left: 6px;
+}
+
+.search-container {
+  display: flex;
+  flex: 1;
+  align-items: center;
+  border: 1px solid #dbdae3;
+  border-radius: 4px;
+  height: 40px;
+  max-width: 600px;
+}
+
+.search-input {
+  flex: 1;
+  border: none;
+  outline: none;
+  padding: 0 12px;
+  font-size: 14px;
+  height: 100%;
+}
+
+.search-divider {
+  width: 1px;
+  height: 24px;
+  background: #dbdae3;
+}
+
+.location-input {
+  border: none;
+  outline: none;
+  padding: 0 12px;
+  font-size: 14px;
+  width: 140px;
+  color: #39364f;
+}
+
+.search-btn {
+  width: 40px;
+  height: 100%;
+  background: #d1410c;
+  border: none;
+  border-radius: 0 4px 4px 0;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.search-btn svg {
+  fill: white;
+  width: 16px;
+  height: 16px;
+}
+
+.nav-links {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  margin-left: 24px;
+  font-size: 14px;
+  white-space: nowrap;
+}
+
+.nav-links a {
+  color: #39364f;
+}
+
+.nav-links a:hover {
+  color: #d1410c;
+}
+
+.hamburger {
+  display: none;
+  flex-direction: column;
+  gap: 4px;
+  cursor: pointer;
+  padding: 8px;
+}
+
+.hamburger span {
+  width: 20px;
+  height: 2px;
+  background: #39364f;
+}
+
+/* Main Content */
+.main-content {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 24px;
+}
+
+.event-header {
+  margin-bottom: 24px;
+  border-bottom: 1px solid #eeedf2;
+  padding-bottom: 24px;
+}
+
+.event-ended-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: #f05537;
+  color: white;
+  padding: 4px 10px;
+  border-radius: 3px;
+  font-size: 12px;
+  font-weight: 600;
+  margin-bottom: 12px;
+}
+
+.event-ended-badge::before {
+  content: '⏸';
+  font-size: 10px;
+}
+
+.event-title {
+  font-size: 22px;
+  font-weight: 700;
+  color: #1e0a3c;
+  margin-bottom: 6px;
+}
+
+.view-details {
+  color: #3659e3;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+/* Organizer Section */
+.organizer-section {
+  background: #fff;
+  border-radius: 8px;
+  padding: 24px;
+  margin-bottom: 32px;
+}
+
+.organizer-section h3 {
+  font-size: 16px;
+  font-weight: 400;
+  color: #39364f;
+  margin-bottom: 16px;
+}
+
+.organizer-card {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  max-width: 360px;
+}
+
+.organizer-info {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.organizer-avatar {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #4a90d9 0%, #2d5a8c 50%, #1a3a5c 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  overflow: hidden;
+}
+
+.organizer-avatar::after {
+  content: '';
+  position: absolute;
+  width: 20px;
+  height: 20px;
+  background: rgba(255,255,255,0.3);
+  border-radius: 50%;
+  top: 8px;
+  right: 8px;
+}
+
+.organizer-details {
+  font-size: 14px;
+}
+
+.organizer-details .by {
+  color: #6f7287;
+}
+
+.organizer-details .name {
+  font-weight: 600;
+  color: #1e0a3c;
+}
+
+.followers {
+  color: #6f7287;
+  font-size: 13px;
+}
+
+.follow-btn {
+  background: #d1410c;
+  color: white;
+  border: none;
+  padding: 8px 20px;
+  border-radius: 4px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.follow-btn:hover {
+  background: #b83a0b;
+}
+
+/* Events Section */
+.events-section {
+  margin-bottom: 40px;
+}
+
+.events-section h2 {
+  font-size: 24px;
+  font-weight: 700;
+  margin-bottom: 20px;
+  color: #1e0a3c;
+}
+
+.events-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+}
+
+.event-card {
+  background: #fff;
+  border-radius: 8px;
+  overflow: hidden;
+  transition: box-shadow 0.2s;
+}
+
+.event-card:hover {
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+
+.event-image {
+  width: 100%;
+  height: 160px;
+  position: relative;
+  overflow: hidden;
+}
+
+.event-image-bg {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-weight: 700;
+  font-size: 16px;
+  text-align: center;
+  padding: 16px;
+  text-shadow: 0 1px 3px rgba(0,0,0,0.3);
+}
+
+.event-actions {
+  position: absolute;
+  bottom: 8px;
+  right: 8px;
+  display: flex;
+  gap: 8px;
+}
+
+.action-btn {
+  width: 32px;
+  height: 32px;
+  background: rgba(255,255,255,0.95);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  cursor: pointer;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.15);
+}
+
+.action-btn svg {
+  width: 16px;
+  height: 16px;
+}
+
+.event-badge {
+  position: absolute;
+  top: 8px;
+  left: 8px;
+  background: white;
+  padding: 4px 10px;
+  border-radius: 3px;
+  font-size: 12px;
+  font-weight: 600;
+  color: #39364f;
+}
+
+.event-info {
+  padding: 16px;
+}
+
+.event-card-title {
+  font-size: 16px;
+  font-weight: 700;
+  color: #1e0a3c;
+  margin-bottom: 6px;
+  line-height: 1.3;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.event-date {
+  color: #d1410c;
+  font-size: 14px;
+  font-weight: 600;
+  margin-bottom: 4px;
+}
+
+.event-location {
+  color: #6f7287;
+  font-size: 14px;
+  margin-bottom: 4px;
+}
+
+.event-price {
+  color: #6f7287;
+  font-size: 14px;
+  margin-bottom: 6px;
+}
+
+.event-organizer {
+  color: #39364f;
+  font-size: 13px;
+  font-weight: 600;
+  margin-bottom: 4px;
+}
+
+.event-promoted {
+  color: #a0a0a0;
+  font-size: 12px;
+}
+
+/* Footer */
+.footer {
+  background: #1e0a3c;
+  color: #fff;
+  padding: 48px 24px 24px;
+  margin-top: 60px;
+}
+
+.footer-content {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.footer-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 32px;
+  margin-bottom: 40px;
+}
+
+.footer-col h4 {
+  font-size: 16px;
+  font-weight: 700;
+  margin-bottom: 16px;
+  color: #fff;
+}
+
+.footer-col a {
+  display: block;
+  color: #a9a8b3;
+  font-size: 14px;
+  margin-bottom: 8px;
+  line-height: 1.6;
+}
+
+.footer-col a:hover {
+  color: #fff;
+}
+
+.footer-bottom {
+  border-top: 1px solid #39364f;
+  padding-top: 24px;
+  text-align: center;
+}
+
+.footer-links {
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+  margin-bottom: 16px;
+  font-size: 13px;
+  color: #a9a8b3;
+  flex-wrap: wrap;
+}
+
+.footer-links a {
+  color: #a9a8b3;
+}
+
+.footer-links span {
+  color: #6f7287;
+}
+
+.footer-logo {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  margin-bottom: 12px;
+}
+
+.footer-logo-icon {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.footer-logo-icon .eb {
+  width: 24px;
+  height: 24px;
+  background: #f05537;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-weight: bold;
+  font-size: 14px;
+}
+
+.footer-logo-icon .tf {
+  width: 24px;
+  height: 24px;
+  background: #6366f1;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-weight: bold;
+  font-size: 14px;
+}
+
+.footer-copyright {
+  color: #6f7287;
+  font-size: 13px;
+}
+
+/* Color gradients for event images */
+.bg-steady {
+  background: linear-gradient(135deg, #4a3728 0%, #6b5240 50%, #3d2d1f 100%);
+  background-size: cover;
+  position: relative;
+}
+
+.bg-steady::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: rgba(0,0,0,0.3);
+}
+
+.bg-steady span {
+  position: relative;
+  z-index: 1;
+}
+
+.bg-yoga {
+  background: linear-gradient(135deg, #e8c9a0 0%, #d4a574 50%, #c9956a 100%);
+}
+
+.bg-dot {
+  background: linear-gradient(135deg, #2d1b4e 0%, #4a2d7a 30%, #1a1a2e 60%, #0d0d1a 100%);
+}
+
+.bg-painting {
+  background: linear-gradient(135deg, #3a4a5c 0%, #2d3d4a 50%, #1e2d3a 100%);
+}
+
+.bg-3d {
+  background: linear-gradient(135deg, #2d3748 0%, #4a5568 50%, #1a202c 100%);
+}
+
+.bg-tig {
+  background: linear-gradient(135deg, #4a90d9 0%, #3182ce 30%, #2b6cb0 60%, #1a365d 100%);
+}
+
+.bg-sew {
+  background: linear-gradient(135deg, #e8f0e8 0%, #c8d8c8 50%, #a8b8a8 100%);
+  color: #333 !important;
+  text-shadow: none !important;
+}
+
+.bg-laser {
+  background: linear-gradient(135deg, #1a1a2e 0%, #2d2d4a 50%, #0d0d1a 100%);
+}
+
+.bg-oaw {
+  background: linear-gradient(135deg, #2d3748 0%, #4a5568 50%, #1a202c 100%);
+}
+
+.bg-sew2 {
+  background: linear-gradient(135deg, #e8f0e8 0%, #d0dcd0 50%, #b8c8b8 100%);
+  color: #333 !important;
+  text-shadow: none !important;
+}
+
+/* Responsive Styles */
+@media (max-width: 1024px) {
+  .events-grid {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+  }
+  
+  .footer-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  
+  .nav-links a:nth-child(1),
+  .nav-links a:nth-child(2) {
+    display: none;
+  }
+}
+
+@media (max-width: 768px) {
+  .header {
+    padding: 0 16px;
+    height: 56px;
+  }
+  
+  .search-container {
+    display: none;
+  }
+  
+  .nav-links {
+    display: none;
+  }
+  
+  .nav-links.active {
+    display: flex;
+    flex-direction: column;
+    position: absolute;
+    top: 56px;
+    left: 0;
+    right: 0;
+    background: #fff;
+    padding: 16px 24px;
+    border-bottom: 1px solid #eeedf2;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  }
+  
+  .hamburger {
+    display: flex;
+  }
+  
+  .logo-text {
+    display: none;
+  }
+  
+  .mobile-search {
+    display: flex;
+    padding: 12px 16px;
+    background: #fff;
+    border-bottom: 1px solid #eeedf2;
+  }
+  
+  .mobile-search .search-container {
+    display: flex;
+    flex: 1;
+  }
+  
+  .events-grid {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+  
+  .main-content {
+    padding: 16px;
+  }
+  
+  .footer-grid {
+    grid-template-columns: 1fr;
+    gap: 24px;
+  }
+  
+  .event-image {
+    height: 180px;
+  }
+}
+
+@media (min-width: 769px) {
+  .mobile-search {
+    display: none;
+  }
+}
+
+@media (min-width: 1025px) {
+  .hamburger {
+    display: none;
+  }
+  
+  .mobile-search {
+    display: none;
+  }
+}
+
+/* Heart icon styles */
+.heart-btn svg {
+  fill: none;
+  stroke: #39364f;
+  stroke-width: 2;
+}
+
+.more-btn svg {
+  fill: #39364f;
+}
+
+/* Bottom section actions on smaller screens */
+.event-actions-bottom {
+  display: none;
+}
+</style>
+</head>
+<body>
+
+<!-- Header -->
+<header class="header">
+  <a href="#" class="logo">
+    <div class="logo-icon">e</div>
+    <span class="logo-text">eventbrite</span>
+  </a>
+  
+  <div class="search-container">
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="#39364f" style="margin-left: 12px;">
+      <path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/>
+    </svg>
+    <input type="text" class="search-input" placeholder="Search events">
+    <div class="search-divider"></div>
+    <input type="text" class="location-input" value="Singapore">
+    <button class="search-btn">
+      <svg viewBox="0 0 24 24">
+        <path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/>
+      </svg>
+    </button>
+  </div>
+  
+  <nav class="nav-links" id="navLinks">
+    <a href="#">Contact Sales</a>
+    <a href="#">Create Events</a>
+    <a href="#">Help Center ▾</a>
+    <a href="#">Find my tickets</a>
+    <a href="#">Log In</a>
+    <a href="#">Sign Up</a>
+  </nav>
+  
+  <div class="hamburger" onclick="document.getElementById('navLinks').classList.toggle('active')">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</header>
+
+<!-- Mobile Search -->
+<div class="mobile-search">
+  <div class="search-container">
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="#39364f" style="margin-left: 12px;">
+      <path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/>
+    </svg>
+    <input type="text" class="search-input" placeholder="Search events">
+    <button class="search-btn">
+      <svg viewBox="0 0 24 24">
+        <path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/>
+      </svg>
+    </button>
+  </div>
+</div>
+
+<!-- Main Content -->
+<main class="main-content">
+  <!-- Event Header -->
+  <div class="event-header">
+    <div class="event-ended-badge">EVENT ENDED</div>
+    <h1 class="event-title">Android Smartphones for Beginners (T1-19)</h1>
+    <a href="#" class="view-details">View details</a>
+  </div>
+
+  <!-- Organizer Section -->
+  <section class="organizer-section">
+    <h3>Follow this organizer to stay informed on future events</h3>
+    <div class="organizer-card">
+      <div class="organizer-info">
+        <div class="organizer-avatar"></div>
+        <div class="organizer-details">
+          <div><span class="by">By</span> <span class="name">Loveland Public Library</span></div>
+          <div class="followers">283 followers</div>
+        </div>
+      </div>
+      <button class="follow-btn">Follow</button>
+    </div>
+  </section>
+
+  <!-- Other Events Section -->
+  <section class="events-section">
+    <h2>Other events you may like</h2>
+    <div class="events-grid">
+      
+      <!-- Event 1: Steady January -->
+      <div class="event-card">
+        <div class="event-image bg-steady">
+          <span style="font-size: 14px; font-weight: 700; text-transform: uppercase; letter-spacing: 2px;">STEADY JANUARY</span>
+          <div class="event-actions">
+            <button class="action-btn heart-btn">
+              <svg viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
+            </button>
+            <button class="action-btn more-btn">
+              <svg width="16" height="16" viewBox="0 0 24 24"><circle cx="12" cy="5" r="2"/><circle cx="12" cy="12" r="2"/><circle cx="12" cy="19" r="2"/></svg>
+            </button>
+          </div>
+          <div class="event-badge">Sales end soon</div>
+        </div>
+        <div class="event-info">
+          <h3 class="event-card-title">Steady January : A Women's Healing Circle to slowly welcome 2026</h3>
+          <div class="event-date">Friday • 7:00 PM</div>
+          <div class="event-location">Peaceful Birth Company</div>
+          <div class="event-price">From $27.00</div>
+          <div class="event-organizer">The Motherhood Mentor: Somatic and holistic healing</div>
+          <div class="event-promoted">Promoted ⓘ</div>
+        </div>
+      </div>
+
+      <!-- Event 2: Yoga -->
+      <div class="event-card">
+        <div class="event-image bg-yoga">
+          <span style="font-size: 18px; color: #5a3d2b; font-style: italic;">yoga for beginners</span>
+          <div class="event-actions">
+            <button class="action-btn heart-btn">
+              <svg viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
+            </button>
+            <button class="action-btn more-btn">
+              <svg width="16" height="16" viewBox="0 0 24 24"><circle cx="12" cy="5" r="2"/><circle cx="12" cy="12" r="2"/><circle cx="12" cy="19" r="2"/></svg>
+            </button>
+          </div>
+        </div>
+        <div class="event-info">
+          <h3 class="event-card-title">Yoga for Beginners / Upa Yoga</h3>
+          <div class="event-date">Saturday • 11:30 AM</div>
+          <div class="event-location">10 W 14th Ave</div>
+          <div class="event-price">Free</div>
+          <div class="event-organizer">Isha Foundation</div>
+        </div>
+      </div>
+
+      <!-- Event 3: Dot Painting -->
+      <div class="event-card">
+        <div class="event-image bg-dot">
+          <div class="event-actions">
+            <button class="action-btn heart-btn">
+              <svg viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
+            </button>
+            <button class="action-btn more-btn">
+              <svg width="16" height="16" viewBox="0 0 24 24"><circle cx="12" cy="5" r="2"/><circle cx="12" cy="12" r="2"/><circle cx="12" cy="19" r="2"/></svg>
+            </button>
+          </div>
+        </div>
+        <div class="event-info">
+          <h3 class="event-card-title">Introduction to Dot Painting Class</h3>
+          <div class="event-date">Fri, Feb 13 • 6:00 PM</div>
+          <div class="event-location">2920 Ariel Dr</div>
+          <div class="event-price">From $35.98</div>
+          <div class="event-organizer">Lori Wilson - Instructor</div>
+          <div class="event-promoted">Promoted ⓘ</div>
+        </div>
+      </div>
+
+      <!-- Event 4: Painting -->
+      <div class="event-card">
+        <div class="event-image bg-painting">
+          <span>🎨 Painting Class</span>
+          <div class="event-actions">
+            <button class="action-btn heart-btn">
+              <svg viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
+            </button>
+            <button class="action-btn more-btn">
+              <svg width="16" height="16" viewBox="0 0 24 24"><circle cx="12" cy="5" r="2"/><circle cx="12" cy="12" r="2"/><circle cx="12" cy="19" r="2"/></svg>
+            </button>
+          </div>
+        </div>
+        <div class="event-info">
+          <h3 class="event-card-title">Painting From A Photo: Watercolors for Beginners</h3>
+          <div class="event-date">Fri, Jan 30 • 5:30 PM</div>
+          <div class="event-location">Restoration Covenant Church</div>
+          <div class="event-price">From $46.65</div>
+          <div class="event-organizer">Chrissy Sparks</div>
+        </div>
+      </div>
+
+      <!-- Event 5: 3D Printing -->
+      <div class="event-card">
+        <div class="event-image bg-3d">
+          <span>3D PRINTING FOR BEGINNERS</span>
+          <div class="event-actions">
+            <button class="action-btn heart-btn">
+              <svg viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
+            </button>
+            <button class="action-btn more-btn">
+              <svg width="16" height="16" viewBox="0 0 24 24"><circle cx="12" cy="5" r="2"/><circle cx="12" cy="12" r="2"/><circle cx="12" cy="19" r="2"/></svg>
+            </button>
+          </div>
+        </div>
+        <div class="event-info">
+          <h3 class="event-card-title">3D Printing for Beginners w/ Luca</h3>
+          <div class="event-date">Today • 3:30 PM</div>
+          <div class="event-location">9110 W 44th Ave</div>
+          <div class="event-price">Free</div>
+          <div class="event-organizer">Clear Creek Makerspace</div>
+        </div>
+      </div>
+
+      <!-- Event 6: TIG Welding -->
+      <div class="event-card">
+        <div class="event-image bg-tig">
+          <span>INTRO TO TIG WELDING</span>
+          <div class="event-actions">
+            <button class="action-btn heart-btn">
+              <svg viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
+            </button>
+            <button class="action-btn more-btn">
+              <svg width="16" height="16" viewBox="0 0 24 24"><circle cx="12" cy="5" r="2"/><circle cx="12" cy="12" r="2"/><circle cx="12" cy="19" r="2"/></svg>
+            </button>
+          </div>
+        </div>
+        <div class="event-info">
+          <h3 class="event-card-title">TIG Welding (GTAW) for Beginners</h3>
+          <div class="event-date">Saturday • 2:00 PM + 1 more</div>
+          <div class="event-location">9110 W 44th Ave</div>
+          <div class="event-price">From $65.87</div>
+          <div class="event-organizer">Clear Creek Makerspace</div>
+        </div>
+      </div>
+
+      <!-- Event 7: Learn to Sew 1 -->
+      <div class="event-card">
+        <div class="event-image bg-sew">
+          <span>🧵 Sewing Machine</span>
+          <div class="event-actions">
+            <button class="action-btn heart-btn">
+              <svg viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
+            </button>
+            <button class="action-btn more-btn">
+              <svg width="16" height="16" viewBox="0 0 24 24"><circle cx="12" cy="5" r="2"/><circle cx="12" cy="12" r="2"/><circle cx="12" cy="19" r="2"/></svg>
+            </button>
+          </div>
+        </div>
+        <div class="event-info">
+          <h3 class="event-card-title">Learn to Sew – Machine Sewing for Beginners (Drivers Ed)</h3>
+          <div class="event-date">Fri, Feb 6 • 5:00 PM</div>
+          <div class="event-location">Vacuums R Us & Sewing Too - Arvada Store</div>
+          <div class="event-price">From $60.00</div>
+          <div class="event-organizer">Vacuums R Us Events</div>
+        </div>
+      </div>
+
+      <!-- Event 8: Laser Cutting -->
+      <div class="event-card">
+        <div class="event-image bg-laser">
+          <span>INTRO TO LASER CUTTERS</span>
+          <div class="event-actions">
+            <button class="action-btn heart-btn">
+              <svg viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
+            </button>
+            <button class="action-btn more-btn">
+              <svg width="16" height="16" viewBox="0 0 24 24"><circle cx="12" cy="5" r="2"/><circle cx="12" cy="12" r="2"/><circle cx="12" cy="19" r="2"/></svg>
+            </button>
+          </div>
+        </div>
+        <div class="event-info">
+          <h3 class="event-card-title">Laser Cutting for Beginners w/ Hugh</h3>
+          <div class="event-date">Fri, Jan 23 • 5:00 PM</div>
+          <div class="event-location">9110 W 44th Ave</div>
+          <div class="event-price">Free</div>
+          <div class="event-organizer">Clear Creek Makerspace</div>
+        </div>
+      </div>
+
+      <!-- Event 9: OAW Welding -->
+      <div class="event-card">
+        <div class="event-image bg-oaw">
+          <span>INTRO TO OAW WELDING</span>
+          <div class="event-actions">
+            <button class="action-btn heart-btn">
+              <svg viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
+            </button>
+            <button class="action-btn more-btn">
+              <svg width="16" height="16" viewBox="0 0 24 24"><circle cx="12" cy="5" r="2"/><circle cx="12" cy="12" r="2"/><circle cx="12" cy="19" r="2"/></svg>
+            </button>
+          </div>
+        </div>
+        <div class="event-info">
+          <h3 class="event-card-title">Oxygen Acetylene Welding (OAW) for Beginners</h3>
+          <div class="event-date">Wed, Feb 4 • 5:00 PM + 8 more</div>
+          <div class="event-location">9110 W 44th Ave</div>
+          <div class="event-price">From $49.87</div>
+          <div class="event-organizer">Clear Creek Makerspace</div>
+        </div>
+      </div>
+
+      <!-- Event 10: Learn to Sew 2 -->
+      <div class="event-card">
+        <div class="event-image bg-sew2">
+          <span>🧵 Sewing Machine</span>
+          <div class="event-actions">
+            <button class="action-btn heart-btn">
+              <svg viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
+            </button>
+            <button class="action-btn more-btn">
+              <svg width="16" height="16" viewBox="0 0 24 24"><circle cx="12" cy="5" r="2"/><circle cx="12" cy="12" r="2"/><circle cx="12" cy="19" r="2"/></svg>
+            </button>
+          </div>
+        </div>
+        <div class="event-info">
+          <h3 class="event-card-title">Learn to Sew – Machine Sewing for Beginners (Drivers Ed)</h3>
+          <div class="event-date">Sun, Feb 8 • 11:00 AM</div>
+          <div class="event-location">Vacuums R Us & Sewing Too - Boulder Store</div>
+          <div class="event-price">From $60.00</div>
+          <div class="event-organizer">Vacuums R Us Events</div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+</main>
+
+<!-- Footer -->
+<footer class="footer">
+  <div class="footer-content">
+    <div class="footer-grid">
+      <div class="footer-col">
+        <h4>Use Eventbrite</h4>
+        <a href="#">Create Events</a>
+        <a href="#">Pricing</a>
+        <a href="#">Event Marketing Platform</a>
+        <a href="#">Eventbrite Mobile Ticket App</a>
+        <a href="#">Eventbrite Check-In App</a>
+        <a href="#">Eventbrite App Marketplace</a>
+        <a href="#">Event Registration Software</a>
+        <a href="#">Community Guidelines</a>
+        <a href="#">FAQs</a>
+        <a href="#">Sitemap</a>
+      </div>
+      <div class="footer-col">
+        <h4>Plan Events</h4>
+        <a href="#">Sell Tickets Online</a>
+        <a href="#">Performing Arts Ticketing Software</a>
+        <a href="#">Sell Concert Tickets Online</a>
+        <a href="#">Event Payment System</a>
+        <a href="#">Solutions for Professional Services</a>
+        <a href="#">Event Management Software</a>
+        <a href="#">Halloween Party Planning</a>
+        <a href="#">Virtual Events Platform</a>
+        <a href="#">QR Codes for Event Check-In</a>
+        <a href="#">Post your event online</a>
+      </div>
+      <div class="footer-col">
+        <h4>Find Events</h4>
+        <a href="#">Browse Loveland Events</a>
+        <a href="#">Get the Eventbrite App</a>
+      </div>
+      <div class="footer-col">
+        <h4>Connect With Us</h4>
+        <a href="#">Report This Event</a>
+        <a href="#">Help Center</a>
+        <a href="#">Terms</a>
+        <a href="#">Privacy</a>
+        <a href="#">CA Privacy Notice</a>
+        <a href="#">Accessibility</a>
+        <a href="#">Community Guidelines</a>
+      </div>
+    </div>
+    
+    <div class="footer-bottom">
+      <div class="footer-links">
+        <a href="#">Manage Cookie Preferences</a>
+        <span>·</span>
+        <a href="#">Do Not Sell or Share My Personal Information</a>
+        <span>·</span>
+        <a href="#">Privacy</a>
+      </div>
+      <div class="footer-logo">
+        <div class="footer-logo-icon">
+          <div class="eb">e</div>
+          <span style="color: #a9a8b3; font-size: 14px; font-weight: 600;">eventbrite</span>
+        </div>
+        <span style="color: #6f7287;">|</span>
+        <div class="footer-logo-icon">
+          <div class="tf">t</div>
+          <span style="color: #a9a8b3; font-size: 14px; font-weight: 600;">ticketfly</span>
+        </div>
+      </div>
+      <div class="footer-copyright">© 2026 Eventbrite</div>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>
+```

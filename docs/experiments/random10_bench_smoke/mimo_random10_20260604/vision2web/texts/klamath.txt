@@ -1,0 +1,663 @@
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Institutional Assessment - Klamath Community College</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            background-color: #ffffff;
+            color: #333;
+            line-height: 1.6;
+        }
+
+        header {
+            background-color: #8b0000;
+            color: white;
+            padding: 0 40px;
+        }
+
+        .header-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 0;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-weight: bold;
+            font-size: 18px;
+            color: white;
+            text-decoration: none;
+        }
+
+        .logo-icon {
+            width: 40px;
+            height: 40px;
+            background: white;
+            border-radius: 4px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #8b0000;
+            font-weight: bold;
+            font-size: 24px;
+        }
+
+        .logo-text {
+            display: flex;
+            flex-direction: column;
+            line-height: 1.2;
+        }
+
+        .logo-text span {
+            font-size: 10px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .header-actions {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .search-bar {
+            display: flex;
+            align-items: center;
+            background-color: white;
+            border-radius: 20px;
+            padding: 6px 15px;
+            width: 250px;
+        }
+
+        .search-bar input {
+            border: none;
+            outline: none;
+            width: 100%;
+            padding: 0 10px;
+            font-size: 14px;
+        }
+
+        .search-icon {
+            color: #8b0000;
+            font-size: 16px;
+        }
+
+        .top-buttons {
+            display: flex;
+            gap: 10px;
+        }
+
+        .top-buttons button {
+            background-color: transparent;
+            border: 1px solid white;
+            color: white;
+            padding: 6px 15px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 13px;
+            font-weight: 500;
+            transition: all 0.3s;
+        }
+
+        .top-buttons button:hover {
+            background-color: white;
+            color: #8b0000;
+        }
+
+        nav.main-nav {
+            padding: 15px 0;
+        }
+
+        nav.main-nav ul {
+            display: flex;
+            list-style: none;
+            gap: 25px;
+            flex-wrap: wrap;
+        }
+
+        nav.main-nav a {
+            color: white;
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+
+        nav.main-nav a:hover {
+            color: #ffcc00;
+        }
+
+        .hamburger {
+            display: none;
+            font-size: 24px;
+            cursor: pointer;
+            color: white;
+        }
+
+        .breadcrumb {
+            background-color: #333;
+            color: white;
+            padding: 15px 40px;
+            font-size: 12px;
+        }
+
+        .breadcrumb a {
+            color: white;
+            text-decoration: none;
+            margin: 0 8px;
+        }
+
+        .breadcrumb a:first-child {
+            margin-left: 0;
+        }
+
+        .page-header {
+            background-color: #8b0000;
+            color: white;
+            padding: 25px 40px;
+        }
+
+        .page-header h1 {
+            font-size: 32px;
+            font-weight: bold;
+        }
+
+        main {
+            display: flex;
+            padding: 40px;
+            gap: 40px;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .content {
+            flex: 1;
+            max-width: 800px;
+        }
+
+        .sidebar {
+            width: 300px;
+            flex-shrink: 0;
+        }
+
+        .sidebar-section {
+            background-color: #8b0000;
+            color: white;
+            padding: 15px 20px;
+            margin-bottom: 10px;
+            border-radius: 4px;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-weight: bold;
+            transition: background-color 0.3s;
+        }
+
+        .sidebar-section:hover {
+            background-color: #a00000;
+        }
+
+        .sidebar-section:first-child {
+            background-color: #660000;
+            cursor: default;
+        }
+
+        .sidebar-section:first-child:hover {
+            background-color: #660000;
+        }
+
+        .content p {
+            margin-bottom: 25px;
+            font-size: 16px;
+        }
+
+        .content a {
+            color: #0066cc;
+            text-decoration: underline;
+        }
+
+        .content ul {
+            margin-left: 25px;
+            margin-bottom: 25px;
+        }
+
+        .content li {
+            margin-bottom: 12px;
+            font-size: 16px;
+        }
+
+        footer {
+            background-color: #8b0000;
+            color: white;
+            padding: 50px 40px 30px;
+            margin-top: 50px;
+        }
+
+        .footer-content {
+            display: flex;
+            justify-content: space-between;
+            max-width: 1400px;
+            margin: 0 auto;
+            flex-wrap: wrap;
+            gap: 40px;
+        }
+
+        .footer-logo {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .footer-logo-icon {
+            width: 60px;
+            height: 60px;
+            background: white;
+            border-radius: 4px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #8b0000;
+            font-weight: bold;
+            font-size: 36px;
+        }
+
+        .footer-logo-text {
+            display: flex;
+            flex-direction: column;
+            font-weight: bold;
+            font-size: 24px;
+            line-height: 1.2;
+        }
+
+        .footer-logo-text span {
+            font-size: 14px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .footer-links {
+            display: flex;
+            gap: 60px;
+        }
+
+        .footer-links-column h4 {
+            font-size: 14px;
+            font-weight: bold;
+            margin-bottom: 15px;
+        }
+
+        .footer-links-column ul {
+            list-style: none;
+        }
+
+        .footer-links-column li {
+            margin-bottom: 10px;
+        }
+
+        .footer-links-column a {
+            color: white;
+            text-decoration: none;
+            font-size: 14px;
+            transition: color 0.3s;
+        }
+
+        .footer-links-column a:hover {
+            color: #ffcc00;
+        }
+
+        .footer-logos {
+            display: flex;
+            gap: 15px;
+            align-items: center;
+        }
+
+        .footer-logos .logo-placeholder {
+            width: 70px;
+            height: 70px;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 10px;
+            text-align: center;
+        }
+
+        .social-icons {
+            display: flex;
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .social-icon {
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+            border: 1px solid white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            text-decoration: none;
+            font-size: 16px;
+            transition: all 0.3s;
+        }
+
+        .social-icon:hover {
+            background-color: white;
+            color: #8b0000;
+        }
+
+        .footer-bottom {
+            border-top: 1px solid rgba(255,255,255,0.2);
+            padding-top: 30px;
+            margin-top: 40px;
+            text-align: center;
+            max-width: 1400px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .footer-bottom p {
+            font-size: 12px;
+            line-height: 1.8;
+            margin-bottom: 10px;
+        }
+
+        .footer-bottom a {
+            color: white;
+            text-decoration: underline;
+        }
+
+        /* Mobile Styles */
+        @media (max-width: 992px) {
+            .header-actions .top-buttons {
+                display: none;
+            }
+
+            .search-bar {
+                width: 200px;
+            }
+
+            main {
+                flex-direction: column;
+            }
+
+            .sidebar {
+                width: 100%;
+            }
+
+            .sidebar-section {
+                margin-bottom: 5px;
+            }
+
+            .sidebar-section:nth-child(2),
+            .sidebar-section:nth-child(3) {
+                display: none;
+            }
+
+            .sidebar-section.active + .sidebar-content {
+                display: block;
+            }
+
+            .footer-content {
+                flex-direction: column;
+                align-items: center;
+                text-align: center;
+            }
+
+            .footer-links {
+                flex-direction: column;
+                gap: 30px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            header {
+                padding: 0 20px;
+            }
+
+            .hamburger {
+                display: block;
+            }
+
+            nav.main-nav {
+                display: none;
+                position: absolute;
+                top: 80px;
+                left: 0;
+                right: 0;
+                background-color: #8b0000;
+                padding: 20px;
+                z-index: 100;
+            }
+
+            nav.main-nav.active {
+                display: block;
+            }
+
+            nav.main-nav ul {
+                flex-direction: column;
+                gap: 15px;
+            }
+
+            .breadcrumb {
+                padding: 10px 20px;
+                font-size: 11px;
+            }
+
+            .page-header {
+                padding: 20px;
+            }
+
+            .page-header h1 {
+                font-size: 26px;
+            }
+
+            main {
+                padding: 20px;
+            }
+
+            .sidebar-section {
+                display: flex;
+            }
+
+            .sidebar-section:nth-child(2),
+            .sidebar-section:nth-child(3) {
+                display: flex;
+            }
+
+            footer {
+                padding: 40px 20px 20px;
+            }
+
+            .footer-logos {
+                flex-direction: column;
+            }
+        }
+
+        /* Accessibility */
+        .sr-only {
+            position: absolute;
+            width: 1px;
+            height: 1px;
+            padding: 0;
+            margin: -1px;
+            overflow: hidden;
+            clip: rect(0, 0, 0, 0);
+            white-space: nowrap;
+            border: 0;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="header-top">
+            <a href="#" class="logo">
+                <div class="logo-icon">K</div>
+                <div class="logo-text">
+                    KLAMATH
+                    <span>Community College</span>
+                </div>
+            </a>
+            <div class="header-actions">
+                <div class="search-bar">
+                    <span class="search-icon">🔍</span>
+                    <input type="text" placeholder="Search...">
+                </div>
+                <div class="top-buttons">
+                    <button>Apply</button>
+                    <button>MyKCC</button>
+                    <button>Canvas</button>
+                    <button>Concerns?</button>
+                    <button>Give</button>
+                </div>
+                <div class="hamburger" onclick="toggleMenu()">☰</div>
+            </div>
+        </div>
+        <nav class="main-nav" id="mainNav">
+            <ul>
+                <li><a href="#">About</a></li>
+                <li><a href="#">Academics</a></li>
+                <li><a href="#">Admissions</a></li>
+                <li><a href="#">Athletics</a></li>
+                <li><a href="#">KCC Foundation</a></li>
+                <li><a href="#">Safe Campus</a></li>
+                <li><a href="#">Students</a></li>
+                <li><a href="#">Workforce & Community Education</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <div class="breadcrumb">
+        <a href="#">HOME</a>
+        <a href="#">ABOUT KLAMATH COMMUNITY COLLEGE</a>
+    </div>
+
+    <div class="page-header">
+        <h1>Institutional Assessment</h1>
+    </div>
+
+    <main>
+        <div class="content">
+            <p>Providing students quality education and services is the core of KCC's <a href="#">mission</a>.</p>
+
+            <p>Northwest Commission on Colleges and Universities, our regional accreditor, provides <a href="#">standards</a> for our continuous improvement.</p>
+
+            <p>Institutional assessment involves assessing academic programs and disciplines, as well as non-academic programs that provide student services. Resulting high-quality assessment data is used for curriculum, budgeting, or strategic planning at the discipline, program, and institutional level to improve student learning and success.</p>
+
+            <p>Assessing practices that impact quality education, training, and student supports allows KCC to continually improve. Reliable data is crucial to show and to assure we are meeting our mission and that services and programs are continuously improving.</p>
+
+            <p>According to assessment experts <a href="#">Trudy Banta</a>, <a href="#">Karen Black</a>, <a href="#">Susan Kahn</a>, and <a href="#">Julia Jackson</a>, a successful assessment process does the following:</p>
+
+            <ul>
+                <li>Produces credible evidence of learning and organizational effectiveness.</li>
+                <li>Ensures that assessment data are used to improve programs and services.</li>
+                <li>Provides a vehicle for demonstrating accountability to stakeholders.</li>
+                <li>Encompasses the expectation that outcomes assessment will be ongoing, not episodic.</li>
+                <li>Incorporates ongoing evaluation and improvement of the assessment process itself.</li>
+            </ul>
+        </div>
+
+        <div class="sidebar">
+            <div class="sidebar-section" onclick="toggleSidebarSection(this)">Institutional Assessment</div>
+            <div class="sidebar-section" onclick="toggleSidebarSection(this)">Academic Assessment <span>▼</span></div>
+            <div class="sidebar-section" onclick="toggleSidebarSection(this)">Program Review <span>▼</span></div>
+            <div class="social-icons">
+                <a href="#" class="social-icon">f</a>
+                <a href="#" class="social-icon">𝕏</a>
+                <a href="#" class="social-icon">▶</a>
+                <a href="#" class="social-icon">in</a>
+                <a href="#" class="social-icon">📷</a>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <div class="footer-content">
+            <div class="footer-logo">
+                <div class="footer-logo-icon">K</div>
+                <div class="footer-logo-text">
+                    KLAMATH
+                    <span>Community College</span>
+                </div>
+            </div>
+
+            <div class="footer-links">
+                <div class="footer-links-column">
+                    <h4>Staff Directory</h4>
+                    <ul>
+                        <li><a href="#">Site Map</a></li>
+                    </ul>
+                </div>
+                <div class="footer-links-column">
+                    <h4>Giving</h4>
+                    <ul>
+                        <li><a href="#">Request Information</a></li>
+                    </ul>
+                </div>
+                <div class="footer-links-column">
+                    <h4>Maps</h4>
+                    <ul>
+                        <li><a href="#">Jobs</a></li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="footer-logos">
+                <div class="logo-placeholder">CCC</div>
+                <div class="logo-placeholder">MF 20-21</div>
+                <div class="logo-placeholder">MF 19-20</div>
+            </div>
+
+            <div class="social-icons">
+                <a href="#" class="social-icon">f</a>
+                <a href="#" class="social-icon">𝕏</a>
+                <a href="#" class="social-icon">▶</a>
+                <a href="#" class="social-icon">in</a>
+                <a href="#" class="social-icon">📷</a>
+            </div>
+        </div>
+
+        <div class="footer-bottom">
+            <p>7390 South 6th Street | Klamath Falls, OR 97603 | 541-882-3521</p>
+            <p>Klamath Community College does not discriminate in any programs, activities, or employment practices on the basis of race, color, religion, ethnicity, use of native language, national origin, sex, sexual orientation, gender identity, marital status, veteran status, disability, age, pregnancy, or any other status protected under applicable federal, state, or local laws. For further policy information and for a full list of regulatory specific contact persons visit the webpage <a href="#">here</a>.</p>
+        </div>
+    </footer>
+
+    <script>
+        function toggleMenu() {
+            const nav = document.getElementById('mainNav');
+            nav.classList.toggle('active');
+        }
+
+        function toggleSidebarSection(element) {
+            // For mobile, toggle active class
+            if (window.innerWidth <= 992) {
+                element.classList.toggle('active');
+                // Toggle arrow
+                const arrow = element.querySelector('span');
+                if (arrow) {
+                    arrow.textContent = element.classList.contains('active') ? '▲' : '▼';
+                }
+            }
+        }
+    </script>
+</body>
+</html>
+```

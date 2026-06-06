@@ -1,0 +1,319 @@
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Entegral Blog</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+            background-color: #f5f5f5;
+            color: #555;
+            line-height: 1.6;
+        }
+        
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        header {
+            margin-bottom: 30px;
+        }
+        
+        header h1 {
+            font-size: 32px;
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 5px;
+        }
+        
+        header p {
+            font-size: 16px;
+            color: #777;
+        }
+        
+        .article-card {
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+            padding: 40px;
+            margin-bottom: 30px;
+        }
+        
+        .article-title {
+            font-size: 28px;
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 15px;
+            line-height: 1.3;
+        }
+        
+        .article-date {
+            font-size: 14px;
+            color: #777;
+            margin-bottom: 30px;
+        }
+        
+        .article-content p {
+            font-size: 16px;
+            color: #555;
+            margin-bottom: 20px;
+            line-height: 1.7;
+        }
+        
+        .article-content strong {
+            color: #333;
+            font-weight: bold;
+        }
+        
+        .article-content em {
+            font-style: italic;
+        }
+        
+        .article-link {
+            color: #0a6abf;
+            text-decoration: none;
+        }
+        
+        .article-link:hover {
+            text-decoration: underline;
+        }
+        
+        .image-placeholder {
+            width: 100%;
+            height: 300px;
+            background-color: #0000ff;
+            margin: 30px 0;
+            border-radius: 4px;
+        }
+        
+        .tags {
+            margin-top: 40px;
+            display: flex;
+            gap: 10px;
+        }
+        
+        .tag {
+            padding: 5px 12px;
+            background-color: #f0f0f0;
+            color: #555;
+            font-size: 14px;
+            border-radius: 3px;
+            border: 1px solid #ddd;
+        }
+        
+        .divider {
+            border: none;
+            border-top: 1px dashed #ccc;
+            margin: 30px 0;
+        }
+        
+        .popular-posts-section {
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+            padding: 40px;
+        }
+        
+        .section-title {
+            font-size: 18px;
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 25px;
+        }
+        
+        .popular-post {
+            margin-bottom: 30px;
+        }
+        
+        .popular-post:last-child {
+            margin-bottom: 0;
+        }
+        
+        .popular-post-title {
+            font-size: 20px;
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 8px;
+            line-height: 1.3;
+        }
+        
+        .popular-post-date {
+            font-size: 14px;
+            color: #999;
+            font-style: italic;
+            margin-bottom: 15px;
+        }
+        
+        .popular-post-content {
+            display: flex;
+            gap: 20px;
+            margin-bottom: 15px;
+        }
+        
+        .popular-post-image {
+            width: 100px;
+            height: 100px;
+            background-color: #0000ff;
+            flex-shrink: 0;
+        }
+        
+        .popular-post-text {
+            flex: 1;
+        }
+        
+        .popular-post-text p {
+            font-size: 14px;
+            color: #555;
+            line-height: 1.5;
+            margin-bottom: 15px;
+        }
+        
+        .read-more {
+            display: block;
+            text-align: right;
+            font-size: 14px;
+            font-weight: bold;
+            color: #0a6abf;
+            text-decoration: none;
+        }
+        
+        .read-more:hover {
+            text-decoration: underline;
+        }
+        
+        .post-separator {
+            border: none;
+            border-top: 1px dashed #ccc;
+            margin: 30px 0;
+        }
+        
+        @media (max-width: 768px) {
+            .container {
+                padding: 15px;
+            }
+            
+            .article-card,
+            .popular-posts-section {
+                padding: 25px;
+            }
+            
+            .article-title {
+                font-size: 24px;
+            }
+            
+            .popular-post-content {
+                flex-direction: column;
+            }
+            
+            .popular-post-image {
+                width: 100%;
+                height: 150px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Entegral Blog</h1>
+            <p>Real Estate Technology Simplified!</p>
+        </header>
+        
+        <div class="article-card">
+            <h2 class="article-title">Real Estate Disruption: Sell at the click of a mouse, buy with a money back guarantee</h2>
+            <div class="article-date">June 14, 2016</div>
+            
+            <div class="article-content">
+                <p>
+                    <a href="#" class="article-link">OpenDoor</a> started its operation in late 2014 by a former PayPal executive. It is a real estate startup that promises a better home buying and selling process: <strong><em>Sell your home at the click of a mouse, and buy with a money back guarantee.</em></strong>
+                </p>
+                <p>
+                    Essentially they buy homes at a slightly discounted price, flips them and then resells it through their website. This is how they are trying to disrupt the real estate industry:
+                </p>
+                <p>
+                    <strong>Selling:</strong> Sell your house through the click of a mouse. Provide details on your home and they will send you a cash offer.
+                </p>
+                <p>
+                    <strong>Buying:</strong> OpenDoor offers a 30-day money back guarantee on any homes purchased through OpenDoor. It further takes away most of the risk of buying home by providing an 180-point full inspection of every home it sells, and a 2-year warranty that covers up to 20 items.
+                </p>
+                
+                <div class="image-placeholder"></div>
+                
+                <p>OpenDoor currently operates in Phoenix and Dallas, USA.</p>
+                <p>
+                    <a href="#" class="article-link">Wall Street Journal estimates OpenDoor</a> makes $10,000 to $15,000 profit on every home.
+                </p>
+                <p>Is this a sustainable real estate business? Time will tell.</p>
+                <p>
+                    <strong>More reading on OpenDoor:</strong><br>
+                    - https://www.opendoor.com/<br>
+                    - http://fortune.com/2016/06/07/opendoor-money-back-gurantee/<br>
+                    - http://techcrunch.com/2016/06/07/a-startup-that-pays-cash-to-buy-homes-now-offers-money-back-guarantee/
+                </p>
+            </div>
+            
+            <div class="tags">
+                <span class="tag">real estate disruption</span>
+                <span class="tag">technology</span>
+            </div>
+            
+            <hr class="divider">
+        </div>
+        
+        <div class="popular-posts-section">
+            <h3 class="section-title">Popular posts from this blog</h3>
+            
+            <div class="popular-post">
+                <h4 class="popular-post-title">Looking for new estate agents or interns to join your estate agency? Here is an effective solution</h4>
+                <div class="popular-post-date">February 21, 2020</div>
+                <div class="popular-post-content">
+                    <div class="popular-post-image"></div>
+                    <div class="popular-post-text">
+                        <p>Attract fresh new real estate talent with our real estate job board You can now advertise your real estate vacancies on MyProperty's Job Board  from only R99 for 3 months of exposure. Our Real Estate Job Board is also integrated with Google's job search, which ...</p>
+                    </div>
+                </div>
+                <a href="#" class="read-more">READ MORE</a>
+            </div>
+            
+            <hr class="post-separator">
+            
+            <div class="popular-post">
+                <h4 class="popular-post-title">Easily link Base with external CRM systems</h4>
+                <div class="popular-post-date">September 15, 2020</div>
+                <div class="popular-post-content">
+                    <div class="popular-post-image"></div>
+                    <div class="popular-post-text">
+                        <p>What is the Base Zapier integration? The Entegral Base system was recently improved with a native Zapier app integration . ...</p>
+                    </div>
+                </div>
+                <a href="#" class="read-more">READ MORE</a>
+            </div>
+            
+            <hr class="post-separator">
+            
+            <div class="popular-post">
+                <h4 class="popular-post-title">US trends show more buyers come from internet, less from print</h4>
+                <div class="popular-post-date">March 30, 2009</div>
+                <div class="popular-post-content">
+                    <div class="popular-post-image"></div>
+                    <div class="popular-post-text">
+                        <p>Where home buyers found the home they purchased- 2001 vs. 2008  Have a look at the very interesting figures published for USA home buyers on: http://rismedia.com/2009-03-29/buyers-becoming-more-successful-finding-homes-through-internet/ The NAR statisti ...</p>
+                    </div>
+                </div>
+                <a href="#" class="read-more">READ MORE</a>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
+```

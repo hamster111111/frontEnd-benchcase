@@ -1,0 +1,561 @@
+```html
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Toni Franco Salas - Campeón de España de Duatlón</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+            font-size: 14px;
+            line-height: 1.6;
+            color: #333;
+            background-color: #fff;
+        }
+
+        a {
+            color: #00a8e8;
+            text-decoration: none;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+
+        /* Top Bar */
+        .top-bar {
+            background: #fff;
+            padding: 5px 0;
+            font-size: 12px;
+        }
+
+        .top-bar-inner {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 30px;
+        }
+
+        .top-contact {
+            color: #666;
+            margin-bottom: 5px;
+        }
+
+        .top-contact a {
+            color: #00a8e8;
+        }
+
+        .social-links-top {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+
+        .social-links-top a {
+            font-size: 12px;
+        }
+
+        /* Main Navigation */
+        .main-nav {
+            background: #fff;
+            padding: 10px 0;
+        }
+
+        .main-nav-inner {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 30px;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+
+        .nav-links a {
+            font-size: 13px;
+        }
+
+        /* Logo Section */
+        .logo-section {
+            padding: 20px 0;
+        }
+
+        .logo-section-inner {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 30px;
+        }
+
+        .logo-placeholder {
+            width: 500px;
+            height: 110px;
+            background-color: #b5b5b5;
+        }
+
+        /* Menu Navigation */
+        .menu-nav {
+            background: #fff;
+            border-top: 1px solid #eee;
+            border-bottom: 1px solid #eee;
+        }
+
+        .menu-nav-inner {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 30px;
+        }
+
+        .menu-list {
+            list-style: none;
+        }
+
+        .menu-list li {
+            margin-bottom: 8px;
+        }
+
+        .menu-list a {
+            font-size: 14px;
+            display: block;
+            padding: 2px 0;
+        }
+
+        /* Search Section */
+        .search-section {
+            padding: 10px 0;
+        }
+
+        .search-section-inner {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 30px;
+        }
+
+        .search-label {
+            font-size: 13px;
+            margin-bottom: 5px;
+        }
+
+        .search-input {
+            padding: 5px 10px;
+            border: 1px solid #ccc;
+            font-size: 13px;
+            width: 200px;
+        }
+
+        /* Article Section */
+        .article-section {
+            padding: 20px 0;
+        }
+
+        .article-inner {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 30px;
+        }
+
+        .article-title {
+            font-size: 28px;
+            font-weight: normal;
+            color: #333;
+            margin-bottom: 8px;
+            line-height: 1.3;
+        }
+
+        .article-meta {
+            font-size: 13px;
+            color: #888;
+            margin-bottom: 20px;
+        }
+
+        .article-meta a {
+            color: #00a8e8;
+        }
+
+        .article-image-main {
+            width: 100%;
+            height: 700px;
+            background-color: #b8b8b8;
+            margin-bottom: 15px;
+        }
+
+        .article-image-secondary {
+            width: 280px;
+            height: 200px;
+            background-color: #b8b8b8;
+            margin-bottom: 20px;
+        }
+
+        /* Comment Section */
+        .comment-section {
+            padding: 30px 0;
+        }
+
+        .comment-section-inner {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 30px;
+        }
+
+        .comment-title {
+            font-size: 22px;
+            font-weight: normal;
+            margin-bottom: 10px;
+        }
+
+        .comment-notice {
+            font-size: 12px;
+            color: #666;
+            margin-bottom: 20px;
+        }
+
+        .comment-form {
+            margin-bottom: 30px;
+        }
+
+        .form-row {
+            display: flex;
+            align-items: flex-start;
+            margin-bottom: 12px;
+            gap: 10px;
+        }
+
+        .form-label {
+            font-size: 13px;
+            min-width: 150px;
+            text-align: right;
+            padding-top: 5px;
+        }
+
+        .form-textarea {
+            width: 300px;
+            height: 80px;
+            padding: 5px 10px;
+            border: 1px solid #ccc;
+            font-size: 13px;
+            resize: vertical;
+        }
+
+        .form-input {
+            width: 200px;
+            padding: 5px 10px;
+            border: 1px solid #ccc;
+            font-size: 13px;
+        }
+
+        .form-checkbox-row {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-left: 160px;
+            margin-bottom: 15px;
+            font-size: 13px;
+        }
+
+        .submit-btn {
+            background: #fff;
+            border: 2px solid #000;
+            padding: 8px 25px;
+            font-size: 13px;
+            cursor: pointer;
+            font-weight: bold;
+            margin-left: 160px;
+        }
+
+        .submit-btn:hover {
+            background: #f5f5f5;
+        }
+
+        /* Subscribe Section */
+        .subscribe-section {
+            padding: 20px 0;
+            border-top: 1px solid #eee;
+        }
+
+        .subscribe-section-inner {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 30px;
+        }
+
+        .subscribe-title {
+            font-size: 18px;
+            font-weight: normal;
+            margin-bottom: 15px;
+        }
+
+        .subscribe-form {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .subscribe-input {
+            padding: 8px 12px;
+            border: 1px solid #ccc;
+            font-size: 13px;
+            width: 200px;
+        }
+
+        .subscribe-btn {
+            background: #444;
+            color: #fff;
+            border: none;
+            padding: 10px 25px;
+            font-size: 13px;
+            cursor: pointer;
+        }
+
+        .subscribe-btn:hover {
+            background: #333;
+        }
+
+        .subscribe-btn:hover {
+            text-decoration: none;
+        }
+
+        .hidden-inputs {
+            display: flex;
+            gap: 10px;
+            margin-top: 15px;
+        }
+
+        .hidden-inputs input[type="text"] {
+            width: 120px;
+            padding: 5px 10px;
+            border: 1px solid #ccc;
+            font-size: 12px;
+        }
+
+        /* Mis tuits */
+        .mis-tuits {
+            padding: 15px 0;
+            font-size: 13px;
+        }
+
+        /* Footer */
+        .footer {
+            padding: 30px 0 15px;
+            border-top: 1px solid #eee;
+        }
+
+        .footer-inner {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 30px;
+        }
+
+        .footer-links {
+            list-style: none;
+            margin-bottom: 15px;
+        }
+
+        .footer-links li {
+            margin-bottom: 5px;
+        }
+
+        .footer-links a {
+            font-size: 13px;
+        }
+
+        .footer-social {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .footer-social a {
+            font-size: 13px;
+        }
+
+        .footer-credit {
+            font-size: 12px;
+            color: #666;
+        }
+    </style>
+</head>
+<body>
+    <!-- Top Bar -->
+    <div class="top-bar">
+        <div class="top-bar-inner">
+            <div class="top-contact">
+                <span>696 635 440</span>
+                <a href="mailto:info@tonifranco.com">info@tonifranco.com</a>
+            </div>
+            <div class="social-links-top">
+                <a href="#">Facebook</a>
+                <a href="#">X</a>
+                <a href="#">Instagram</a>
+                <a href="#">RSS</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Second Social Links Row -->
+    <div class="top-bar">
+        <div class="top-bar-inner">
+            <div class="social-links-top">
+                <a href="#">Facebook</a>
+                <a href="#">X</a>
+                <a href="#">Instagram</a>
+                <a href="#">RSS</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Navigation -->
+    <div class="main-nav">
+        <div class="main-nav-inner">
+            <div class="nav-links">
+                <a href="#">Prensa</a>
+                <a href="#">Contacto</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Logo Section -->
+    <div class="logo-section">
+        <div class="logo-section-inner">
+            <div class="logo-placeholder"></div>
+        </div>
+    </div>
+
+    <!-- Menu Navigation -->
+    <div class="menu-nav">
+        <div class="menu-nav-inner">
+            <ul class="menu-list">
+                <li><a href="#">El Anillo 2021</a></li>
+                <li><a href="#">Jornadas y Eventos</a></li>
+                <li><a href="#">Vive Sin Trampas</a></li>
+                <li><a href="#">Patrocinadores</a></li>
+                <li><a href="#">Patrocina un Deportista</a></li>
+                <li><a href="#">X-TERRA</a></li>
+                <li><a href="#">Competiciones</a></li>
+                <li><a href="#">Ironman Lanzarote 2021</a></li>
+                <li><a href="#">Blog</a></li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- Search Section -->
+    <div class="search-section">
+        <div class="search-section-inner">
+            <div class="search-label">Seleccionar página</div>
+            <input type="text" class="search-input">
+        </div>
+    </div>
+
+    <!-- Article Section -->
+    <div class="article-section">
+        <div class="article-inner">
+            <h1 class="article-title">Campeón de España de Duatlón en PTS5 en Soria 2020 Image 2020-10-25 at 14.36.09 (5)</h1>
+            <div class="article-meta">
+                por <a href="#">ToniFS</a> | Oct 26, 2020 | 0 Comentarios
+            </div>
+            <div class="article-image-main"></div>
+            <div class="article-image-secondary"></div>
+        </div>
+    </div>
+
+    <!-- Comment Section -->
+    <div class="comment-section">
+        <div class="comment-section-inner">
+            <h2 class="comment-title">Enviar comentario</h2>
+            <div class="comment-notice">
+                Tu dirección de correo electrónico no será publicada. Los campos obligatorios están marcados con *
+            </div>
+            <form class="comment-form">
+                <div class="form-row">
+                    <label class="form-label">Comentario *</label>
+                    <textarea class="form-textarea" rows="4"></textarea>
+                </div>
+                <div class="form-row">
+                    <label class="form-label">Nombre *</label>
+                    <input type="text" class="form-input">
+                </div>
+                <div class="form-row">
+                    <label class="form-label">Correo electrónico *</label>
+                    <input type="email" class="form-input">
+                </div>
+                <div class="form-row">
+                    <label class="form-label">Web</label>
+                    <input type="url" class="form-input">
+                </div>
+                <div class="form-checkbox-row">
+                    <input type="checkbox" id="subscribe-comment">
+                    <label for="subscribe-comment">Recibir un correo electrónico con cada nueva entrada.</label>
+                </div>
+                <button type="submit" class="submit-btn">Enviar comentario</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Subscribe Section -->
+    <div class="subscribe-section">
+        <div class="subscribe-section-inner">
+            <h3 class="subscribe-title">Suscríbete al blog</h3>
+            <form class="subscribe-form">
+                <input type="email" class="subscribe-input" placeholder="Tu correo electrónico">
+                <button type="submit" class="subscribe-btn">Suscribir</button>
+            </form>
+            <div class="hidden-inputs">
+                <input type="text" placeholder="">
+                <input type="text" placeholder="">
+            </div>
+            <div class="hidden-inputs">
+                <input type="text" placeholder="">
+                <input type="text" placeholder="">
+            </div>
+        </div>
+    </div>
+
+    <!-- Mis tuits -->
+    <div class="mis-tuits">
+        <div class="subscribe-section-inner">
+            <a href="#">Mis tuits</a>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <div class="footer">
+        <div class="footer-inner">
+            <ul class="footer-links">
+                <li><a href="#">Patrocina un Deportista</a></li>
+                <li><a href="#">Toni Franco Salas – Paratriatleta Internacional</a></li>
+                <li><a href="#">Blog</a></li>
+            </ul>
+            <div class="footer-social">
+                <a href="#">Facebook</a>
+                <a href="#">X</a>
+                <a href="#">Instagram</a>
+                <a href="#">RSS</a>
+            </div>
+            <div class="footer-credit">
+                Desarrollo y Diseño realizado por Flovit.co Identidad Digital
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Basic form submission handling
+        document.querySelector('.comment-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            alert('Comentario enviado correctamente');
+        });
+
+        document.querySelector('.subscribe-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            alert('Te has suscrito correctamente al blog');
+        });
+    </script>
+</body>
+</html>
+```

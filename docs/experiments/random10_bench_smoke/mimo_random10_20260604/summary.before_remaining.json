@@ -1,0 +1,2903 @@
+{
+  "run_dir": "experiments\\random10_bench_smoke\\mimo_random10_20260604",
+  "provider": "mimo",
+  "model": "mimo-v2.5",
+  "base_url": "https://api.xiaomimimo.com/v1",
+  "bypass_proxy": true,
+  "max_tokens": null,
+  "sample_size_per_bench": 10,
+  "seed": 20260604,
+  "dry_run": false,
+  "started_at": "2026-06-04T16:08:32",
+  "benches": {
+    "design2code": {
+      "available": 484,
+      "selected": 10,
+      "results": [
+        {
+          "bench": "design2code",
+          "sample_id": "256",
+          "task_type": "static_generation",
+          "source": "UI2Code_N/evaluation/data/Design2Code",
+          "notes": "",
+          "original_prompt": "帮我实现一个相似的 UI 布局，并给出完整的 React 代码示例",
+          "reference_present": true,
+          "image_paths": [
+            "benchmarks\\ui2code_n\\evaluation\\data\\Design2Code\\images\\image_256.png"
+          ],
+          "local_image_paths": [
+            "experiments\\random10_bench_smoke\\mimo_random10_20260604\\design2code\\inputs\\images\\256_0.png"
+          ],
+          "local_prompt_path": "experiments\\random10_bench_smoke\\mimo_random10_20260604\\design2code\\inputs\\prompts\\256.txt",
+          "http_status": 200,
+          "text_path": "experiments\\random10_bench_smoke\\mimo_random10_20260604\\design2code\\texts\\256.txt",
+          "usage": {
+            "completion_tokens": 1440,
+            "prompt_tokens": 2466,
+            "total_tokens": 3906,
+            "completion_tokens_details": {
+              "reasoning_tokens": 394
+            },
+            "prompt_tokens_details": {
+              "cached_tokens": 192,
+              "image_tokens": 2000
+            }
+          },
+          "html_extracted": true,
+          "html_complete": true,
+          "html_path": "experiments\\random10_bench_smoke\\mimo_random10_20260604\\design2code\\html\\256.html"
+        },
+        {
+          "bench": "design2code",
+          "sample_id": "378",
+          "task_type": "static_generation",
+          "source": "UI2Code_N/evaluation/data/Design2Code",
+          "notes": "",
+          "original_prompt": "Please provide me with an example of a similar page and the corresponding React version of the HTML/JSX.",
+          "reference_present": true,
+          "image_paths": [
+            "benchmarks\\ui2code_n\\evaluation\\data\\Design2Code\\images\\image_378.png"
+          ],
+          "local_image_paths": [
+            "experiments\\random10_bench_smoke\\mimo_random10_20260604\\design2code\\inputs\\images\\378_0.png"
+          ],
+          "local_prompt_path": "experiments\\random10_bench_smoke\\mimo_random10_20260604\\design2code\\inputs\\prompts\\378.txt",
+          "http_status": 200,
+          "text_path": "experiments\\random10_bench_smoke\\mimo_random10_20260604\\design2code\\texts\\378.txt",
+          "usage": {
+            "completion_tokens": 4035,
+            "prompt_tokens": 3189,
+            "total_tokens": 7224,
+            "completion_tokens_details": {
+              "reasoning_tokens": 1523
+            },
+            "prompt_tokens_details": {
+              "cached_tokens": 192,
+              "image_tokens": 2720
+            }
+          },
+          "html_extracted": true,
+          "html_complete": true,
+          "html_path": "experiments\\random10_bench_smoke\\mimo_random10_20260604\\design2code\\html\\378.html"
+        },
+        {
+          "bench": "design2code",
+          "sample_id": "335",
+          "task_type": "static_generation",
+          "source": "UI2Code_N/evaluation/data/Design2Code",
+          "notes": "",
+          "original_prompt": "Please provide me with an example of a similar page and the corresponding React version of the HTML/JSX.",
+          "reference_present": true,
+          "image_paths": [
+            "benchmarks\\ui2code_n\\evaluation\\data\\Design2Code\\images\\image_335.png"
+          ],
+          "local_image_paths": [
+            "experiments\\random10_bench_smoke\\mimo_random10_20260604\\design2code\\inputs\\images\\335_0.png"
+          ],
+          "local_prompt_path": "experiments\\random10_bench_smoke\\mimo_random10_20260604\\design2code\\inputs\\prompts\\335.txt",
+          "http_status": 200,
+          "text_path": "experiments\\random10_bench_smoke\\mimo_random10_20260604\\design2code\\texts\\335.txt",
+          "usage": {
+            "completion_tokens": 2623,
+            "prompt_tokens": 1349,
+            "total_tokens": 3972,
+            "completion_tokens_details": {
+              "reasoning_tokens": 1139
+            },
+            "prompt_tokens_details": {
+              "cached_tokens": 192,
+              "image_tokens": 880
+            }
+          },
+          "html_extracted": true,
+          "html_complete": true,
+          "html_path": "experiments\\random10_bench_smoke\\mimo_random10_20260604\\design2code\\html\\335.html"
+        },
+        {
+          "bench": "design2code",
+          "sample_id": "416",
+          "task_type": "static_generation",
+          "source": "UI2Code_N/evaluation/data/Design2Code",
+          "notes": "",
+          "original_prompt": "请制作一个同类型的界面，并把它转换成 React 可用的 HTML 代码",
+          "reference_present": true,
+          "image_paths": [
+            "benchmarks\\ui2code_n\\evaluation\\data\\Design2Code\\images\\image_416.png"
+          ],
+          "local_image_paths": [
+            "experiments\\random10_bench_smoke\\mimo_random10_20260604\\design2code\\inputs\\images\\416_0.png"
+          ],
+          "local_prompt_path": "experiments\\random10_bench_smoke\\mimo_random10_20260604\\design2code\\inputs\\prompts\\416.txt",
+          "http_status": 200,
+          "text_path": "experiments\\random10_bench_smoke\\mimo_random10_20260604\\design2code\\texts\\416.txt",
+          "usage": {
+            "completion_tokens": 3310,
+            "prompt_tokens": 2866,
+            "total_tokens": 6176,
+            "completion_tokens_details": {
+              "reasoning_tokens": 229
+            },
+            "prompt_tokens_details": {
+              "cached_tokens": 192,
+              "image_tokens": 2400
+            }
+          },
+          "html_extracted": true,
+          "html_complete": true,
+          "html_path": "experiments\\random10_bench_smoke\\mimo_random10_20260604\\design2code\\html\\416.html"
+        },
+        {
+          "bench": "design2code",
+          "sample_id": "278",
+          "task_type": "static_generation",
+          "source": "UI2Code_N/evaluation/data/Design2Code",
+          "notes": "",
+          "original_prompt": "Please build a comparable interface and convert it into React-ready HTML code.",
+          "reference_present": true,
+          "image_paths": [
+            "benchmarks\\ui2code_n\\evaluation\\data\\Design2Code\\images\\image_278.png"
+          ],
+          "local_image_paths": [
+            "experiments\\random10_bench_smoke\\mimo_random10_20260604\\design2code\\inputs\\images\\278_0.png"
+          ],
+          "local_prompt_path": "experiments\\random10_bench_smoke\\mimo_random10_20260604\\design2code\\inputs\\prompts\\278.txt",
+          "http_status": 200,
+          "text_path": "experiments\\random10_bench_smoke\\mimo_random10_20260604\\design2code\\texts\\278.txt",
+          "usage": {
+            "completion_tokens": 10534,
+            "prompt_tokens": 3221,
+            "total_tokens": 13755,
+            "completion_tokens_details": {
+              "reasoning_tokens": 5337
+            },
+            "prompt_tokens_details": {
+              "cached_tokens": 192,
+              "image_tokens": 2760
+            }
+          },
+          "html_extracted": true,
+          "html_complete": true,
+          "html_path": "experiments\\random10_bench_smoke\\mimo_random10_20260604\\design2code\\html\\278.html"
+        },
+        {
+          "bench": "design2code",
+          "sample_id": "332",
+          "task_type": "static_generation",
+          "source": "UI2Code_N/evaluation/data/Design2Code",
+          "notes": "",
+          "original_prompt": "Please provide me with an example of a similar page and the corresponding React version of the HTML/JSX.",
+          "reference_present": true,
+          "image_paths": [
+            "benchmarks\\ui2code_n\\evaluation\\data\\Design2Code\\images\\image_332.png"
+          ],
+          "local_image_paths": [
+            "experiments\\random10_bench_smoke\\mimo_random10_20260604\\design2code\\inputs\\images\\332_0.png"
+          ],
+          "local_prompt_path": "experiments\\random10_bench_smoke\\mimo_random10_20260604\\design2code\\inputs\\prompts\\332.txt",
+          "http_status": 200,
+          "text_path": "experiments\\random10_bench_smoke\\mimo_random10_20260604\\design2code\\texts\\332.txt",
+          "usage": {
+            "completion_tokens": 1806,
+            "prompt_tokens": 1349,
+            "total_tokens": 3155,
+            "completion_tokens_details": {
+              "reasoning_tokens": 642
+            },
+            "prompt_tokens_details": {
+              "cached_tokens": 192,
+              "image_tokens": 880
+            }
+          },
+          "html_extracted": true,
+          "html_complete": true,
+          "html_path": "experiments\\random10_bench_smoke\\mimo_random10_20260604\\design2code\\html\\332.html"
+        },
+        {
+          "bench": "design2code",
+          "sample_id": "193",
+          "task_type": "static_generation",
+          "source": "UI2Code_N/evaluation/data/Design2Code",
+          "notes": "",
+          "original_prompt": "Please build a comparable interface and convert it into React-ready HTML code.",
+          "reference_present": true,
+          "image_paths": [
+            "benchmarks\\ui2code_n\\evaluation\\data\\Design2Code\\images\\image_193.png"
+          ],
+          "local_image_paths": [
+            "experiments\\random10_bench_smoke\\mimo_random10_20260604\\design2code\\inputs\\images\\193_0.png"
+          ],
+          "local_prompt_path": "experiments\\random10_bench_smoke\\mimo_random10_20260604\\design2code\\inputs\\prompts\\193.txt",
+          "http_status": 200,
+          "text_path": "experiments\\random10_bench_smoke\\mimo_random10_20260604\\design2code\\texts\\193.txt",
+          "usage": {
+            "completion_tokens": 3039,
+            "prompt_tokens": 3541,
+            "total_tokens": 6580,
+            "completion_tokens_details": {
+              "reasoning_tokens": 945
+            },
+            "prompt_tokens_details": {
+              "cached_tokens": 192,
+              "image_tokens": 3080
+            }
+          },
+          "html_extracted": true,
+          "html_complete": true,
+          "html_path": "experiments\\random10_bench_smoke\\mimo_random10_20260604\\design2code\\html\\193.html"
+        },
+        {
+          "bench": "design2code",
+          "sample_id": "105",
+          "task_type": "static_generation",
+          "source": "UI2Code_N/evaluation/data/Design2Code",
+          "notes": "",
+          "original_prompt": "Please provide me with an example of a similar page and the corresponding React version of the HTML/JSX.",
+          "reference_present": true,
+          "image_paths": [
+            "benchmarks\\ui2code_n\\evaluation\\data\\Design2Code\\images\\image_105.png"
+          ],
+          "local_image_paths": [
+            "experiments\\random10_bench_smoke\\mimo_random10_20260604\\design2code\\inputs\\images\\105_0.png"
+          ],
+          "local_prompt_path": "experiments\\random10_bench_smoke\\mimo_random10_20260604\\design2code\\inputs\\prompts\\105.txt",
+          "http_status": 200,
+          "text_path": "experiments\\random10_bench_smoke\\mimo_random10_20260604\\design2code\\texts\\105.txt",
+          "usage": {
+            "completion_tokens": 3738,
+            "prompt_tokens": 3309,
+            "total_tokens": 7047,
+            "completion_tokens_details": {
+              "reasoning_tokens": 1281
+            },
+            "prompt_tokens_details": {
+              "cached_tokens": 192,
+              "image_tokens": 2840
+            }
+          },
+          "html_extracted": true,
+          "html_complete": true,
+          "html_path": "experiments\\random10_bench_smoke\\mimo_random10_20260604\\design2code\\html\\105.html"
+        },
+        {
+          "bench": "design2code",
+          "sample_id": "229",
+          "task_type": "static_generation",
+          "source": "UI2Code_N/evaluation/data/Design2Code",
+          "notes": "",
+          "original_prompt": "Please design a similar interface for me and generate the corresponding React component code.",
+          "reference_present": true,
+          "image_paths": [
+            "benchmarks\\ui2code_n\\evaluation\\data\\Design2Code\\images\\image_229.png"
+          ],
+          "local_image_paths": [
+            "experiments\\random10_bench_smoke\\mimo_random10_20260604\\design2code\\inputs\\images\\229_0.png"
+          ],
+          "local_prompt_path": "experiments\\random10_bench_smoke\\mimo_random10_20260604\\design2code\\inputs\\prompts\\229.txt",
+          "http_status": 200,
+          "text_path": "experiments\\random10_bench_smoke\\mimo_random10_20260604\\design2code\\texts\\229.txt",
+          "usage": {
+            "completion_tokens": 3170,
+            "prompt_tokens": 2782,
+            "total_tokens": 5952,
+            "completion_tokens_details": {
+              "reasoning_tokens": 412
+            },
+            "prompt_tokens_details": {
+              "cached_tokens": 192,
+              "image_tokens": 2320
+            }
+          },
+          "html_extracted": true,
+          "html_complete": true,
+          "html_path": "experiments\\random10_bench_smoke\\mimo_random10_20260604\\design2code\\html\\229.html"
+        },
+        {
+          "bench": "design2code",
+          "sample_id": "125",
+          "task_type": "static_generation",
+          "source": "UI2Code_N/evaluation/data/Design2Code",
+          "notes": "",
+          "original_prompt": "Help me implement a similar UI layout and give me the complete React code sample.",
+          "reference_present": true,
+          "image_paths": [
+            "benchmarks\\ui2code_n\\evaluation\\data\\Design2Code\\images\\image_125.png"
+          ],
+          "local_image_paths": [
+            "experiments\\random10_bench_smoke\\mimo_random10_20260604\\design2code\\inputs\\images\\125_0.png"
+          ],
+          "local_prompt_path": "experiments\\random10_bench_smoke\\mimo_random10_20260604\\design2code\\inputs\\prompts\\125.txt",
+          "http_status": 200,
+          "text_path": "experiments\\random10_bench_smoke\\mimo_random10_20260604\\design2code\\texts\\125.txt",
+          "usage": {
+            "completion_tokens": 993,
+            "prompt_tokens": 1343,
+            "total_tokens": 2336,
+            "completion_tokens_details": {
+              "reasoning_tokens": 291
+            },
+            "prompt_tokens_details": {
+              "cached_tokens": 192,
+              "image_tokens": 880
+            }
+          },
+          "html_extracted": true,
+          "html_complete": true,
+          "html_path": "experiments\\random10_bench_smoke\\mimo_random10_20260604\\design2code\\html\\125.html"
+        }
+      ]
+    },
+    "flame": {
+      "available": 80,
+      "selected": 10,
+      "results": [
+        {
+          "bench": "flame",
+          "sample_id": "38",
+          "task_type": "react_generation",
+          "source": "UI2Code_N/evaluation/data/Flame",
+          "notes": "",
+          "original_prompt": "Please provide me with an example of a similar page and the corresponding React version of the HTML/JSX.",
+          "reference_present": true,
+          "image_paths": [
+            "benchmarks\\ui2code_n\\evaluation\\data\\Flame\\images\\image_38.png"
+          ],
+          "local_image_paths": [
+            "experiments\\random10_bench_smoke\\mimo_random10_20260604\\flame\\inputs\\images\\38_0.png"
+          ],
+          "local_prompt_path": "experiments\\random10_bench_smoke\\mimo_random10_20260604\\flame\\inputs\\prompts\\38.txt",
+          "http_status": 200,
+          "text_path": "experiments\\random10_bench_smoke\\mimo_random10_20260604\\flame\\texts\\38.txt",
+          "usage": {
+            "completion_tokens": 1463,
+            "prompt_tokens": 943,
+            "total_tokens": 2406,
+            "completion_tokens_details": {
+              "reasoning_tokens": 222
+            },
+            "prompt_tokens_details": {
+              "cached_tokens": 192,
+              "image_tokens": 475
+            }
+          },
+          "html_extracted": true,
+          "html_complete": true,
+          "html_path": "experiments\\random10_bench_smoke\\mimo_random10_20260604\\flame\\html\\38.html"
+        },
+        {
+          "bench": "flame",
+          "sample_id": "17",
+          "task_type": "react_generation",
+          "source": "UI2Code_N/evaluation/data/Flame",
+          "notes": "",
+          "original_prompt": "Could you create a page in a similar style for me and provide the HTML/JSX in React format?",
+          "reference_present": true,
+          "image_paths": [
+            "benchmarks\\ui2code_n\\evaluation\\data\\Flame\\images\\image_17.png"
+          ],
+          "local_image_paths": [
+            "experiments\\random10_bench_smoke\\mimo_random10_20260604\\flame\\inputs\\images\\17_0.png"
+          ],
+          "local_prompt_path": "experiments\\random10_bench_smoke\\mimo_random10_20260604\\flame\\inputs\\prompts\\17.txt",
+          "http_status": 200,
+          "text_path": "experiments\\random10_bench_smoke\\mimo_random10_20260604\\flame\\texts\\17.txt",
+          "usage": {
+            "completion_tokens": 1314,
+            "prompt_tokens": 943,
+            "total_tokens": 2257,
+            "completion_tokens_details": {
+              "reasoning_tokens": 487
+            },
+            "prompt_tokens_details": {
+              "cached_tokens": 192,
+              "image_tokens": 475
+            }
+          },
+          "html_extracted": true,
+          "html_complete": true,
+          "html_path": "experiments\\random10_bench_smoke\\mimo_random10_20260604\\flame\\html\\17.html"
+        },
+        {
+          "bench": "flame",
+          "sample_id": "42",
+          "task_type": "react_generation",
+          "source": "UI2Code_N/evaluation/data/Flame",
+          "notes": "",
+          "original_prompt": "请帮我设计一个类似的界面，并生成对应的 React 组件代码",
+          "reference_present": true,
+          "image_paths": [
+            "benchmarks\\ui2code_n\\evaluation\\data\\Flame\\images\\image_42.png"
+          ],
+          "local_image_paths": [
+            "experiments\\random10_bench_smoke\\mimo_random10_20260604\\flame\\inputs\\images\\42_0.png"
+          ],
+          "local_prompt_path": "experiments\\random10_bench_smoke\\mimo_random10_20260604\\flame\\inputs\\prompts\\42.txt",
+          "http_status": 200,
+          "text_path": "experiments\\random10_bench_smoke\\mimo_random10_20260604\\flame\\texts\\42.txt",
+          "usage": {
+            "completion_tokens": 2503,
+            "prompt_tokens": 935,
+            "total_tokens": 3438,
+            "completion_tokens_details": {
+              "reasoning_tokens": 1241
+            },
+            "prompt_tokens_details": {
+              "cached_tokens": 192,
+              "image_tokens": 475
+            }
+          },
+          "html_extracted": true,
+          "html_complete": true,
+          "html_path": "experiments\\random10_bench_smoke\\mimo_random10_20260604\\flame\\html\\42.html"
+        },
+        {
+          "bench": "flame",
+          "sample_id": "51",
+          "task_type": "react_generation",
+          "source": "UI2Code_N/evaluation/data/Flame",
+          "notes": "",
+          "original_prompt": "请帮我设计一个类似的界面，并生成对应的 React 组件代码",
+          "reference_present": true,
+          "image_paths": [
+            "benchmarks\\ui2code_n\\evaluation\\data\\Flame\\images\\image_51.png"
+          ],
+          "local_image_paths": [
+            "experiments\\random10_bench_smoke\\mimo_random10_20260604\\flame\\inputs\\images\\51_0.png"
+          ],
+          "local_prompt_path": "experiments\\random10_bench_smoke\\mimo_random10_20260604\\flame\\inputs\\prompts\\51.txt",
+          "http_status": 200,
+          "text_path": "experiments\\random10_bench_smoke\\mimo_random10_20260604\\flame\\texts\\51.txt",
+          "usage": {
+            "completion_tokens": 1254,
+            "prompt_tokens": 935,
+            "total_tokens": 2189,
+            "completion_tokens_details": {
+              "reasoning_tokens": 410
+            },
+            "prompt_tokens_details": {
+              "cached_tokens": 192,
+              "image_tokens": 475
+            }
+          },
+          "html_extracted": true,
+          "html_complete": true,
+          "html_path": "experiments\\random10_bench_smoke\\mimo_random10_20260604\\flame\\html\\51.html"
+        },
+        {
+          "bench": "flame",
+          "sample_id": "66",
+          "task_type": "react_generation",
+          "source": "UI2Code_N/evaluation/data/Flame",
+          "notes": "",
+          "original_prompt": "能否为我创建一套类似风格的页面，并输出 React 格式的 HTML/JSX？",
+          "reference_present": true,
+          "image_paths": [
+            "benchmarks\\ui2code_n\\evaluation\\data\\Flame\\images\\image_66.png"
+          ],
+          "local_image_paths": [
+            "experiments\\random10_bench_smoke\\mimo_random10_20260604\\flame\\inputs\\images\\66_0.png"
+          ],
+          "local_prompt_path": "experiments\\random10_bench_smoke\\mimo_random10_20260604\\flame\\inputs\\prompts\\66.txt",
+          "http_status": 200,
+          "text_path": "experiments\\random10_bench_smoke\\mimo_random10_20260604\\flame\\texts\\66.txt",
+          "usage": {
+            "completion_tokens": 1940,
+            "prompt_tokens": 941,
+            "total_tokens": 2881,
+            "completion_tokens_details": {
+              "reasoning_tokens": 350
+            },
+            "prompt_tokens_details": {
+              "cached_tokens": 192,
+              "image_tokens": 475
+            }
+          },
+          "html_extracted": true,
+          "html_complete": true,
+          "html_path": "experiments\\random10_bench_smoke\\mimo_random10_20260604\\flame\\html\\66.html"
+        },
+        {
+          "bench": "flame",
+          "sample_id": "31",
+          "task_type": "react_generation",
+          "source": "UI2Code_N/evaluation/data/Flame",
+          "notes": "",
+          "original_prompt": "Please build a comparable interface and convert it into React-ready HTML code.",
+          "reference_present": true,
+          "image_paths": [
+            "benchmarks\\ui2code_n\\evaluation\\data\\Flame\\images\\image_31.png"
+          ],
+          "local_image_paths": [
+            "experiments\\random10_bench_smoke\\mimo_random10_20260604\\flame\\inputs\\images\\31_0.png"
+          ],
+          "local_prompt_path": "experiments\\random10_bench_smoke\\mimo_random10_20260604\\flame\\inputs\\prompts\\31.txt",
+          "http_status": 200,
+          "text_path": "experiments\\random10_bench_smoke\\mimo_random10_20260604\\flame\\texts\\31.txt",
+          "usage": {
+            "completion_tokens": 2815,
+            "prompt_tokens": 935,
+            "total_tokens": 3750,
+            "completion_tokens_details": {
+              "reasoning_tokens": 1598
+            },
+            "prompt_tokens_details": {
+              "cached_tokens": 192,
+              "image_tokens": 475
+            }
+          },
+          "html_extracted": true,
+          "html_complete": true,
+          "html_path": "experiments\\random10_bench_smoke\\mimo_random10_20260604\\flame\\html\\31.html"
+        },
+        {
+          "bench": "flame",
+          "sample_id": "33",
+          "task_type": "react_generation",
+          "source": "UI2Code_N/evaluation/data/Flame",
+          "notes": "",
+          "original_prompt": "Please provide me with an example of a similar page and the corresponding React version of the HTML/JSX.",
+          "reference_present": true,
+          "image_paths": [
+            "benchmarks\\ui2code_n\\evaluation\\data\\Flame\\images\\image_33.png"
+          ],
+          "local_image_paths": [
+            "experiments\\random10_bench_smoke\\mimo_random10_20260604\\flame\\inputs\\images\\33_0.png"
+          ],
+          "local_prompt_path": "experiments\\random10_bench_smoke\\mimo_random10_20260604\\flame\\inputs\\prompts\\33.txt",
+          "http_status": 200,
+          "text_path": "experiments\\random10_bench_smoke\\mimo_random10_20260604\\flame\\texts\\33.txt",
+          "usage": {
+            "completion_tokens": 2102,
+            "prompt_tokens": 943,
+            "total_tokens": 3045,
+            "completion_tokens_details": {
+              "reasoning_tokens": 302
+            },
+            "prompt_tokens_details": {
+              "cached_tokens": 192,
+              "image_tokens": 475
+            }
+          },
+          "html_extracted": true,
+          "html_complete": true,
+          "html_path": "experiments\\random10_bench_smoke\\mimo_random10_20260604\\flame\\html\\33.html"
+        },
+        {
+          "bench": "flame",
+          "sample_id": "50",
+          "task_type": "react_generation",
+          "source": "UI2Code_N/evaluation/data/Flame",
+          "notes": "",
+          "original_prompt": "请制作一个同类型的界面，并把它转换成 React 可用的 HTML 代码",
+          "reference_present": true,
+          "image_paths": [
+            "benchmarks\\ui2code_n\\evaluation\\data\\Flame\\images\\image_50.png"
+          ],
+          "local_image_paths": [
+            "experiments\\random10_bench_smoke\\mimo_random10_20260604\\flame\\inputs\\images\\50_0.png"
+          ],
+          "local_prompt_path": "experiments\\random10_bench_smoke\\mimo_random10_20260604\\flame\\inputs\\prompts\\50.txt",
+          "http_status": 200,
+          "text_path": "experiments\\random10_bench_smoke\\mimo_random10_20260604\\flame\\texts\\50.txt",
+          "usage": {
+            "completion_tokens": 1196,
+            "prompt_tokens": 940,
+            "total_tokens": 2136,
+            "completion_tokens_details": {
+              "reasoning_tokens": 148
+            },
+            "prompt_tokens_details": {
+              "cached_tokens": 192,
+              "image_tokens": 475
+            }
+          },
+          "html_extracted": true,
+          "html_complete": true,
+          "html_path": "experiments\\random10_bench_smoke\\mimo_random10_20260604\\flame\\html\\50.html"
+        },
+        {
+          "bench": "flame",
+          "sample_id": "61",
+          "task_type": "react_generation",
+          "source": "UI2Code_N/evaluation/data/Flame",
+          "notes": "",
+          "original_prompt": "请帮我设计一个类似的界面，并生成对应的 React 组件代码",
+          "reference_present": true,
+          "image_paths": [
+            "benchmarks\\ui2code_n\\evaluation\\data\\Flame\\images\\image_61.png"
+          ],
+          "local_image_paths": [
+            "experiments\\random10_bench_smoke\\mimo_random10_20260604\\flame\\inputs\\images\\61_0.png"
+          ],
+          "local_prompt_path": "experiments\\random10_bench_smoke\\mimo_random10_20260604\\flame\\inputs\\prompts\\61.txt",
+          "http_status": 200,
+          "text_path": "experiments\\random10_bench_smoke\\mimo_random10_20260604\\flame\\texts\\61.txt",
+          "usage": {
+            "completion_tokens": 1397,
+            "prompt_tokens": 935,
+            "total_tokens": 2332,
+            "completion_tokens_details": {
+              "reasoning_tokens": 643
+            },
+            "prompt_tokens_details": {
+              "cached_tokens": 192,
+              "image_tokens": 475
+            }
+          },
+          "html_extracted": true,
+          "html_complete": true,
+          "html_path": "experiments\\random10_bench_smoke\\mimo_random10_20260604\\flame\\html\\61.html"
+        },
+        {
+          "bench": "flame",
+          "sample_id": "74",
+          "task_type": "react_generation",
+          "source": "UI2Code_N/evaluation/data/Flame",
+          "notes": "",
+          "original_prompt": "请帮我设计一个类似的界面，并生成对应的 React 组件代码",
+          "reference_present": true,
+          "image_paths": [
+            "benchmarks\\ui2code_n\\evaluation\\data\\Flame\\images\\image_74.png"
+          ],
+          "local_image_paths": [
+            "experiments\\random10_bench_smoke\\mimo_random10_20260604\\flame\\inputs\\images\\74_0.png"
+          ],
+          "local_prompt_path": "experiments\\random10_bench_smoke\\mimo_random10_20260604\\flame\\inputs\\prompts\\74.txt",
+          "http_status": 200,
+          "text_path": "experiments\\random10_bench_smoke\\mimo_random10_20260604\\flame\\texts\\74.txt",
+          "usage": {
+            "completion_tokens": 1778,
+            "prompt_tokens": 935,
+            "total_tokens": 2713,
+            "completion_tokens_details": {
+              "reasoning_tokens": 151
+            },
+            "prompt_tokens_details": {
+              "cached_tokens": 192,
+              "image_tokens": 475
+            }
+          },
+          "html_extracted": true,
+          "html_complete": true,
+          "html_path": "experiments\\random10_bench_smoke\\mimo_random10_20260604\\flame\\html\\74.html"
+        }
+      ]
+    },
+    "ui2code_real": {
+      "available": 115,
+      "selected": 10,
+      "results": [
+        {
+          "bench": "ui2code_real",
+          "sample_id": "39",
+          "task_type": "real_static_generation",
+          "source": "UI2Code_N/evaluation/data/UI2Code-Real",
+          "notes": "",
+          "original_prompt": "Please design a similar interface for me and generate the corresponding React component code.",
+          "reference_present": false,
+          "image_paths": [
+            "benchmarks\\ui2code_n\\evaluation\\data\\UI2Code-Real\\test_images\\39.png"
+          ],
+          "local_image_paths": [
+            "experiments\\random10_bench_smoke\\mimo_random10_20260604\\ui2code_real\\inputs\\images\\39_0.png"
+          ],
+          "local_prompt_path": "experiments\\random10_bench_smoke\\mimo_random10_20260604\\ui2code_real\\inputs\\prompts\\39.txt",
+          "http_status": 200,
+          "text_path": "experiments\\random10_bench_smoke\\mimo_random10_20260604\\ui2code_real\\texts\\39.txt",
+          "usage": {
+            "completion_tokens": 9390,
+            "prompt_tokens": 2504,
+            "total_tokens": 11894,
+            "completion_tokens_details": {
+              "reasoning_tokens": 400
+            },
+            "prompt_tokens_details": {
+              "cached_tokens": 192,
+              "image_tokens": 2040
+            }
+          },
+          "html_extracted": true,
+          "html_complete": true,
+          "html_path": "experiments\\random10_bench_smoke\\mimo_random10_20260604\\ui2code_real\\html\\39.html"
+        },
+        {
+          "bench": "ui2code_real",
+          "sample_id": "35",
+          "task_type": "real_static_generation",
+          "source": "UI2Code_N/evaluation/data/UI2Code-Real",
+          "notes": "",
+          "original_prompt": "请帮我设计一个类似的界面，并生成对应的 React 组件代码",
+          "reference_present": false,
+          "image_paths": [
+            "benchmarks\\ui2code_n\\evaluation\\data\\UI2Code-Real\\test_images\\35.png"
+          ],
+          "local_image_paths": [
+            "experiments\\random10_bench_smoke\\mimo_random10_20260604\\ui2code_real\\inputs\\images\\35_0.png"
+          ],
+          "local_prompt_path": "experiments\\random10_bench_smoke\\mimo_random10_20260604\\ui2code_real\\inputs\\prompts\\35.txt",
+          "http_status": 200,
+          "text_path": "experiments\\random10_bench_smoke\\mimo_random10_20260604\\ui2code_real\\texts\\35.txt",
+          "usage": {
+            "completion_tokens": 6688,
+            "prompt_tokens": 2503,
+            "total_tokens": 9191,
+            "completion_tokens_details": {
+              "reasoning_tokens": 78
+            },
+            "prompt_tokens_details": {
+              "cached_tokens": 192,
+              "image_tokens": 2040
+            }
+          },
+          "html_extracted": true,
+          "html_complete": true,
+          "html_path": "experiments\\random10_bench_smoke\\mimo_random10_20260604\\ui2code_real\\html\\35.html"
+        },
+        {
+          "bench": "ui2code_real",
+          "sample_id": "103",
+          "task_type": "real_static_generation",
+          "source": "UI2Code_N/evaluation/data/UI2Code-Real",
+          "notes": "",
+          "original_prompt": "Could you create a page in a similar style for me and provide the HTML/JSX in React format?",
+          "reference_present": false,
+          "image_paths": [
+            "benchmarks\\ui2code_n\\evaluation\\data\\UI2Code-Real\\test_images\\103.png"
+          ],
+          "local_image_paths": [
+            "experiments\\random10_bench_smoke\\mimo_random10_20260604\\ui2code_real\\inputs\\images\\103_0.png"
+          ],
+          "local_prompt_path": "experiments\\random10_bench_smoke\\mimo_random10_20260604\\ui2code_real\\inputs\\prompts\\103.txt",
+          "http_status": 200,
+          "text_path": "experiments\\random10_bench_smoke\\mimo_random10_20260604\\ui2code_real\\texts\\103.txt",
+          "usage": {
+            "completion_tokens": 6972,
+            "prompt_tokens": 2511,
+            "total_tokens": 9483,
+            "completion_tokens_details": {
+              "reasoning_tokens": 530
+            },
+            "prompt_tokens_details": {
+              "cached_tokens": 192,
+              "image_tokens": 2040
+            }
+          },
+          "html_extracted": true,
+          "html_complete": true,
+          "html_path": "experiments\\random10_bench_smoke\\mimo_random10_20260604\\ui2code_real\\html\\103.html"
+        },
+        {
+          "bench": "ui2code_real",
+          "sample_id": "19",
+          "task_type": "real_static_generation",
+          "source": "UI2Code_N/evaluation/data/UI2Code-Real",
+          "notes": "",
+          "original_prompt": "请帮我设计一个类似的界面，并生成对应的 React 组件代码",
+          "reference_present": false,
+          "image_paths": [
+            "benchmarks\\ui2code_n\\evaluation\\data\\UI2Code-Real\\test_images\\19.png"
+          ],
+          "local_image_paths": [
+            "experiments\\random10_bench_smoke\\mimo_random10_20260604\\ui2code_real\\inputs\\images\\19_0.png"
+          ],
+          "local_prompt_path": "experiments\\random10_bench_smoke\\mimo_random10_20260604\\ui2code_real\\inputs\\prompts\\19.txt",
+          "http_status": 200,
+          "text_path": "experiments\\random10_bench_smoke\\mimo_random10_20260604\\ui2code_real\\texts\\19.txt",
+          "usage": {
+            "completion_tokens": 5378,
+            "prompt_tokens": 2503,
+            "total_tokens": 7881,
+            "completion_tokens_details": {
+              "reasoning_tokens": 1085
+            },
+            "prompt_tokens_details": {
+              "cached_tokens": 192,
+              "image_tokens": 2040
+            }
+          },
+          "html_extracted": true,
+          "html_complete": true,
+          "html_path": "experiments\\random10_bench_smoke\\mimo_random10_20260604\\ui2code_real\\html\\19.html"
+        },
+        {
+          "bench": "ui2code_real",
+          "sample_id": "64",
+          "task_type": "real_static_generation",
+          "source": "UI2Code_N/evaluation/data/UI2Code-Real",
+          "notes": "",
+          "original_prompt": "请制作一个同类型的界面，并把它转换成 React 可用的 HTML 代码",
+          "reference_present": false,
+          "image_paths": [
+            "benchmarks\\ui2code_n\\evaluation\\data\\UI2Code-Real\\test_images\\64.png"
+          ],
+          "local_image_paths": [
+            "experiments\\random10_bench_smoke\\mimo_random10_20260604\\ui2code_real\\inputs\\images\\64_0.png"
+          ],
+          "local_prompt_path": "experiments\\random10_bench_smoke\\mimo_random10_20260604\\ui2code_real\\inputs\\prompts\\64.txt",
+          "http_status": 200,
+          "text_path": "experiments\\random10_bench_smoke\\mimo_random10_20260604\\ui2code_real\\texts\\64.txt",
+          "usage": {
+            "completion_tokens": 3546,
+            "prompt_tokens": 2508,
+            "total_tokens": 6054,
+            "completion_tokens_details": {
+              "reasoning_tokens": 921
+            },
+            "prompt_tokens_details": {
+              "cached_tokens": 192,
+              "image_tokens": 2040
+            }
+          },
+          "html_extracted": true,
+          "html_complete": true,
+          "html_path": "experiments\\random10_bench_smoke\\mimo_random10_20260604\\ui2code_real\\html\\64.html"
+        },
+        {
+          "bench": "ui2code_real",
+          "sample_id": "99",
+          "task_type": "real_static_generation",
+          "source": "UI2Code_N/evaluation/data/UI2Code-Real",
+          "notes": "",
+          "original_prompt": "Please design a similar interface for me and generate the corresponding React component code.",
+          "reference_present": false,
+          "image_paths": [
+            "benchmarks\\ui2code_n\\evaluation\\data\\UI2Code-Real\\test_images\\99.png"
+          ],
+          "local_image_paths": [
+            "experiments\\random10_bench_smoke\\mimo_random10_20260604\\ui2code_real\\inputs\\images\\99_0.png"
+          ],
+          "local_prompt_path": "experiments\\random10_bench_smoke\\mimo_random10_20260604\\ui2code_real\\inputs\\prompts\\99.txt",
+          "http_status": 200,
+          "text_path": "experiments\\random10_bench_smoke\\mimo_random10_20260604\\ui2code_real\\texts\\99.txt",
+          "usage": {
+            "completion_tokens": 4402,
+            "prompt_tokens": 2504,
+            "total_tokens": 6906,
+            "completion_tokens_details": {
+              "reasoning_tokens": 438
+            },
+            "prompt_tokens_details": {
+              "cached_tokens": 192,
+              "image_tokens": 2040
+            }
+          },
+          "html_extracted": true,
+          "html_complete": true,
+          "html_path": "experiments\\random10_bench_smoke\\mimo_random10_20260604\\ui2code_real\\html\\99.html"
+        },
+        {
+          "bench": "ui2code_real",
+          "sample_id": "25",
+          "task_type": "real_static_generation",
+          "source": "UI2Code_N/evaluation/data/UI2Code-Real",
+          "notes": "",
+          "original_prompt": "Please provide me with an example of a similar page and the corresponding React version of the HTML/JSX.",
+          "reference_present": false,
+          "image_paths": [
+            "benchmarks\\ui2code_n\\evaluation\\data\\UI2Code-Real\\test_images\\25.png"
+          ],
+          "local_image_paths": [
+            "experiments\\random10_bench_smoke\\mimo_random10_20260604\\ui2code_real\\inputs\\images\\25_0.png"
+          ],
+          "local_prompt_path": "experiments\\random10_bench_smoke\\mimo_random10_20260604\\ui2code_real\\inputs\\prompts\\25.txt",
+          "http_status": 200,
+          "text_path": "experiments\\random10_bench_smoke\\mimo_random10_20260604\\ui2code_real\\texts\\25.txt",
+          "usage": {
+            "completion_tokens": 2742,
+            "prompt_tokens": 2511,
+            "total_tokens": 5253,
+            "completion_tokens_details": {
+              "reasoning_tokens": 867
+            },
+            "prompt_tokens_details": {
+              "cached_tokens": 192,
+              "image_tokens": 2040
+            }
+          },
+          "html_extracted": true,
+          "html_complete": true,
+          "html_path": "experiments\\random10_bench_smoke\\mimo_random10_20260604\\ui2code_real\\html\\25.html"
+        },
+        {
+          "bench": "ui2code_real",
+          "sample_id": "55",
+          "task_type": "real_static_generation",
+          "source": "UI2Code_N/evaluation/data/UI2Code-Real",
+          "notes": "",
+          "original_prompt": "能否为我创建一套类似风格的页面，并输出 React 格式的 HTML/JSX？",
+          "reference_present": false,
+          "image_paths": [
+            "benchmarks\\ui2code_n\\evaluation\\data\\UI2Code-Real\\test_images\\55.png"
+          ],
+          "local_image_paths": [
+            "experiments\\random10_bench_smoke\\mimo_random10_20260604\\ui2code_real\\inputs\\images\\55_0.png"
+          ],
+          "local_prompt_path": "experiments\\random10_bench_smoke\\mimo_random10_20260604\\ui2code_real\\inputs\\prompts\\55.txt",
+          "http_status": 200,
+          "text_path": "experiments\\random10_bench_smoke\\mimo_random10_20260604\\ui2code_real\\texts\\55.txt",
+          "usage": {
+            "completion_tokens": 4644,
+            "prompt_tokens": 2509,
+            "total_tokens": 7153,
+            "completion_tokens_details": {
+              "reasoning_tokens": 360
+            },
+            "prompt_tokens_details": {
+              "cached_tokens": 192,
+              "image_tokens": 2040
+            }
+          },
+          "html_extracted": true,
+          "html_complete": true,
+          "html_path": "experiments\\random10_bench_smoke\\mimo_random10_20260604\\ui2code_real\\html\\55.html"
+        },
+        {
+          "bench": "ui2code_real",
+          "sample_id": "104",
+          "task_type": "real_static_generation",
+          "source": "UI2Code_N/evaluation/data/UI2Code-Real",
+          "notes": "",
+          "original_prompt": "麻烦给我一个类似的页面范例，以及相应的 React 版 HTML/JSX",
+          "reference_present": false,
+          "image_paths": [
+            "benchmarks\\ui2code_n\\evaluation\\data\\UI2Code-Real\\test_images\\104.png"
+          ],
+          "local_image_paths": [
+            "experiments\\random10_bench_smoke\\mimo_random10_20260604\\ui2code_real\\inputs\\images\\104_0.png"
+          ],
+          "local_prompt_path": "experiments\\random10_bench_smoke\\mimo_random10_20260604\\ui2code_real\\inputs\\prompts\\104.txt",
+          "http_status": 200,
+          "text_path": "experiments\\random10_bench_smoke\\mimo_random10_20260604\\ui2code_real\\texts\\104.txt",
+          "usage": {
+            "completion_tokens": 4626,
+            "prompt_tokens": 2507,
+            "total_tokens": 7133,
+            "completion_tokens_details": {
+              "reasoning_tokens": 542
+            },
+            "prompt_tokens_details": {
+              "cached_tokens": 192,
+              "image_tokens": 2040
+            }
+          },
+          "html_extracted": true,
+          "html_complete": true,
+          "html_path": "experiments\\random10_bench_smoke\\mimo_random10_20260604\\ui2code_real\\html\\104.html"
+        },
+        {
+          "bench": "ui2code_real",
+          "sample_id": "0",
+          "task_type": "real_static_generation",
+          "source": "UI2Code_N/evaluation/data/UI2Code-Real",
+          "notes": "",
+          "original_prompt": "请制作一个同类型的界面，并把它转换成 React 可用的 HTML 代码",
+          "reference_present": false,
+          "image_paths": [
+            "benchmarks\\ui2code_n\\evaluation\\data\\UI2Code-Real\\test_images\\0.png"
+          ],
+          "local_image_paths": [
+            "experiments\\random10_bench_smoke\\mimo_random10_20260604\\ui2code_real\\inputs\\images\\0_0.png"
+          ],
+          "local_prompt_path": "experiments\\random10_bench_smoke\\mimo_random10_20260604\\ui2code_real\\inputs\\prompts\\0.txt",
+          "http_status": 200,
+          "text_path": "experiments\\random10_bench_smoke\\mimo_random10_20260604\\ui2code_real\\texts\\0.txt",
+          "usage": {
+            "completion_tokens": 5840,
+            "prompt_tokens": 2508,
+            "total_tokens": 8348,
+            "completion_tokens_details": {
+              "reasoning_tokens": 2445
+            },
+            "prompt_tokens_details": {
+              "cached_tokens": 192,
+              "image_tokens": 2040
+            }
+          },
+          "html_extracted": true,
+          "html_complete": true,
+          "html_path": "experiments\\random10_bench_smoke\\mimo_random10_20260604\\ui2code_real\\html\\0.html"
+        }
+      ]
+    },
+    "uipolish_real": {
+      "available": 100,
+      "selected": 10,
+      "results": [
+        {
+          "bench": "uipolish_real",
+          "sample_id": "44",
+          "task_type": "repair_direct_incomplete",
+          "source": "UI2Code_N/evaluation/data/UIPolish-Real",
+          "notes": "本地 jsonl 只含目标截图和 prompt，缺少当前 HTML/渲染图；本轮按 direct 输入跑。",
+          "original_prompt": "我正在做一个“生成代码 → 优化贴合 UI”的实验。输入包括目标 UI 截图、生成代码渲染截图和 HTML+CSS 源码。请你对比设计稿和渲染结果，详细分析差距，给出优化建议并直接修改 HTML+CSS，输出一个完整可运行的 HTML 文件，使页面还原度更高。",
+          "reference_present": false,
+          "image_paths": [
+            "benchmarks\\ui2code_n\\evaluation\\data\\UIPolish-Real\\test_images\\44.png"
+          ],
+          "local_image_paths": [
+            "experiments\\random10_bench_smoke\\mimo_random10_20260604\\uipolish_real\\inputs\\images\\44_0.png"
+          ],
+          "local_prompt_path": "experiments\\random10_bench_smoke\\mimo_random10_20260604\\uipolish_real\\inputs\\prompts\\44.txt",
+          "http_status": 200,
+          "text_path": "experiments\\random10_bench_smoke\\mimo_random10_20260604\\uipolish_real\\texts\\44.txt",
+          "usage": {
+            "completion_tokens": 4972,
+            "prompt_tokens": 2610,
+            "total_tokens": 7582,
+            "completion_tokens_details": {
+              "reasoning_tokens": 449
+            },
+            "prompt_tokens_details": {
+              "cached_tokens": 192,
+              "image_tokens": 2040
+            }
+          },
+          "html_extracted": true,
+          "html_complete": true,
+          "html_path": "experiments\\random10_bench_smoke\\mimo_random10_20260604\\uipolish_real\\html\\44.html"
+        },
+        {
+          "bench": "uipolish_real",
+          "sample_id": "26",
+          "task_type": "repair_direct_incomplete",
+          "source": "UI2Code_N/evaluation/data/UIPolish-Real",
+          "notes": "本地 jsonl 只含目标截图和 prompt，缺少当前 HTML/渲染图；本轮按 direct 输入跑。",
+          "original_prompt": "背景：系统会从设计稿截图生成 HTML 页面，但效果常常和设计稿有差距。我将提供：目标 UI 截图、生成的 HTML+CSS、渲染截图。请你对比 UI 截图与渲染截图，分析差距并优化代码，输出一个完整可运行的 HTML 文件，使页面效果尽可能与设计稿一致。",
+          "reference_present": false,
+          "image_paths": [
+            "benchmarks\\ui2code_n\\evaluation\\data\\UIPolish-Real\\test_images\\26.png"
+          ],
+          "local_image_paths": [
+            "experiments\\random10_bench_smoke\\mimo_random10_20260604\\uipolish_real\\inputs\\images\\26_0.png"
+          ],
+          "local_prompt_path": "experiments\\random10_bench_smoke\\mimo_random10_20260604\\uipolish_real\\inputs\\prompts\\26.txt",
+          "http_status": 200,
+          "text_path": "experiments\\random10_bench_smoke\\mimo_random10_20260604\\uipolish_real\\texts\\26.txt",
+          "usage": {
+            "completion_tokens": 4574,
+            "prompt_tokens": 2611,
+            "total_tokens": 7185,
+            "completion_tokens_details": {
+              "reasoning_tokens": 515
+            },
+            "prompt_tokens_details": {
+              "cached_tokens": 192,
+              "image_tokens": 2040
+            }
+          },
+          "html_extracted": true,
+          "html_complete": true,
+          "html_path": "experiments\\random10_bench_smoke\\mimo_random10_20260604\\uipolish_real\\html\\26.html"
+        },
+        {
+          "bench": "uipolish_real",
+          "sample_id": "1",
+          "task_type": "repair_direct_incomplete",
+          "source": "UI2Code_N/evaluation/data/UIPolish-Real",
+          "notes": "本地 jsonl 只含目标截图和 prompt，缺少当前 HTML/渲染图；本轮按 direct 输入跑。",
+          "original_prompt": "这是一个“设计稿还原优化”任务。我会给你：目标 UI 截图、基于它生成的 HTML+CSS、以及渲染截图。请你作为前端专家，对比目标 UI 与渲染结果，找出差异（颜色、字体、间距、布局、组件样式、交互），并修改 HTML+CSS 代码，最终输出一个完整可运行的 HTML 文件，最大程度还原目标 UI。",
+          "reference_present": false,
+          "image_paths": [
+            "benchmarks\\ui2code_n\\evaluation\\data\\UIPolish-Real\\test_images\\1.png"
+          ],
+          "local_image_paths": [
+            "experiments\\random10_bench_smoke\\mimo_random10_20260604\\uipolish_real\\inputs\\images\\1_0.png"
+          ],
+          "local_prompt_path": "experiments\\random10_bench_smoke\\mimo_random10_20260604\\uipolish_real\\inputs\\prompts\\1.txt",
+          "http_status": 200,
+          "text_path": "experiments\\random10_bench_smoke\\mimo_random10_20260604\\uipolish_real\\texts\\1.txt",
+          "usage": {
+            "completion_tokens": 4046,
+            "prompt_tokens": 2619,
+            "total_tokens": 6665,
+            "completion_tokens_details": {
+              "reasoning_tokens": 576
+            },
+            "prompt_tokens_details": {
+              "cached_tokens": 192,
+              "image_tokens": 2040
+            }
+          },
+          "html_extracted": true,
+          "html_complete": true,
+          "html_path": "experiments\\random10_bench_smoke\\mimo_random10_20260604\\uipolish_real\\html\\1.html"
+        },
+        {
+          "bench": "uipolish_real",
+          "sample_id": "45",
+          "task_type": "repair_direct_incomplete",
+          "source": "UI2Code_N/evaluation/data/UIPolish-Real",
+          "notes": "本地 jsonl 只含目标截图和 prompt，缺少当前 HTML/渲染图；本轮按 direct 输入跑。",
+          "original_prompt": "我正在做一个“代码生成结果与设计稿对齐”的实验。输入包括：目标 UI 截图、生成的 HTML+CSS 代码及其渲染截图。请你对比目标 UI 和渲染结果，逐条分析不足之处（如组件样式、排版、颜色、字体、交互逻辑），并在此基础上改写 HTML+CSS，输出一个完整可运行的 HTML 文件，让效果更接近设计稿。",
+          "reference_present": false,
+          "image_paths": [
+            "benchmarks\\ui2code_n\\evaluation\\data\\UIPolish-Real\\test_images\\45.png"
+          ],
+          "local_image_paths": [
+            "experiments\\random10_bench_smoke\\mimo_random10_20260604\\uipolish_real\\inputs\\images\\45_0.png"
+          ],
+          "local_prompt_path": "experiments\\random10_bench_smoke\\mimo_random10_20260604\\uipolish_real\\inputs\\prompts\\45.txt",
+          "http_status": 200,
+          "text_path": "experiments\\random10_bench_smoke\\mimo_random10_20260604\\uipolish_real\\texts\\45.txt",
+          "usage": {
+            "completion_tokens": 4508,
+            "prompt_tokens": 2625,
+            "total_tokens": 7133,
+            "completion_tokens_details": {
+              "reasoning_tokens": 409
+            },
+            "prompt_tokens_details": {
+              "cached_tokens": 192,
+              "image_tokens": 2040
+            }
+          },
+          "html_extracted": true,
+          "html_complete": true,
+          "html_path": "experiments\\random10_bench_smoke\\mimo_random10_20260604\\uipolish_real\\html\\45.html"
+        },
+        {
+          "bench": "uipolish_real",
+          "sample_id": "67",
+          "task_type": "repair_direct_incomplete",
+          "source": "UI2Code_N/evaluation/data/UIPolish-Real",
+          "notes": "本地 jsonl 只含目标截图和 prompt，缺少当前 HTML/渲染图；本轮按 direct 输入跑。",
+          "original_prompt": "这是一个“设计稿还原优化”任务。我会给你：目标 UI 截图、基于它生成的 HTML+CSS、以及渲染截图。请你作为前端专家，对比目标 UI 与渲染结果，找出差异（颜色、字体、间距、布局、组件样式、交互），并修改 HTML+CSS 代码，最终输出一个完整可运行的 HTML 文件，最大程度还原目标 UI。",
+          "reference_present": false,
+          "image_paths": [
+            "benchmarks\\ui2code_n\\evaluation\\data\\UIPolish-Real\\test_images\\67.png"
+          ],
+          "local_image_paths": [
+            "experiments\\random10_bench_smoke\\mimo_random10_20260604\\uipolish_real\\inputs\\images\\67_0.png"
+          ],
+          "local_prompt_path": "experiments\\random10_bench_smoke\\mimo_random10_20260604\\uipolish_real\\inputs\\prompts\\67.txt",
+          "http_status": 200,
+          "text_path": "experiments\\random10_bench_smoke\\mimo_random10_20260604\\uipolish_real\\texts\\67.txt",
+          "usage": {
+            "completion_tokens": 3405,
+            "prompt_tokens": 2619,
+            "total_tokens": 6024,
+            "completion_tokens_details": {
+              "reasoning_tokens": 287
+            },
+            "prompt_tokens_details": {
+              "cached_tokens": 512,
+              "image_tokens": 2040
+            }
+          },
+          "html_extracted": true,
+          "html_complete": true,
+          "html_path": "experiments\\random10_bench_smoke\\mimo_random10_20260604\\uipolish_real\\html\\67.html"
+        },
+        {
+          "bench": "uipolish_real",
+          "sample_id": "22",
+          "task_type": "repair_direct_incomplete",
+          "source": "UI2Code_N/evaluation/data/UIPolish-Real",
+          "notes": "本地 jsonl 只含目标截图和 prompt，缺少当前 HTML/渲染图；本轮按 direct 输入跑。",
+          "original_prompt": "目标：让自动生成的 HTML 页面逐步优化到接近设计稿。我会提供：目标 UI 截图、当前生成的 HTML 代码和渲染截图。请你对比目标 UI 与渲染效果，分析差距（如布局不一致、配色不准、字体大小错误、间距偏差、交互缺失），然后修改 HTML+CSS，输出一个完整可运行的 HTML 文件，使结果最大程度对齐设计稿。",
+          "reference_present": false,
+          "image_paths": [
+            "benchmarks\\ui2code_n\\evaluation\\data\\UIPolish-Real\\test_images\\22.png"
+          ],
+          "local_image_paths": [
+            "experiments\\random10_bench_smoke\\mimo_random10_20260604\\uipolish_real\\inputs\\images\\22_0.png"
+          ],
+          "local_prompt_path": "experiments\\random10_bench_smoke\\mimo_random10_20260604\\uipolish_real\\inputs\\prompts\\22.txt",
+          "http_status": 200,
+          "text_path": "experiments\\random10_bench_smoke\\mimo_random10_20260604\\uipolish_real\\texts\\22.txt",
+          "usage": {
+            "completion_tokens": 4518,
+            "prompt_tokens": 2625,
+            "total_tokens": 7143,
+            "completion_tokens_details": {
+              "reasoning_tokens": 290
+            },
+            "prompt_tokens_details": {
+              "cached_tokens": 192,
+              "image_tokens": 2040
+            }
+          },
+          "html_extracted": true,
+          "html_complete": true,
+          "html_path": "experiments\\random10_bench_smoke\\mimo_random10_20260604\\uipolish_real\\html\\22.html"
+        },
+        {
+          "bench": "uipolish_real",
+          "sample_id": "68",
+          "task_type": "repair_direct_incomplete",
+          "source": "UI2Code_N/evaluation/data/UIPolish-Real",
+          "notes": "本地 jsonl 只含目标截图和 prompt，缺少当前 HTML/渲染图；本轮按 direct 输入跑。",
+          "original_prompt": "目标：让自动生成的 HTML 页面逐步优化到接近设计稿。我会提供：目标 UI 截图、当前生成的 HTML 代码和渲染截图。请你对比目标 UI 与渲染效果，分析差距（如布局不一致、配色不准、字体大小错误、间距偏差、交互缺失），然后修改 HTML+CSS，输出一个完整可运行的 HTML 文件，使结果最大程度对齐设计稿。",
+          "reference_present": false,
+          "image_paths": [
+            "benchmarks\\ui2code_n\\evaluation\\data\\UIPolish-Real\\test_images\\68.png"
+          ],
+          "local_image_paths": [
+            "experiments\\random10_bench_smoke\\mimo_random10_20260604\\uipolish_real\\inputs\\images\\68_0.png"
+          ],
+          "local_prompt_path": "experiments\\random10_bench_smoke\\mimo_random10_20260604\\uipolish_real\\inputs\\prompts\\68.txt",
+          "http_status": 200,
+          "text_path": "experiments\\random10_bench_smoke\\mimo_random10_20260604\\uipolish_real\\texts\\68.txt",
+          "usage": {
+            "completion_tokens": 6541,
+            "prompt_tokens": 2625,
+            "total_tokens": 9166,
+            "completion_tokens_details": {
+              "reasoning_tokens": 524
+            },
+            "prompt_tokens_details": {
+              "cached_tokens": 512,
+              "image_tokens": 2040
+            }
+          },
+          "html_extracted": true,
+          "html_complete": true,
+          "html_path": "experiments\\random10_bench_smoke\\mimo_random10_20260604\\uipolish_real\\html\\68.html"
+        },
+        {
+          "bench": "uipolish_real",
+          "sample_id": "87",
+          "task_type": "repair_direct_incomplete",
+          "source": "UI2Code_N/evaluation/data/UIPolish-Real",
+          "notes": "本地 jsonl 只含目标截图和 prompt，缺少当前 HTML/渲染图；本轮按 direct 输入跑。",
+          "original_prompt": "我正在研究如何自动优化前端页面以贴合设计稿。我会提供目标 UI 截图、基于该截图自动生成的 HTML+CSS 代码、以及渲染后的截图。请你作为资深前端工程师，对比目标 UI 与渲染截图，分析差距（排版、布局、颜色、字体、间距、动效），并给出优化方案。最终请重写 HTML+CSS 代码，输出一个完整可运行的 HTML 文件，让页面最大程度还原设计稿。",
+          "reference_present": false,
+          "image_paths": [
+            "benchmarks\\ui2code_n\\evaluation\\data\\UIPolish-Real\\test_images\\87.png"
+          ],
+          "local_image_paths": [
+            "experiments\\random10_bench_smoke\\mimo_random10_20260604\\uipolish_real\\inputs\\images\\87_0.png"
+          ],
+          "local_prompt_path": "experiments\\random10_bench_smoke\\mimo_random10_20260604\\uipolish_real\\inputs\\prompts\\87.txt",
+          "http_status": 200,
+          "text_path": "experiments\\random10_bench_smoke\\mimo_random10_20260604\\uipolish_real\\texts\\87.txt",
+          "usage": {
+            "completion_tokens": 4205,
+            "prompt_tokens": 2638,
+            "total_tokens": 6843,
+            "completion_tokens_details": {
+              "reasoning_tokens": 478
+            },
+            "prompt_tokens_details": {
+              "cached_tokens": 192,
+              "image_tokens": 2040
+            }
+          },
+          "html_extracted": true,
+          "html_complete": true,
+          "html_path": "experiments\\random10_bench_smoke\\mimo_random10_20260604\\uipolish_real\\html\\87.html"
+        },
+        {
+          "bench": "uipolish_real",
+          "sample_id": "23",
+          "task_type": "repair_direct_incomplete",
+          "source": "UI2Code_N/evaluation/data/UIPolish-Real",
+          "notes": "本地 jsonl 只含目标截图和 prompt，缺少当前 HTML/渲染图；本轮按 direct 输入跑。",
+          "original_prompt": "我正在做一个“自动生成前端代码并与设计稿对齐”的任务。首先会根据目标 UI 截图（设计稿）生成一段 HTML+CSS 代码，但生成的页面往往和目标 UI 还有差距。因此需要不断的优化，让最终代码尽可能还原设计稿。我将提供以下内容：目标 UI 截图（设计稿）、现有 HTML 代码渲染后的截图、现有 HTML+CSS 代码。请你：对比 目标 UI 截图 与 现有渲染截图，详细分析差距（包括布局结构、排版、配色、字体、间距、组件样式、交互效果等）。在分析的基础上，修改并重写 HTML+CSS 代码，使页面的最终渲染效果尽可能接近目标 UI。输出一个 完整可运行的 HTML 文件（可包含 CSS/JS）。",
+          "reference_present": false,
+          "image_paths": [
+            "benchmarks\\ui2code_n\\evaluation\\data\\UIPolish-Real\\test_images\\23.png"
+          ],
+          "local_image_paths": [
+            "experiments\\random10_bench_smoke\\mimo_random10_20260604\\uipolish_real\\inputs\\images\\23_0.png"
+          ],
+          "local_prompt_path": "experiments\\random10_bench_smoke\\mimo_random10_20260604\\uipolish_real\\inputs\\prompts\\23.txt",
+          "http_status": 200,
+          "text_path": "experiments\\random10_bench_smoke\\mimo_random10_20260604\\uipolish_real\\texts\\23.txt",
+          "usage": {
+            "completion_tokens": 3875,
+            "prompt_tokens": 2716,
+            "total_tokens": 6591,
+            "completion_tokens_details": {
+              "reasoning_tokens": 596
+            },
+            "prompt_tokens_details": {
+              "cached_tokens": 192,
+              "image_tokens": 2040
+            }
+          },
+          "html_extracted": true,
+          "html_complete": true,
+          "html_path": "experiments\\random10_bench_smoke\\mimo_random10_20260604\\uipolish_real\\html\\23.html"
+        },
+        {
+          "bench": "uipolish_real",
+          "sample_id": "92",
+          "task_type": "repair_direct_incomplete",
+          "source": "UI2Code_N/evaluation/data/UIPolish-Real",
+          "notes": "本地 jsonl 只含目标截图和 prompt，缺少当前 HTML/渲染图；本轮按 direct 输入跑。",
+          "original_prompt": "我正在做一个“生成代码 → 优化贴合 UI”的实验。输入包括目标 UI 截图、生成代码渲染截图和 HTML+CSS 源码。请你对比设计稿和渲染结果，详细分析差距，给出优化建议并直接修改 HTML+CSS，输出一个完整可运行的 HTML 文件，使页面还原度更高。",
+          "reference_present": false,
+          "image_paths": [
+            "benchmarks\\ui2code_n\\evaluation\\data\\UIPolish-Real\\test_images\\92.png"
+          ],
+          "local_image_paths": [
+            "experiments\\random10_bench_smoke\\mimo_random10_20260604\\uipolish_real\\inputs\\images\\92_0.png"
+          ],
+          "local_prompt_path": "experiments\\random10_bench_smoke\\mimo_random10_20260604\\uipolish_real\\inputs\\prompts\\92.txt",
+          "http_status": 200,
+          "text_path": "experiments\\random10_bench_smoke\\mimo_random10_20260604\\uipolish_real\\texts\\92.txt",
+          "usage": {
+            "completion_tokens": 2086,
+            "prompt_tokens": 2610,
+            "total_tokens": 4696,
+            "completion_tokens_details": {
+              "reasoning_tokens": 135
+            },
+            "prompt_tokens_details": {
+              "cached_tokens": 512,
+              "image_tokens": 2040
+            }
+          },
+          "html_extracted": true,
+          "html_complete": true,
+          "html_path": "experiments\\random10_bench_smoke\\mimo_random10_20260604\\uipolish_real\\html\\92.html"
+        }
+      ]
+    },
+    "uipolish_synthetic": {
+      "available": 100,
+      "selected": 10,
+      "results": [
+        {
+          "bench": "uipolish_synthetic",
+          "sample_id": "14110",
+          "task_type": "repair_direct_incomplete",
+          "source": "UI2Code_N/evaluation/data/UIPolish-Synthetic",
+          "notes": "本地 jsonl 只含目标截图和 prompt，缺少当前 HTML/渲染图；本轮按 direct 输入跑。",
+          "original_prompt": "背景：系统根据 UI 截图生成 HTML+CSS，但生成结果往往不符合设计稿。我会提供目标 UI 截图、生成页面截图和对应的 HTML+CSS 代码。请你详细分析生成页面和目标 UI 的差异，并改进 HTML+CSS 代码，保证排版、字体、间距、颜色、交互等都更贴合设计稿。输出一个完整可运行的 HTML 文件。",
+          "reference_present": false,
+          "image_paths": [
+            "benchmarks\\ui2code_n\\evaluation\\data\\UIPolish-Synthetic\\test_image\\14110.png"
+          ],
+          "local_image_paths": [
+            "experiments\\random10_bench_smoke\\mimo_random10_20260604\\uipolish_synthetic\\inputs\\images\\14110_0.png"
+          ],
+          "local_prompt_path": "experiments\\random10_bench_smoke\\mimo_random10_20260604\\uipolish_synthetic\\inputs\\prompts\\14110.txt",
+          "http_status": 200,
+          "text_path": "experiments\\random10_bench_smoke\\mimo_random10_20260604\\uipolish_synthetic\\texts\\14110.txt",
+          "usage": {
+            "completion_tokens": 9498,
+            "prompt_tokens": 2864,
+            "total_tokens": 12362,
+            "completion_tokens_details": {
+              "reasoning_tokens": 476
+            },
+            "prompt_tokens_details": {
+              "cached_tokens": 192,
+              "image_tokens": 2280
+            }
+          },
+          "html_extracted": true,
+          "html_complete": true,
+          "html_path": "experiments\\random10_bench_smoke\\mimo_random10_20260604\\uipolish_synthetic\\html\\14110.html"
+        },
+        {
+          "bench": "uipolish_synthetic",
+          "sample_id": "8210",
+          "task_type": "repair_direct_incomplete",
+          "source": "UI2Code_N/evaluation/data/UIPolish-Synthetic",
+          "notes": "本地 jsonl 只含目标截图和 prompt，缺少当前 HTML/渲染图；本轮按 direct 输入跑。",
+          "original_prompt": "我正在构建一个“自动生成前端代码 → 校对优化”的流程。提供给你：目标 UI 截图、系统生成的 HTML+CSS 代码、渲染后的截图。请你先分析目标 UI 与渲染效果的差距，然后根据差距修改 HTML+CSS，输出一个完整可运行的 HTML 文件，使最终渲染结果尽可能贴合设计稿。",
+          "reference_present": false,
+          "image_paths": [
+            "benchmarks\\ui2code_n\\evaluation\\data\\UIPolish-Synthetic\\test_image\\8210.png"
+          ],
+          "local_image_paths": [
+            "experiments\\random10_bench_smoke\\mimo_random10_20260604\\uipolish_synthetic\\inputs\\images\\8210_0.png"
+          ],
+          "local_prompt_path": "experiments\\random10_bench_smoke\\mimo_random10_20260604\\uipolish_synthetic\\inputs\\prompts\\8210.txt",
+          "http_status": 200,
+          "text_path": "experiments\\random10_bench_smoke\\mimo_random10_20260604\\uipolish_synthetic\\texts\\8210.txt",
+          "usage": {
+            "completion_tokens": 8707,
+            "prompt_tokens": 2616,
+            "total_tokens": 11323,
+            "completion_tokens_details": {
+              "reasoning_tokens": 454
+            },
+            "prompt_tokens_details": {
+              "cached_tokens": 192,
+              "image_tokens": 2040
+            }
+          },
+          "html_extracted": true,
+          "html_complete": true,
+          "html_path": "experiments\\random10_bench_smoke\\mimo_random10_20260604\\uipolish_synthetic\\html\\8210.html"
+        },
+        {
+          "bench": "uipolish_synthetic",
+          "sample_id": "948",
+          "task_type": "repair_direct_incomplete",
+          "source": "UI2Code_N/evaluation/data/UIPolish-Synthetic",
+          "notes": "本地 jsonl 只含目标截图和 prompt，缺少当前 HTML/渲染图；本轮按 direct 输入跑。",
+          "original_prompt": "这是一个“设计稿还原优化”任务。我会给你：目标 UI 截图、基于它生成的 HTML+CSS、以及渲染截图。请你作为前端专家，对比目标 UI 与渲染结果，找出差异（颜色、字体、间距、布局、组件样式、交互），并修改 HTML+CSS 代码，最终输出一个完整可运行的 HTML 文件，最大程度还原目标 UI。",
+          "reference_present": false,
+          "image_paths": [
+            "benchmarks\\ui2code_n\\evaluation\\data\\UIPolish-Synthetic\\test_image\\948.png"
+          ],
+          "local_image_paths": [
+            "experiments\\random10_bench_smoke\\mimo_random10_20260604\\uipolish_synthetic\\inputs\\images\\948_0.png"
+          ],
+          "local_prompt_path": "experiments\\random10_bench_smoke\\mimo_random10_20260604\\uipolish_synthetic\\inputs\\prompts\\948.txt",
+          "http_status": 200,
+          "text_path": "experiments\\random10_bench_smoke\\mimo_random10_20260604\\uipolish_synthetic\\texts\\948.txt",
+          "usage": {
+            "completion_tokens": 5933,
+            "prompt_tokens": 3520,
+            "total_tokens": 9453,
+            "completion_tokens_details": {
+              "reasoning_tokens": 152
+            },
+            "prompt_tokens_details": {
+              "cached_tokens": 192,
+              "image_tokens": 2940
+            }
+          },
+          "html_extracted": true,
+          "html_complete": true,
+          "html_path": "experiments\\random10_bench_smoke\\mimo_random10_20260604\\uipolish_synthetic\\html\\948.html"
+        },
+        {
+          "bench": "uipolish_synthetic",
+          "sample_id": "7712",
+          "task_type": "repair_direct_incomplete",
+          "source": "UI2Code_N/evaluation/data/UIPolish-Synthetic",
+          "notes": "本地 jsonl 只含目标截图和 prompt，缺少当前 HTML/渲染图；本轮按 direct 输入跑。",
+          "original_prompt": "背景：系统根据 UI 截图生成 HTML+CSS，但生成结果往往不符合设计稿。我会提供目标 UI 截图、生成页面截图和对应的 HTML+CSS 代码。请你详细分析生成页面和目标 UI 的差异，并改进 HTML+CSS 代码，保证排版、字体、间距、颜色、交互等都更贴合设计稿。输出一个完整可运行的 HTML 文件。",
+          "reference_present": false,
+          "image_paths": [
+            "benchmarks\\ui2code_n\\evaluation\\data\\UIPolish-Synthetic\\test_image\\7712.png"
+          ],
+          "local_image_paths": [
+            "experiments\\random10_bench_smoke\\mimo_random10_20260604\\uipolish_synthetic\\inputs\\images\\7712_0.png"
+          ],
+          "local_prompt_path": "experiments\\random10_bench_smoke\\mimo_random10_20260604\\uipolish_synthetic\\inputs\\prompts\\7712.txt",
+          "http_status": 200,
+          "text_path": "experiments\\random10_bench_smoke\\mimo_random10_20260604\\uipolish_synthetic\\texts\\7712.txt",
+          "usage": {
+            "completion_tokens": 5357,
+            "prompt_tokens": 2924,
+            "total_tokens": 8281,
+            "completion_tokens_details": {
+              "reasoning_tokens": 376
+            },
+            "prompt_tokens_details": {
+              "cached_tokens": 512,
+              "image_tokens": 2340
+            }
+          },
+          "html_extracted": true,
+          "html_complete": true,
+          "html_path": "experiments\\random10_bench_smoke\\mimo_random10_20260604\\uipolish_synthetic\\html\\7712.html"
+        },
+        {
+          "bench": "uipolish_synthetic",
+          "sample_id": "13826",
+          "task_type": "repair_direct_incomplete",
+          "source": "UI2Code_N/evaluation/data/UIPolish-Synthetic",
+          "notes": "本地 jsonl 只含目标截图和 prompt，缺少当前 HTML/渲染图；本轮按 direct 输入跑。",
+          "original_prompt": "我正在做一个“代码生成结果与设计稿对齐”的实验。输入包括：目标 UI 截图、生成的 HTML+CSS 代码及其渲染截图。请你对比目标 UI 和渲染结果，逐条分析不足之处（如组件样式、排版、颜色、字体、交互逻辑），并在此基础上改写 HTML+CSS，输出一个完整可运行的 HTML 文件，让效果更接近设计稿。",
+          "reference_present": false,
+          "image_paths": [
+            "benchmarks\\ui2code_n\\evaluation\\data\\UIPolish-Synthetic\\test_image\\13826.png"
+          ],
+          "local_image_paths": [
+            "experiments\\random10_bench_smoke\\mimo_random10_20260604\\uipolish_synthetic\\inputs\\images\\13826_0.png"
+          ],
+          "local_prompt_path": "experiments\\random10_bench_smoke\\mimo_random10_20260604\\uipolish_synthetic\\inputs\\prompts\\13826.txt",
+          "http_status": 200,
+          "text_path": "experiments\\random10_bench_smoke\\mimo_random10_20260604\\uipolish_synthetic\\texts\\13826.txt",
+          "usage": {
+            "completion_tokens": 6414,
+            "prompt_tokens": 3286,
+            "total_tokens": 9700,
+            "completion_tokens_details": {
+              "reasoning_tokens": 584
+            },
+            "prompt_tokens_details": {
+              "cached_tokens": 192,
+              "image_tokens": 2700
+            }
+          },
+          "html_extracted": true,
+          "html_complete": true,
+          "html_path": "experiments\\random10_bench_smoke\\mimo_random10_20260604\\uipolish_synthetic\\html\\13826.html"
+        },
+        {
+          "bench": "uipolish_synthetic",
+          "sample_id": "13989",
+          "task_type": "repair_direct_incomplete",
+          "source": "UI2Code_N/evaluation/data/UIPolish-Synthetic",
+          "notes": "本地 jsonl 只含目标截图和 prompt，缺少当前 HTML/渲染图；本轮按 direct 输入跑。",
+          "original_prompt": "背景：系统会从设计稿截图生成 HTML 页面，但效果常常和设计稿有差距。我将提供：目标 UI 截图、生成的 HTML+CSS、渲染截图。请你对比 UI 截图与渲染截图，分析差距并优化代码，输出一个完整可运行的 HTML 文件，使页面效果尽可能与设计稿一致。",
+          "reference_present": false,
+          "image_paths": [
+            "benchmarks\\ui2code_n\\evaluation\\data\\UIPolish-Synthetic\\test_image\\13989.png"
+          ],
+          "local_image_paths": [
+            "experiments\\random10_bench_smoke\\mimo_random10_20260604\\uipolish_synthetic\\inputs\\images\\13989_0.png"
+          ],
+          "local_prompt_path": "experiments\\random10_bench_smoke\\mimo_random10_20260604\\uipolish_synthetic\\inputs\\prompts\\13989.txt",
+          "http_status": 200,
+          "text_path": "experiments\\random10_bench_smoke\\mimo_random10_20260604\\uipolish_synthetic\\texts\\13989.txt",
+          "usage": {
+            "completion_tokens": 10495,
+            "prompt_tokens": 3092,
+            "total_tokens": 13587,
+            "completion_tokens_details": {
+              "reasoning_tokens": 609
+            },
+            "prompt_tokens_details": {
+              "cached_tokens": 192,
+              "image_tokens": 2520
+            }
+          },
+          "html_extracted": true,
+          "html_complete": true,
+          "html_path": "experiments\\random10_bench_smoke\\mimo_random10_20260604\\uipolish_synthetic\\html\\13989.html"
+        },
+        {
+          "bench": "uipolish_synthetic",
+          "sample_id": "16973",
+          "task_type": "repair_direct_incomplete",
+          "source": "UI2Code_N/evaluation/data/UIPolish-Synthetic",
+          "notes": "本地 jsonl 只含目标截图和 prompt，缺少当前 HTML/渲染图；本轮按 direct 输入跑。",
+          "original_prompt": "我正在构建一个“自动生成前端代码 → 校对优化”的流程。提供给你：目标 UI 截图、系统生成的 HTML+CSS 代码、渲染后的截图。请你先分析目标 UI 与渲染效果的差距，然后根据差距修改 HTML+CSS，输出一个完整可运行的 HTML 文件，使最终渲染结果尽可能贴合设计稿。",
+          "reference_present": false,
+          "image_paths": [
+            "benchmarks\\ui2code_n\\evaluation\\data\\UIPolish-Synthetic\\test_image\\16973.png"
+          ],
+          "local_image_paths": [
+            "experiments\\random10_bench_smoke\\mimo_random10_20260604\\uipolish_synthetic\\inputs\\images\\16973_0.png"
+          ],
+          "local_prompt_path": "experiments\\random10_bench_smoke\\mimo_random10_20260604\\uipolish_synthetic\\inputs\\prompts\\16973.txt",
+          "http_status": 200,
+          "text_path": "experiments\\random10_bench_smoke\\mimo_random10_20260604\\uipolish_synthetic\\texts\\16973.txt",
+          "usage": {
+            "completion_tokens": 7691,
+            "prompt_tokens": 3516,
+            "total_tokens": 11207,
+            "completion_tokens_details": {
+              "reasoning_tokens": 190
+            },
+            "prompt_tokens_details": {
+              "cached_tokens": 512,
+              "image_tokens": 2940
+            }
+          },
+          "html_extracted": true,
+          "html_complete": true,
+          "html_path": "experiments\\random10_bench_smoke\\mimo_random10_20260604\\uipolish_synthetic\\html\\16973.html"
+        },
+        {
+          "bench": "uipolish_synthetic",
+          "sample_id": "15746",
+          "task_type": "repair_direct_incomplete",
+          "source": "UI2Code_N/evaluation/data/UIPolish-Synthetic",
+          "notes": "本地 jsonl 只含目标截图和 prompt，缺少当前 HTML/渲染图；本轮按 direct 输入跑。",
+          "original_prompt": "我正在构建一个“自动生成前端代码 → 校对优化”的流程。提供给你：目标 UI 截图、系统生成的 HTML+CSS 代码、渲染后的截图。请你先分析目标 UI 与渲染效果的差距，然后根据差距修改 HTML+CSS，输出一个完整可运行的 HTML 文件，使最终渲染结果尽可能贴合设计稿。",
+          "reference_present": false,
+          "image_paths": [
+            "benchmarks\\ui2code_n\\evaluation\\data\\UIPolish-Synthetic\\test_image\\15746.png"
+          ],
+          "local_image_paths": [
+            "experiments\\random10_bench_smoke\\mimo_random10_20260604\\uipolish_synthetic\\inputs\\images\\15746_0.png"
+          ],
+          "local_prompt_path": "experiments\\random10_bench_smoke\\mimo_random10_20260604\\uipolish_synthetic\\inputs\\prompts\\15746.txt",
+          "http_status": 200,
+          "text_path": "experiments\\random10_bench_smoke\\mimo_random10_20260604\\uipolish_synthetic\\texts\\15746.txt",
+          "usage": {
+            "completion_tokens": 6003,
+            "prompt_tokens": 2616,
+            "total_tokens": 8619,
+            "completion_tokens_details": {
+              "reasoning_tokens": 445
+            },
+            "prompt_tokens_details": {
+              "cached_tokens": 512,
+              "image_tokens": 2040
+            }
+          },
+          "html_extracted": true,
+          "html_complete": true,
+          "html_path": "experiments\\random10_bench_smoke\\mimo_random10_20260604\\uipolish_synthetic\\html\\15746.html"
+        },
+        {
+          "bench": "uipolish_synthetic",
+          "sample_id": "12802",
+          "task_type": "repair_direct_incomplete",
+          "source": "UI2Code_N/evaluation/data/UIPolish-Synthetic",
+          "notes": "本地 jsonl 只含目标截图和 prompt，缺少当前 HTML/渲染图；本轮按 direct 输入跑。",
+          "original_prompt": "这是一个“代码修复贴合设计稿”的任务。我会给你目标 UI 截图、自动生成的 HTML+CSS 代码和页面渲染截图。请你比较目标 UI 与渲染截图，逐项分析差距（布局、排版、颜色、字体、组件细节、交互），然后修改 HTML+CSS 并输出完整可运行的 HTML 文件，使渲染结果更符合设计稿。",
+          "reference_present": false,
+          "image_paths": [
+            "benchmarks\\ui2code_n\\evaluation\\data\\UIPolish-Synthetic\\test_image\\12802.png"
+          ],
+          "local_image_paths": [
+            "experiments\\random10_bench_smoke\\mimo_random10_20260604\\uipolish_synthetic\\inputs\\images\\12802_0.png"
+          ],
+          "local_prompt_path": "experiments\\random10_bench_smoke\\mimo_random10_20260604\\uipolish_synthetic\\inputs\\prompts\\12802.txt",
+          "http_status": 200,
+          "text_path": "experiments\\random10_bench_smoke\\mimo_random10_20260604\\uipolish_synthetic\\texts\\12802.txt",
+          "usage": {
+            "completion_tokens": 7502,
+            "prompt_tokens": 2621,
+            "total_tokens": 10123,
+            "completion_tokens_details": {
+              "reasoning_tokens": 3229
+            },
+            "prompt_tokens_details": {
+              "cached_tokens": 192,
+              "image_tokens": 2040
+            }
+          },
+          "html_extracted": true,
+          "html_complete": true,
+          "html_path": "experiments\\random10_bench_smoke\\mimo_random10_20260604\\uipolish_synthetic\\html\\12802.html"
+        },
+        {
+          "bench": "uipolish_synthetic",
+          "sample_id": "10940",
+          "task_type": "repair_direct_incomplete",
+          "source": "UI2Code_N/evaluation/data/UIPolish-Synthetic",
+          "notes": "本地 jsonl 只含目标截图和 prompt，缺少当前 HTML/渲染图；本轮按 direct 输入跑。",
+          "original_prompt": "背景：系统根据 UI 截图生成 HTML+CSS，但生成结果往往不符合设计稿。我会提供目标 UI 截图、生成页面截图和对应的 HTML+CSS 代码。请你详细分析生成页面和目标 UI 的差异，并改进 HTML+CSS 代码，保证排版、字体、间距、颜色、交互等都更贴合设计稿。输出一个完整可运行的 HTML 文件。",
+          "reference_present": false,
+          "image_paths": [
+            "benchmarks\\ui2code_n\\evaluation\\data\\UIPolish-Synthetic\\test_image\\10940.png"
+          ],
+          "local_image_paths": [
+            "experiments\\random10_bench_smoke\\mimo_random10_20260604\\uipolish_synthetic\\inputs\\images\\10940_0.png"
+          ],
+          "local_prompt_path": "experiments\\random10_bench_smoke\\mimo_random10_20260604\\uipolish_synthetic\\inputs\\prompts\\10940.txt",
+          "http_status": 200,
+          "text_path": "experiments\\random10_bench_smoke\\mimo_random10_20260604\\uipolish_synthetic\\texts\\10940.txt",
+          "usage": {
+            "completion_tokens": 7176,
+            "prompt_tokens": 2924,
+            "total_tokens": 10100,
+            "completion_tokens_details": {
+              "reasoning_tokens": 1364
+            },
+            "prompt_tokens_details": {
+              "cached_tokens": 512,
+              "image_tokens": 2340
+            }
+          },
+          "html_extracted": true,
+          "html_complete": true,
+          "html_path": "experiments\\random10_bench_smoke\\mimo_random10_20260604\\uipolish_synthetic\\html\\10940.html"
+        }
+      ]
+    },
+    "web2code": {
+      "available": 1198,
+      "selected": 10,
+      "results": [
+        {
+          "bench": "web2code",
+          "sample_id": "364",
+          "task_type": "webpage_generation",
+          "source": "UI2Code_N/evaluation/data/Web2Code",
+          "notes": "",
+          "original_prompt": "请制作一个同类型的界面，并把它转换成 React 可用的 HTML 代码",
+          "reference_present": false,
+          "image_paths": [
+            "benchmarks\\ui2code_n\\evaluation\\data\\Web2Code\\Web2Code_image_eval\\image_3237_15.png"
+          ],
+          "local_image_paths": [
+            "experiments\\random10_bench_smoke\\mimo_random10_20260604\\web2code\\inputs\\images\\364_0.png"
+          ],
+          "local_prompt_path": "experiments\\random10_bench_smoke\\mimo_random10_20260604\\web2code\\inputs\\prompts\\364.txt",
+          "http_status": 200,
+          "text_path": "experiments\\random10_bench_smoke\\mimo_random10_20260604\\web2code\\texts\\364.txt",
+          "usage": {
+            "completion_tokens": 1141,
+            "prompt_tokens": 1347,
+            "total_tokens": 2488,
+            "completion_tokens_details": {
+              "reasoning_tokens": 306
+            },
+            "prompt_tokens_details": {
+              "cached_tokens": 192,
+              "image_tokens": 880
+            }
+          },
+          "html_extracted": true,
+          "html_complete": true,
+          "html_path": "experiments\\random10_bench_smoke\\mimo_random10_20260604\\web2code\\html\\364.html"
+        },
+        {
+          "bench": "web2code",
+          "sample_id": "85",
+          "task_type": "webpage_generation",
+          "source": "UI2Code_N/evaluation/data/Web2Code",
+          "notes": "",
+          "original_prompt": "Please build a comparable interface and convert it into React-ready HTML code.",
+          "reference_present": false,
+          "image_paths": [
+            "benchmarks\\ui2code_n\\evaluation\\data\\Web2Code\\Web2Code_image_eval\\image_9393_41.png"
+          ],
+          "local_image_paths": [
+            "experiments\\random10_bench_smoke\\mimo_random10_20260604\\web2code\\inputs\\images\\85_0.png"
+          ],
+          "local_prompt_path": "experiments\\random10_bench_smoke\\mimo_random10_20260604\\web2code\\inputs\\prompts\\85.txt",
+          "http_status": 200,
+          "text_path": "experiments\\random10_bench_smoke\\mimo_random10_20260604\\web2code\\texts\\85.txt",
+          "usage": {
+            "completion_tokens": 1327,
+            "prompt_tokens": 1822,
+            "total_tokens": 3149,
+            "completion_tokens_details": {
+              "reasoning_tokens": 411
+            },
+            "prompt_tokens_details": {
+              "cached_tokens": 192,
+              "image_tokens": 1360
+            }
+          },
+          "html_extracted": true,
+          "html_complete": true,
+          "html_path": "experiments\\random10_bench_smoke\\mimo_random10_20260604\\web2code\\html\\85.html"
+        },
+        {
+          "bench": "web2code",
+          "sample_id": "76",
+          "task_type": "webpage_generation",
+          "source": "UI2Code_N/evaluation/data/Web2Code",
+          "notes": "",
+          "original_prompt": "能否为我创建一套类似风格的页面，并输出 React 格式的 HTML/JSX？",
+          "reference_present": false,
+          "image_paths": [
+            "benchmarks\\ui2code_n\\evaluation\\data\\Web2Code\\Web2Code_image_eval\\image_5037_44.png"
+          ],
+          "local_image_paths": [
+            "experiments\\random10_bench_smoke\\mimo_random10_20260604\\web2code\\inputs\\images\\76_0.png"
+          ],
+          "local_prompt_path": "experiments\\random10_bench_smoke\\mimo_random10_20260604\\web2code\\inputs\\prompts\\76.txt",
+          "http_status": 200,
+          "text_path": "experiments\\random10_bench_smoke\\mimo_random10_20260604\\web2code\\texts\\76.txt",
+          "usage": {
+            "completion_tokens": 2024,
+            "prompt_tokens": 1348,
+            "total_tokens": 3372,
+            "completion_tokens_details": {
+              "reasoning_tokens": 1071
+            },
+            "prompt_tokens_details": {
+              "cached_tokens": 192,
+              "image_tokens": 880
+            }
+          },
+          "html_extracted": true,
+          "html_complete": true,
+          "html_path": "experiments\\random10_bench_smoke\\mimo_random10_20260604\\web2code\\html\\76.html"
+        },
+        {
+          "bench": "web2code",
+          "sample_id": "1169",
+          "task_type": "webpage_generation",
+          "source": "UI2Code_N/evaluation/data/Web2Code",
+          "notes": "",
+          "original_prompt": "请帮我设计一个类似的界面，并生成对应的 React 组件代码",
+          "reference_present": false,
+          "image_paths": [
+            "benchmarks\\ui2code_n\\evaluation\\data\\Web2Code\\Web2Code_image_eval\\1995.png"
+          ],
+          "local_image_paths": [
+            "experiments\\random10_bench_smoke\\mimo_random10_20260604\\web2code\\inputs\\images\\1169_0.png"
+          ],
+          "local_prompt_path": "experiments\\random10_bench_smoke\\mimo_random10_20260604\\web2code\\inputs\\prompts\\1169.txt",
+          "http_status": 200,
+          "text_path": "experiments\\random10_bench_smoke\\mimo_random10_20260604\\web2code\\texts\\1169.txt",
+          "usage": {
+            "completion_tokens": 1745,
+            "prompt_tokens": 2502,
+            "total_tokens": 4247,
+            "completion_tokens_details": {
+              "reasoning_tokens": 464
+            },
+            "prompt_tokens_details": {
+              "cached_tokens": 192,
+              "image_tokens": 2040
+            }
+          },
+          "html_extracted": true,
+          "html_complete": true,
+          "html_path": "experiments\\random10_bench_smoke\\mimo_random10_20260604\\web2code\\html\\1169.html"
+        },
+        {
+          "bench": "web2code",
+          "sample_id": "835",
+          "task_type": "webpage_generation",
+          "source": "UI2Code_N/evaluation/data/Web2Code",
+          "notes": "",
+          "original_prompt": "Could you create a page in a similar style for me and provide the HTML/JSX in React format?",
+          "reference_present": false,
+          "image_paths": [
+            "benchmarks\\ui2code_n\\evaluation\\data\\Web2Code\\Web2Code_image_eval\\image_6933_32.png"
+          ],
+          "local_image_paths": [
+            "experiments\\random10_bench_smoke\\mimo_random10_20260604\\web2code\\inputs\\images\\835_0.png"
+          ],
+          "local_prompt_path": "experiments\\random10_bench_smoke\\mimo_random10_20260604\\web2code\\inputs\\prompts\\835.txt",
+          "http_status": 200,
+          "text_path": "experiments\\random10_bench_smoke\\mimo_random10_20260604\\web2code\\texts\\835.txt",
+          "usage": {
+            "completion_tokens": 1744,
+            "prompt_tokens": 1350,
+            "total_tokens": 3094,
+            "completion_tokens_details": {
+              "reasoning_tokens": 785
+            },
+            "prompt_tokens_details": {
+              "cached_tokens": 192,
+              "image_tokens": 880
+            }
+          },
+          "html_extracted": true,
+          "html_complete": true,
+          "html_path": "experiments\\random10_bench_smoke\\mimo_random10_20260604\\web2code\\html\\835.html"
+        },
+        {
+          "bench": "web2code",
+          "sample_id": "794",
+          "task_type": "webpage_generation",
+          "source": "UI2Code_N/evaluation/data/Web2Code",
+          "notes": "",
+          "original_prompt": "Please build a comparable interface and convert it into React-ready HTML code.",
+          "reference_present": false,
+          "image_paths": [
+            "benchmarks\\ui2code_n\\evaluation\\data\\Web2Code\\Web2Code_image_eval\\image_6609_55.png"
+          ],
+          "local_image_paths": [
+            "experiments\\random10_bench_smoke\\mimo_random10_20260604\\web2code\\inputs\\images\\794_0.png"
+          ],
+          "local_prompt_path": "experiments\\random10_bench_smoke\\mimo_random10_20260604\\web2code\\inputs\\prompts\\794.txt",
+          "http_status": 200,
+          "text_path": "experiments\\random10_bench_smoke\\mimo_random10_20260604\\web2code\\texts\\794.txt",
+          "usage": {
+            "completion_tokens": 2601,
+            "prompt_tokens": 1382,
+            "total_tokens": 3983,
+            "completion_tokens_details": {
+              "reasoning_tokens": 1758
+            },
+            "prompt_tokens_details": {
+              "cached_tokens": 192,
+              "image_tokens": 920
+            }
+          },
+          "html_extracted": true,
+          "html_complete": true,
+          "html_path": "experiments\\random10_bench_smoke\\mimo_random10_20260604\\web2code\\html\\794.html"
+        },
+        {
+          "bench": "web2code",
+          "sample_id": "317",
+          "task_type": "webpage_generation",
+          "source": "UI2Code_N/evaluation/data/Web2Code",
+          "notes": "",
+          "original_prompt": "麻烦给我一个类似的页面范例，以及相应的 React 版 HTML/JSX",
+          "reference_present": false,
+          "image_paths": [
+            "benchmarks\\ui2code_n\\evaluation\\data\\Web2Code\\Web2Code_image_eval\\image_10817_20.png"
+          ],
+          "local_image_paths": [
+            "experiments\\random10_bench_smoke\\mimo_random10_20260604\\web2code\\inputs\\images\\317_0.png"
+          ],
+          "local_prompt_path": "experiments\\random10_bench_smoke\\mimo_random10_20260604\\web2code\\inputs\\prompts\\317.txt",
+          "http_status": 200,
+          "text_path": "experiments\\random10_bench_smoke\\mimo_random10_20260604\\web2code\\texts\\317.txt",
+          "usage": {
+            "completion_tokens": 1705,
+            "prompt_tokens": 1466,
+            "total_tokens": 3171,
+            "completion_tokens_details": {
+              "reasoning_tokens": 114
+            },
+            "prompt_tokens_details": {
+              "cached_tokens": 192,
+              "image_tokens": 1000
+            }
+          },
+          "html_extracted": true,
+          "html_complete": true,
+          "html_path": "experiments\\random10_bench_smoke\\mimo_random10_20260604\\web2code\\html\\317.html"
+        },
+        {
+          "bench": "web2code",
+          "sample_id": "914",
+          "task_type": "webpage_generation",
+          "source": "UI2Code_N/evaluation/data/Web2Code",
+          "notes": "",
+          "original_prompt": "Could you create a page in a similar style for me and provide the HTML/JSX in React format?",
+          "reference_present": false,
+          "image_paths": [
+            "benchmarks\\ui2code_n\\evaluation\\data\\Web2Code\\Web2Code_image_eval\\48904.png"
+          ],
+          "local_image_paths": [
+            "experiments\\random10_bench_smoke\\mimo_random10_20260604\\web2code\\inputs\\images\\914_0.png"
+          ],
+          "local_prompt_path": "experiments\\random10_bench_smoke\\mimo_random10_20260604\\web2code\\inputs\\prompts\\914.txt",
+          "http_status": 200,
+          "text_path": "experiments\\random10_bench_smoke\\mimo_random10_20260604\\web2code\\texts\\914.txt",
+          "usage": {
+            "completion_tokens": 1363,
+            "prompt_tokens": 2510,
+            "total_tokens": 3873,
+            "completion_tokens_details": {
+              "reasoning_tokens": 621
+            },
+            "prompt_tokens_details": {
+              "cached_tokens": 192,
+              "image_tokens": 2040
+            }
+          },
+          "html_extracted": true,
+          "html_complete": true,
+          "html_path": "experiments\\random10_bench_smoke\\mimo_random10_20260604\\web2code\\html\\914.html"
+        },
+        {
+          "bench": "web2code",
+          "sample_id": "919",
+          "task_type": "webpage_generation",
+          "source": "UI2Code_N/evaluation/data/Web2Code",
+          "notes": "",
+          "original_prompt": "Help me implement a similar UI layout and give me the complete React code sample.",
+          "reference_present": false,
+          "image_paths": [
+            "benchmarks\\ui2code_n\\evaluation\\data\\Web2Code\\Web2Code_image_eval\\image_11108_38.png"
+          ],
+          "local_image_paths": [
+            "experiments\\random10_bench_smoke\\mimo_random10_20260604\\web2code\\inputs\\images\\919_0.png"
+          ],
+          "local_prompt_path": "experiments\\random10_bench_smoke\\mimo_random10_20260604\\web2code\\inputs\\prompts\\919.txt",
+          "http_status": 200,
+          "text_path": "experiments\\random10_bench_smoke\\mimo_random10_20260604\\web2code\\texts\\919.txt",
+          "usage": {
+            "completion_tokens": 2201,
+            "prompt_tokens": 1344,
+            "total_tokens": 3545,
+            "completion_tokens_details": {
+              "reasoning_tokens": 1419
+            },
+            "prompt_tokens_details": {
+              "cached_tokens": 192,
+              "image_tokens": 880
+            }
+          },
+          "html_extracted": true,
+          "html_complete": true,
+          "html_path": "experiments\\random10_bench_smoke\\mimo_random10_20260604\\web2code\\html\\919.html"
+        },
+        {
+          "bench": "web2code",
+          "sample_id": "521",
+          "task_type": "webpage_generation",
+          "source": "UI2Code_N/evaluation/data/Web2Code",
+          "notes": "",
+          "original_prompt": "请帮我设计一个类似的界面，并生成对应的 React 组件代码",
+          "reference_present": false,
+          "image_paths": [
+            "benchmarks\\ui2code_n\\evaluation\\data\\Web2Code\\Web2Code_image_eval\\image_2808_17.png"
+          ],
+          "local_image_paths": [
+            "experiments\\random10_bench_smoke\\mimo_random10_20260604\\web2code\\inputs\\images\\521_0.png"
+          ],
+          "local_prompt_path": "experiments\\random10_bench_smoke\\mimo_random10_20260604\\web2code\\inputs\\prompts\\521.txt",
+          "http_status": 200,
+          "text_path": "experiments\\random10_bench_smoke\\mimo_random10_20260604\\web2code\\texts\\521.txt",
+          "usage": {
+            "completion_tokens": 1107,
+            "prompt_tokens": 1382,
+            "total_tokens": 2489,
+            "completion_tokens_details": {
+              "reasoning_tokens": 177
+            },
+            "prompt_tokens_details": {
+              "cached_tokens": 192,
+              "image_tokens": 920
+            }
+          },
+          "html_extracted": true,
+          "html_complete": true,
+          "html_path": "experiments\\random10_bench_smoke\\mimo_random10_20260604\\web2code\\html\\521.html"
+        }
+      ]
+    },
+    "dcgen_original": {
+      "available": 110,
+      "selected": 10,
+      "results": [
+        {
+          "bench": "dcgen_original",
+          "sample_id": "26",
+          "task_type": "static_generation",
+          "source": "DCGen/data/original",
+          "notes": "使用 DCGen repo 自带 sample dataset 的 original 截图；reference HTML 只保存为元信息，不喂给模型。",
+          "original_prompt": "请根据这张网页截图生成一个完整、可直接运行的单文件 HTML，尽量还原原网页。",
+          "reference_present": false,
+          "image_paths": [
+            "benchmarks\\dcgen\\data\\original\\26.png"
+          ],
+          "local_image_paths": [
+            "experiments\\random10_bench_smoke\\mimo_random10_20260604\\dcgen_original\\inputs\\images\\26_0.png"
+          ],
+          "local_prompt_path": "experiments\\random10_bench_smoke\\mimo_random10_20260604\\dcgen_original\\inputs\\prompts\\26.txt",
+          "reference_path": "benchmarks\\dcgen\\data\\original\\26.html",
+          "http_status": 200,
+          "text_path": "experiments\\random10_bench_smoke\\mimo_random10_20260604\\dcgen_original\\texts\\26.txt",
+          "usage": {
+            "completion_tokens": 4798,
+            "prompt_tokens": 5029,
+            "total_tokens": 9827,
+            "completion_tokens_details": {
+              "reasoning_tokens": 433
+            },
+            "prompt_tokens_details": {
+              "cached_tokens": 192,
+              "image_tokens": 4560
+            }
+          },
+          "html_extracted": true,
+          "html_complete": true,
+          "html_path": "experiments\\random10_bench_smoke\\mimo_random10_20260604\\dcgen_original\\html\\26.html"
+        },
+        {
+          "bench": "dcgen_original",
+          "sample_id": "86",
+          "task_type": "static_generation",
+          "source": "DCGen/data/original",
+          "notes": "使用 DCGen repo 自带 sample dataset 的 original 截图；reference HTML 只保存为元信息，不喂给模型。",
+          "original_prompt": "请根据这张网页截图生成一个完整、可直接运行的单文件 HTML，尽量还原原网页。",
+          "reference_present": false,
+          "image_paths": [
+            "benchmarks\\dcgen\\data\\original\\86.png"
+          ],
+          "local_image_paths": [
+            "experiments\\random10_bench_smoke\\mimo_random10_20260604\\dcgen_original\\inputs\\images\\86_0.png"
+          ],
+          "local_prompt_path": "experiments\\random10_bench_smoke\\mimo_random10_20260604\\dcgen_original\\inputs\\prompts\\86.txt",
+          "reference_path": "benchmarks\\dcgen\\data\\original\\86.html",
+          "http_status": 200,
+          "text_path": "experiments\\random10_bench_smoke\\mimo_random10_20260604\\dcgen_original\\texts\\86.txt",
+          "usage": {
+            "completion_tokens": 8618,
+            "prompt_tokens": 4129,
+            "total_tokens": 12747,
+            "completion_tokens_details": {
+              "reasoning_tokens": 465
+            },
+            "prompt_tokens_details": {
+              "cached_tokens": 192,
+              "image_tokens": 3660
+            }
+          },
+          "html_extracted": true,
+          "html_complete": true,
+          "html_path": "experiments\\random10_bench_smoke\\mimo_random10_20260604\\dcgen_original\\html\\86.html"
+        },
+        {
+          "bench": "dcgen_original",
+          "sample_id": "43",
+          "task_type": "static_generation",
+          "source": "DCGen/data/original",
+          "notes": "使用 DCGen repo 自带 sample dataset 的 original 截图；reference HTML 只保存为元信息，不喂给模型。",
+          "original_prompt": "请根据这张网页截图生成一个完整、可直接运行的单文件 HTML，尽量还原原网页。",
+          "reference_present": false,
+          "image_paths": [
+            "benchmarks\\dcgen\\data\\original\\43.png"
+          ],
+          "local_image_paths": [
+            "experiments\\random10_bench_smoke\\mimo_random10_20260604\\dcgen_original\\inputs\\images\\43_0.png"
+          ],
+          "local_prompt_path": "experiments\\random10_bench_smoke\\mimo_random10_20260604\\dcgen_original\\inputs\\prompts\\43.txt",
+          "reference_path": "benchmarks\\dcgen\\data\\original\\43.html",
+          "http_status": 200,
+          "text_path": "experiments\\random10_bench_smoke\\mimo_random10_20260604\\dcgen_original\\texts\\43.txt",
+          "usage": {
+            "completion_tokens": 2030,
+            "prompt_tokens": 2749,
+            "total_tokens": 4779,
+            "completion_tokens_details": {
+              "reasoning_tokens": 475
+            },
+            "prompt_tokens_details": {
+              "cached_tokens": 192,
+              "image_tokens": 2280
+            }
+          },
+          "html_extracted": true,
+          "html_complete": true,
+          "html_path": "experiments\\random10_bench_smoke\\mimo_random10_20260604\\dcgen_original\\html\\43.html"
+        },
+        {
+          "bench": "dcgen_original",
+          "sample_id": "11",
+          "task_type": "static_generation",
+          "source": "DCGen/data/original",
+          "notes": "使用 DCGen repo 自带 sample dataset 的 original 截图；reference HTML 只保存为元信息，不喂给模型。",
+          "original_prompt": "请根据这张网页截图生成一个完整、可直接运行的单文件 HTML，尽量还原原网页。",
+          "reference_present": false,
+          "image_paths": [
+            "benchmarks\\dcgen\\data\\original\\11.png"
+          ],
+          "local_image_paths": [
+            "experiments\\random10_bench_smoke\\mimo_random10_20260604\\dcgen_original\\inputs\\images\\11_0.png"
+          ],
+          "local_prompt_path": "experiments\\random10_bench_smoke\\mimo_random10_20260604\\dcgen_original\\inputs\\prompts\\11.txt",
+          "reference_path": "benchmarks\\dcgen\\data\\original\\11.html",
+          "http_status": 200,
+          "text_path": "experiments\\random10_bench_smoke\\mimo_random10_20260604\\dcgen_original\\texts\\11.txt",
+          "usage": {
+            "completion_tokens": 3400,
+            "prompt_tokens": 2329,
+            "total_tokens": 5729,
+            "completion_tokens_details": {
+              "reasoning_tokens": 442
+            },
+            "prompt_tokens_details": {
+              "cached_tokens": 192,
+              "image_tokens": 1860
+            }
+          },
+          "html_extracted": true,
+          "html_complete": true,
+          "html_path": "experiments\\random10_bench_smoke\\mimo_random10_20260604\\dcgen_original\\html\\11.html"
+        },
+        {
+          "bench": "dcgen_original",
+          "sample_id": "85",
+          "task_type": "static_generation",
+          "source": "DCGen/data/original",
+          "notes": "使用 DCGen repo 自带 sample dataset 的 original 截图；reference HTML 只保存为元信息，不喂给模型。",
+          "original_prompt": "请根据这张网页截图生成一个完整、可直接运行的单文件 HTML，尽量还原原网页。",
+          "reference_present": false,
+          "image_paths": [
+            "benchmarks\\dcgen\\data\\original\\85.png"
+          ],
+          "local_image_paths": [
+            "experiments\\random10_bench_smoke\\mimo_random10_20260604\\dcgen_original\\inputs\\images\\85_0.png"
+          ],
+          "local_prompt_path": "experiments\\random10_bench_smoke\\mimo_random10_20260604\\dcgen_original\\inputs\\prompts\\85.txt",
+          "reference_path": "benchmarks\\dcgen\\data\\original\\85.html",
+          "http_status": 200,
+          "text_path": "experiments\\random10_bench_smoke\\mimo_random10_20260604\\dcgen_original\\texts\\85.txt",
+          "usage": {
+            "completion_tokens": 4020,
+            "prompt_tokens": 2329,
+            "total_tokens": 6349,
+            "completion_tokens_details": {
+              "reasoning_tokens": 523
+            },
+            "prompt_tokens_details": {
+              "cached_tokens": 192,
+              "image_tokens": 1860
+            }
+          },
+          "html_extracted": true,
+          "html_complete": true,
+          "html_path": "experiments\\random10_bench_smoke\\mimo_random10_20260604\\dcgen_original\\html\\85.html"
+        },
+        {
+          "bench": "dcgen_original",
+          "sample_id": "46",
+          "task_type": "static_generation",
+          "source": "DCGen/data/original",
+          "notes": "使用 DCGen repo 自带 sample dataset 的 original 截图；reference HTML 只保存为元信息，不喂给模型。",
+          "original_prompt": "请根据这张网页截图生成一个完整、可直接运行的单文件 HTML，尽量还原原网页。",
+          "reference_present": false,
+          "image_paths": [
+            "benchmarks\\dcgen\\data\\original\\46.png"
+          ],
+          "local_image_paths": [
+            "experiments\\random10_bench_smoke\\mimo_random10_20260604\\dcgen_original\\inputs\\images\\46_0.png"
+          ],
+          "local_prompt_path": "experiments\\random10_bench_smoke\\mimo_random10_20260604\\dcgen_original\\inputs\\prompts\\46.txt",
+          "reference_path": "benchmarks\\dcgen\\data\\original\\46.html",
+          "http_status": 200,
+          "text_path": "experiments\\random10_bench_smoke\\mimo_random10_20260604\\dcgen_original\\texts\\46.txt",
+          "usage": {
+            "completion_tokens": 3859,
+            "prompt_tokens": 4969,
+            "total_tokens": 8828,
+            "completion_tokens_details": {
+              "reasoning_tokens": 509
+            },
+            "prompt_tokens_details": {
+              "cached_tokens": 192,
+              "image_tokens": 4500
+            }
+          },
+          "html_extracted": true,
+          "html_complete": true,
+          "html_path": "experiments\\random10_bench_smoke\\mimo_random10_20260604\\dcgen_original\\html\\46.html"
+        },
+        {
+          "bench": "dcgen_original",
+          "sample_id": "71",
+          "task_type": "static_generation",
+          "source": "DCGen/data/original",
+          "notes": "使用 DCGen repo 自带 sample dataset 的 original 截图；reference HTML 只保存为元信息，不喂给模型。",
+          "original_prompt": "请根据这张网页截图生成一个完整、可直接运行的单文件 HTML，尽量还原原网页。",
+          "reference_present": false,
+          "image_paths": [
+            "benchmarks\\dcgen\\data\\original\\71.png"
+          ],
+          "local_image_paths": [
+            "experiments\\random10_bench_smoke\\mimo_random10_20260604\\dcgen_original\\inputs\\images\\71_0.png"
+          ],
+          "local_prompt_path": "experiments\\random10_bench_smoke\\mimo_random10_20260604\\dcgen_original\\inputs\\prompts\\71.txt",
+          "reference_path": "benchmarks\\dcgen\\data\\original\\71.html",
+          "http_status": 200,
+          "text_path": "experiments\\random10_bench_smoke\\mimo_random10_20260604\\dcgen_original\\texts\\71.txt",
+          "usage": {
+            "completion_tokens": 6011,
+            "prompt_tokens": 4429,
+            "total_tokens": 10440,
+            "completion_tokens_details": {
+              "reasoning_tokens": 569
+            },
+            "prompt_tokens_details": {
+              "cached_tokens": 192,
+              "image_tokens": 3960
+            }
+          },
+          "html_extracted": true,
+          "html_complete": true,
+          "html_path": "experiments\\random10_bench_smoke\\mimo_random10_20260604\\dcgen_original\\html\\71.html"
+        },
+        {
+          "bench": "dcgen_original",
+          "sample_id": "79",
+          "task_type": "static_generation",
+          "source": "DCGen/data/original",
+          "notes": "使用 DCGen repo 自带 sample dataset 的 original 截图；reference HTML 只保存为元信息，不喂给模型。",
+          "original_prompt": "请根据这张网页截图生成一个完整、可直接运行的单文件 HTML，尽量还原原网页。",
+          "reference_present": false,
+          "image_paths": [
+            "benchmarks\\dcgen\\data\\original\\79.png"
+          ],
+          "local_image_paths": [
+            "experiments\\random10_bench_smoke\\mimo_random10_20260604\\dcgen_original\\inputs\\images\\79_0.png"
+          ],
+          "local_prompt_path": "experiments\\random10_bench_smoke\\mimo_random10_20260604\\dcgen_original\\inputs\\prompts\\79.txt",
+          "reference_path": "benchmarks\\dcgen\\data\\original\\79.html",
+          "http_status": 200,
+          "text_path": "experiments\\random10_bench_smoke\\mimo_random10_20260604\\dcgen_original\\texts\\79.txt",
+          "usage": {
+            "completion_tokens": 5615,
+            "prompt_tokens": 8149,
+            "total_tokens": 13764,
+            "completion_tokens_details": {
+              "reasoning_tokens": 350
+            },
+            "prompt_tokens_details": {
+              "cached_tokens": 192,
+              "image_tokens": 7680
+            }
+          },
+          "html_extracted": true,
+          "html_complete": true,
+          "html_path": "experiments\\random10_bench_smoke\\mimo_random10_20260604\\dcgen_original\\html\\79.html"
+        },
+        {
+          "bench": "dcgen_original",
+          "sample_id": "5",
+          "task_type": "static_generation",
+          "source": "DCGen/data/original",
+          "notes": "使用 DCGen repo 自带 sample dataset 的 original 截图；reference HTML 只保存为元信息，不喂给模型。",
+          "original_prompt": "请根据这张网页截图生成一个完整、可直接运行的单文件 HTML，尽量还原原网页。",
+          "reference_present": false,
+          "image_paths": [
+            "benchmarks\\dcgen\\data\\original\\5.png"
+          ],
+          "local_image_paths": [
+            "experiments\\random10_bench_smoke\\mimo_random10_20260604\\dcgen_original\\inputs\\images\\5_0.png"
+          ],
+          "local_prompt_path": "experiments\\random10_bench_smoke\\mimo_random10_20260604\\dcgen_original\\inputs\\prompts\\5.txt",
+          "reference_path": "benchmarks\\dcgen\\data\\original\\5.html",
+          "http_status": 200,
+          "text_path": "experiments\\random10_bench_smoke\\mimo_random10_20260604\\dcgen_original\\texts\\5.txt",
+          "usage": {
+            "completion_tokens": 4522,
+            "prompt_tokens": 6829,
+            "total_tokens": 11351,
+            "completion_tokens_details": {
+              "reasoning_tokens": 412
+            },
+            "prompt_tokens_details": {
+              "cached_tokens": 192,
+              "image_tokens": 6360
+            }
+          },
+          "html_extracted": true,
+          "html_complete": true,
+          "html_path": "experiments\\random10_bench_smoke\\mimo_random10_20260604\\dcgen_original\\html\\5.html"
+        },
+        {
+          "bench": "dcgen_original",
+          "sample_id": "260",
+          "task_type": "static_generation",
+          "source": "DCGen/data/original",
+          "notes": "使用 DCGen repo 自带 sample dataset 的 original 截图；reference HTML 只保存为元信息，不喂给模型。",
+          "original_prompt": "请根据这张网页截图生成一个完整、可直接运行的单文件 HTML，尽量还原原网页。",
+          "reference_present": false,
+          "image_paths": [
+            "benchmarks\\dcgen\\data\\original\\260.png"
+          ],
+          "local_image_paths": [
+            "experiments\\random10_bench_smoke\\mimo_random10_20260604\\dcgen_original\\inputs\\images\\260_0.png"
+          ],
+          "local_prompt_path": "experiments\\random10_bench_smoke\\mimo_random10_20260604\\dcgen_original\\inputs\\prompts\\260.txt",
+          "reference_path": "benchmarks\\dcgen\\data\\original\\260.html",
+          "http_status": 200,
+          "text_path": "experiments\\random10_bench_smoke\\mimo_random10_20260604\\dcgen_original\\texts\\260.txt",
+          "usage": {
+            "completion_tokens": 4786,
+            "prompt_tokens": 7849,
+            "total_tokens": 12635,
+            "completion_tokens_details": {
+              "reasoning_tokens": 511
+            },
+            "prompt_tokens_details": {
+              "cached_tokens": 192,
+              "image_tokens": 7380
+            }
+          },
+          "html_extracted": true,
+          "html_complete": true,
+          "html_path": "experiments\\random10_bench_smoke\\mimo_random10_20260604\\dcgen_original\\html\\260.html"
+        }
+      ]
+    },
+    "interaction2code": {
+      "available": 155,
+      "selected": 10,
+      "results": [
+        {
+          "bench": "interaction2code",
+          "sample_id": "109_2",
+          "task_type": "interaction_generation",
+          "source": "Interaction2Code/sample",
+          "notes": "每个样本使用交互前/交互后两张图和 action.json 描述。",
+          "original_prompt": "主题：software\n框架：traditional\n交互动作：move the cursor to the \"Turbo Download Manager\" extension.\n交互描述：when moving the cursor to the \"Turbo Download Manager\" extension., the rating of it appears.\n标签类型：, button, link, image, area\n视觉变化：, new component",
+          "reference_present": false,
+          "image_paths": [
+            "benchmarks\\interaction2code\\sample\\109\\2.png",
+            "benchmarks\\interaction2code\\sample\\109\\3.png"
+          ],
+          "local_image_paths": [
+            "experiments\\random10_bench_smoke\\mimo_random10_20260604\\interaction2code\\inputs\\images\\109_2_0.png",
+            "experiments\\random10_bench_smoke\\mimo_random10_20260604\\interaction2code\\inputs\\images\\109_2_1.png"
+          ],
+          "local_prompt_path": "experiments\\random10_bench_smoke\\mimo_random10_20260604\\interaction2code\\inputs\\prompts\\109_2.txt",
+          "action_json": {
+            "src": "2",
+            "dst": "3",
+            "action": "move the cursor to the \"Turbo Download Manager\" extension.",
+            "description": "when moving the cursor to the \"Turbo Download Manager\" extension., the rating of it appears.",
+            "tag type": [
+              "",
+              "button",
+              "link",
+              "image",
+              "area"
+            ],
+            "visual type": [
+              "",
+              "new component"
+            ]
+          },
+          "http_status": 200,
+          "text_path": "experiments\\random10_bench_smoke\\mimo_random10_20260604\\interaction2code\\texts\\109_2.txt",
+          "usage": {
+            "completion_tokens": 5998,
+            "prompt_tokens": 10650,
+            "total_tokens": 16648,
+            "completion_tokens_details": {
+              "reasoning_tokens": 361
+            },
+            "prompt_tokens_details": {
+              "cached_tokens": 192,
+              "image_tokens": 10080
+            }
+          },
+          "html_extracted": true,
+          "html_complete": true,
+          "html_path": "experiments\\random10_bench_smoke\\mimo_random10_20260604\\interaction2code\\html\\109_2.html"
+        },
+        {
+          "bench": "interaction2code",
+          "sample_id": "109_1",
+          "task_type": "interaction_generation",
+          "source": "Interaction2Code/sample",
+          "notes": "每个样本使用交互前/交互后两张图和 action.json 描述。",
+          "original_prompt": "主题：software\n框架：traditional\n交互动作：move the cursor to \"More...\" button\n交互描述：when moving the cursor to \"More...\" button, a new component appear, which contains 2 new buttons.\n标签类型：, button, text\n视觉变化：, new component, text",
+          "reference_present": false,
+          "image_paths": [
+            "benchmarks\\interaction2code\\sample\\109\\0.png",
+            "benchmarks\\interaction2code\\sample\\109\\1.png"
+          ],
+          "local_image_paths": [
+            "experiments\\random10_bench_smoke\\mimo_random10_20260604\\interaction2code\\inputs\\images\\109_1_0.png",
+            "experiments\\random10_bench_smoke\\mimo_random10_20260604\\interaction2code\\inputs\\images\\109_1_1.png"
+          ],
+          "local_prompt_path": "experiments\\random10_bench_smoke\\mimo_random10_20260604\\interaction2code\\inputs\\prompts\\109_1.txt",
+          "action_json": {
+            "src": "0",
+            "dst": "1",
+            "action": "move the cursor to \"More...\" button",
+            "description": "when moving the cursor to \"More...\" button, a new component appear, which contains 2 new buttons.",
+            "tag type": [
+              "",
+              "button",
+              "text"
+            ],
+            "visual type": [
+              "",
+              "new component",
+              "text"
+            ]
+          },
+          "http_status": 200,
+          "text_path": "experiments\\random10_bench_smoke\\mimo_random10_20260604\\interaction2code\\texts\\109_1.txt",
+          "usage": {
+            "completion_tokens": 3373,
+            "prompt_tokens": 10646,
+            "total_tokens": 14019,
+            "completion_tokens_details": {
+              "reasoning_tokens": 444
+            },
+            "prompt_tokens_details": {
+              "cached_tokens": 192,
+              "image_tokens": 10080
+            }
+          },
+          "html_extracted": true,
+          "html_complete": true,
+          "html_path": "experiments\\random10_bench_smoke\\mimo_random10_20260604\\interaction2code\\html\\109_1.html"
+        },
+        {
+          "bench": "interaction2code",
+          "sample_id": "105_3",
+          "task_type": "interaction_generation",
+          "source": "Interaction2Code/sample",
+          "notes": "每个样本使用交互前/交互后两张图和 action.json 描述。",
+          "original_prompt": "主题：project management\n框架：traditional\n交互动作：click \"Project settings\" button\n交互描述：after clicking \"Project settings\" button, the page shows the project details, and provide text box to modify it.\n标签类型：, button, text\n视觉变化：, text, new component",
+          "reference_present": false,
+          "image_paths": [
+            "benchmarks\\interaction2code\\sample\\105\\4.png",
+            "benchmarks\\interaction2code\\sample\\105\\5.png"
+          ],
+          "local_image_paths": [
+            "experiments\\random10_bench_smoke\\mimo_random10_20260604\\interaction2code\\inputs\\images\\105_3_0.png",
+            "experiments\\random10_bench_smoke\\mimo_random10_20260604\\interaction2code\\inputs\\images\\105_3_1.png"
+          ],
+          "local_prompt_path": "experiments\\random10_bench_smoke\\mimo_random10_20260604\\interaction2code\\inputs\\prompts\\105_3.txt",
+          "action_json": {
+            "src": "4",
+            "dst": "5",
+            "action": "click \"Project settings\" button",
+            "description": "after clicking \"Project settings\" button, the page shows the project details, and provide text box to modify it.",
+            "tag type": [
+              "",
+              "button",
+              "text"
+            ],
+            "visual type": [
+              "",
+              "text",
+              "new component"
+            ]
+          },
+          "http_status": 200,
+          "text_path": "experiments\\random10_bench_smoke\\mimo_random10_20260604\\interaction2code\\texts\\105_3.txt",
+          "usage": {
+            "completion_tokens": 10724,
+            "prompt_tokens": 11276,
+            "total_tokens": 22000,
+            "completion_tokens_details": {
+              "reasoning_tokens": 467
+            },
+            "prompt_tokens_details": {
+              "cached_tokens": 192,
+              "image_tokens": 10710
+            }
+          },
+          "html_extracted": true,
+          "html_complete": true,
+          "html_path": "experiments\\random10_bench_smoke\\mimo_random10_20260604\\interaction2code\\html\\105_3.html"
+        },
+        {
+          "bench": "interaction2code",
+          "sample_id": "120_4",
+          "task_type": "interaction_generation",
+          "source": "Interaction2Code/sample",
+          "notes": "每个样本使用交互前/交互后两张图和 action.json 描述。",
+          "original_prompt": "主题：technology\n框架：nextjs\n交互动作：click to the transparent lines\n交互描述：When the transparent lines is clicked, the content switch\n标签类型：, image, progress\n视觉变化：, switch, position",
+          "reference_present": false,
+          "image_paths": [
+            "benchmarks\\interaction2code\\sample\\120\\6.png",
+            "benchmarks\\interaction2code\\sample\\120\\7.png"
+          ],
+          "local_image_paths": [
+            "experiments\\random10_bench_smoke\\mimo_random10_20260604\\interaction2code\\inputs\\images\\120_4_0.png",
+            "experiments\\random10_bench_smoke\\mimo_random10_20260604\\interaction2code\\inputs\\images\\120_4_1.png"
+          ],
+          "local_prompt_path": "experiments\\random10_bench_smoke\\mimo_random10_20260604\\interaction2code\\inputs\\prompts\\120_4.txt",
+          "action_json": {
+            "src": "6",
+            "dst": "7",
+            "action": "click to the transparent lines",
+            "description": "When the transparent lines is clicked, the content switch",
+            "tag type": [
+              "",
+              "image",
+              "progress"
+            ],
+            "visual type": [
+              "",
+              "switch",
+              "position"
+            ]
+          },
+          "http_status": 200,
+          "text_path": "experiments\\random10_bench_smoke\\mimo_random10_20260604\\interaction2code\\texts\\120_4.txt",
+          "usage": {
+            "completion_tokens": 3984,
+            "prompt_tokens": 3568,
+            "total_tokens": 7552,
+            "completion_tokens_details": {
+              "reasoning_tokens": 591
+            },
+            "prompt_tokens_details": {
+              "cached_tokens": 192,
+              "image_tokens": 3016
+            }
+          },
+          "html_extracted": true,
+          "html_complete": true,
+          "html_path": "experiments\\random10_bench_smoke\\mimo_random10_20260604\\interaction2code\\html\\120_4.html"
+        },
+        {
+          "bench": "interaction2code",
+          "sample_id": "103_4",
+          "task_type": "interaction_generation",
+          "source": "Interaction2Code/sample",
+          "notes": "每个样本使用交互前/交互后两张图和 action.json 描述。",
+          "original_prompt": "主题：video\n框架：react\n交互动作：move the cursor to the \"like\" button\n交互描述：a new text pop out, indicating that this movie would be add to favorite if clicking the \"like\" button.\n标签类型：, button\n视觉变化：, new component",
+          "reference_present": false,
+          "image_paths": [
+            "benchmarks\\interaction2code\\sample\\103\\6.png",
+            "benchmarks\\interaction2code\\sample\\103\\7.png"
+          ],
+          "local_image_paths": [
+            "experiments\\random10_bench_smoke\\mimo_random10_20260604\\interaction2code\\inputs\\images\\103_4_0.png",
+            "experiments\\random10_bench_smoke\\mimo_random10_20260604\\interaction2code\\inputs\\images\\103_4_1.png"
+          ],
+          "local_prompt_path": "experiments\\random10_bench_smoke\\mimo_random10_20260604\\interaction2code\\inputs\\prompts\\103_4.txt",
+          "action_json": {
+            "src": "6",
+            "dst": "7",
+            "action": "move the cursor to the \"like\" button",
+            "description": "a new text pop out, indicating that this movie would be add to favorite if clicking the \"like\" button.",
+            "tag type": [
+              "",
+              "button"
+            ],
+            "visual type": [
+              "",
+              "new component"
+            ]
+          },
+          "http_status": 200,
+          "text_path": "experiments\\random10_bench_smoke\\mimo_random10_20260604\\interaction2code\\texts\\103_4.txt",
+          "usage": {
+            "completion_tokens": 3371,
+            "prompt_tokens": 11274,
+            "total_tokens": 14645,
+            "completion_tokens_details": {
+              "reasoning_tokens": 455
+            },
+            "prompt_tokens_details": {
+              "cached_tokens": 192,
+              "image_tokens": 10710
+            }
+          },
+          "html_extracted": true,
+          "html_complete": true,
+          "html_path": "experiments\\random10_bench_smoke\\mimo_random10_20260604\\interaction2code\\html\\103_4.html"
+        },
+        {
+          "bench": "interaction2code",
+          "sample_id": "105_2",
+          "task_type": "interaction_generation",
+          "source": "Interaction2Code/sample",
+          "notes": "每个样本使用交互前/交互后两张图和 action.json 描述。",
+          "original_prompt": "主题：project management\n框架：traditional\n交互动作：click one issue on the kanban board\n交互描述：after clicking one issue on the kanban board, a new component pop out, which contain the details of this issue: Type, Bug, Story, Task, Status, ASSIGNEES, REPORTER and PRIORITY.\n标签类型：, button, area\n视觉变化：, text, new component",
+          "reference_present": false,
+          "image_paths": [
+            "benchmarks\\interaction2code\\sample\\105\\2.png",
+            "benchmarks\\interaction2code\\sample\\105\\3.png"
+          ],
+          "local_image_paths": [
+            "experiments\\random10_bench_smoke\\mimo_random10_20260604\\interaction2code\\inputs\\images\\105_2_0.png",
+            "experiments\\random10_bench_smoke\\mimo_random10_20260604\\interaction2code\\inputs\\images\\105_2_1.png"
+          ],
+          "local_prompt_path": "experiments\\random10_bench_smoke\\mimo_random10_20260604\\interaction2code\\inputs\\prompts\\105_2.txt",
+          "action_json": {
+            "src": "2",
+            "dst": "3",
+            "action": "click one issue on the kanban board",
+            "description": "after clicking one issue on the kanban board, a new component pop out, which contain the details of this issue: Type, Bug, Story, Task, Status, ASSIGNEES, REPORTER and PRIORITY.",
+            "tag type": [
+              "",
+              "button",
+              "area"
+            ],
+            "visual type": [
+              "",
+              "text",
+              "new component"
+            ]
+          },
+          "http_status": 200,
+          "text_path": "experiments\\random10_bench_smoke\\mimo_random10_20260604\\interaction2code\\texts\\105_2.txt",
+          "usage": {
+            "completion_tokens": 9856,
+            "prompt_tokens": 11300,
+            "total_tokens": 21156,
+            "completion_tokens_details": {
+              "reasoning_tokens": 279
+            },
+            "prompt_tokens_details": {
+              "cached_tokens": 192,
+              "image_tokens": 10710
+            }
+          },
+          "html_extracted": true,
+          "html_complete": true,
+          "html_path": "experiments\\random10_bench_smoke\\mimo_random10_20260604\\interaction2code\\html\\105_2.html"
+        },
+        {
+          "bench": "interaction2code",
+          "sample_id": "109_3",
+          "task_type": "interaction_generation",
+          "source": "Interaction2Code/sample",
+          "notes": "每个样本使用交互前/交互后两张图和 action.json 描述。",
+          "original_prompt": "主题：software\n框架：traditional\n交互动作：click the \"login\" button\n交互描述：after clicking the \"login\" button, go to the login page\n标签类型：, button, link\n视觉变化：, new page",
+          "reference_present": false,
+          "image_paths": [
+            "benchmarks\\interaction2code\\sample\\109\\4.png",
+            "benchmarks\\interaction2code\\sample\\109\\5.png"
+          ],
+          "local_image_paths": [
+            "experiments\\random10_bench_smoke\\mimo_random10_20260604\\interaction2code\\inputs\\images\\109_3_0.png",
+            "experiments\\random10_bench_smoke\\mimo_random10_20260604\\interaction2code\\inputs\\images\\109_3_1.png"
+          ],
+          "local_prompt_path": "experiments\\random10_bench_smoke\\mimo_random10_20260604\\interaction2code\\inputs\\prompts\\109_3.txt",
+          "action_json": {
+            "src": "4",
+            "dst": "5",
+            "action": "click the \"login\" button",
+            "description": "after clicking the \"login\" button, go to the login page",
+            "tag type": [
+              "",
+              "button",
+              "link"
+            ],
+            "visual type": [
+              "",
+              "new page"
+            ]
+          },
+          "http_status": 200,
+          "text_path": "experiments\\random10_bench_smoke\\mimo_random10_20260604\\interaction2code\\texts\\109_3.txt",
+          "usage": {
+            "completion_tokens": 4171,
+            "prompt_tokens": 10949,
+            "total_tokens": 15120,
+            "completion_tokens_details": {
+              "reasoning_tokens": 196
+            },
+            "prompt_tokens_details": {
+              "cached_tokens": 192,
+              "image_tokens": 10395
+            }
+          },
+          "html_extracted": true,
+          "html_complete": true,
+          "html_path": "experiments\\random10_bench_smoke\\mimo_random10_20260604\\interaction2code\\html\\109_3.html"
+        },
+        {
+          "bench": "interaction2code",
+          "sample_id": "110_8",
+          "task_type": "interaction_generation",
+          "source": "Interaction2Code/sample",
+          "notes": "每个样本使用交互前/交互后两张图和 action.json 描述。",
+          "original_prompt": "主题：software development\n框架：nextjs\n交互动作：click on the \"Light\" option\n交互描述：after clicking the option, the background color turn white, and the moon icon change to a sun icon\n标签类型：option\n视觉变化：color",
+          "reference_present": false,
+          "image_paths": [
+            "benchmarks\\interaction2code\\sample\\110\\14.png",
+            "benchmarks\\interaction2code\\sample\\110\\15.png"
+          ],
+          "local_image_paths": [
+            "experiments\\random10_bench_smoke\\mimo_random10_20260604\\interaction2code\\inputs\\images\\110_8_0.png",
+            "experiments\\random10_bench_smoke\\mimo_random10_20260604\\interaction2code\\inputs\\images\\110_8_1.png"
+          ],
+          "local_prompt_path": "experiments\\random10_bench_smoke\\mimo_random10_20260604\\interaction2code\\inputs\\prompts\\110_8.txt",
+          "action_json": {
+            "src": "14",
+            "dst": "15",
+            "action": "click on the \"Light\" option",
+            "description": "after clicking the option, the background color turn white, and the moon icon change to a sun icon",
+            "tag type": [
+              "option"
+            ],
+            "visual type": [
+              "color"
+            ]
+          },
+          "http_status": 200,
+          "text_path": "experiments\\random10_bench_smoke\\mimo_random10_20260604\\interaction2code\\texts\\110_8.txt",
+          "usage": {
+            "completion_tokens": 10233,
+            "prompt_tokens": 6959,
+            "total_tokens": 17192,
+            "completion_tokens_details": {
+              "reasoning_tokens": 3692
+            },
+            "prompt_tokens_details": {
+              "cached_tokens": 192,
+              "image_tokens": 6400
+            }
+          },
+          "html_extracted": true,
+          "html_complete": true,
+          "html_path": "experiments\\random10_bench_smoke\\mimo_random10_20260604\\interaction2code\\html\\110_8.html"
+        },
+        {
+          "bench": "interaction2code",
+          "sample_id": "111_3",
+          "task_type": "interaction_generation",
+          "source": "Interaction2Code/sample",
+          "notes": "每个样本使用交互前/交互后两张图和 action.json 描述。",
+          "original_prompt": "主题：software development\n框架：traditional\n交互动作：click on the \"Blog\" button\n交互描述：after clicking the button, turn to the blog page\n标签类型：button, link\n视觉变化：new page",
+          "reference_present": false,
+          "image_paths": [
+            "benchmarks\\interaction2code\\sample\\111\\4.png",
+            "benchmarks\\interaction2code\\sample\\111\\5.png"
+          ],
+          "local_image_paths": [
+            "experiments\\random10_bench_smoke\\mimo_random10_20260604\\interaction2code\\inputs\\images\\111_3_0.png",
+            "experiments\\random10_bench_smoke\\mimo_random10_20260604\\interaction2code\\inputs\\images\\111_3_1.png"
+          ],
+          "local_prompt_path": "experiments\\random10_bench_smoke\\mimo_random10_20260604\\interaction2code\\inputs\\prompts\\111_3.txt",
+          "action_json": {
+            "src": "4",
+            "dst": "5",
+            "action": "click on the \"Blog\" button",
+            "description": "after clicking the button, turn to the blog page",
+            "tag type": [
+              "button",
+              "link"
+            ],
+            "visual type": [
+              "new page"
+            ]
+          },
+          "http_status": 200,
+          "text_path": "experiments\\random10_bench_smoke\\mimo_random10_20260604\\interaction2code\\texts\\111_3.txt",
+          "usage": {
+            "completion_tokens": 3544,
+            "prompt_tokens": 7191,
+            "total_tokens": 10735,
+            "completion_tokens_details": {
+              "reasoning_tokens": 576
+            },
+            "prompt_tokens_details": {
+              "cached_tokens": 192,
+              "image_tokens": 6640
+            }
+          },
+          "html_extracted": true,
+          "html_complete": true,
+          "html_path": "experiments\\random10_bench_smoke\\mimo_random10_20260604\\interaction2code\\html\\111_3.html"
+        },
+        {
+          "bench": "interaction2code",
+          "sample_id": "110_3",
+          "task_type": "interaction_generation",
+          "source": "Interaction2Code/sample",
+          "notes": "每个样本使用交互前/交互后两张图和 action.json 描述。",
+          "original_prompt": "主题：software development\n框架：nextjs\n交互动作：hover on the React icon\n交互描述：the React icon will be brighter, while other icons will be dimmer. \"any framework\" will change to \"React\"\n标签类型：image\n视觉变化：text, color",
+          "reference_present": false,
+          "image_paths": [
+            "benchmarks\\interaction2code\\sample\\110\\4.png",
+            "benchmarks\\interaction2code\\sample\\110\\5.png"
+          ],
+          "local_image_paths": [
+            "experiments\\random10_bench_smoke\\mimo_random10_20260604\\interaction2code\\inputs\\images\\110_3_0.png",
+            "experiments\\random10_bench_smoke\\mimo_random10_20260604\\interaction2code\\inputs\\images\\110_3_1.png"
+          ],
+          "local_prompt_path": "experiments\\random10_bench_smoke\\mimo_random10_20260604\\interaction2code\\inputs\\prompts\\110_3.txt",
+          "action_json": {
+            "src": "4",
+            "dst": "5",
+            "action": "hover on the React icon",
+            "description": "the React icon will be brighter, while other icons will be dimmer. \"any framework\" will change to \"React\"",
+            "tag type": [
+              "image"
+            ],
+            "visual type": [
+              "text",
+              "color"
+            ]
+          },
+          "http_status": 200,
+          "text_path": "experiments\\random10_bench_smoke\\mimo_random10_20260604\\interaction2code\\texts\\110_3.txt",
+          "usage": {
+            "completion_tokens": 5848,
+            "prompt_tokens": 6963,
+            "total_tokens": 12811,
+            "completion_tokens_details": {
+              "reasoning_tokens": 575
+            },
+            "prompt_tokens_details": {
+              "cached_tokens": 192,
+              "image_tokens": 6400
+            }
+          },
+          "html_extracted": true,
+          "html_complete": true,
+          "html_path": "experiments\\random10_bench_smoke\\mimo_random10_20260604\\interaction2code\\html\\110_3.html"
+        }
+      ]
+    }
+  },
+  "skipped": [
+    {
+      "bench": "designbench",
+      "reason": "本地仓库没有完整 900 样本数据，需要先下载 HuggingFace/Google Drive 数据并确认 Node/browser evaluator。"
+    },
+    {
+      "bench": "vab_css",
+      "reason": "本地仓库已有 framework/task 代码，但 CSS benchmark 数据本体和最小 worker 配置还没落地。"
+    },
+    {
+      "bench": "vision2web",
+      "reason": "本地仓库只有代码；数据在 HuggingFace，需另拉 Level 1 static 后再跑。"
+    },
+    {
+      "bench": "screencoder_screenbench",
+      "reason": "本地仓库主要是方法代码；ScreenBench 数据在 HuggingFace，标准 evaluator 还需确认。"
+    },
+    {
+      "bench": "visualwebbench",
+      "reason": "任务偏网页理解/grounding，不是本轮 design-to-code 主线；数据也需 HuggingFace。"
+    }
+  ],
+  "finished_at": "2026-06-04T17:12:48"
+}

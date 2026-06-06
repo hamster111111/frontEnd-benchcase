@@ -1,0 +1,1211 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>eBay - Similar items</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            background: #fff;
+            color: #191919;
+            font-size: 14px;
+            line-height: 1.5;
+        }
+
+        a {
+            color: #3665f3;
+            text-decoration: none;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+
+        /* Top Bar */
+        .top-bar {
+            background: #fff;
+            border-bottom: 1px solid #e5e5e5;
+            padding: 0 20px;
+            font-size: 12px;
+            color: #555;
+        }
+
+        .top-bar-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            height: 28px;
+        }
+
+        .top-bar-left a, .top-bar-right a {
+            color: #555;
+            margin-right: 12px;
+            font-size: 12px;
+        }
+
+        .top-bar-left a:first-child {
+            color: #555;
+        }
+
+        .top-bar-left a.sign-in {
+            color: #3665f3;
+            font-weight: 600;
+        }
+
+        .top-bar-right {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .top-bar-right a svg, .cart-icon svg {
+            width: 18px;
+            height: 18px;
+            fill: #333;
+        }
+
+        /* Header */
+        .header {
+            background: #fff;
+            padding: 10px 20px;
+            border-bottom: 1px solid #e5e5e5;
+        }
+
+        .header-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .logo {
+            flex-shrink: 0;
+        }
+
+        .logo-text {
+            font-size: 36px;
+            font-weight: bold;
+            font-style: italic;
+        }
+
+        .logo-text span:nth-child(1) { color: #e53238; }
+        .logo-text span:nth-child(2) { color: #0064d2; }
+        .logo-text span:nth-child(3) { color: #f5af02; }
+        .logo-text span:nth-child(4) { color: #86b817; }
+
+        .shop-category {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            font-size: 13px;
+            color: #555;
+            cursor: pointer;
+            padding: 6px 12px;
+            border: 1px solid #ccc;
+            border-radius: 20px;
+            white-space: nowrap;
+        }
+
+        .search-container {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            border: 2px solid #191919;
+            border-radius: 24px;
+            overflow: hidden;
+            height: 44px;
+        }
+
+        .search-input {
+            flex: 1;
+            border: none;
+            padding: 0 16px;
+            font-size: 14px;
+            outline: none;
+        }
+
+        .category-select {
+            border: none;
+            border-left: 1px solid #ccc;
+            padding: 0 12px;
+            font-size: 13px;
+            color: #555;
+            background: #fff;
+            cursor: pointer;
+            height: 100%;
+        }
+
+        .search-btn {
+            background: #3665f3;
+            color: #fff;
+            border: none;
+            padding: 0 24px;
+            height: 100%;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 500;
+        }
+
+        .search-btn:hover {
+            background: #2a53d9;
+        }
+
+        .advanced-link {
+            font-size: 13px;
+            color: #555;
+            white-space: nowrap;
+        }
+
+        /* Banner */
+        .live-banner {
+            background: linear-gradient(135deg, #191919 0%, #2d2d2d 100%);
+            margin: 16px 20px;
+            padding: 16px 24px;
+            border-radius: 12px;
+            color: #fff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 16px;
+            flex-wrap: wrap;
+        }
+
+        .live-badge {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            background: rgba(255,255,255,0.15);
+            padding: 4px 12px;
+            border-radius: 16px;
+            font-size: 13px;
+            font-weight: 600;
+        }
+
+        .live-dot {
+            width: 8px;
+            height: 8px;
+            background: #3665f3;
+            border-radius: 50%;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+
+        .banner-text {
+            font-size: 15px;
+            font-weight: 600;
+        }
+
+        .join-btn {
+            background: #3665f3;
+            color: #fff;
+            padding: 10px 20px;
+            border-radius: 20px;
+            font-size: 14px;
+            font-weight: 600;
+            border: none;
+            cursor: pointer;
+        }
+
+        .join-btn:hover {
+            background: #2a53d9;
+        }
+
+        /* Main Content */
+        .main-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Section */
+        .section {
+            margin-bottom: 40px;
+        }
+
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+            margin-bottom: 12px;
+        }
+
+        .section-title {
+            font-size: 22px;
+            font-weight: 700;
+            color: #191919;
+        }
+
+        .section-subtitle {
+            font-size: 12px;
+            color: #707070;
+            margin-top: 2px;
+        }
+
+        .see-all {
+            font-size: 14px;
+            color: #3665f3;
+        }
+
+        /* Product Row (People who viewed) */
+        .product-row {
+            display: flex;
+            gap: 16px;
+            overflow-x: auto;
+            padding-bottom: 8px;
+        }
+
+        .product-row::-webkit-scrollbar {
+            height: 4px;
+        }
+
+        .product-row::-webkit-scrollbar-thumb {
+            background: #ccc;
+            border-radius: 4px;
+        }
+
+        .product-card-small {
+            min-width: 180px;
+            max-width: 200px;
+            flex-shrink: 0;
+        }
+
+        .product-image-placeholder {
+            width: 100%;
+            aspect-ratio: 1;
+            border-radius: 8px;
+            overflow: hidden;
+            margin-bottom: 8px;
+        }
+
+        .product-image-placeholder img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .img-placeholder {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            color: #fff;
+            font-weight: 500;
+        }
+
+        .product-title-small {
+            font-size: 13px;
+            color: #191919;
+            margin-bottom: 4px;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+            line-height: 1.4;
+        }
+
+        .product-business {
+            font-size: 12px;
+            color: #707070;
+            margin-bottom: 4px;
+        }
+
+        .product-price {
+            font-weight: 700;
+            font-size: 14px;
+            margin-bottom: 2px;
+        }
+
+        .product-postage {
+            font-size: 12px;
+            color: #191919;
+        }
+
+        .product-sponsored {
+            font-size: 11px;
+            color: #707070;
+        }
+
+        .product-menu {
+            text-align: right;
+            color: #707070;
+            cursor: pointer;
+            font-size: 16px;
+            margin-top: 4px;
+        }
+
+        /* Featured Product Card */
+        .featured-card {
+            display: flex;
+            gap: 20px;
+            background: #f7f7f7;
+            border-radius: 12px;
+            padding: 16px;
+            margin-top: 16px;
+        }
+
+        .featured-image {
+            width: 180px;
+            height: 180px;
+            border-radius: 8px;
+            overflow: hidden;
+            flex-shrink: 0;
+        }
+
+        .featured-info {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .ended-badge {
+            display: inline-block;
+            background: #fff;
+            border: 1px solid #191919;
+            padding: 2px 8px;
+            font-size: 11px;
+            font-weight: 600;
+            border-radius: 4px;
+            margin-bottom: 8px;
+            align-self: flex-start;
+        }
+
+        .featured-title {
+            font-size: 16px;
+            font-weight: 500;
+            margin-bottom: 8px;
+            line-height: 1.4;
+        }
+
+        .featured-price {
+            font-size: 22px;
+            font-weight: 700;
+            margin-bottom: 4px;
+        }
+
+        .featured-date {
+            font-size: 13px;
+            color: #707070;
+        }
+
+        .seller-other-items {
+            align-self: flex-end;
+            background: #fff;
+            border: 1px solid #3665f3;
+            color: #3665f3;
+            padding: 10px 20px;
+            border-radius: 24px;
+            font-size: 14px;
+            cursor: pointer;
+            white-space: nowrap;
+        }
+
+        /* Similar Items Grid */
+        .product-grid {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 16px;
+        }
+
+        .product-grid .product-card {
+            position: relative;
+        }
+
+        .product-grid .product-image-placeholder {
+            aspect-ratio: 1;
+        }
+
+        .heart-icon {
+            position: absolute;
+            top: 8px;
+            right: 8px;
+            width: 28px;
+            height: 28px;
+            background: rgba(255,255,255,0.9);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        }
+
+        .heart-icon svg {
+            width: 16px;
+            height: 16px;
+            fill: none;
+            stroke: #191919;
+            stroke-width: 2;
+        }
+
+        .product-title {
+            font-size: 13px;
+            color: #191919;
+            margin-bottom: 4px;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+            line-height: 1.4;
+            min-height: 36px;
+        }
+
+        .product-condition {
+            font-size: 12px;
+            color: #707070;
+            margin-bottom: 4px;
+        }
+
+        .product-delivery {
+            font-size: 12px;
+            color: #191919;
+            margin-bottom: 2px;
+        }
+
+        .product-delivery.green {
+            color: #389e0d;
+        }
+
+        .product-seller-info {
+            font-size: 11px;
+            color: #707070;
+        }
+
+        .product-watchers {
+            font-size: 11px;
+            color: #707070;
+        }
+
+        .product-original-price {
+            font-size: 12px;
+            color: #707070;
+            text-decoration: line-through;
+        }
+
+        .product-discount {
+            font-size: 12px;
+            color: #e53238;
+        }
+
+        /* You may also like grid */
+        .you-may-like-grid {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 16px;
+        }
+
+        .grid-item {
+            position: relative;
+        }
+
+        .grid-item .product-image-placeholder {
+            aspect-ratio: 1;
+        }
+
+        /* Consider items */
+        .consider-grid {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 16px;
+        }
+
+        /* Footer */
+        .footer {
+            border-top: 1px solid #e5e5e5;
+            margin-top: 40px;
+            padding: 20px;
+        }
+
+        .footer-nav {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .footer-links {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px 0;
+        }
+
+        .footer-links a {
+            font-size: 13px;
+            color: #3665f3;
+        }
+
+        .footer-bottom {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 16px 0;
+            text-align: center;
+        }
+
+        .footer-bottom-links {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 8px 20px;
+            margin-bottom: 8px;
+        }
+
+        .footer-bottom-links a {
+            font-size: 12px;
+            color: #555;
+        }
+
+        .footer-copyright {
+            font-size: 12px;
+            color: #707070;
+        }
+
+        .footer-copyright a {
+            color: #555;
+        }
+
+        /* Help Button */
+        .help-button {
+            position: fixed;
+            bottom: 24px;
+            right: 24px;
+            width: 48px;
+            height: 48px;
+            background: #191919;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+            z-index: 100;
+        }
+
+        .help-button svg {
+            width: 24px;
+            height: 24px;
+            fill: #fff;
+        }
+
+        /* Feedback link */
+        .feedback-link {
+            font-size: 12px;
+            color: #555;
+            text-decoration: underline;
+        }
+
+        /* Mobile styles */
+        @media (max-width: 768px) {
+            .top-bar {
+                display: none;
+            }
+
+            .shop-category {
+                display: none;
+            }
+
+            .category-select, .advanced-link {
+                display: none;
+            }
+
+            .search-btn {
+                padding: 0 16px;
+            }
+
+            .live-banner {
+                margin: 12px;
+                padding: 12px 16px;
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .section-title {
+                font-size: 18px;
+            }
+
+            .product-row {
+                gap: 12px;
+            }
+
+            .product-card-small {
+                min-width: 150px;
+            }
+
+            .featured-card {
+                flex-direction: column;
+            }
+
+            .featured-image {
+                width: 100%;
+                max-width: 200px;
+            }
+
+            .seller-other-items {
+                align-self: stretch;
+                text-align: center;
+            }
+
+            .product-grid,
+            .you-may-like-grid,
+            .consider-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 12px;
+            }
+
+            .footer-links {
+                flex-direction: column;
+                gap: 12px;
+                text-align: center;
+            }
+
+            .footer-bottom-links {
+                flex-direction: column;
+                align-items: center;
+            }
+        }
+
+        /* Tablet styles */
+        @media (min-width: 769px) and (max-width: 1024px) {
+            .product-grid,
+            .you-may-like-grid,
+            .consider-grid {
+                grid-template-columns: repeat(4, 1fr);
+            }
+        }
+
+        /* Color variations for placeholders */
+        .bg-dress-1 { background: linear-gradient(145deg, #8b4513 0%, #d2691e 100%); }
+        .bg-dress-2 { background: linear-gradient(145deg, #2f4f4f 0%, #556b2f 100%); }
+        .bg-dress-3 { background: linear-gradient(145deg, #4a4a4a 0%, #696969 100%); }
+        .bg-dress-4 { background: linear-gradient(145deg, #c19a6b 0%, #daa520 100%); }
+        .bg-dress-5 { background: linear-gradient(145deg, #8b0000 0%, #b22222 100%); }
+        .bg-dress-6 { background: linear-gradient(145deg, #000080 0%, #4169e1 100%); }
+        .bg-dress-7 { background: linear-gradient(145deg, #2e8b57 0%, #3cb371 100%); }
+        .bg-dress-8 { background: linear-gradient(145deg, #9932cc 0%, #ba55d3 100%); }
+        .bg-dress-9 { background: linear-gradient(145deg, #ff6347 0%, #ff7f50 100%); }
+        .bg-dress-10 { background: linear-gradient(145deg, #708090 0%, #a9a9a9 100%); }
+        .bg-cocktail { background: linear-gradient(145deg, #ffd700 0%, #ff8c00 100%); }
+        .bg-yellow { background: linear-gradient(145deg, #ffd700 0%, #ffa500 100%); }
+    </style>
+</head>
+<body>
+    <!-- Top Bar -->
+    <div class="top-bar">
+        <div class="top-bar-content">
+            <div class="top-bar-left">
+                <span>Hello. </span>
+                <a href="#" class="sign-in">Sign in</a>
+                <span>or </span>
+                <a href="#">register</a>
+                <a href="#">Local</a>
+                <a href="#">Daily Deals</a>
+                <a href="#">Fashion</a>
+                <a href="#">Help & Contact</a>
+            </div>
+            <div class="top-bar-right">
+                <a href="#">Sell <span style="font-size:10px">▼</span></a>
+                <a href="#">Watchlist <span style="font-size:10px">▼</span></a>
+                <a href="#">My eBay <span style="font-size:10px">▼</span></a>
+                <a href="#" class="cart-icon">
+                    <svg viewBox="0 0 24 24"><path d="M7 18c-1.1 0-1.99.9-1.99 2S5.9 22 7 22s2-.9 2-2-.9-2-2-2zM1 2v2h2l3.6 7.59-1.35 2.45c-.16.28-.25.61-.25.96 0 1.1.9 2 2 2h12v-2H7.42c-.14 0-.25-.11-.25-.25l.03-.12.9-1.63h7.45c.75 0 1.41-.41 1.75-1.03l3.58-6.49A1.003 1.003 0 0 0 20 4H5.21l-.94-2H1zm16 16c-1.1 0-1.99.9-1.99 2s.89 2 1.99 2 2-.9 2-2-.9-2-2-2z"/></svg>
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Header -->
+    <header class="header">
+        <div class="header-content">
+            <div class="logo">
+                <div class="logo-text">
+                    <span>e</span><span>b</span><span>a</span><span>y</span>
+                </div>
+            </div>
+            <div class="shop-category">
+                Shop by<br>category
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="#555"><path d="M7 10l5 5 5-5z"/></svg>
+            </div>
+            <div class="search-container">
+                <input type="text" class="search-input" placeholder="Search for anything">
+                <select class="category-select">
+                    <option>All Categories</option>
+                </select>
+                <button class="search-btn">Search</button>
+            </div>
+            <a href="#" class="advanced-link">Advanced</a>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <!-- Live Banner -->
+        <div class="live-banner">
+            <div class="live-badge">
+                <div class="live-dot"></div>
+                LIVE
+            </div>
+            <span class="banner-text">Streaming now  Shop exclusive items from trusted sellers</span>
+            <button class="join-btn">Join event</button>
+        </div>
+
+        <!-- People who viewed this item also viewed -->
+        <div class="section">
+            <h2 class="section-title">People who viewed this item also viewed</h2>
+            <div class="product-row">
+                <div class="product-card-small">
+                    <div class="product-image-placeholder">
+                        <div class="img-placeholder bg-dress-1">Dress</div>
+                    </div>
+                    <div class="product-title-small">Womens Glitter Tassel Fringe Mini Dress Bodycon Evening Cocktail Party Ball Gown</div>
+                    <div class="product-business">Business</div>
+                    <div class="product-price">£16.69</div>
+                    <div class="product-postage">Free postage</div>
+                    <div class="product-sponsored">Sponsored</div>
+                    <div class="product-menu">⋮</div>
+                </div>
+                <div class="product-card-small">
+                    <div class="product-image-placeholder">
+                        <div class="img-placeholder bg-dress-2">Dress</div>
+                    </div>
+                    <div class="product-title-small">UK Women Sequin Glitter Bodycon Ladies Ruffle Evening Cocktail Party Mini...</div>
+                    <div class="product-business">Business</div>
+                    <div class="product-price">£5.99</div>
+                    <div class="product-postage">Free postage</div>
+                    <div class="product-menu">⋮</div>
+                </div>
+                <div class="product-card-small">
+                    <div class="product-image-placeholder">
+                        <div class="img-placeholder bg-dress-3">Dress</div>
+                    </div>
+                    <div class="product-title-small">Ladies V Neck Bodycon Short Mini Flapper Dress Cocktail Fringe Evening Par...</div>
+                    <div class="product-business">Business</div>
+                    <div class="product-price">£3.99</div>
+                    <div class="product-postage">Free postage</div>
+                    <div class="product-menu">⋮</div>
+                </div>
+                <div class="product-card-small">
+                    <div class="product-image-placeholder">
+                        <div class="img-placeholder bg-dress-4">Dress</div>
+                    </div>
+                    <div class="product-title-small">Women Ribbed Long Sleeve Mini Dress Wrap V Neck Evening Party Cocktail...</div>
+                    <div class="product-business">Business</div>
+                    <div class="product-price">£3.69</div>
+                    <div class="product-postage">Free postage</div>
+                    <div class="product-menu">⋮</div>
+                </div>
+                <div class="product-card-small">
+                    <div class="product-image-placeholder">
+                        <div class="img-placeholder bg-dress-5">Dress</div>
+                    </div>
+                    <div class="product-title-small">Women V Neck Sexy Bodycon Ladies Cocktail Evening Party Gown Fishtail...</div>
+                    <div class="product-business">Business</div>
+                    <div class="product-price">£8.19</div>
+                    <div class="product-postage">Free postage</div>
+                    <div class="product-menu">⋮</div>
+                </div>
+            </div>
+
+            <!-- Featured Ended Item -->
+            <div class="featured-card">
+                <div class="featured-image">
+                    <div class="img-placeholder bg-dress-3" style="height:100%;font-size:14px;">Dress</div>
+                </div>
+                <div class="featured-info">
+                    <span class="ended-badge">ENDED</span>
+                    <div class="featured-title">Womens Bodycon Evening Dress Party Cocktail Club Short Mini Dress V Neck UK</div>
+                    <div class="featured-price">£19.99</div>
+                    <div class="featured-date">Fri, 07 Oct, 10:35</div>
+                </div>
+                <button class="seller-other-items">Seller's other items</button>
+            </div>
+        </div>
+
+        <!-- Similar items -->
+        <div class="section">
+            <div class="section-header">
+                <div>
+                    <h2 class="section-title">Similar items</h2>
+                    <div class="section-subtitle">Sponsored</div>
+                </div>
+                <a href="#" class="see-all">See all</a>
+            </div>
+            <div class="product-grid">
+                <div class="product-card grid-item">
+                    <div class="product-image-placeholder">
+                        <div class="img-placeholder bg-dress-10">Mesh</div>
+                    </div>
+                    <div class="product-title">Women Mesh See-through Mini Bodycon Tube Dress Sexy Ladies Evening Party Club</div>
+                    <div class="product-condition">New · Business</div>
+                    <div class="product-price">£7.71</div>
+                    <div class="product-postage green">Free postage</div>
+                    <div class="product-menu">⋮</div>
+                </div>
+                <div class="product-card grid-item">
+                    <div class="product-image-placeholder">
+                        <div class="img-placeholder bg-dress-3">Cocktail</div>
+                    </div>
+                    <div class="product-title">Bodycon Cocktail Club Evening Party Long Sleeve Mini Dress V-Neck Sexy Women</div>
+                    <div class="product-condition">New (other) · Business</div>
+                    <div class="product-price">£10.67</div>
+                    <div class="product-postage green">Free postage</div>
+                    <div class="product-menu">⋮</div>
+                </div>
+                <div class="product-card grid-item">
+                    <div class="product-image-placeholder">
+                        <div class="img-placeholder bg-dress-7">Mini</div>
+                    </div>
+                    <div class="product-title">Mini Dress Party Cocktail Womens Club Long Sleeve V Neck Bodycon Evening Casual</div>
+                    <div class="product-condition">New (other) · Business</div>
+                    <div class="product-price">£11.55</div>
+                    <div class="product-postage green">Free postage</div>
+                    <div class="product-menu">⋮</div>
+                </div>
+                <div class="product-card grid-item">
+                    <div class="product-image-placeholder">
+                        <div class="img-placeholder bg-dress-8">Shiny</div>
+                    </div>
+                    <div class="product-title">Womens Ladies Sexy Shiny Wet Look Bodycon Evening Party Cocktail Club Mini Dress</div>
+                    <div class="product-condition">New · Business</div>
+                    <div class="product-price">£9.99</div>
+                    <div class="product-postage green">Free postage</div>
+                    <div class="product-menu">⋮</div>
+                </div>
+                <div class="product-card grid-item">
+                    <div class="product-image-placeholder">
+                        <div class="img-placeholder bg-dress-9">Backless</div>
+                    </div>
+                    <div class="product-title">Women Shiny Wetlook Strap Backless Bodycon Mini Dress Evening Party Club Dresses</div>
+                    <div class="product-condition">New · Business</div>
+                    <div class="product-price">£10.95</div>
+                    <div class="product-postage green">Free postage</div>
+                    <div class="product-menu">⋮</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Explore related items -->
+        <div class="section">
+            <div class="section-header">
+                <div>
+                    <h2 class="section-title">Explore related items</h2>
+                    <div class="section-subtitle">Sponsored</div>
+                </div>
+                <a href="#" class="see-all">See all</a>
+            </div>
+            <div class="product-grid">
+                <div class="product-card grid-item">
+                    <div class="product-image-placeholder">
+                        <div class="heart-icon">
+                            <svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+                        </div>
+                        <div class="img-placeholder bg-cocktail">Cookie</div>
+                    </div>
+                    <div class="product-title">Margarita cookie cutter - Cocktail drinks summer beach party wedding beverages</div>
+                    <div class="product-condition">New · Business</div>
+                    <div class="product-price">£13.70</div>
+                    <div class="product-delivery green">Free delivery in 2-3 days</div>
+                    <div class="product-seller-info">Seller 99.6% positive</div>
+                    <div class="product-menu">⋮</div>
+                </div>
+                <div class="product-card grid-item">
+                    <div class="product-image-placeholder">
+                        <div class="heart-icon">
+                            <svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+                        </div>
+                        <div class="img-placeholder bg-dress-2">M&S</div>
+                    </div>
+                    <div class="product-title">M&S Collection Colour Block 3/4 Sleeve Bodycon Dress</div>
+                    <div class="product-condition">New · Private</div>
+                    <div class="product-price">£45.00</div>
+                    <div class="product-delivery">+ £2.45 postage</div>
+                    <div class="product-seller-info">Seller with 100% positive feedback</div>
+                    <div class="product-menu">⋮</div>
+                </div>
+                <div class="product-card grid-item">
+                    <div class="product-image-placeholder">
+                        <div class="heart-icon">
+                            <svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+                        </div>
+                        <div class="img-placeholder bg-dress-6">CK</div>
+                    </div>
+                    <div class="product-title">CALVIN KLEIN Womens 3/4 Sleeve Sheath Dress Cocktail 10 Black Polyester Blend</div>
+                    <div class="product-condition">Pre-owned · Private</div>
+                    <div class="product-price">£30.00</div>
+                    <div class="product-delivery">+ £2.47 postage</div>
+                    <div class="product-seller-info">Seller with 100% positive feedback</div>
+                    <div class="product-menu">⋮</div>
+                </div>
+                <div class="product-card grid-item">
+                    <div class="product-image-placeholder">
+                        <div class="heart-icon">
+                            <svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+                        </div>
+                        <div class="img-placeholder bg-dress-5">Evening</div>
+                    </div>
+                    <div class="product-title">Women's Evening Dress V Neck Party Cocktail Bodycon Ladies Dresses @</div>
+                    <div class="product-condition">New · Business</div>
+                    <div class="product-price">£18.19</div>
+                    <div class="product-postage green">Free postage</div>
+                    <div class="product-seller-info">Seller with 100% positive feedback</div>
+                    <div class="product-menu">⋮</div>
+                </div>
+                <div class="product-card grid-item">
+                    <div class="product-image-placeholder">
+                        <div class="heart-icon">
+                            <svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+                        </div>
+                        <div class="img-placeholder bg-dress-4">Bandage</div>
+                    </div>
+                    <div class="product-title">Dress Sleeveless Party Mini Evening Short Bandage Cocktail Bodycon Women's Club</div>
+                    <div class="product-condition">New · Business</div>
+                    <div class="product-price">£19.79</div>
+                    <div class="product-original-price">£21.28</div>
+                    <div class="product-discount">7% off</div>
+                    <div class="product-postage green">Free postage</div>
+                    <div class="product-seller-info">25 watchers</div>
+                    <div class="product-menu">⋮</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- You may also like -->
+        <div class="section">
+            <div class="section-header">
+                <h2 class="section-title">You may also like</h2>
+                <a href="#" class="feedback-link">Feedback on our suggestions</a>
+            </div>
+            <div class="you-may-like-grid">
+                <div class="grid-item">
+                    <div class="product-image-placeholder">
+                        <div class="img-placeholder bg-dress-5">Plunge</div>
+                    </div>
+                    <div class="product-title">Women Sexy Plunge V Neck Mini Dress Evening Cocktail Club Party Backless Bodycon</div>
+                    <div class="product-condition">New · Business</div>
+                    <div class="product-price">£2.99</div>
+                    <div class="product-postage green">Free postage</div>
+                    <div class="product-menu">⋮</div>
+                </div>
+                <div class="grid-item">
+                    <div class="product-image-placeholder">
+                        <div class="img-placeholder bg-dress-1">Ribbed</div>
+                    </div>
+                    <div class="product-title">Women Ribbed Long Sleeve Mini Dress Wrap V Neck Evening Party Cocktail Bodycon</div>
+                    <div class="product-condition">New · Business</div>
+                    <div class="product-price">£3.69</div>
+                    <div class="product-postage green">Free postage</div>
+                    <div class="product-seller-info">7 watchers</div>
+                    <div class="product-menu">⋮</div>
+                </div>
+                <div class="grid-item">
+                    <div class="product-image-placeholder">
+                        <div class="img-placeholder bg-dress-7">Bodycon</div>
+                    </div>
+                    <div class="product-title">Women V Neck Sexy Bodycon Ladies Cocktail Evening Party Gown Fishtail Midi Dress</div>
+                    <div class="product-condition">New · Business</div>
+                    <div class="product-price">£8.19</div>
+                    <div class="product-postage green">Free postage</div>
+                    <div class="product-seller-info">22 sold</div>
+                    <div class="product-menu">⋮</div>
+                </div>
+                <div class="grid-item">
+                    <div class="product-image-placeholder">
+                        <div class="img-placeholder bg-dress-3">Night</div>
+                    </div>
+                    <div class="product-title">Womens Sexy Plunge V Neck Mini Dress Evening Cocktail Night Club Party Bodycon</div>
+                    <div class="product-condition">New · Business</div>
+                    <div class="product-price">£3.09</div>
+                    <div class="product-postage green">Free postage</div>
+                    <div class="product-menu">⋮</div>
+                </div>
+                <div class="grid-item">
+                    <div class="product-image-placeholder">
+                        <div class="img-placeholder bg-dress-8">Sequin</div>
+                    </div>
+                    <div class="product-title">UK Women Sequin Glitter Bodycon Ladies Ruffle Evening Cocktail Party Mini Dress</div>
+                    <div class="product-condition">New · Business</div>
+                    <div class="product-price">£5.99</div>
+                    <div class="product-delivery green">Free delivery in 2-3 days</div>
+                    <div class="product-seller-info">Seller with 100% positive feedback</div>
+                    <div class="product-menu">⋮</div>
+                </div>
+                <div class="grid-item">
+                    <div class="product-image-placeholder">
+                        <div class="img-placeholder bg-dress-9">Plunge</div>
+                    </div>
+                    <div class="product-title">Women Sexy Plunge V Neck Mini Dress Cocktail Night Club Party Backless Bodycon</div>
+                    <div class="product-condition">New · Business</div>
+                    <div class="product-price">£3.29</div>
+                    <div class="product-postage green">Free postage</div>
+                    <div class="product-menu">⋮</div>
+                </div>
+                <div class="grid-item">
+                    <div class="product-image-placeholder">
+                        <div class="img-placeholder bg-dress-10">Glossy</div>
+                    </div>
+                    <div class="product-title">Sexy Shiny Glossy Semi Sheer Mini Bodycon Tube Dress Cocktail Evening Party Club</div>
+                    <div class="product-condition">New · Business</div>
+                    <div class="product-price">£11.40</div>
+                    <div class="product-postage green">Free postage</div>
+                    <div class="product-seller-info">95 sold</div>
+                    <div class="product-menu">⋮</div>
+                </div>
+                <div class="grid-item">
+                    <div class="product-image-placeholder">
+                        <div class="img-placeholder bg-dress-5">Ruffle</div>
+                    </div>
+                    <div class="product-title">Women Sexy Plunge V Neck Ruffle Mini Dress Evening Cocktail Club Party Bodycon</div>
+                    <div class="product-condition">New · Business</div>
+                    <div class="product-price">£3.29</div>
+                    <div class="product-postage green">Free postage</div>
+                    <div class="product-seller-info">Seller with 100% positive feedback</div>
+                    <div class="product-menu">⋮</div>
+                </div>
+                <div class="grid-item">
+                    <div class="product-image-placeholder">
+                        <div class="img-placeholder bg-dress-2">Bandage</div>
+                    </div>
+                    <div class="product-title">Bandage Mini Bodycon Womens Club Dress Short Party Glitter Evening Sexy Cocktail</div>
+                    <div class="product-condition">New (other) · Business</div>
+                    <div class="product-price">£6.72</div>
+                    <div class="product-postage green">Free postage</div>
+                    <div class="product-menu">⋮</div>
+                </div>
+                <div class="grid-item">
+                    <div class="product-image-placeholder">
+                        <div class="img-placeholder bg-dress-4">Party</div>
+                    </div>
+                    <div class="product-title">Mini Dress Party Cocktail Womens Club Long Sleeve V Neck Bodycon Evening Casual</div>
+                    <div class="product-condition">New (other) · Business</div>
+                    <div class="product-price">£13.86</div>
+                    <div class="product-postage green">Free postage</div>
+                    <div class="product-menu">⋮</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Consider these items -->
+        <div class="section">
+            <div class="section-header">
+                <div>
+                    <h2 class="section-title">Consider these items</h2>
+                    <div class="section-subtitle">Sponsored</div>
+                </div>
+            </div>
+            <div class="consider-grid">
+                <div class="grid-item">
+                    <div class="product-image-placeholder">
+                        <div class="img-placeholder bg-dress-4">Bandage</div>
+                    </div>
+                    <div class="product-title">Dress Sleeveless Party Mini Evening Short Bandage Cocktail Bodycon Women's Club</div>
+                    <div class="product-condition">New · Business</div>
+                    <div class="product-price">£19.79</div>
+                    <div class="product-original-price">£21.28</div>
+                    <div class="product-discount">7% off</div>
+                    <div class="product-postage green">Free postage</div>
+                    <div class="product-menu">⋮</div>
+                </div>
+                <div class="grid-item">
+                    <div class="product-image-placeholder">
+                        <div class="heart-icon">
+                            <svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+                        </div>
+                        <div class="img-placeholder bg-yellow">Sleeveless</div>
+                    </div>
+                    <div class="product-title">Women's Sexy V Neck Bodycon Mini Dress Party Evening Cocktail Sleeveless Short</div>
+                    <div class="product-condition">Pre-owned · Private</div>
+                    <div class="product-price">£14.15</div>
+                    <div class="product-delivery">+ £3.84 postage</div>
+                    <div class="product-menu">⋮</div>
+                </div>
+                <div class="grid-item">
+                    <div class="product-image-placeholder">
+                        <div class="heart-icon">
+                            <svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+                        </div>
+                        <div class="img-placeholder bg-dress-3">Pencil</div>
+                    </div>
+                    <div class="product-title">Women V Neck Sleeveless Bodycon Club Party Casual Cocktail Pencil Mini Dress</div>
+                    <div class="product-condition">New (other) · Private</div>
+                    <div class="product-price">£16.50</div>
+                    <div class="product-delivery">+ £4.00 postage</div>
+                    <div class="product-menu">⋮</div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-nav">
+            <div class="footer-links">
+                <a href="#">Back to home page</a>
+                <a href="#">Return to top</a>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <div class="footer-bottom-links">
+                <a href="#">About eBay</a>
+                <a href="#">Announcements</a>
+                <a href="#">Community</a>
+                <a href="#">Safety Centre</a>
+                <a href="#">Seller Centre</a>
+                <a href="#">VeRO: Protecting Intellectual Property</a>
+                <a href="#">Policies</a>
+                <a href="#">Product Safety Tips</a>
+                <a href="#">Help & Contact</a>
+                <a href="#">Site Map</a>
+            </div>
+            <div class="footer-copyright">
+                Copyright © 1995-2024 eBay Inc. All Rights Reserved. 
+                <a href="#">User Agreement</a>, 
+                <a href="#">Privacy</a>, 
+                <a href="#">Payments Terms of Use</a>, 
+                <a href="#">Cookies</a> and 
+                <a href="#">AdChoice</a>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Help Button -->
+    <div class="help-button">
+        <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 17h-2v-2h2v2zm2.07-7.75l-.9.92C13.45 12.9 13 13.5 13 15h-2v-.5c0-1.1.45-2.1 1.17-2.83l1.24-1.26c.37-.36.59-.86.59-1.41 0-1.1-.9-2-2-2s-2 .9-2 2H8c0-2.21 1.79-4 4-4s4 1.79 4 4c0 .88-.36 1.68-.93 2.25z"/></svg>
+    </div>
+
+    <script>
+        // Simple interactions
+        document.querySelectorAll('.heart-icon').forEach(icon => {
+            icon.addEventListener('click', function(e) {
+                e.preventDefault();
+                e.stopPropagation();
+                const svg = this.querySelector('svg');
+                if (svg.style.fill === 'rgb(229, 50, 56)') {
+                    svg.style.fill = 'none';
+                    svg.style.stroke = '#191919';
+                } else {
+                    svg.style.fill = '#e53238';
+                    svg.style.stroke = '#e53238';
+                }
+            });
+        });
+
+        // Smooth scroll to top
+        document.querySelector('.footer-links a:last-child')?.addEventListener('click', function(e) {
+            e.preventDefault();
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,506 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Course Page - wikiHow Style</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+        }
+
+        body {
+            background-color: #ffffff;
+            color: #333333;
+            line-height: 1.6;
+        }
+
+        /* 导航栏 */
+        .top-nav {
+            background-color: #488b49; /* 深绿色背景 */
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 40px;
+            height: 50px;
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: bold;
+            color: white;
+            text-decoration: none;
+            margin-right: 20px;
+        }
+
+        .logo span {
+            font-weight: 400; /* "How"部分可能较细，但此处统一粗细更接近截图 */
+        }
+
+        .search-container {
+            display: flex;
+            align-items: center;
+            flex-grow: 1;
+            max-width: 600px;
+        }
+
+        .search-input {
+            padding: 8px 15px;
+            border: 2px solid #ffffff; /* 白色边框 */
+            border-right: none;
+            border-radius: 4px 0 0 4px;
+            font-size: 14px;
+            flex-grow: 1;
+            background-color: rgba(255, 255, 255, 0.9); /* 稍不透明 */
+            outline: none;
+        }
+
+        .search-button {
+            background-color: #6db56d; /* 稍浅的绿色 */
+            color: white;
+            border: 2px solid #ffffff;
+            border-left: none;
+            padding: 8px 15px;
+            border-radius: 0 4px 4px 0;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: bold;
+        }
+
+        .nav-right {
+            display: flex;
+            align-items: center;
+            gap: 25px;
+        }
+
+        .pro-button {
+            background-color: #f9e84e; /* 黄色 */
+            color: #1c3b1c; /* 深绿 */
+            font-weight: bold;
+            font-size: 12px;
+            padding: 4px 10px;
+            border-radius: 4px;
+            text-decoration: none;
+            border: 1px solid #d9cc00;
+        }
+
+        .nav-link {
+            color: white;
+            text-decoration: none;
+            font-size: 13px;
+            font-weight: 500;
+        }
+
+        .nav-link:hover {
+            text-decoration: underline;
+        }
+
+        /* 主内容布局 */
+        .main-content {
+            display: flex;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 30px 40px;
+            gap: 50px;
+        }
+
+        /* 左侧 - 评价部分 */
+        .reviews-section {
+            flex: 1;
+        }
+
+        .review {
+            margin-bottom: 35px;
+        }
+
+        .review-header {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 10px;
+        }
+
+        .reviewer-name {
+            font-weight: bold;
+            font-size: 16px;
+        }
+
+        .stars {
+            color: #f9b800; /* 黄色星星 */
+            font-size: 16px;
+            letter-spacing: 2px;
+        }
+
+        .review-text {
+            font-size: 15px;
+            line-height: 1.6;
+            color: #555;
+        }
+
+        .disclaimer {
+            font-size: 12px;
+            color: #888;
+            font-style: italic;
+            margin-top: 50px;
+            border-top: 1px solid #eee;
+            padding-top: 20px;
+        }
+
+        /* 右侧 - 课程推广卡片 */
+        .course-promo-card {
+            width: 300px;
+            flex-shrink: 0;
+            border: 2px solid #f0c34b; /* 黄色边框 */
+            border-radius: 8px;
+            padding: 25px;
+            background-color: #fff;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+            align-self: flex-start; /* 卡片顶部对齐 */
+            position: sticky;
+            top: 20px; /* 吸顶效果 */
+        }
+
+        .promo-button {
+            display: block;
+            width: 100%;
+            background-color: #f9b800; /* 黄色 */
+            color: #fff;
+            text-align: center;
+            padding: 12px 20px;
+            border-radius: 6px;
+            font-size: 16px;
+            font-weight: bold;
+            text-decoration: none;
+            margin-bottom: 25px;
+        }
+
+        .promo-details {
+            font-size: 14px;
+        }
+
+        .promo-label {
+            font-weight: bold;
+            color: #555;
+            margin-bottom: 5px;
+        }
+
+        .promo-text {
+            margin-bottom: 20px;
+            color: #666;
+            line-height: 1.5;
+        }
+
+        /* 其他课程部分 */
+        .other-courses {
+            max-width: 1200px;
+            margin: 50px auto 30px;
+            padding: 0 40px;
+        }
+
+        .other-courses h2 {
+            font-size: 24px;
+            font-weight: bold;
+            color: #1c1c1c;
+            margin-bottom: 25px;
+            text-align: center; /* 截图中标题居中 */
+        }
+
+        .courses-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 25px;
+        }
+
+        .course-card {
+            border: 1px solid #eee;
+            border-radius: 6px;
+            overflow: hidden;
+            text-decoration: none;
+            color: inherit;
+            transition: box-shadow 0.2s;
+        }
+
+        .course-card:hover {
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        .course-image {
+            height: 160px;
+            background: #f0f0f0; /* 占位背景 */
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+
+        /* 为每个课程设置不同的占位背景 */
+        .course-card:nth-child(1) .course-image {
+            background: linear-gradient(135deg, #5a9367 0%, #217346 100%); /* Excel绿色 */
+        }
+        .course-card:nth-child(2) .course-image {
+            background: linear-gradient(135deg, #f7c948 0%, #f08c2e 100%); /* 搜索橙黄 */
+        }
+        .course-card:nth-child(3) .course-image {
+            background: linear-gradient(135deg, #83c0d9 0%, #5ea3c3 100%); /* 焦虑浅蓝 */
+        }
+        .course-card:nth-child(4) .course-image {
+            background: linear-gradient(135deg, #c0d5d1 0%, #7eb3a5 100%); /* 整理灰绿 */
+        }
+
+        .course-image-placeholder {
+            width: 60px;
+            height: 60px;
+            background: rgba(255, 255, 255, 0.7);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            font-weight: bold;
+            color: #333;
+        }
+
+        .course-info {
+            padding: 15px;
+        }
+
+        .course-tag {
+            display: inline-block;
+            background-color: #488b49; /* 默认绿色 */
+            color: white;
+            font-size: 10px;
+            font-weight: bold;
+            padding: 3px 6px;
+            border-radius: 3px;
+            margin-bottom: 10px;
+            text-transform: uppercase;
+        }
+
+        .course-card:nth-child(1) .course-tag { background-color: #d84315; } /* TECH - 橙色 */
+        .course-card:nth-child(2) .course-tag { background-color: #488b49; } /* SELF IMPROVEMENT - 绿色 */
+        .course-card:nth-child(3) .course-tag { background-color: #488b49; } /* SELF IMPROVEMENT - 绿色 */
+        .course-card:nth-child(4) .course-tag { background-color: #4a8fb0; } /* HOME - 蓝色 */
+
+        .course-title {
+            font-size: 16px;
+            font-weight: bold;
+            line-height: 1.3;
+            margin-bottom: 8px;
+            color: #1c1c1c;
+        }
+
+        .course-author {
+            font-size: 13px;
+            color: #666;
+            margin-bottom: 12px;
+            line-height: 1.4;
+        }
+
+        .course-meta {
+            display: flex;
+            justify-content: space-between;
+            font-size: 12px;
+            color: #888;
+            border-top: 1px solid #eee;
+            padding-top: 10px;
+        }
+
+        .browse-more {
+            text-align: center;
+            margin-top: 30px;
+            margin-bottom: 40px;
+        }
+
+        .browse-more a {
+            color: #488b49;
+            font-weight: bold;
+            font-size: 16px;
+            text-decoration: none;
+        }
+
+        .browse-more a:hover {
+            text-decoration: underline;
+        }
+
+        /* 页脚 */
+        .page-footer {
+            background-color: #488b49;
+            padding: 40px 40px 20px;
+            color: white;
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .footer-logo {
+            font-size: 36px;
+            font-weight: bold;
+            margin-bottom: 20px;
+            text-decoration: none;
+            color: white;
+        }
+
+        .footer-logo span {
+            font-weight: 400;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- 顶部导航栏 -->
+    <nav class="top-nav">
+        <a href="#" class="logo">wiki<span>How</span></a>
+        <div class="search-container">
+            <input type="text" class="search-input" placeholder="to do anything...">
+            <button class="search-button">🔍</button>
+        </div>
+        <div class="nav-right">
+            <a href="#" class="pro-button">PRO</a>
+            <a href="#" class="nav-link">QUIZZES</a>
+            <a href="#" class="nav-link">EXPLORE</a>
+            <a href="#" class="nav-link">LOG IN</a>
+            <a href="#" class="nav-link">RANDOM</a>
+        </div>
+    </nav>
+
+    <!-- 主内容区 -->
+    <div class="main-content">
+        <!-- 左侧 - 评价部分 -->
+        <div class="reviews-section">
+            <div class="review">
+                <div class="review-header">
+                    <span class="reviewer-name">Divine</span>
+                    <span class="stars">★★★★★</span>
+                </div>
+                <p class="review-text">
+                    Very informative. I really learned a lot. The information was very well-detailed and understandable. After all these months of saying I want to begin meditating, I can now finally start, because I have the exact information I need! Thanks.
+                </p>
+            </div>
+
+            <div class="review">
+                <div class="review-header">
+                    <span class="reviewer-name">Pallab</span>
+                    <span class="stars">★★★★★</span>
+                </div>
+                <p class="review-text">
+                    I was looking for peace and calm for a long time, and I wanted to remove my mental tiredness and find rejuvenation. I knew that only correct meditation could help me, and I tried lots of different processes. Nothing worked well. Finally, I feel I have a guru to follow. I only can say, “thank you.”
+                </p>
+            </div>
+
+            <div class="review">
+                <div class="review-header">
+                    <span class="reviewer-name">Dee</span>
+                    <span class="stars">★★★★★</span>
+                </div>
+                <p class="review-text">
+                    This really helped me a lot. I've become more calm, and I free my mind once or twice a day. I could really tell the expert knew what they were talking about. It's usually hard to find great resources like this online. Thanks!
+                </p>
+            </div>
+
+            <p class="disclaimer">
+                Disclaimer: The wikiHow service is provided without warranties of any kind, including that the content is accurate, reliable, correct or will meet your requirements. Use of any information provided is at your own risk. See our full Terms of Use for more information.
+            </p>
+        </div>
+
+        <!-- 右侧 - 课程推广卡片 -->
+        <div class="course-promo-card">
+            <a href="#" class="promo-button">Start Your Free Trial</a>
+            <div class="promo-details">
+                <div class="promo-label">Format</div>
+                <p class="promo-text">Every lesson includes expert insights, practical advice, and homework exercises to put your learning into practice! Completely mobile-friendly.</p>
+
+                <div class="promo-label">Duration</div>
+                <p class="promo-text">This course lasts 5 days, with one lesson per day delivered to your inbox.</p>
+
+                <div class="promo-label">Time</div>
+                <p class="promo-text">Each lesson takes 10-15 minutes to read.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- 其他课程推荐 -->
+    <section class="other-courses">
+        <h2>Other courses that might interest you</h2>
+        <div class="courses-grid">
+            <a href="#" class="course-card">
+                <div class="course-image">
+                    <div class="course-image-placeholder">X</div> <!-- Excel占位符 -->
+                </div>
+                <div class="course-info">
+                    <span class="course-tag">Tech</span>
+                    <h3 class="course-title">5 Must-Have Excel Skills Every Professional Should Know</h3>
+                    <p class="course-author">Featuring wikiHow's Excel Expert</p>
+                    <div class="course-meta">
+                        <span>📝 5 lessons</span>
+                        <span>⏱ 15 min per lesson</span>
+                    </div>
+                </div>
+            </a>
+
+            <a href="#" class="course-card">
+                <div class="course-image">
+                    <div class="course-image-placeholder">🚀</div> <!-- 搜索占位符 -->
+                </div>
+                <div class="course-info">
+                    <span class="course-tag">Self Improvement</span>
+                    <h3 class="course-title">How to Accelerate Your Job Search</h3>
+                    <p class="course-author">Featuring Adrian Klaphaak, Career Coach</p>
+                    <div class="course-meta">
+                        <span>📝 5 lessons</span>
+                        <span>⏱ 10-15 min per lesson</span>
+                    </div>
+                </div>
+            </a>
+
+            <a href="#" class="course-card">
+                <div class="course-image">
+                    <div class="course-image-placeholder">🧘</div> <!-- 冥想占位符 -->
+                </div>
+                <div class="course-info">
+                    <span class="course-tag">Self Improvement</span>
+                    <h3 class="course-title">How to Manage Your Anxiety</h3>
+                    <p class="course-author">Featuring Dr. Chloe Carmichael, PhD, Licensed Clinical Psychologist</p>
+                    <div class="course-meta">
+                        <span>📝 5 lessons</span>
+                        <span>⏱ 10-15 min per lesson</span>
+                    </div>
+                </div>
+            </a>
+
+            <a href="#" class="course-card">
+                <div class="course-image">
+                    <div class="course-image-placeholder">🏠</div> <!-- 家居占位符 -->
+                </div>
+                <div class="course-info">
+                    <span class="course-tag">Home</span>
+                    <h3 class="course-title">Organize Your Home (& Your Life!)</h3>
+                    <p class="course-author">Featuring Kathi Burns, CPO®, Board-Certified Professional Organizer</p>
+                    <div class="course-meta">
+                        <span>📝 5 lessons</span>
+                        <span>⏱ 5 min per lesson</span>
+                    </div>
+                </div>
+            </a>
+        </div>
+
+        <div class="browse-more">
+            <a href="#">Browse more courses</a>
+        </div>
+    </section>
+
+    <!-- 页脚（只显示了开头部分） -->
+    <footer class="page-footer">
+        <div class="footer-content">
+            <a href="#" class="footer-logo">wiki<span>How</span></a>
+            <!-- 其他页脚内容 -->
+        </div>
+    </footer>
+
+</body>
+</html>

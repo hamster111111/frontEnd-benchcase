@@ -1,0 +1,182 @@
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Car Rental Company</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      background-color: #f9fafb;
+      color: #333;
+      line-height: 1.6;
+      padding: 24px 32px;
+    }
+
+    .card {
+      background: #fff;
+      border: 1px solid #d9d9d9;
+      border-radius: 6px;
+      padding: 32px 40px;
+      margin-bottom: 24px;
+    }
+
+    .card:last-child {
+      margin-bottom: 0;
+    }
+
+    .card h1 {
+      font-size: 32px;
+      font-weight: 700;
+      color: #1a1a1a;
+      margin-bottom: 12px;
+    }
+
+    .card h2 {
+      font-size: 22px;
+      font-weight: 700;
+      color: #1a1a1a;
+      margin-bottom: 10px;
+    }
+
+    .card h3 {
+      font-size: 18px;
+      font-weight: 700;
+      color: #1a1a1a;
+      margin-top: 16px;
+      margin-bottom: 8px;
+    }
+
+    .card p {
+      font-size: 15px;
+      color: #333;
+    }
+
+    /* React/JSX version embedded as a reference */
+    .code-block {
+      margin-top: 32px;
+      background: #1e1e2e;
+      color: #cdd6f4;
+      border-radius: 8px;
+      padding: 24px;
+      overflow-x: auto;
+      font-family: "SFMono-Regular", "Fira Code", monospace;
+      font-size: 13px;
+      line-height: 1.6;
+      white-space: pre;
+    }
+
+    .code-block .keyword {
+      color: #cba6f7;
+    }
+
+    .code-block .string {
+      color: #a6e3a1;
+    }
+
+    .code-block .comment {
+      color: #6c7086;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Page Preview -->
+  <div class="card">
+    <h1>Welcome to Our Rental Company</h1>
+    <p>Rent a vehicle for your travels with us featuring a wide range of vehicles from classic cars to luxury vehicles.</p>
+  </div>
+
+  <div class="card">
+    <h2>Rental Reservation</h2>
+    <p>Book your rental today featuring different vehicles.</p>
+  </div>
+
+  <div class="card">
+    <h2>Latest Articles</h2>
+    <p>Stay informed about the latest driving laws and safety tips.</p>
+    <h3>Article Title</h3>
+    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+  </div>
+
+  <div class="card">
+    <h2>Social Media</h2>
+    <p>Connect with us on social media for customer feedback and referrals.</p>
+  </div>
+
+  <!-- React JSX Reference -->
+  <div class="code-block"><span class="comment">// React JSX version</span>
+
+<span class="keyword">import</span> React <span class="keyword">from</span> <span class="string">'react'</span>;
+
+<span class="keyword">const</span> styles = {
+  card: {
+    background: <span class="string">'#fff'</span>,
+    border: <span class="string">'1px solid #d9d9d9'</span>,
+    borderRadius: <span class="string">'6px'</span>,
+    padding: <span class="string">'32px 40px'</span>,
+    marginBottom: <span class="string">'24px'</span>,
+  },
+  title: {
+    fontSize: <span class="string">'32px'</span>,
+    fontWeight: 700,
+    color: <span class="string">'#1a1a1a'</span>,
+    marginBottom: <span class="string">'12px'</span>,
+  },
+  subtitle: {
+    fontSize: <span class="string">'22px'</span>,
+    fontWeight: 700,
+    color: <span class="string">'#1a1a1a'</span>,
+    marginBottom: <span class="string">'10px'</span>,
+  },
+  heading3: {
+    fontSize: <span class="string">'18px'</span>,
+    fontWeight: 700,
+    color: <span class="string">'#1a1a1a'</span>,
+    marginTop: <span class="string">'16px'</span>,
+    marginBottom: <span class="string">'8px'</span>,
+  },
+  text: {
+    fontSize: <span class="string">'15px'</span>,
+    color: <span class="string">'#333'</span>,
+  },
+};
+
+<span class="keyword">export default function</span> RentalPage() {
+  <span class="keyword">return</span> (
+    &lt;div style={{ padding: <span class="string">'24px 32px'</span>, background: <span class="string">'#f9fafb'</span> }}&gt;
+      &lt;div style={styles.card}&gt;
+        &lt;h1 style={styles.title}&gt;Welcome to Our Rental Company&lt;/h1&gt;
+        &lt;p style={styles.text}&gt;Rent a vehicle for your travels with us featuring a wide range of vehicles from classic cars to luxury vehicles.&lt;/p&gt;
+      &lt;/div&gt;
+
+      &lt;div style={styles.card}&gt;
+        &lt;h2 style={styles.subtitle}&gt;Rental Reservation&lt;/h2&gt;
+        &lt;p style={styles.text}&gt;Book your rental today featuring different vehicles.&lt;/p&gt;
+      &lt;/div&gt;
+
+      &lt;div style={styles.card}&gt;
+        &lt;h2 style={styles.subtitle}&gt;Latest Articles&lt;/h2&gt;
+        &lt;p style={styles.text}&gt;Stay informed about the latest driving laws and safety tips.&lt;/p&gt;
+        &lt;h3 style={styles.heading3}&gt;Article Title&lt;/h3&gt;
+        &lt;p style={styles.text}&gt;Lorem ipsum dolor sit amet, consectetur adipiscing elit.&lt;/p&gt;
+      &lt;/div&gt;
+
+      &lt;div style={styles.card}&gt;
+        &lt;h2 style={styles.subtitle}&gt;Social Media&lt;/h2&gt;
+        &lt;p style={styles.text}&gt;Connect with us on social media for customer feedback and referrals.&lt;/p&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+  );
+}</div>
+
+</body>
+</html>
+```

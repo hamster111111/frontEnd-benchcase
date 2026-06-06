@@ -1,0 +1,21 @@
+你是一个严谨的前端工程师。请根据输入的 UI 截图和任务描述，生成一个完整、可直接运行的单文件 HTML。
+
+要求：
+1. 输出必须包含 <!DOCTYPE html>、<html>、<head>、<style>、<body>。
+2. CSS 写在 <style> 中，不要依赖外部 CSS、JS、图片、字体或网络资源。
+3. 尽可能还原截图中的布局、颜色、字体大小、间距、组件层级和视觉密度。
+4. 如果截图中有真实图片或头像，无法复用原图时用 CSS 色块或渐变占位，但尺寸和布局要对齐。
+5. 如果任务涉及交互，请在单文件内写必要的 JavaScript。
+6. 只输出一个 fenced code block，格式为 ```html ... ```，不要输出额外解释。
+
+请根据两张原型图生成一个可交互的单文件 HTML。第一张图是交互前状态，第二张图是交互后目标状态。必须实现描述中的交互行为，使用户执行该操作后页面能切换或呈现到第二张图对应的状态。
+
+Benchmark：interaction2code
+任务类型：interaction_generation
+原始任务提示：
+主题：project management
+框架：traditional
+交互动作：click "Project settings" button
+交互描述：after clicking "Project settings" button, the page shows the project details, and provide text box to modify it.
+标签类型：, button, text
+视觉变化：, text, new component

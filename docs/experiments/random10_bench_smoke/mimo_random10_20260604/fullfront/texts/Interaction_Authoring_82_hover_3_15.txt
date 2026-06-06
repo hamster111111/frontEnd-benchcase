@@ -1,0 +1,290 @@
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Product Page</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Arial', sans-serif;
+    }
+
+    body {
+      background-color: #fff;
+      color: #000;
+    }
+
+    header {
+      background-color: #000;
+      color: #fff;
+      padding: 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+    }
+
+    .logo img {
+      height: 40px;
+      margin-right: 10px;
+    }
+
+    nav {
+      display: flex;
+      gap: 25px;
+      align-items: center;
+    }
+
+    nav a {
+      color: white;
+      text-decoration: none;
+      font-weight: bold;
+      transition: text-decoration 0.3s ease;
+    }
+
+    #InteractionPart {
+      position: relative;
+      transition: text-decoration 0.3s ease;
+    }
+
+    #InteractionPart:hover {
+      text-decoration: underline;
+    }
+
+    .icons {
+      display: flex;
+      gap: 20px;
+    }
+
+    .icons div {
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      border: 1px solid white;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .breadcrumb {
+      padding: 20px;
+      font-size: 14px;
+    }
+
+    .breadcrumb span {
+      color: gray;
+    }
+
+    .main {
+      display: flex;
+      padding: 20px;
+    }
+
+    .filters {
+      width: 200px;
+      padding-right: 20px;
+      border-right: 1px solid #eee;
+    }
+
+    .filters h4 {
+      font-size: 13px;
+      margin-bottom: 10px;
+    }
+
+    .filters button {
+      margin-top: 20px;
+      padding: 10px 20px;
+      background-color: #eee;
+      border: none;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    .content {
+      flex-grow: 1;
+      padding-left: 20px;
+    }
+
+    .alert {
+      background-color: #e0ad43;
+      color: white;
+      padding: 15px;
+      margin-bottom: 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .search-bar {
+      display: flex;
+      align-items: center;
+      border: 1px solid #ddd;
+      border-radius: 30px;
+      padding: 10px 20px;
+      max-width: 500px;
+    }
+
+    .search-bar input {
+      border: none;
+      width: 100%;
+      outline: none;
+      font-size: 16px;
+    }
+
+    .search-bar button {
+      border: none;
+      background: none;
+      cursor: pointer;
+    }
+
+    footer {
+      background-color: #000;
+      color: white;
+      padding: 40px 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+    }
+
+    .footer-left {
+      max-width: 200px;
+      font-size: 24px;
+      line-height: 1.4;
+    }
+
+    .footer-center {
+      text-align: center;
+    }
+
+    .footer-center p {
+      margin-bottom: 10px;
+      font-weight: bold;
+    }
+
+    .footer-center .social-icons {
+      display: flex;
+      gap: 20px;
+      justify-content: center;
+    }
+
+    .footer-center .social-icons img {
+      width: 24px;
+      height: 24px;
+    }
+
+    .footer-right {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .footer-right p {
+      margin-bottom: 10px;
+      font-weight: bold;
+    }
+
+    .newsletter {
+      display: flex;
+      border: 1px solid #fff;
+      border-radius: 5px;
+      overflow: hidden;
+      margin-top: 5px;
+    }
+
+    .newsletter input {
+      padding: 10px;
+      border: none;
+      flex: 1;
+      outline: none;
+    }
+
+    .newsletter button {
+      padding: 10px 20px;
+      background-color: white;
+      color: black;
+      border: none;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    /* Placeholder icon representation */
+    .icon-placeholder {
+      background-color: white;
+      color: black;
+      font-size: 12px;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="logo">
+      <img src="https://raw.githubusercontent.com/Mikivishy/imgs/main/folder1/Logo.jpg" alt="Logo" />
+      <strong>BODY POLITIX</strong>
+    </div>
+    <nav>
+      <a href="#">HOME</a>
+      <a id="InteractionPart" href="#">SHOP</a>
+      <a href="#">NEW</a>
+      <a href="#">COLLECTIONS</a>
+      <a href="#">SHOP IG</a>
+      <a href="#">SALE</a>
+      <a href="#">WHO IS BP</a>
+    </nav>
+    <div class="icons">
+      <div class="icon-placeholder">👤</div>
+      <div class="icon-placeholder">♡</div>
+      <div class="icon-placeholder">👜</div>
+    </div>
+  </header>
+
+  <div class="breadcrumb">
+    <span>Home</span> / <strong>Product size S/M</strong>
+  </div>
+
+  <div class="main">
+    <div class="filters">
+      <h4>PRICE +</h4>
+      <h4>AVAILABILITY +</h4>
+      <button>FILTER</button>
+    </div>
+    <div class="content">
+      <div class="alert">
+        <span>⚠️ No products were found matching your selection.</span>
+      </div>
+      <div class="search-bar">
+        <input type="text" placeholder="Search for products" />
+        <button>🔍</button>
+      </div>
+    </div>
+  </div>
+
+  <footer>
+    <div class="footer-left">
+      Let Your<br/>Body Do<br/>The Talking
+    </div>
+    <div class="footer-center">
+      <p>FOLLOW US</p>
+      <div class="social-icons">
+        <img src="https://raw.githubusercontent.com/Mikivishy/imgs/main/folder1/Icon.jpg" alt="Instagram" title="Instagram"/>
+        <img src="https://raw.githubusercontent.com/Mikivishy/imgs/main/folder1/Icon.jpg" alt="Facebook" title="Facebook"/>
+        <img src="https://raw.githubusercontent.com/Mikivishy/imgs/main/folder1/Icon.jpg" alt="TikTok" title="TikTok"/>
+      </div>
+    </div>
+    <div class="footer-right">
+      <p>NEWSLETTER</p>
+      <div class="newsletter">
+        <input type="email" placeholder="Your email address" />
+        <button>SIGN UP</button>
+      </div>
+    </div>
+  </footer>
+</body>
+</html>
+```

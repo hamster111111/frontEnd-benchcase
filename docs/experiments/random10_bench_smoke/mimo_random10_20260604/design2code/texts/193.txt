@@ -1,0 +1,256 @@
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>How to fix thunar missing icons</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Georgia, 'Times New Roman', serif;
+            background-color: #ffffff;
+            color: #333333;
+            line-height: 1.6;
+            padding: 20px 40px 40px;
+            max-width: 800px;
+        }
+
+        .nav-link {
+            display: inline-block;
+            margin-bottom: 20px;
+            color: #333333;
+            font-size: 15px;
+            text-decoration: none;
+        }
+
+        .nav-link:hover {
+            text-decoration: underline;
+        }
+
+        .post-title {
+            font-size: 38px;
+            font-weight: bold;
+            color: #111111;
+            margin-bottom: 12px;
+            line-height: 1.2;
+        }
+
+        .meta {
+            font-size: 15px;
+            color: #666666;
+            margin-bottom: 30px;
+        }
+
+        .meta .hashtag {
+            color: #555555;
+        }
+
+        .divider {
+            border: none;
+            border-top: 1px solid #cccccc;
+            margin: 30px 0;
+        }
+
+        .tldr {
+            margin-bottom: 20px;
+        }
+
+        .tldr h2 {
+            font-size: 24px;
+            font-weight: bold;
+            margin-bottom: 12px;
+            border-bottom: 2px solid #333;
+            display: inline-block;
+            padding-bottom: 2px;
+        }
+
+        .code-block {
+            background-color: #3d3d3d;
+            color: #cccccc;
+            font-family: 'Consolas', 'Courier New', Courier, monospace;
+            font-size: 14px;
+            padding: 14px 18px;
+            border-radius: 4px;
+            margin: 14px 0;
+            overflow-x: auto;
+            white-space: pre-wrap;
+            word-break: break-all;
+        }
+
+        .code-block .green {
+            color: #4ec9b0;
+        }
+
+        .code-block .white {
+            color: #ffffff;
+        }
+
+        .code-block .dollar {
+            color: #9a9a9a;
+        }
+
+        .post-text {
+            font-size: 17px;
+            color: #333333;
+            margin-bottom: 16px;
+        }
+
+        .post-text a {
+            color: #1a73e8;
+            text-decoration: none;
+        }
+
+        .post-text a:hover {
+            text-decoration: underline;
+        }
+
+        .image-placeholder {
+            width: 100%;
+            height: 320px;
+            background-color: #0033ff;
+            margin: 20px 0;
+            border-radius: 2px;
+        }
+
+        .section-heading {
+            font-size: 26px;
+            font-weight: bold;
+            color: #111111;
+            margin: 30px 0 16px;
+            line-height: 1.3;
+        }
+
+        .inline-code {
+            background-color: #f0f0f0;
+            font-family: 'Consolas', 'Courier New', Courier, monospace;
+            font-size: 14px;
+            padding: 2px 6px;
+            border-radius: 3px;
+            color: #333;
+        }
+
+        .reference-section {
+            margin-top: 35px;
+        }
+
+        .reference-section h2 {
+            font-size: 24px;
+            font-weight: bold;
+            color: #111111;
+            margin-bottom: 14px;
+        }
+
+        .reference-list {
+            margin-left: 22px;
+        }
+
+        .reference-list li {
+            font-size: 16px;
+            margin-bottom: 12px;
+        }
+
+        .reference-list .quoted {
+            font-weight: 500;
+        }
+
+        .reference-list a {
+            color: #1a73e8;
+            text-decoration: none;
+            word-break: break-all;
+        }
+
+        .reference-list a:hover {
+            text-decoration: underline;
+        }
+
+        .reference-list .accessed {
+            color: #333;
+        }
+
+        .footer-links {
+            margin-top: 50px;
+            border-top: 1px solid #eeeeee;
+            padding-top: 24px;
+        }
+
+        .footer-links a {
+            display: block;
+            color: #333333;
+            text-decoration: none;
+            font-size: 15px;
+            margin-bottom: 8px;
+        }
+
+        .footer-links a:hover {
+            text-decoration: underline;
+        }
+
+        p {
+            margin-bottom: 16px;
+        }
+    </style>
+</head>
+<body>
+    <a href="#" class="nav-link">← Home</a>
+
+    <h1 class="post-title">How to fix thunar missing icons</h1>
+    <div class="meta">Nov 2, 2017 &nbsp;•&nbsp; <span class="hashtag">#unix</span> <span class="hashtag">#desktop</span></div>
+
+    <hr class="divider">
+
+    <div class="tldr">
+        <h2>tl;dr</h2>
+        <p class="post-text" style="margin-top: 10px;">Edit <span class="inline-code">~/.gtkrc-2.0</span> with something like:</p>
+        <div class="code-block">gtk-icon-theme-name = "<span class="green">Tango</span>"</div>
+        <p class="post-text">And that is it :)</p>
+    </div>
+
+    <hr class="divider">
+
+    <div class="image-placeholder"></div>
+
+    <p class="post-text">I'm still looking for a perfect filebrowser, nautilus is good I wish I could use it, but nautilus has so many dependencies that I always give up installing.</p>
+    <p class="post-text">I tried thunar in a docker image (it is <a href="#">here</a> if you want to use it), but you know we don't get many integrations in this way.</p>
+    <p class="post-text">Like I said I tried first to use it in a Docker image, fixed this problem but I could not create the habit of using it. Then I moved to install it in my desktop.</p>
+
+    <h2 class="section-heading">Fix it!</h2>
+    <p class="post-text">This "missing icons" problem happens only when there is no icons in your system (which is a rare case) or when your system is not configured properly.</p>
+
+    <h2 class="section-heading">If you don't have a icon theme</h2>
+    <p class="post-text">In the first case you will have to install a icon pac to find "instalables" pacs type:</p>
+    <div class="code-block"><span class="dollar">$</span> apt-cache search icon-theme</div>
+    <p class="post-text">In Ubuntu, or</p>
+    <div class="code-block"><span class="dollar">$</span> pacman -Ss icon-theme</div>
+    <p class="post-text">In Arch.</p>
+    <p class="post-text">Install it using <span class="inline-code">apt-get install ICON-THEME</span> or <span class="inline-code">pacman -S ICON-THEME</span>.</p>
+
+    <h2 class="section-heading">Configure it</h2>
+    <p class="post-text">If you had installed or you already had a icon theme in order to fix this problem you have to create or edit this file: <span class="inline-code">~/.gtkrc-2.0</span> to something like:</p>
+    <div class="code-block">gtk-icon-theme-name="<span class="green">ICON-THEME</span>"</div>
+    <p class="post-text">And that is it!</p>
+
+    <div class="reference-section">
+        <h2>Reference</h2>
+        <ul class="reference-list">
+            <li>
+                <span class="quoted">"Icons for Thunar file manager"</span><br>
+                <a href="https://www.linuxquestions.org/questions/slackware-14/icons-for-thunar-file-manager-773501/">https://www.linuxquestions.org/questions/slackware-14/icons-for-thunar-file-manager-773501/</a> <span class="accessed">. Accessed Nov 2, 2017.</span>
+            </li>
+        </ul>
+    </div>
+
+    <div class="footer-links">
+        <a href="#">github.com/dmitryrck</a>
+        <a href="#">linkedin.com/in/dmitryrck</a>
+        <a href="#">speakerdeck.com/dmitryrck</a>
+        <a href="#">twitter.com/dmitryrck</a>
+    </div>
+</body>
+</html>
+```

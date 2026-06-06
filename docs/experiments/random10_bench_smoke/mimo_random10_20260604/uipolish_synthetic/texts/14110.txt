@@ -1,0 +1,774 @@
+```html
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>礼物推荐</title>
+<style>
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+  background: #f0f0f0;
+  color: #333;
+  font-size: 14px;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+/* Header */
+.header {
+  background: #fff;
+  height: 56px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 24px;
+  border-bottom: 1px solid #eee;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 100;
+}
+.header-left {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.header-logo {
+  width: 36px;
+  height: 36px;
+  background: linear-gradient(135deg, #ff6b9d, #ff4081);
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  font-size: 18px;
+}
+.header-title {
+  font-size: 16px;
+  font-weight: 600;
+  color: #333;
+}
+.header-nav {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+}
+.header-nav a {
+  text-decoration: none;
+  font-size: 14px;
+  color: #666;
+  padding: 6px 16px;
+  border-radius: 20px;
+  transition: all 0.2s;
+}
+.header-nav a.active {
+  background: #ffe8f0;
+  color: #e91e63;
+}
+.header-nav a:hover {
+  color: #e91e63;
+}
+
+/* Layout */
+.layout {
+  display: flex;
+  margin-top: 56px;
+  flex: 1;
+}
+
+/* Left Sidebar */
+.sidebar-left {
+  width: 200px;
+  background: #fff;
+  border-right: 1px solid #eee;
+  padding: 20px 0;
+  position: fixed;
+  top: 56px;
+  bottom: 50px;
+  left: 0;
+  overflow-y: auto;
+}
+.menu-title {
+  font-size: 14px;
+  font-weight: 600;
+  color: #333;
+  padding: 0 20px;
+  margin-bottom: 12px;
+}
+.menu-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 20px;
+  cursor: pointer;
+  font-size: 14px;
+  color: #555;
+  transition: background 0.2s;
+}
+.menu-item:hover {
+  background: #f8f8f8;
+}
+.menu-item.pink {
+  color: #e91e63;
+}
+.menu-icon {
+  width: 20px;
+  height: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 16px;
+}
+.tips-box {
+  margin: 24px 16px 0;
+  padding: 16px;
+  background: #fffbe6;
+  border-radius: 8px;
+  border: 1px solid #fff3a8;
+}
+.tips-title {
+  font-size: 14px;
+  font-weight: 600;
+  color: #333;
+  margin-bottom: 8px;
+}
+.tips-text {
+  font-size: 12px;
+  color: #666;
+  line-height: 1.6;
+}
+
+/* Main Content */
+.main-content {
+  flex: 1;
+  margin-left: 200px;
+  margin-right: 240px;
+  padding: 20px 24px;
+  min-height: calc(100vh - 106px);
+}
+.content-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 20px;
+}
+.content-title {
+  font-size: 20px;
+  font-weight: 600;
+  color: #333;
+}
+.btn-add {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 10px 24px;
+  background: linear-gradient(135deg, #ff6b9d, #e91e63);
+  color: #fff;
+  border: none;
+  border-radius: 24px;
+  font-size: 14px;
+  cursor: pointer;
+  transition: opacity 0.2s;
+  font-weight: 500;
+}
+.btn-add:hover {
+  opacity: 0.9;
+}
+
+/* Gift Grid */
+.gift-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+}
+.gift-card {
+  background: #fff;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.06);
+  transition: box-shadow 0.2s;
+}
+.gift-card:hover {
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+.gift-image {
+  position: relative;
+  height: 180px;
+  overflow: hidden;
+}
+.gift-image-bg {
+  width: 100%;
+  height: 100%;
+}
+.img-actions {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  display: flex;
+  gap: 6px;
+}
+.img-action-btn {
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  font-size: 12px;
+  color: #fff;
+  border: none;
+  transition: transform 0.2s;
+}
+.img-action-btn:hover {
+  transform: scale(1.1);
+}
+.img-action-btn.blue {
+  background: #42a5f5;
+}
+.img-action-btn.red {
+  background: #ef5350;
+}
+.gift-info {
+  padding: 14px 16px;
+}
+.gift-name {
+  font-size: 15px;
+  font-weight: 600;
+  color: #333;
+  margin-bottom: 6px;
+}
+.gift-price {
+  font-size: 18px;
+  font-weight: 700;
+  color: #e91e63;
+  margin-bottom: 8px;
+}
+.gift-desc {
+  font-size: 12px;
+  color: #888;
+  line-height: 1.6;
+  margin-bottom: 12px;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+.gift-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.gift-tag {
+  font-size: 12px;
+  padding: 3px 10px;
+  border-radius: 4px;
+  font-weight: 500;
+}
+.tag-pink { background: #fce4ec; color: #e91e63; }
+.tag-purple { background: #f3e5f5; color: #9c27b0; }
+.tag-yellow { background: #fff8e1; color: #f9a825; }
+.tag-green { background: #e8f5e9; color: #4caf50; }
+.tag-orange { background: #fff3e0; color: #ff9800; }
+.tag-blue { background: #e3f2fd; color: #2196f3; }
+.tag-red { background: #fce4ec; color: #e53935; }
+.stars {
+  display: flex;
+  gap: 2px;
+}
+.star {
+  color: #ffc107;
+  font-size: 14px;
+}
+.star.empty {
+  color: #ddd;
+}
+
+/* Right Sidebar */
+.sidebar-right {
+  width: 240px;
+  position: fixed;
+  top: 56px;
+  right: 0;
+  bottom: 50px;
+  padding: 20px 16px;
+  overflow-y: auto;
+  background: #f0f0f0;
+}
+.stat-card, .trend-card, .gender-card {
+  background: #fff;
+  border-radius: 12px;
+  padding: 18px;
+  margin-bottom: 16px;
+}
+.stat-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 16px;
+}
+.stat-header h3 {
+  font-size: 15px;
+  font-weight: 600;
+  color: #333;
+}
+.stat-refresh {
+  width: 28px;
+  height: 28px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  color: #999;
+  font-size: 16px;
+  border-radius: 50%;
+  border: 1px solid #eee;
+  background: #fff;
+}
+.stat-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 8px 0;
+}
+.stat-row + .stat-row {
+  border-top: 1px solid #f5f5f5;
+}
+.stat-label {
+  font-size: 13px;
+  color: #666;
+}
+.stat-value {
+  font-size: 14px;
+  font-weight: 600;
+  color: #333;
+}
+.stat-value.red {
+  color: #e91e63;
+}
+
+/* Trend Chart */
+.trend-header {
+  margin-bottom: 16px;
+}
+.trend-header h3 {
+  font-size: 15px;
+  font-weight: 600;
+  color: #333;
+}
+.trend-chart {
+  width: 100%;
+  height: 140px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #999;
+  font-size: 13px;
+}
+
+/* Gender Chart */
+.gender-header {
+  margin-bottom: 16px;
+}
+.gender-header h3 {
+  font-size: 15px;
+  font-weight: 600;
+  color: #333;
+}
+.pie-chart-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+}
+.pie-chart {
+  width: 130px;
+  height: 130px;
+  border-radius: 50%;
+  background: conic-gradient(#ffb6c1 0% 60%, #b3d4fc 60% 100%);
+  position: relative;
+}
+.pie-chart::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 0;
+  height: 0;
+}
+.pie-legend {
+  display: flex;
+  gap: 16px;
+  font-size: 12px;
+  color: #666;
+}
+.legend-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  display: inline-block;
+  margin-right: 4px;
+  vertical-align: middle;
+}
+.legend-dot.pink { background: #ffb6c1; }
+.legend-dot.blue { background: #b3d4fc; }
+
+/* Footer */
+.footer {
+  background: #fff;
+  border-top: 1px solid #eee;
+  padding: 16px 24px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: auto;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 100;
+}
+.footer-left {
+  font-size: 12px;
+  color: #999;
+}
+.footer-right {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  font-size: 12px;
+  color: #999;
+}
+.footer-right a {
+  color: #999;
+  text-decoration: none;
+}
+.footer-right a:hover {
+  color: #666;
+}
+.social-icons {
+  display: flex;
+  gap: 8px;
+  margin-left: 8px;
+}
+.social-icon {
+  width: 20px;
+  height: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #999;
+  font-size: 14px;
+}
+
+/* SVG icons */
+svg { display: inline-block; vertical-align: middle; }
+</style>
+</head>
+<body>
+  <!-- Header -->
+  <header class="header">
+    <div class="header-left">
+      <div class="header-logo">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <rect x="3" y="8" width="18" height="13" rx="2"/>
+          <path d="M12 8V21"/>
+          <path d="M3 12h18"/>
+          <path d="M12 8c-2-4-5-4-5-4s0 4 5 4z"/>
+          <path d="M12 8c2-4 5-4 5-4s0 4-5 4z"/>
+        </svg>
+      </div>
+      <span class="header-title">礼物推荐</span>
+    </div>
+    <nav class="header-nav">
+      <a href="#" class="active">礼物</a>
+      <a href="#">热门礼物</a>
+      <a href="#">我的收藏</a>
+    </nav>
+  </header>
+
+  <div class="layout">
+    <!-- Left Sidebar -->
+    <aside class="sidebar-left">
+      <div class="menu-title">功能菜单</div>
+      <div class="menu-item pink">
+        <span class="menu-icon">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#e91e63" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><line x1="12" y1="8" x2="12" y2="16"/><line x1="8" y1="12" x2="16" y2="12"/></svg>
+        </span>
+        添加礼物
+      </div>
+      <div class="menu-item">
+        <span class="menu-icon">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#666" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 013 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
+        </span>
+        编辑推荐
+      </div>
+      <div class="menu-item">
+        <span class="menu-icon">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#666" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="12" width="4" height="8"/><rect x="10" y="8" width="4" height="12"/><rect x="17" y="4" width="4" height="16"/></svg>
+        </span>
+        统计数据
+      </div>
+      <div class="menu-item">
+        <span class="menu-icon">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#666" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><path d="M9.09 9a3 3 0 015.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+        </span>
+        帮助指南
+      </div>
+      <div class="tips-box">
+        <div class="tips-title">使用小贴士</div>
+        <div class="tips-text">每多可添加20个推荐，添加高质量图片可提升点击率</div>
+      </div>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="main-content">
+      <div class="content-header">
+        <h1 class="content-title">热门礼物推荐</h1>
+        <button class="btn-add">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+          添加新礼物
+        </button>
+      </div>
+
+      <div class="gift-grid">
+        <!-- Card 1 -->
+        <div class="gift-card">
+          <div class="gift-image">
+            <div class="gift-image-bg" style="background: linear-gradient(135deg, #c49a6c 0%, #8b5e3c 40%, #d4a373 100%);"></div>
+            <div class="img-actions">
+              <button class="img-action-btn blue">
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5"><path d="M11 4H4a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 013 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
+              </button>
+              <button class="img-action-btn red">
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 01-2 2H7a2 2 0 01-2-2V6m3 0V4a2 2 0 012-2h4a2 2 0 012 2v2"/></svg>
+              </button>
+            </div>
+          </div>
+          <div class="gift-info">
+            <div class="gift-name">心情巧克力盒</div>
+            <div class="gift-price">¥128</div>
+            <div class="gift-desc">浪漫情人节首选，精美包装，内含12颗进口巧克力，实淡甜蜜的高品质礼物。</div>
+            <div class="gift-footer">
+              <span class="gift-tag tag-pink">今日礼物</span>
+              <div class="stars">
+                <span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Card 2 -->
+        <div class="gift-card">
+          <div class="gift-image">
+            <div class="gift-image-bg" style="background: linear-gradient(135deg, #1a237e 0%, #283593 50%, #3949ab 100%);"></div>
+            <div class="img-actions">
+              <button class="img-action-btn blue">
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5"><path d="M11 4H4a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 013 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
+              </button>
+              <button class="img-action-btn red">
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 01-2 2H7a2 2 0 01-2-2V6m3 0V4a2 2 0 012-2h4a2 2 0 012 2v2"/></svg>
+              </button>
+            </div>
+          </div>
+          <div class="gift-info">
+            <div class="gift-name">星空音乐盒</div>
+            <div class="gift-price">¥299</div>
+            <div class="gift-desc">精致的八音盒，打开时的美妙音乐，闪闪的银河，仿佛音乐盒中有着宇宙。</div>
+            <div class="gift-footer">
+              <span class="gift-tag tag-purple">儿童礼物</span>
+              <div class="stars">
+                <span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Card 3 -->
+        <div class="gift-card">
+          <div class="gift-image">
+            <div class="gift-image-bg" style="background: linear-gradient(135deg, #8d6e63 0%, #6d4c41 40%, #a1887f 100%);"></div>
+            <div class="img-actions">
+              <button class="img-action-btn blue">
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5"><path d="M11 4H4a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 013 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
+              </button>
+              <button class="img-action-btn red">
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 01-2 2H7a2 2 0 01-2-2V6m3 0V4a2 2 0 012-2h4a2 2 0 012 2v2"/></svg>
+              </button>
+            </div>
+          </div>
+          <div class="gift-info">
+            <div class="gift-name">定制照片相框</div>
+            <div class="gift-price">¥89</div>
+            <div class="gift-desc">可定制照片的实木相框，手工制作，温馨家居装饰，记录美好时光。</div>
+            <div class="gift-footer">
+              <span class="gift-tag tag-yellow">家居礼物</span>
+              <div class="stars">
+                <span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star empty">★</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Card 4 -->
+        <div class="gift-card">
+          <div class="gift-image">
+            <div class="gift-image-bg" style="background: linear-gradient(135deg, #4caf50 0%, #2e7d32 50%, #66bb6a 100%);"></div>
+            <div class="img-actions">
+              <button class="img-action-btn blue">
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5"><path d="M11 4H4a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 013 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
+              </button>
+              <button class="img-action-btn red">
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 01-2 2H7a2 2 0 01-2-2V6m3 0V4a2 2 0 012-2h4a2 2 0 012 2v2"/></svg>
+              </button>
+            </div>
+          </div>
+          <div class="gift-info">
+            <div class="gift-name">创意多功能台灯</div>
+            <div class="gift-price">¥159</div>
+            <div class="gift-desc">三档调光，无线充电，还有蓝牙功能，办公室学习的超值实用礼物。</div>
+            <div class="gift-footer">
+              <span class="gift-tag tag-green">实用礼物</span>
+              <div class="stars">
+                <span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star empty">★</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Card 5 -->
+        <div class="gift-card">
+          <div class="gift-image">
+            <div class="gift-image-bg" style="background: linear-gradient(135deg, #78909c 0%, #546e7a 50%, #90a4ae 100%);"></div>
+            <div class="img-actions">
+              <button class="img-action-btn blue">
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5"><path d="M11 4H4a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 013 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
+              </button>
+              <button class="img-action-btn red">
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 01-2 2H7a2 2 0 01-2-2V6m3 0V4a2 2 0 012-2h4a2 2 0 012 2v2"/></svg>
+              </button>
+            </div>
+          </div>
+          <div class="gift-info">
+            <div class="gift-name">精致茶具套装</div>
+            <div class="gift-price">¥399</div>
+            <div class="gift-desc">高级陶瓷茶具，一壶四杯的标配，送给懂的朋友茶具，尽显奢华品味。</div>
+            <div class="gift-footer">
+              <span class="gift-tag tag-orange">节庆礼物</span>
+              <div class="stars">
+                <span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Card 6 -->
+        <div class="gift-card">
+          <div class="gift-image">
+            <div class="gift-image-bg" style="background: linear-gradient(135deg, #bf360c 0%, #e64a19 50%, #ff8a65 100%);"></div>
+            <div class="img-actions">
+              <button class="img-action-btn blue">
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5"><path d="M11 4H4a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 013 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
+              </button>
+              <button class="img-action-btn red">
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 01-2 2H7a2 2 0 01-2-2V6m3 0V4a2 2 0 012-2h4a2 2 0 012 2v2"/></svg>
+              </button>
+            </div>
+          </div>
+          <div class="gift-info">
+            <div class="gift-name">智能手环</div>
+            <div class="gift-price">¥249</div>
+            <div class="gift-desc">多功能健康监测，来电提醒，防水设计，适合注重健康的朋友的贴心礼物。</div>
+            <div class="gift-footer">
+              <span class="gift-tag tag-blue">科技礼物</span>
+              <div class="stars">
+                <span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star empty">★</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <!-- Right Sidebar -->
+    <aside class="sidebar-right">
+      <div class="stat-card">
+        <div class="stat-header">
+          <h3>实时数据统计</h3>
+          <button class="stat-refresh">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#999" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M23 4v6h-6"/><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"/></svg>
+          </button>
+        </div>
+        <div class="stat-row">
+          <span class="stat-label">礼物总数</span>
+          <span class="stat-value">6</span>
+        </div>
+        <div class="stat-row">
+          <span class="stat-label">已发布推荐</span>
+          <span class="stat-value">6</span>
+        </div>
+        <div class="stat-row">
+          <span class="stat-label">月浏览量</span>
+          <span class="stat-value red">12.0k</span>
+        </div>
+      </div>
+
+      <div class="trend-card">
+        <div class="trend-header">
+          <h3>浏览量趋势</h3>
+        </div>
+        <div class="trend-chart">
+          <span>日趋势浏览波段</span>
+        </div>
+      </div>
+
+      <div class="gender-card">
+        <div class="gender-header">
+          <h3>性别偏好</h3>
+        </div>
+        <div class="pie-chart-container">
+          <div class="pie-chart"></div>
+          <div class="pie-legend">
+            <span><span class="legend-dot pink"></span>男性 60%</span>
+            <span><span class="legend-dot blue"></span>女性 40%</span>
+          </div>
+        </div>
+      </div>
+    </aside>
+  </div>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="footer-left">© 2023 线上礼物推荐平台 版权所有</div>
+    <div class="footer-right">
+      <a href="#">关于我们</a>
+      <a href="#">使用条款</a>
+      <a href="#">隐私政策</a>
+      <div class="social-icons">
+        <span class="social-icon">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="#999"><path d="M8.69 2C4.99 2 2 4.99 2 8.69v.63C2 13.02 4.99 16 8.69 16c.44 0 .87-.04 1.29-.13l3.3 1.98c.06.04.13.05.19.05.12 0 .24-.06.32-.17l.29-.4c.26-.39.2-.9-.16-1.19l-2.01-1.63c2.24-.96 3.78-3.2 3.78-5.81 0-.55-.09-1.08-.26-1.58C15.45 5.5 14.03 5 12.42 5 10.81 5 9.39 5.5 8.3 6.39 8.89 5.08 9.81 4 11.22 3.18 9.47 2.42 8.69 2 8.69 2z"/></svg>
+        </span>
+        <span class="social-icon">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="#999"><circle cx="12" cy="12" r="10"/><path d="M8 14s1.5 2 4 2 4-2 4-2" stroke="white" stroke-width="1.5" fill="none" stroke-linecap="round"/><circle cx="9" cy="10" r="1" fill="white"/><circle cx="15" cy="10" r="1" fill="white"/></svg>
+        </span>
+        <span class="social-icon">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="#999"><path d="M4 4h16a2 2 0 012 2v12a2 2 0 01-2 2H4a2 2 0 01-2-2V6a2 2 0 012-2z"/><path d="M22 6l-10 7L2 6" stroke="white" stroke-width="1.5" fill="none"/></svg>
+        </span>
+        <span class="social-icon">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="#999"><path d="M18 2h-3a5 5 0 00-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 011-1h3z"/></svg>
+        </span>
+      </div>
+    </div>
+  </footer>
+</body>
+</html>
+```

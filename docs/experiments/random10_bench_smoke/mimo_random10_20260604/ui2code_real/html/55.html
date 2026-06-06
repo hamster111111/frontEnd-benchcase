@@ -1,0 +1,622 @@
+<!DOCTYPE html>
+<html lang="fi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Steam - Time-Space Rebuild DEMO Trailer</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', 'Helvetica Neue', Helvetica, sans-serif;
+            background-color: #2a475e;
+            color: #c7d5e0;
+            min-height: 100vh;
+        }
+
+        /* Header */
+        .header {
+            background: linear-gradient(to right, #1b2838 0%, #1e2a3a 100%);
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 40px;
+        }
+
+        .header-left {
+            display: flex;
+            align-items: center;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            text-decoration: none;
+        }
+
+        .logo-icon {
+            width: 30px;
+            height: 30px;
+            background: radial-gradient(circle at 50% 50%, #66c0f4 0%, #1b2838 70%);
+            border-radius: 50%;
+            position: relative;
+        }
+
+        .logo-icon::after {
+            content: '';
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            border: 3px solid #fff;
+            border-radius: 50%;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+
+        .logo-text {
+            font-size: 22px;
+            font-weight: bold;
+            color: #fff;
+            letter-spacing: 2px;
+        }
+
+        .nav {
+            display: flex;
+            gap: 16px;
+            margin-left: 30px;
+        }
+
+        .nav a {
+            color: #b8b6b4;
+            text-decoration: none;
+            font-size: 13px;
+            font-weight: 600;
+            padding: 8px 12px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            transition: color 0.2s;
+        }
+
+        .nav a:hover {
+            color: #fff;
+        }
+
+        .nav a.active {
+            color: #fff;
+        }
+
+        .header-right {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .btn-install {
+            background: #4c6b22;
+            color: #d2efa9;
+            border: none;
+            padding: 5px 15px;
+            font-size: 11px;
+            font-weight: bold;
+            border-radius: 2px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .btn-install:hover {
+            background: #5c8028;
+        }
+
+        .header-link {
+            color: #b8b6b4;
+            font-size: 11px;
+            text-decoration: none;
+        }
+
+        .header-link:hover {
+            color: #fff;
+        }
+
+        .divider {
+            color: #4d4b49;
+            margin: 0 4px;
+        }
+
+        .lang-btn {
+            background: none;
+            border: none;
+            color: #b8b6b4;
+            font-size: 11px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        /* Hero Banner */
+        .hero-banner {
+            width: 100%;
+            height: 350px;
+            background: linear-gradient(135deg, 
+                #1a3045 0%, 
+                #2c4a5e 15%,
+                #3a5a6a 25%,
+                #4a6878 35%,
+                #8a9aa8 45%,
+                #c8b898 50%,
+                #a89070 55%,
+                #6a7a88 65%,
+                #3a5060 75%,
+                #1a3040 100%);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero-banner::before {
+            content: '';
+            position: absolute;
+            width: 200px;
+            height: 200px;
+            border: 8px solid rgba(200, 180, 120, 0.6);
+            border-radius: 50%;
+            top: 50%;
+            left: 55%;
+            transform: translate(-50%, -50%);
+        }
+
+        .hero-banner::after {
+            content: '';
+            position: absolute;
+            width: 160px;
+            height: 160px;
+            border: 4px solid rgba(200, 180, 120, 0.4);
+            border-radius: 50%;
+            top: 50%;
+            left: 55%;
+            transform: translate(-50%, -50%);
+        }
+
+        .clock-center {
+            position: absolute;
+            top: 45%;
+            left: 52%;
+            transform: translate(-50%, -50%);
+            width: 120px;
+            height: 120px;
+            border: 6px solid rgba(220, 200, 150, 0.8);
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, rgba(100,120,140,0.3) 100%);
+        }
+
+        .gear {
+            position: absolute;
+            width: 80px;
+            height: 80px;
+            background: rgba(80, 90, 100, 0.6);
+            border-radius: 50%;
+            border: 4px solid rgba(120, 130, 140, 0.5);
+        }
+
+        .gear-1 {
+            top: 30%;
+            left: 35%;
+        }
+
+        .gear-2 {
+            top: 25%;
+            left: 65%;
+            width: 60px;
+            height: 60px;
+        }
+
+        .gear-3 {
+            top: 55%;
+            right: 15%;
+            width: 50px;
+            height: 50px;
+        }
+
+        /* Content Container */
+        .content-wrapper {
+            max-width: 960px;
+            margin: 0 auto;
+            background: #16202d;
+            min-height: 800px;
+            padding: 20px 30px;
+        }
+
+        /* Breadcrumb */
+        .breadcrumb {
+            color: #8f98a0;
+            font-size: 12px;
+            margin-bottom: 15px;
+        }
+
+        .breadcrumb a {
+            color: #8f98a0;
+            text-decoration: none;
+        }
+
+        .breadcrumb a:hover {
+            color: #fff;
+        }
+
+        .breadcrumb span {
+            margin: 0 5px;
+        }
+
+        /* Title */
+        .page-title {
+            font-size: 28px;
+            color: #fff;
+            font-weight: 400;
+            margin-bottom: 25px;
+        }
+
+        /* Main Content Grid */
+        .content-grid {
+            display: grid;
+            grid-template-columns: 1fr 300px;
+            gap: 30px;
+        }
+
+        /* Video Player */
+        .video-player {
+            background: #000;
+            width: 100%;
+            aspect-ratio: 16/9;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+        }
+
+        .play-btn {
+            width: 60px;
+            height: 60px;
+            border: 3px solid rgba(255,255,255,0.7);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .play-btn:hover {
+            border-color: #fff;
+            transform: scale(1.1);
+        }
+
+        .play-btn::after {
+            content: '';
+            width: 0;
+            height: 0;
+            border-left: 20px solid rgba(255,255,255,0.9);
+            border-top: 12px solid transparent;
+            border-bottom: 12px solid transparent;
+            margin-left: 5px;
+        }
+
+        /* Sidebar */
+        .sidebar {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .game-card {
+            background: #1e2c3a;
+            border-radius: 4px;
+            overflow: hidden;
+        }
+
+        .game-cover {
+            width: 100%;
+            height: 150px;
+            background: linear-gradient(135deg, 
+                #3a5a7a 0%, 
+                #5a7a9a 30%,
+                #7a9aba 50%,
+                #9a9aba 70%,
+                #8a7a8a 100%);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .game-cover::before {
+            content: 'TIME-SPACE\nREBUILD';
+            position: absolute;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            color: #fff;
+            font-size: 18px;
+            font-weight: bold;
+            text-align: center;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+            white-space: pre-line;
+        }
+
+        .game-cover-faces {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 100px;
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .face {
+            width: 40px;
+            height: 60px;
+            background: linear-gradient(to bottom, #d4a574 0%, #c49464 100%);
+            border-radius: 20px 20px 5px 5px;
+        }
+
+        .game-info-bar {
+            background: #16202d;
+            padding: 10px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .platform-icon {
+            width: 20px;
+            height: 20px;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2px;
+        }
+
+        .platform-icon span {
+            background: #fff;
+            border-radius: 1px;
+        }
+
+        .tag-new {
+            background: #4c6b22;
+            color: #d2efa9;
+            font-size: 11px;
+            font-weight: bold;
+            padding: 3px 8px;
+            border-radius: 2px;
+        }
+
+        .discount-tag {
+            background: #4c6b22;
+            color: #d2efa9;
+            font-size: 14px;
+            font-weight: bold;
+            padding: 4px 8px;
+            border-radius: 2px;
+        }
+
+        .price-info {
+            margin-left: auto;
+            text-align: right;
+        }
+
+        .price-old {
+            color: #8f98a0;
+            font-size: 11px;
+            text-decoration: line-through;
+        }
+
+        .price-new {
+            color: #beee11;
+            font-size: 16px;
+            font-weight: bold;
+        }
+
+        .wishlist-row {
+            background: #1e2c3a;
+            padding: 12px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .wishlist-btn {
+            background: #365c7a;
+            border: none;
+            width: 34px;
+            height: 26px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            border-radius: 2px;
+        }
+
+        .wishlist-btn:hover {
+            background: #4a7a9a;
+        }
+
+        .star-icon {
+            color: #fff;
+            font-size: 16px;
+        }
+
+        .wishlist-text {
+            flex: 1;
+            height: 26px;
+            background: #2a475e;
+            border-radius: 2px;
+        }
+
+        .meta-section {
+            padding: 0;
+        }
+
+        .meta-label {
+            color: #8f98a0;
+            font-size: 12px;
+            font-weight: 600;
+            margin-top: 20px;
+            margin-bottom: 6px;
+            text-transform: uppercase;
+        }
+
+        .meta-value {
+            color: #8f98a0;
+            font-size: 13px;
+            margin-bottom: 15px;
+        }
+
+        .meta-value strong {
+            color: #fff;
+            font-size: 16px;
+        }
+
+        /* Footer area below content */
+        .content-body {
+            margin-top: 40px;
+            min-height: 300px;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="header-left">
+            <a href="#" class="logo">
+                <div class="logo-icon"></div>
+                <span class="logo-text">STEAM</span>
+            </a>
+            <nav class="nav">
+                <a href="#" class="active">KAUPPA</a>
+                <a href="#">YHTEISÖ</a>
+                <a href="#">TIETOA</a>
+                <a href="#">TUKI</a>
+            </nav>
+        </div>
+        <div class="header-right">
+            <button class="btn-install">
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M5 3h14a1 1 0 0 1 1 1v16a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1zm2 4v2h10V7H7zm0 4v2h10v-2H7zm0 4v2h7v-2H7z"/>
+                </svg>
+                Asenna Steam
+            </button>
+            <a href="#" class="header-link">kirjaudu sisään</a>
+            <span class="divider">|</span>
+            <button class="lang-btn">
+                kieli
+                <svg width="10" height="6" viewBox="0 0 10 6" fill="currentColor">
+                    <path d="M0 0l5 6 5-6z"/>
+                </svg>
+            </button>
+        </div>
+    </header>
+
+    <!-- Hero Banner -->
+    <div class="hero-banner">
+        <div class="gear gear-1"></div>
+        <div class="gear gear-2"></div>
+        <div class="gear gear-3"></div>
+        <div class="clock-center"></div>
+    </div>
+
+    <!-- Content -->
+    <div class="content-wrapper">
+        <!-- Breadcrumb -->
+        <div class="breadcrumb">
+            <a href="#">Kaikki tapahtumat</a>
+            <span>›</span>
+            <a href="#">Tapahtumat: Time Space Rebuild</a>
+            <span>›</span>
+        </div>
+
+        <!-- Title -->
+        <h1 class="page-title">Time-Space Rebuild DEMO Trailer</h1>
+
+        <!-- Content Grid -->
+        <div class="content-grid">
+            <!-- Video Player -->
+            <div class="video-player">
+                <div class="play-btn"></div>
+            </div>
+
+            <!-- Sidebar -->
+            <aside class="sidebar">
+                <!-- Game Card -->
+                <div class="game-card">
+                    <div class="game-cover">
+                        <div class="game-cover-faces">
+                            <div class="face"></div>
+                            <div class="face"></div>
+                            <div class="face"></div>
+                            <div class="face"></div>
+                        </div>
+                    </div>
+                    <div class="game-info-bar">
+                        <div class="platform-icon">
+                            <span></span>
+                            <span></span>
+                            <span></span>
+                            <span></span>
+                        </div>
+                        <span class="tag-new">UUSI</span>
+                        <span class="discount-tag">-20%</span>
+                        <div class="price-info">
+                            <div class="price-old">$15.00</div>
+                            <div class="price-new">$12.00</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Wishlist -->
+                <div class="wishlist-row">
+                    <button class="wishlist-btn">
+                        <span class="star-icon">☆</span>
+                    </button>
+                    <div class="wishlist-text"></div>
+                </div>
+
+                <!-- Meta Info -->
+                <div class="meta-section">
+                    <div class="meta-label">JULKAISTU</div>
+                    <div class="meta-value">ti 29. huhtikuuta 2025 <span style="font-size: 11px;">klo</span> 00.17 CST</div>
+
+                    <div class="meta-label">TYYPPPI</div>
+                    <div class="meta-value"><strong>UUTINEN</strong></div>
+                </div>
+            </aside>
+        </div>
+
+        <!-- Content Body Area -->
+        <div class="content-body"></div>
+    </div>
+
+    <script>
+        // Interactive play button
+        document.querySelector('.play-btn').addEventListener('click', function() {
+            this.style.display = 'none';
+        });
+
+        // Wishlist button toggle
+        document.querySelector('.wishlist-btn').addEventListener('click', function() {
+            const star = this.querySelector('.star-icon');
+            if (star.textContent === '☆') {
+                star.textContent = '★';
+                this.style.backgroundColor = '#4c6b22';
+            } else {
+                star.textContent = '☆';
+                this.style.backgroundColor = '#365c7a';
+            }
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,295 @@
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Estonian Relief Committee</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+            background-color: #ffffff;
+            color: #000000;
+        }
+
+        .header {
+            background-color: #000000;
+            padding: 20px 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+        }
+
+        .header-image {
+            width: 140px;
+            height: 100px;
+            background-color: #888888;
+            flex-shrink: 0;
+        }
+
+        .header-image-left {
+            margin-right: 40px;
+        }
+
+        .header-image-right {
+            margin-left: 40px;
+        }
+
+        .header-center {
+            text-align: center;
+            color: white;
+        }
+
+        .header-title {
+            font-size: 32px;
+            font-weight: bold;
+            margin-bottom: 6px;
+            letter-spacing: 0.5px;
+        }
+
+        .header-subtitle {
+            font-size: 24px;
+            font-weight: normal;
+            font-style: italic;
+        }
+
+        .nav-bar {
+            background-color: #1a1a1a;
+            padding: 10px 20px;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .donate-btn {
+            background-color: #ffff00;
+            color: #000000;
+            border: 2px solid #000000;
+            padding: 8px 18px;
+            font-weight: bold;
+            font-size: 14px;
+            cursor: pointer;
+            border-radius: 3px;
+            margin-right: 10px;
+            text-transform: uppercase;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 3px;
+            flex-wrap: wrap;
+        }
+
+        .nav-link {
+            background-color: #3a3a3a;
+            color: white;
+            padding: 8px 14px;
+            text-decoration: none;
+            font-size: 12px;
+            border: 1px solid #555;
+            border-radius: 3px;
+            text-transform: uppercase;
+            white-space: nowrap;
+        }
+
+        .nav-link:hover {
+            background-color: #555;
+        }
+
+        .lang-selector {
+            margin-left: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 3px;
+        }
+
+        .lang-link {
+            background-color: #3a3a3a;
+            color: white;
+            padding: 3px 10px;
+            text-decoration: none;
+            font-size: 11px;
+            text-align: center;
+            border: 1px solid #555;
+            border-radius: 2px;
+        }
+
+        .lang-link:hover {
+            background-color: #555;
+        }
+
+        .main-content {
+            padding: 30px 40px;
+            display: flex;
+            gap: 30px;
+            align-items: flex-start;
+        }
+
+        .left-column {
+            flex: 0 0 45%;
+        }
+
+        .directors-box {
+            border: 3px solid #0099dd;
+            padding: 20px 25px;
+            background-color: #e8f4f8;
+            margin-bottom: 20px;
+        }
+
+        .directors-title {
+            color: #0099dd;
+            font-size: 20px;
+            font-weight: bold;
+            margin-bottom: 15px;
+        }
+
+        .directors-list {
+            list-style: none;
+            margin-bottom: 25px;
+        }
+
+        .directors-list li {
+            margin-bottom: 4px;
+            font-size: 14px;
+            line-height: 1.5;
+        }
+
+        .directors-list li.indent {
+            padding-left: 30px;
+            font-weight: normal;
+        }
+
+        .auditor-section {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        .auditor-title {
+            color: #0099dd;
+            font-size: 18px;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+
+        .auditor-name {
+            font-size: 14px;
+        }
+
+        .volunteers {
+            margin-top: 10px;
+        }
+
+        .volunteers ul {
+            list-style: disc;
+            padding-left: 25px;
+        }
+
+        .volunteers li {
+            font-size: 14px;
+        }
+
+        .right-column {
+            flex: 1;
+            padding-top: 10px;
+        }
+
+        .right-column p {
+            font-size: 14px;
+            line-height: 1.7;
+            margin-bottom: 18px;
+            text-align: justify;
+        }
+
+        .election-notice {
+            margin: 30px 40px 40px 350px;
+            border: 2px solid #cccccc;
+            border-radius: 25px;
+            padding: 15px 30px;
+            text-align: center;
+            background-color: #f5f5f5;
+        }
+
+        .election-notice p {
+            font-size: 14px;
+            font-weight: bold;
+            font-style: italic;
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <div class="header-image header-image-left"></div>
+        <div class="header-center">
+            <h1 class="header-title">Estonian Relief Committee</h1>
+            <h2 class="header-subtitle">Eesti Abistamiskomitee USA's</h2>
+        </div>
+        <div class="header-image header-image-right"></div>
+    </header>
+
+    <nav class="nav-bar">
+        <button class="donate-btn">DONATE</button>
+        <div class="nav-links">
+            <a href="#" class="nav-link">HOME</a>
+            <a href="#" class="nav-link">GRANTS PROVIDED</a>
+            <a href="#" class="nav-link">DONATE</a>
+            <a href="#" class="nav-link">REQUEST GRANT</a>
+            <a href="#" class="nav-link">GOVERNANCE</a>
+            <a href="#" class="nav-link">MEMBERSHIP</a>
+            <a href="#" class="nav-link">HISTORY</a>
+            <a href="#" class="nav-link">CONTACT</a>
+        </div>
+        <div class="lang-selector">
+            <a href="#" class="lang-link">EST</a>
+            <a href="#" class="lang-link">ENG</a>
+        </div>
+    </nav>
+
+    <main class="main-content">
+        <div class="left-column">
+            <div class="directors-box">
+                <h3 class="directors-title">Board of Directors and Officers*</h3>
+                <ul class="directors-list">
+                    <li><strong>Toomas Kilm</strong> - Chairman, President *</li>
+                    <li><strong>Helena Otsa</strong> - Director, Vice President *</li>
+                    <li><strong>Leena Kangro</strong> - Director, Secretary *</li>
+                    <li><strong>Mati Laan</strong> - Director, Treasurer *</li>
+                    <li><strong>Liisa Sestrich</strong> - Director, Grants</li>
+                    <li class="indent">Lya Karm - Director</li>
+                    <li class="indent">Pia Salmre - Director</li>
+                    <li class="indent">Gunnar Tamm - Director</li>
+                    <li class="indent">Virve Vaher - Director</li>
+                    <li class="indent">Kadri Wichman - Director</li>
+                </ul>
+                <div class="auditor-section">
+                    <h4 class="auditor-title">Auditor</h4>
+                    <p class="auditor-name"><strong>Karin Raus</strong></p>
+                </div>
+            </div>
+            <div class="volunteers">
+                <ul>
+                    <li>All Volunteers</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="right-column">
+            <p>The Estonian Relief Committee, Inc., established in 1941, is a publicly supported non-profit charitable organization established under Internal Revenue Code Section 501(c)(3) and is registered with the State of New York.</p>
+            <p>The Board of Directors are elected by the Members as defined by the bylaws of the corporation. The Board designates the Officers and Auditors.</p>
+            <p>The Board of Directors, guided by the bylaws, determines the policies of the organization and has the power and authority to manage the property and to govern the affairs of the organization.</p>
+            <p>The books and records are audited by the Audit Committee. The ERC utilizes an outside certified public accounting firm to annually file Federal Form 990 (Return of Organization Exempt from Income Tax) and New York State Form Char500 (Annual Filing for Charitable Organizations) as required by law.</p>
+        </div>
+    </main>
+
+    <div class="election-notice">
+        <p>Election of the Board of Directors was held online from Oct 20 to November 3, 2023</p>
+    </div>
+</body>
+</html>
+```

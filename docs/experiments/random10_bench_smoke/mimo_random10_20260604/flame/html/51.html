@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Community Garden Sign Up</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: #dcebd8;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .container {
+            background-color: #e8f2e4;
+            border-radius: 4px;
+            width: 100%;
+            max-width: 800px;
+            min-height: 500px;
+            padding: 20px 30px;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+        }
+
+        .list-item {
+            display: flex;
+            align-items: center;
+            padding: 16px 0;
+            border-bottom: 1px solid #d0ddc8;
+        }
+
+        .list-item:last-child {
+            border-bottom: none;
+        }
+
+        .column-left {
+            flex: 0 0 25%;
+            color: #3d6b35;
+            font-size: 16px;
+            font-weight: 400;
+        }
+
+        .column-center {
+            flex: 1;
+            color: #3d6b35;
+            font-size: 16px;
+            font-weight: 400;
+        }
+
+        .column-right {
+            flex: 0 0 120px;
+            display: flex;
+            justify-content: center;
+        }
+
+        .signup-btn {
+            background-color: #4caf50;
+            color: white;
+            border: none;
+            padding: 10px 24px;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            border-radius: 2px;
+            transition: background-color 0.2s ease;
+        }
+
+        .signup-btn:hover {
+            background-color: #43a047;
+        }
+
+        .signup-btn:active {
+            background-color: #388e3c;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="list-item">
+            <div class="column-left">Soil Preparation</div>
+            <div class="column-center">Community Garden at City Square</div>
+            <div class="column-right">
+                <button class="signup-btn">Sign Up</button>
+            </div>
+        </div>
+        <div class="list-item">
+            <div class="column-left">Plant Care</div>
+            <div class="column-center">Rooftop Greening Initiative</div>
+            <div class="column-right">
+                <button class="signup-btn">Sign Up</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.querySelectorAll('.signup-btn').forEach(button => {
+            button.addEventListener('click', function() {
+                const row = this.closest('.list-item');
+                const activity = row.querySelector('.column-center').textContent;
+                
+                if (this.textContent === 'Sign Up') {
+                    this.textContent = 'Signed Up';
+                    this.style.backgroundColor = '#2e7d32';
+                    console.log(`Signed up for: ${activity}`);
+                } else {
+                    this.textContent = 'Sign Up';
+                    this.style.backgroundColor = '#4caf50';
+                    console.log(`Cancelled sign up for: ${activity}`);
+                }
+            });
+        });
+    </script>
+</body>
+</html>

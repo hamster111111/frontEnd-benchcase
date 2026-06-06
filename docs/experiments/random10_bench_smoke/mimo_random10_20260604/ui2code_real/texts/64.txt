@@ -1,0 +1,338 @@
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Football Association of Hong Kong, China Limited</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, Helvetica, sans-serif;
+        }
+
+        /* Top Navigation */
+        header {
+            background: #1a1a1a;
+            color: white;
+            padding: 0 40px;
+            height: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            font-size: 14px;
+            position: relative;
+            z-index: 10;
+        }
+
+        .logo-area {
+            position: absolute;
+            top: -25px;
+            left: 40px;
+            width: 100px;
+            height: 100px;
+            background: #e91e23;
+            border-radius: 50%;
+            border: 5px solid #fbbc04;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .logo-inner {
+            width: 90%;
+            height: 90%;
+            border-radius: 50%;
+            background: radial-gradient(circle, #1a1a1a 30%, #e91e23 31%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .logo-crest {
+            width: 40px;
+            height: 40px;
+            background: #1a1a1a;
+            clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
+            position: relative;
+        }
+
+        nav {
+            display: flex;
+            gap: 25px;
+            margin-left: 100px;
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            text-transform: uppercase;
+            font-size: 13px;
+            font-weight: 500;
+            letter-spacing: 0.5px;
+        }
+
+        .lang-toggle {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            cursor: pointer;
+        }
+
+        .globe {
+            width: 18px;
+            height: 18px;
+            border: 2px solid white;
+            border-radius: 50%;
+        }
+
+        /* Sponsors Section */
+        .sponsors {
+            background: #f9f9f9;
+            padding: 60px 20px 40px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 30px;
+        }
+
+        .sponsor-row {
+            display: flex;
+            gap: 40px;
+            justify-content: center;
+            flex-wrap: wrap;
+            align-items: center;
+        }
+
+        .sponsor-item {
+            background: white;
+            padding: 15px 30px;
+            border-radius: 4px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+        }
+
+        .sponsor-item.img-placeholder {
+            min-width: 160px;
+            height: 50px;
+            font-size: 12px;
+            color: #666;
+            font-weight: bold;
+            text-transform: uppercase;
+        }
+
+        /* Footer Columns */
+        .footer-main {
+            background: white;
+            padding: 60px 80px;
+        }
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: repeat(8, 1fr);
+            gap: 20px;
+        }
+
+        .footer-col h3 {
+            font-size: 15px;
+            color: #1a1a1a;
+            margin-bottom: 25px;
+            line-height: 1.4;
+        }
+
+        .footer-col ul {
+            list-style: none;
+        }
+
+        .footer-col li {
+            margin-bottom: 15px;
+        }
+
+        .footer-col a {
+            color: #555;
+            text-decoration: none;
+            font-size: 13px;
+            line-height: 1.4;
+            display: block;
+        }
+
+        .footer-col a:hover {
+            text-decoration: underline;
+        }
+
+        /* Footer Bottom */
+        .footer-bottom {
+            background: white;
+            padding: 40px 20px 60px;
+            text-align: center;
+            border-top: 1px solid #eee;
+            margin: 0 80px;
+        }
+
+        .footer-logo-center {
+            width: 100px;
+            height: 100px;
+            background: #e91e23;
+            border-radius: 50%;
+            border: 5px solid #fbbc04;
+            margin: 0 auto 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .footer-logo-center .logo-crest {
+            width: 40px;
+            height: 40px;
+        }
+
+        .copyright {
+            color: #666;
+            font-size: 13px;
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 1200px) {
+            .footer-grid {
+                grid-template-columns: repeat(4, 1fr);
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="logo-area">
+            <div class="logo-inner">
+                <div class="logo-crest"></div>
+            </div>
+        </div>
+        <nav>
+            <a href="#">About Us</a>
+            <a href="#">HKRT</a>
+            <a href="#">HKPL</a>
+            <a href="#">Football Development</a>
+            <a href="#">Referees</a>
+            <a href="#">Competitions</a>
+            <a href="#">Football Training Centre</a>
+            <a href="#">CSR</a>
+            <a href="#">News</a>
+            <a href="#">Shop</a>
+        </nav>
+        <div class="lang-toggle">
+            <div class="globe"></div>
+            <span>EN</span>
+        </div>
+    </header>
+
+    <div class="sponsors">
+        <div class="sponsor-row">
+            <div class="sponsor-item img-placeholder">adidas</div>
+            <div class="sponsor-item img-placeholder" style="color: #00bcd4;">CHARGE SPOT</div>
+            <div class="sponsor-item img-placeholder" style="color: #d32f2f;">BANK OF CHINA</div>
+            <div class="sponsor-item img-placeholder" style="color: #f57c00;">The Hong Kong Jockey Club</div>
+        </div>
+        <div class="sponsor-row">
+            <div class="sponsor-item img-placeholder" style="background: #1a237e; color: white;">FIFA</div>
+            <div class="sponsor-item img-placeholder" style="background: #e91e23; color: white;">AFC</div>
+            <div class="sponsor-item img-placeholder" style="background: #fbbc04; color: #1a1a1a;">EA SPORTS FC</div>
+        </div>
+    </div>
+
+    <div class="footer-main">
+        <div class="footer-grid">
+            <div class="footer-col">
+                <h3>About HKFA</h3>
+                <ul>
+                    <li><a href="#">Organisation</a></li>
+                    <li><a href="#">Board of Directors</a></li>
+                    <li><a href="#">Vision and Mission</a></li>
+                    <li><a href="#">Job Vacancies</a></li>
+                    <li><a href="#">Governing Rules & Policies</a></li>
+                    <li><a href="#">Members</a></li>
+                    <li><a href="#">Download</a></li>
+                    <li><a href="#">Get Involved</a></li>
+                    <li><a href="#">Contact Us</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h3>HKPL</h3>
+                <ul>
+                    <li><a href="#">HKPL</a></li>
+                    <li><a href="#">Senior Shield</a></li>
+                    <li><a href="#">FA Cup</a></li>
+                    <li><a href="#">Community Cup</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h3>HKRT</h3>
+                <ul>
+                    <li><a href="#">Men's Senior</a></li>
+                    <li><a href="#">Women's Senior</a></li>
+                    <li><a href="#">Futsal</a></li>
+                    <li><a href="#">Youth</a></li>
+                    <li><a href="#">eFootball</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h3>Football Development</h3>
+                <ul>
+                    <li><a href="#">Youth & Grassroot</a></li>
+                    <li><a href="#">Women's Football</a></li>
+                    <li><a href="#">Coach Education</a></li>
+                    <li><a href="#">Futsal</a></li>
+                    <li><a href="#">eFootball</a></li>
+                    <li><a href="#">HK Football Curriculum</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h3>Referees</h3>
+                <ul>
+                    <li><a href="#">Referees</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h3>Competition</h3>
+                <ul>
+                    <li><a href="#">Leagues</a></li>
+                    <li><a href="#">Fixtures</a></li>
+                    <li><a href="#">League Rank</a></li>
+                    <li><a href="#">Top Scorer</a></li>
+                    <li><a href="#">Yellow Card Record</a></li>
+                    <li><a href="#">Red Card Record</a></li>
+                    <li><a href="#">Disciplines</a></li>
+                    <li><a href="#">Match Rules</a></li>
+                    <li><a href="#">Players</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h3>Football Training Centre</h3>
+                <ul>
+                    <li><a href="#">Football Training Centre</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h3>News</h3>
+                <ul>
+                    <li><a href="#">Announcements</a></li>
+                    <li><a href="#">Competitions</a></li>
+                    <li><a href="#">HKRT</a></li>
+                    <li><a href="#">Media Accreditation</a></li>
+                    <li><a href="#">Tendering</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <div class="footer-bottom">
+        <div class="footer-logo-center">
+            <div class="logo-crest"></div>
+        </div>
+        <p class="copyright">Copyright (c) 2025 The Football Association of Hong Kong, China Limited. All rights reserved.</p>
+    </div>
+</body>
+</html>
+```

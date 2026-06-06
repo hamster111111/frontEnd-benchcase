@@ -1,0 +1,442 @@
+你是一个严谨的前端工程师。请根据输入材料生成一个完整、可直接运行的单文件 HTML。
+
+要求：
+1. 输出必须包含 <!DOCTYPE html>、<html>、<head>、<style>、<body>。
+2. CSS 写在 <style> 中，不要依赖外部 CSS、JS、图片、字体或网络资源。
+3. 尽可能还原截图或描述中的布局、颜色、字号、间距、组件层级和视觉密度。
+4. 如果截图中有真实图片、头像、图标或复杂素材，无法复用原图时用 CSS 色块/渐变/简化图形占位，但尺寸和位置要对齐。
+5. 如果任务涉及交互，请在单文件内写必要的 JavaScript。
+6. 只输出一个 fenced code block，格式为 ```html ... ```，不要输出额外解释。
+
+Benchmark：fullfront
+任务类型：Interaction_Authoring
+原始任务提示：
+
+You are a web developer proficient in HTML, CSS, and JavaScript. The user will provide you with two web page screenshots. The first screenshot shows the original state of the web page, while the second screenshot shows the result after the user has performed a specific operation on a particular element on the page. Please carefully analyze the differences between the two images and determine the type of interaction. You must set the ID of the interactive element to "#InteractionPart", so please ensure that this ID is unique and that the element is interactive. The possible types of interactions and the requirements for each type are as follows:
+
+**Interaction_click_1**
+- Function Description: When the element with id="InteractionPart" is clicked, a dropdown box should be displayed. The content of the dropdown should be generated based on the understanding of the page content, and its position, size, and style should be adapted according to the page structure.
+- The element must include the attribute aria-expanded="false", which changes to aria-expanded="true" upon clicking.
+- The dropdown content must use one of the following selectors: .dropdown-menu, .dropdown-content, or [role='menu'].
+- Ensure that the dropdown box is hidden before clicking and visible after clicking.
+**Interaction_click_2**
+- Function Description: Generate a checkbox that can be checked by clicking, with its id='InteractionPart'. The associated text content and position should be adapted based on the layout and context of the page. Ensure that the checkbox can toggle its state (checked/unchecked) when clicked.
+- Must use an <input type="checkbox"> element or an element with the attribute [role='checkbox'].
+- After clicking, it must display a checked state (:checked or aria-checked='true').
+**Interaction_click_3**
+- Function Description: Implement an interactive element (id="InteractionPart") that changes its background color significantly when clicked. The color change should be determined based on the page design style, but it must be detectable.
+- The initial background color must not be transparent or white.
+- The background color must change significantly after clicking (it cannot change from one transparency to another).
+**Interaction_click_4**
+- Function Description: Implement an interactive element (id="InteractionPart") that, when clicked, triggers the display of a modal window or dialog box. The content of the popup should be generated based on the existing content of the page and should match the page style.
+- After clicking, an element that matches one of the following selectors must be displayed: .modal, .dialog, [role='dialog'], or [aria-modal='true'].
+- The modal window must be hidden before clicking.
+**Interaction_click_5**
+- Function Description: Implement an interactive element (id="InteractionPart") that, when clicked, displays a tooltip providing additional information or explanation. The position, style, and content of the tooltip should be adapted according to the needs of the page.
+- After clicking, one of the following elements must be displayed: an element with the class .tooltip or .tip; an element with the attribute [role='tooltip'] or [data-tooltip]; an element with an ID ending in Tooltip or tooltip; an element with the class .tooltip-text inside #InteractionPart.
+**Interaction_click_6**
+- Function Description: Implement an interactive element (id="InteractionPart") that, when clicked, displays a text box or input area for users to enter content. The position and size of the text box should be adjusted according to the page design and should include a clear input prompt or label.
+- After clicking, one of the following elements must be displayed: <input type='text'> or <input type='email'>; <textarea>; an element with the attribute [contenteditable='true']; an element with the attribute [role='textbox']; or the container with the ID newsletterContainer becomes visible.
+
+You need to decide for yourself what kind of interaction to use, and you must meet the requirements for the implementation of each type of interaction.
+If any images are required in the page code, you must classify each image into one of the following categories: People, Animal, Food, Plant, Landscape, Icon, Logo, Architecture, Technology, Transportation, Map, Texture, Art, Movie, Other. The URL for each image is in the format: https://raw.githubusercontent.com/Mikivishy/imgs/main/folder1/{category}.jpg. For example, if you want to use an image from the Animal category, the image URL would be: https://raw.githubusercontent.com/Mikivishy/imgs/main/folder1/Animal.jpg. Since the width and height of each image in the URLs are unknown, you need to set the image sizes manually in the HTML code to ensure that the rendered result matches the layout requirements of the webpage image.
+Your code should accurately reflect the interaction and restore the overall static appearance of the page, ensuring the changes in the screenshots are faithfully reproduced. Please place the HTML, CSS, and JavaScript code in a single file, and your response must be a code that starts with `<!DOCTYPE html>` and ends with `</html>`, without any other content.
+
+
+Interaction type: click_1
+
+Current HTML:
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>ePageSafer Non ActiveX - WhatPulse</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f1f3f5;
+      color: #333;
+    }
+    header {
+      background: white;
+      border-bottom: 1px solid #e0e0e0;
+      display: flex;
+      align-items: center;
+      padding: 10px 20px;
+      justify-content: space-between;
+    }
+    header .left {
+      display: flex;
+      align-items: center;
+    }
+    header .logo {
+      height: 40px;
+      margin-right: 10px;
+    }
+    header nav a {
+      margin: 0 10px;
+      text-decoration: none;
+      color: #444;
+      font-weight: bold;
+    }
+    header .auth-buttons button {
+      border: 1px solid #ccc;
+      background: #fff;
+      margin-left: 10px;
+      padding: 5px 10px;
+      cursor: pointer;
+    }
+    header .auth-buttons .signup {
+      background: #4da5e2;
+      color: white;
+      border: none;
+    }
+    .breadcrumb {
+      background: #e1e6ea;
+      padding: 10px 25px;
+      font-size: 14px;
+    }
+    .breadcrumb a {
+      color: #888;
+      text-decoration: none;
+    }
+    .breadcrumb span {
+      color: #333;
+    }
+    .main-container {
+      display: flex;
+      padding: 20px 25px;
+    }
+    .sidebar {
+      width: 230px;
+      background: #f5f7f9;
+      padding: 20px;
+      border-right: 1px solid #ddd;
+    }
+    .sidebar h3 {
+      margin-bottom: 10px;
+    }
+    .sidebar .section {
+      margin-bottom: 20px;
+    }
+    .sidebar .blue-btn {
+      background: #4da5e2;
+      color: white;
+      border: none;
+      padding: 10px;
+      width: 100%;
+      font-weight: bold;
+      cursor: pointer;
+    }
+    .sidebar .share-icons img {
+      width: 24px;
+      height: 24px;
+      margin-right: 10px;
+      cursor: pointer;
+    }
+    .content {
+      flex: 1;
+      background: white;
+      padding: 25px;
+    }
+    .content h2 {
+      margin-bottom: 20px;
+    }
+    .stats {
+      display: flex;
+      justify-content: space-between;
+    }
+    .stats .left {
+      width: 50%;
+    }
+    .stats .left p {
+      margin-bottom: 8px;
+    }
+    .stats .charts {
+      display: flex;
+      gap: 30px;
+    }
+    .chart {
+      text-align: center;
+    }
+    .chart img {
+      width: 120px;
+      height: 120px;
+      margin-bottom: 10px;
+    }
+    .chart .legend {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 8px;
+      font-size: 14px;
+    }
+    .legend .dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      display: inline-block;
+      margin-right: 5px;
+    }
+    .green { background: #92d050; }
+    .blue { background: #00b0f0; }
+
+    .table-section {
+      background: #f5f5f5;
+      margin-top: 30px;
+      padding: 20px;
+    }
+    .tabs {
+      display: flex;
+      border-bottom: 1px solid #ccc;
+    }
+    .tabs div {
+      padding: 10px 20px;
+      background: white;
+      border: 1px solid #ccc;
+      border-bottom: none;
+      cursor: pointer;
+    }
+    .tabs div.active {
+      background: #fff;
+      font-weight: bold;
+    }
+    .table-controls {
+      display: flex;
+      justify-content: space-between;
+      margin: 10px 0;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      background: white;
+    }
+    th, td {
+      padding: 10px;
+      text-align: left;
+      border: 1px solid #ccc;
+    }
+    th {
+      background: #eee;
+    }
+    
+    /* Dropdown styles */
+    .dropdown-container {
+      position: relative;
+      display: inline-block;
+    }
+    
+    .dropdown-menu {
+      display: none;
+      position: absolute;
+      background-color: white;
+      min-width: 250px;
+      box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+      z-index: 1000;
+      border-radius: 4px;
+      left: 0;
+      top: 100%;
+      padding: 10px 0;
+      margin-top: 5px;
+    }
+    
+    .dropdown-menu.show {
+      display: block;
+    }
+    
+    .dropdown-item {
+      padding: 10px 15px;
+      color: #333;
+      text-decoration: none;
+      display: block;
+      border-bottom: 1px solid #f1f1f1;
+    }
+    
+    .dropdown-item:last-child {
+      border-bottom: none;
+    }
+    
+    .dropdown-item:hover {
+      background-color: #f5f7f9;
+    }
+    
+    .dropdown-header {
+      padding: 10px 15px;
+      color: #999;
+      font-weight: bold;
+      font-size: 0.9em;
+    }
+    
+    h3 {
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="left">
+      <img src="https://raw.githubusercontent.com/Mikivishy/imgs/main/folder1/Logo.jpg" alt="Logo" class="logo">
+      <nav>
+        <a href="#">Home</a>
+        <a href="#">Downloads</a>
+        <a href="#">Statistics</a>
+        <a href="#">Help</a>
+        <a href="#">Premium</a>
+      </nav>
+    </div>
+    <div class="auth-buttons">
+      <button>LOGIN</button>
+      <button class="signup">SIGN UP</button>
+    </div>
+  </header>
+
+  <div class="breadcrumb">
+    <a href="#">Home</a> / 
+    <a href="#">Stats</a> / 
+    <a href="#">Applications</a> / 
+    <span>ePageSafer Non ActiveX</span>
+  </div>
+
+  <div class="main-container">
+    <aside class="sidebar">
+      <div class="dropdown-container">
+        <h3 id="InteractionPart">ePageSafer Non ActiveX</h3>
+        <div class="dropdown-menu">
+          <div class="dropdown-header">Application Information</div>
+          <a href="#" class="dropdown-item">View details</a>
+          <a href="#" class="dropdown-item">Download v2.5.1.66</a>
+          <a href="#" class="dropdown-item">Version history</a>
+          <div class="dropdown-header">Statistics</div>
+          <a href="#" class="dropdown-item">Usage statistics</a>
+          <a href="#" class="dropdown-item">User demographics</a>
+          <a href="#" class="dropdown-item">Compatibility details</a>
+          <div class="dropdown-header">Actions</div>
+          <a href="#" class="dropdown-item">Submit feedback</a>
+          <a href="#" class="dropdown-item">Report a bug</a>
+        </div>
+      </div>
+      <button class="blue-btn">Help Improve</button>
+
+      <div class="section">
+        <h4>CATEGORY</h4>
+        <p>None yet. Help <a href="#">complete this information.</a></p>
+      </div>
+
+      <div class="section">
+        <h4>TAGS</h4>
+        <p>None yet. Help <a href="#">complete this information.</a></p>
+      </div>
+
+      <div class="section">
+        <h4>SHARE</h4>
+        <div class="share-icons">
+          <img src="https://raw.githubusercontent.com/Mikivishy/imgs/main/folder1/Icon.jpg" alt="Facebook">
+          <img src="https://raw.githubusercontent.com/Mikivishy/imgs/main/folder1/Icon.jpg" alt="Twitter">
+          <img src="https://raw.githubusercontent.com/Mikivishy/imgs/main/folder1/Icon.jpg" alt="Pinterest">
+          <img src="https://raw.githubusercontent.com/Mikivishy/imgs/main/folder1/Icon.jpg" alt="Deezer">
+          <img src="https://raw.githubusercontent.com/Mikivishy/imgs/main/folder1/Icon.jpg" alt="LinkedIn">
+        </div>
+      </div>
+    </aside>
+
+    <section class="content">
+      <h2>Stats</h2>
+      <div class="stats">
+        <div class="left">
+          <p>People using it: <strong>21</strong></p>
+          <p>Computers that have it: <strong>21</strong></p>
+          <p>Different versions: <strong>6</strong></p>
+          <p>Latest version: <strong>2.5.1.66</strong></p>
+          <p>Keys: <strong>160</strong></p>
+          <p>Clicks: <strong>609</strong></p>
+          <p>Mouse Scrolls: <strong>247</strong></p>
+          <p>Mouse Distance: <strong>0.014mi</strong></p>
+          <p>Time Used: <strong>2 hours, 24 minutes, 50 seconds</strong></p>
+          <p>Average Time Used: <strong>6 minutes, 54 seconds</strong></p>
+        </div>
+        <div class="charts">
+          <div class="chart">
+            <div>Breakdown by OS</div>
+            <img src="https://raw.githubusercontent.com/Mikivishy/imgs/main/folder1/Chart.jpg" alt="Breakdown Chart">
+            <div class="legend"><span class="dot green"></span> Windows</div>
+          </div>
+          <div class="chart">
+            <div>Keys/Clicks Ratio</div>
+            <img src="https://raw.githubusercontent.com/Mikivishy/imgs/main/folder1/Chart.jpg" alt="Keys/Clicks Chart">
+            <div class="legend">
+              <span class="dot green"></span> Keys
+              <span class="dot blue"></span> Clicks
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="table-section">
+        <div class="tabs">
+          <div class="active">🔧 Versions of Application</div>
+          <div>👥 People Using Application</div>
+        </div>
+        <div class="table-controls">
+          <div>
+            Show 
+            <select>
+              <option>10</option>
+              <option>25</option>
+              <option>50</option>
+              <option>100</option>
+            </select> entries
+          </div>
+          <div>
+            Search: <input type="text"/>
+          </div>
+        </div>
+        <table>
+          <thead>
+            <tr>
+              <th>Version</th>
+              <th>OS</th>
+              <th>Last Seen</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>2.5.1.66</td>
+              <td><img src="https://raw.githubusercontent.com/Mikivishy/imgs/main/folder1/Icon.jpg" width="20" alt="OS Icon"></td>
+              <td>2023-01-25</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+  </div>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      const dropdownTrigger = document.getElementById('InteractionPart');
+      const dropdownMenu = document.querySelector('.dropdown-menu');
+      
+      // Toggle dropdown when clicking on the trigger element
+      dropdownTrigger.addEventListener('click', function(e) {
+        e.stopPropagation();
+        dropdownMenu.classList.toggle('show');
+      });
+      
+      // Close dropdown when clicking anywhere else on the page
+      document.addEventListener('click', function(e) {
+        if (!dropdownMenu.contains(e.target) && e.target !== dropdownTrigger) {
+          dropdownMenu.classList.remove('show');
+        }
+      });
+      
+      // Prevent closing when clicking inside the dropdown
+      dropdownMenu.addEventListener('click', function(e) {
+        e.stopPropagation();
+      });
+    });
+  </script>
+</body>
+</html>
+```

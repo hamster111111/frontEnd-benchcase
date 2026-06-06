@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Best Buy - Choose Country</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #003399 0%, #0066cc 30%, #0099ff 60%, #66ccff 100%);
+            min-height: 100vh;
+            color: white;
+        }
+
+        .language-selector {
+            position: fixed;
+            top: 8px;
+            right: 20px;
+            display: flex;
+            gap: 12px;
+            z-index: 100;
+        }
+
+        .language-selector a {
+            color: white;
+            text-decoration: none;
+            font-size: 12px;
+            padding: 4px 8px;
+            background: rgba(0, 0, 0, 0.6);
+            border-radius: 3px;
+            transition: background-color 0.2s;
+        }
+
+        .language-selector a:hover {
+            background: rgba(0, 0, 0, 0.8);
+        }
+
+        .main-content {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 80px 40px 40px;
+        }
+
+        .logo-placeholder {
+            width: 80px;
+            height: 60px;
+            background: rgba(200, 190, 170, 0.7);
+            border-radius: 5px;
+            margin-bottom: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            color: rgba(100, 90, 70, 0.5);
+        }
+
+        .welcome-text {
+            font-size: 42px;
+            font-weight: bold;
+            line-height: 1.1;
+            margin-bottom: 40px;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
+        }
+
+        .welcome-text span {
+            display: block;
+        }
+
+        .country-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+            margin-bottom: 50px;
+        }
+
+        .country-option {
+            text-align: center;
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+
+        .country-option:hover {
+            transform: translateY(-5px);
+        }
+
+        .country-image {
+            width: 100%;
+            aspect-ratio: 4/3;
+            background: rgba(200, 190, 170, 0.7);
+            border-radius: 5px;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 32px;
+            color: rgba(100, 90, 70, 0.5);
+            border: 1px solid rgba(150, 140, 120, 0.3);
+        }
+
+        .country-name {
+            font-size: 18px;
+            font-weight: 600;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
+        }
+
+        .info-section {
+            margin-top: 40px;
+            border-top: 1px solid rgba(255, 255, 255, 0.3);
+            padding-top: 30px;
+        }
+
+        .info-title {
+            font-size: 18px;
+            font-weight: bold;
+            margin-bottom: 15px;
+        }
+
+        .info-text {
+            font-size: 16px;
+            line-height: 1.5;
+            margin-bottom: 20px;
+        }
+
+        .info-link {
+            color: white;
+            text-decoration: none;
+            font-size: 14px;
+            display: inline-block;
+            margin-bottom: 30px;
+            border-bottom: 1px solid white;
+            padding-bottom: 2px;
+        }
+
+        .info-link:hover {
+            opacity: 0.8;
+        }
+
+        .promo-image {
+            width: 100%;
+            aspect-ratio: 16/9;
+            background: rgba(200, 190, 170, 0.7);
+            border-radius: 5px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 48px;
+            color: rgba(100, 90, 70, 0.5);
+            border: 1px solid rgba(150, 140, 120, 0.3);
+        }
+
+        @media (max-width: 768px) {
+            .country-grid {
+                grid-template-columns: 1fr;
+                gap: 30px;
+            }
+            
+            .welcome-text {
+                font-size: 32px;
+            }
+            
+            .main-content {
+                padding: 100px 20px 40px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="language-selector">
+        <a href="#">English</a>
+        <a href="#">Français</a>
+        <a href="#">Español</a>
+    </div>
+    
+    <div class="main-content">
+        <div class="logo-placeholder">🏷️</div>
+        
+        <div class="welcome-text">
+            <span>Hello!</span>
+            <span>Choose a country.</span>
+        </div>
+        
+        <div class="country-grid">
+            <div class="country-option">
+                <div class="country-image">🇨🇦</div>
+                <div class="country-name">Canada</div>
+            </div>
+            <div class="country-option">
+                <div class="country-image">🇺🇸</div>
+                <div class="country-name">United States</div>
+            </div>
+        </div>
+        
+        <div class="info-section">
+            <div class="info-title">Shopping in the U.S.?</div>
+            <div class="info-text">
+                International customers can shop on www.bestbuy.com and have orders shipped to any U.S. address or U.S. store.
+            </div>
+            <a href="#" class="info-link">See More Details</a>
+            <div class="promo-image">🛍️</div>
+        </div>
+    </div>
+</body>
+</html>

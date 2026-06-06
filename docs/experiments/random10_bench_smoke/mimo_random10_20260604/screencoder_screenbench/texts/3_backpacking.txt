@@ -1,0 +1,1291 @@
+```html
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>backpacking - YouTube</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: Arial, "Microsoft YaHei", "PingFang TC", sans-serif;
+            background-color: #f9f9f9;
+            color: #0f0f0f;
+            overflow-x: hidden;
+        }
+        
+        /* Header */
+        .header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 56px;
+            background-color: #fff;
+            display: flex;
+            align-items: center;
+            padding: 0 16px;
+            z-index: 100;
+            box-shadow: 0 1px 0 rgba(0,0,0,0.1);
+        }
+        
+        .menu-button {
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            border: none;
+            background: none;
+            border-radius: 50%;
+        }
+        
+        .menu-button:hover {
+            background-color: #f2f2f2;
+        }
+        
+        .menu-icon {
+            width: 24px;
+            height: 24px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+        
+        .menu-icon span {
+            display: block;
+            width: 100%;
+            height: 2px;
+            background-color: #606060;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            margin-left: 16px;
+            cursor: pointer;
+        }
+        
+        .logo-icon {
+            width: 90px;
+            height: 20px;
+            background-color: #ff0000;
+            border-radius: 4px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            font-size: 16px;
+        }
+        
+        .logo-sub {
+            font-size: 10px;
+            vertical-align: super;
+            margin-left: 1px;
+        }
+        
+        .search-container {
+            flex: 1;
+            max-width: 640px;
+            margin: 0 40px;
+            display: flex;
+            align-items: center;
+        }
+        
+        .search-input {
+            flex: 1;
+            height: 40px;
+            padding: 0 16px;
+            border: 1px solid #ccc;
+            border-right: none;
+            border-radius: 20px 0 0 20px;
+            font-size: 16px;
+            outline: none;
+        }
+        
+        .search-input:focus {
+            border-color: #1c62b9;
+        }
+        
+        .search-button {
+            height: 40px;
+            width: 64px;
+            background-color: #f8f8f8;
+            border: 1px solid #ccc;
+            border-radius: 0 20px 20px 0;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .search-button:hover {
+            background-color: #f0f0f0;
+        }
+        
+        .search-icon {
+            width: 20px;
+            height: 20px;
+            background-color: #606060;
+            border-radius: 50%;
+        }
+        
+        .voice-button {
+            width: 40px;
+            height: 40px;
+            background-color: #f2f2f2;
+            border-radius: 50%;
+            margin-left: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+        }
+        
+        .voice-icon {
+            width: 12px;
+            height: 20px;
+            background-color: #606060;
+            border-radius: 6px;
+        }
+        
+        .header-right {
+            display: flex;
+            align-items: center;
+            margin-left: auto;
+        }
+        
+        .more-button {
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            border-radius: 50%;
+        }
+        
+        .more-button:hover {
+            background-color: #f2f2f2;
+        }
+        
+        .more-icon {
+            width: 20px;
+            height: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: space-between;
+        }
+        
+        .more-icon span {
+            width: 4px;
+            height: 4px;
+            background-color: #606060;
+            border-radius: 50%;
+        }
+        
+        .signin-button {
+            display: flex;
+            align-items: center;
+            padding: 8px 12px;
+            border: 1px solid #065fd4;
+            border-radius: 20px;
+            color: #065fd4;
+            font-size: 14px;
+            margin-left: 8px;
+            cursor: pointer;
+        }
+        
+        .signin-button:hover {
+            background-color: #f0f8ff;
+        }
+        
+        .signin-icon {
+            width: 24px;
+            height: 24px;
+            background-color: #065fd4;
+            border-radius: 50%;
+            margin-right: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 12px;
+        }
+        
+        /* Sidebar */
+        .sidebar {
+            position: fixed;
+            top: 56px;
+            left: 0;
+            width: 240px;
+            height: calc(100vh - 56px);
+            background-color: #fff;
+            overflow-y: auto;
+            padding: 12px 0;
+            z-index: 50;
+        }
+        
+        .sidebar-section {
+            padding: 0 12px;
+        }
+        
+        .sidebar-item {
+            display: flex;
+            align-items: center;
+            padding: 10px 12px;
+            border-radius: 10px;
+            cursor: pointer;
+            margin-bottom: 2px;
+        }
+        
+        .sidebar-item:hover {
+            background-color: #f2f2f2;
+        }
+        
+        .sidebar-item.active {
+            background-color: #f2f2f2;
+            font-weight: bold;
+        }
+        
+        .sidebar-icon {
+            width: 24px;
+            height: 24px;
+            margin-right: 24px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .sidebar-text {
+            font-size: 14px;
+            color: #0f0f0f;
+        }
+        
+        .sidebar-divider {
+            height: 1px;
+            background-color: #e5e5e5;
+            margin: 12px 0;
+        }
+        
+        .sidebar-section-title {
+            padding: 8px 12px;
+            font-size: 14px;
+            font-weight: bold;
+            color: #0f0f0f;
+        }
+        
+        .signin-sidebar {
+            padding: 0 12px;
+            margin: 16px 0;
+        }
+        
+        .signin-sidebar-text {
+            font-size: 14px;
+            color: #0f0f0f;
+            margin-bottom: 12px;
+            line-height: 1.4;
+        }
+        
+        /* Main Content */
+        .main {
+            margin-left: 240px;
+            margin-top: 56px;
+            padding: 0 24px;
+            background-color: #f9f9f9;
+        }
+        
+        /* Filter Chips */
+        .filter-container {
+            position: sticky;
+            top: 56px;
+            background-color: #f9f9f9;
+            padding: 16px 0;
+            z-index: 40;
+        }
+        
+        .filter-chips {
+            display: flex;
+            gap: 12px;
+            overflow-x: auto;
+            padding-bottom: 8px;
+        }
+        
+        .filter-chips::-webkit-scrollbar {
+            height: 8px;
+        }
+        
+        .filter-chips::-webkit-scrollbar-thumb {
+            background-color: #ccc;
+            border-radius: 4px;
+        }
+        
+        .filter-chip {
+            padding: 8px 12px;
+            background-color: #f2f2f2;
+            border: none;
+            border-radius: 8px;
+            font-size: 14px;
+            white-space: nowrap;
+            cursor: pointer;
+            color: #0f0f0f;
+        }
+        
+        .filter-chip:hover {
+            background-color: #e5e5e5;
+        }
+        
+        .filter-chip.active {
+            background-color: #0f0f0f;
+            color: #fff;
+        }
+        
+        .filter-button {
+            position: absolute;
+            right: 0;
+            top: 16px;
+            background-color: #f9f9f9;
+            border: none;
+            padding: 8px 12px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: #0f0f0f;
+        }
+        
+        /* Shorts Section */
+        .shorts-section {
+            margin-bottom: 24px;
+        }
+        
+        .section-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 16px;
+        }
+        
+        .shorts-icon {
+            width: 24px;
+            height: 24px;
+            margin-right: 12px;
+            background-color: #ff0000;
+            border-radius: 4px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 12px;
+        }
+        
+        .section-title {
+            font-size: 20px;
+            font-weight: bold;
+            color: #0f0f0f;
+        }
+        
+        .shorts-grid {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 16px;
+        }
+        
+        .shorts-card {
+            cursor: pointer;
+        }
+        
+        .shorts-thumbnail {
+            width: 100%;
+            aspect-ratio: 9/16;
+            background-color: #e5e5e5;
+            border-radius: 12px;
+            margin-bottom: 8px;
+            overflow: hidden;
+            position: relative;
+        }
+        
+        .shorts-thumbnail img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        .shorts-title {
+            font-size: 14px;
+            color: #0f0f0f;
+            line-height: 1.4;
+            margin-bottom: 4px;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+        
+        .shorts-meta {
+            font-size: 12px;
+            color: #606060;
+        }
+        
+        .shorts-options {
+            position: absolute;
+            top: 8px;
+            right: 8px;
+            width: 24px;
+            height: 24px;
+            background-color: rgba(0,0,0,0.6);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+        }
+        
+        .shorts-options-icon {
+            width: 16px;
+            height: 16px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: space-between;
+        }
+        
+        .shorts-options-icon span {
+            width: 3px;
+            height: 3px;
+            background-color: white;
+            border-radius: 50%;
+        }
+        
+        /* Show More Button */
+        .show-more-container {
+            display: flex;
+            justify-content: center;
+            margin: 24px 0;
+        }
+        
+        .show-more-button {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 12px 24px;
+            background-color: #f2f2f2;
+            border: none;
+            border-radius: 24px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: bold;
+            color: #0f0f0f;
+        }
+        
+        .show-more-button:hover {
+            background-color: #e5e5e5;
+        }
+        
+        .show-more-icon {
+            width: 12px;
+            height: 12px;
+            border: solid #0f0f0f;
+            border-width: 0 2px 2px 0;
+            transform: rotate(45deg);
+        }
+        
+        /* Video List */
+        .video-list {
+            display: grid;
+            grid-template-columns: repeat(12, 1fr);
+            gap: 16px;
+        }
+        
+        .video-card {
+            grid-column: span 12;
+            display: flex;
+            gap: 16px;
+            cursor: pointer;
+            margin-bottom: 16px;
+        }
+        
+        .video-card:hover .video-title {
+            color: #065fd4;
+        }
+        
+        .video-thumbnail-container {
+            width: 400px;
+            min-width: 360px;
+            flex-shrink: 0;
+        }
+        
+        .video-thumbnail {
+            width: 100%;
+            aspect-ratio: 16/9;
+            background-color: #e5e5e5;
+            border-radius: 12px;
+            overflow: hidden;
+            position: relative;
+        }
+        
+        .video-thumbnail img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        .shorts-badge {
+            position: absolute;
+            bottom: 8px;
+            right: 8px;
+            background-color: rgba(0,0,0,0.8);
+            color: white;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 12px;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+        
+        .shorts-badge-icon {
+            width: 16px;
+            height: 16px;
+            background-color: #ff0000;
+            border-radius: 4px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 10px;
+        }
+        
+        .video-info {
+            flex: 1;
+        }
+        
+        .video-title {
+            font-size: 16px;
+            font-weight: bold;
+            color: #0f0f0f;
+            line-height: 1.4;
+            margin-bottom: 8px;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+        
+        .video-meta {
+            font-size: 14px;
+            color: #606060;
+            margin-bottom: 12px;
+        }
+        
+        .video-channel {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 14px;
+            color: #606060;
+        }
+        
+        .channel-avatar {
+            width: 24px;
+            height: 24px;
+            background-color: #e5e5e5;
+            border-radius: 50%;
+        }
+        
+        .video-options {
+            width: 24px;
+            height: 24px;
+            margin-left: auto;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .video-options-icon {
+            width: 16px;
+            height: 16px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: space-between;
+        }
+        
+        .video-options-icon span {
+            width: 3px;
+            height: 3px;
+            background-color: #606060;
+            border-radius: 50%;
+        }
+        
+        /* Icon placeholders using CSS */
+        .icon-home {
+            width: 24px;
+            height: 24px;
+            background-color: #606060;
+            border-radius: 4px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 12px;
+        }
+        
+        .icon-shorts {
+            width: 24px;
+            height: 24px;
+            background-color: #ff0000;
+            border-radius: 4px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 12px;
+        }
+        
+        .icon-sub {
+            width: 24px;
+            height: 24px;
+            background-color: #ff0000;
+            border-radius: 4px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 12px;
+        }
+        
+        .icon-you {
+            width: 24px;
+            height: 24px;
+            background-color: #606060;
+            border-radius: 4px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 12px;
+        }
+        
+        .icon-history {
+            width: 24px;
+            height: 24px;
+            background-color: #606060;
+            border-radius: 4px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 12px;
+        }
+        
+        .icon-explore {
+            width: 24px;
+            height: 24px;
+            background-color: #ff0000;
+            border-radius: 4px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 12px;
+        }
+        
+        .icon-music {
+            width: 24px;
+            height: 24px;
+            background-color: #ff0000;
+            border-radius: 4px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 12px;
+        }
+        
+        .icon-movies {
+            width: 24px;
+            height: 24px;
+            background-color: #ff0000;
+            border-radius: 4px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 12px;
+        }
+        
+        .icon-live {
+            width: 24px;
+            height: 24px;
+            background-color: #ff0000;
+            border-radius: 4px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 12px;
+        }
+        
+        .icon-gaming {
+            width: 24px;
+            height: 24px;
+            background-color: #ff0000;
+            border-radius: 4px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 12px;
+        }
+        
+        .icon-news {
+            width: 24px;
+            height: 24px;
+            background-color: #ff0000;
+            border-radius: 4px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 12px;
+        }
+        
+        .icon-sports {
+            width: 24px;
+            height: 24px;
+            background-color: #ff0000;
+            border-radius: 4px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 12px;
+        }
+        
+        .icon-fashion {
+            width: 24px;
+            height: 24px;
+            background-color: #ff0000;
+            border-radius: 4px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 12px;
+        }
+        
+        .icon-podcast {
+            width: 24px;
+            background-color: #ff0000;
+            border-radius: 4px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 12px;
+        }
+        
+        .icon-yt-premium {
+            width: 24px;
+            height: 24px;
+            background-color: #ff0000;
+            border-radius: 4px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 12px;
+        }
+        
+        .icon-yt-music {
+            width: 24px;
+            height: 24px;
+            background-color: #ff0000;
+            border-radius: 4px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 12px;
+        }
+        
+        .icon-yt-kids {
+            width: 24px;
+            height: 24px;
+            background-color: #ff0000;
+            border-radius: 4px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 12px;
+        }
+        
+        .icon-settings {
+            width: 24px;
+            height: 24px;
+            background-color: #606060;
+            border-radius: 4px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 12px;
+        }
+        
+        .icon-flag {
+            width: 24px;
+            height: 24px;
+            background-color: #606060;
+            border-radius: 4px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 12px;
+        }
+        
+        .icon-help {
+            width: 24px;
+            height: 24px;
+            background-color: #606060;
+            border-radius: 4px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 12px;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <button class="menu-button">
+            <div class="menu-icon">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </button>
+        
+        <div class="logo">
+            <div class="logo-icon">
+                YouTube<span class="logo-sub">HK</span>
+            </div>
+        </div>
+        
+        <div class="search-container">
+            <input type="text" class="search-input" value="backpacking">
+            <button class="search-button">
+                <div class="search-icon"></div>
+            </button>
+            <div class="voice-button">
+                <div class="voice-icon"></div>
+            </div>
+        </div>
+        
+        <div class="header-right">
+            <div class="more-button">
+                <div class="more-icon">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+            </div>
+            <div class="signin-button">
+                <div class="signin-icon">👤</div>
+                登入
+            </div>
+        </div>
+    </header>
+    
+    <!-- Sidebar -->
+    <aside class="sidebar">
+        <div class="sidebar-section">
+            <div class="sidebar-item active">
+                <div class="sidebar-icon">
+                    <div class="icon-home">🏠</div>
+                </div>
+                <span class="sidebar-text">主頁</span>
+            </div>
+            
+            <div class="sidebar-item">
+                <div class="sidebar-icon">
+                    <div class="icon-shorts">S</div>
+                </div>
+                <span class="sidebar-text">Shorts</span>
+            </div>
+            
+            <div class="sidebar-item">
+                <div class="sidebar-icon">
+                    <div class="icon-sub">S</div>
+                </div>
+                <span class="sidebar-text">訂閱項目</span>
+            </div>
+            
+            <div class="sidebar-item">
+                <div class="sidebar-icon">
+                    <div class="icon-you">Y</div>
+                </div>
+                <span class="sidebar-text">個人中心</span>
+            </div>
+            
+            <div class="sidebar-item">
+                <div class="sidebar-icon">
+                    <div class="icon-history">H</div>
+                </div>
+                <span class="sidebar-text">記錄</span>
+            </div>
+        </div>
+        
+        <div class="signin-sidebar">
+            <div class="signin-sidebar-text">
+                登入即可對影片表示喜歡、留言並訂閱。
+            </div>
+            <div class="signin-button">
+                <div class="signin-icon">👤</div>
+                登入
+            </div>
+        </div>
+        
+        <div class="sidebar-divider"></div>
+        
+        <div class="sidebar-section">
+            <div class="sidebar-section-title">探索</div>
+            
+            <div class="sidebar-item">
+                <div class="sidebar-icon">
+                    <div class="icon-explore">🎵</div>
+                </div>
+                <span class="sidebar-text">音樂</span>
+            </div>
+            
+            <div class="sidebar-item">
+                <div class="sidebar-icon">
+                    <div class="icon-movies">🎬</div>
+                </div>
+                <span class="sidebar-text">電影</span>
+            </div>
+            
+            <div class="sidebar-item">
+                <div class="sidebar-icon">
+                    <div class="icon-live">📡</div>
+                </div>
+                <span class="sidebar-text">直播</span>
+            </div>
+            
+            <div class="sidebar-item">
+                <div class="sidebar-icon">
+                    <div class="icon-gaming">🎮</div>
+                </div>
+                <span class="sidebar-text">遊戲</span>
+            </div>
+            
+            <div class="sidebar-item">
+                <div class="sidebar-icon">
+                    <div class="icon-news">📰</div>
+                </div>
+                <span class="sidebar-text">體育</span>
+            </div>
+            
+            <div class="sidebar-item">
+                <div class="sidebar-icon">
+                    <div class="icon-fashion">👗</div>
+                </div>
+                <span class="sidebar-text">時尚美容</span>
+            </div>
+            
+            <div class="sidebar-item">
+                <div class="sidebar-icon">
+                    <div class="icon-podcast">🎙</div>
+                </div>
+                <span class="sidebar-text">Podcast</span>
+            </div>
+        </div>
+        
+        <div class="sidebar-divider"></div>
+        
+        <div class="sidebar-section">
+            <div class="sidebar-section-title">更多 YouTube 功能</div>
+            
+            <div class="sidebar-item">
+                <div class="sidebar-icon">
+                    <div class="icon-yt-premium">YT</div>
+                </div>
+                <span class="sidebar-text">YouTube Premium</span>
+            </div>
+            
+            <div class="sidebar-item">
+                <div class="sidebar-icon">
+                    <div class="icon-yt-music">YT</div>
+                </div>
+                <span class="sidebar-text">YouTube Music</span>
+            </div>
+            
+            <div class="sidebar-item">
+                <div class="sidebar-icon">
+                    <div class="icon-yt-kids">YT</div>
+                </div>
+                <span class="sidebar-text">YouTube Kids</span>
+            </div>
+        </div>
+        
+        <div class="sidebar-divider"></div>
+        
+        <div class="sidebar-section">
+            <div class="sidebar-item">
+                <div class="sidebar-icon">
+                    <div class="icon-settings">⚙️</div>
+                </div>
+                <span class="sidebar-text">設定</span>
+            </div>
+            
+            <div class="sidebar-item">
+                <div class="sidebar-icon">
+                    <div class="icon-flag">🚩</div>
+                </div>
+                <span class="sidebar-text">舉報紀錄</span>
+            </div>
+            
+            <div class="sidebar-item">
+                <div class="sidebar-icon">
+                    <div class="icon-help">?</div>
+                </div>
+                <span class="sidebar-text">說明</span>
+            </div>
+        </div>
+    </aside>
+    
+    <!-- Main Content -->
+    <main class="main">
+        <!-- Filter Chips -->
+        <div class="filter-container">
+            <div class="filter-chips">
+                <button class="filter-chip active">全部</button>
+                <button class="filter-chip">Shorts</button>
+                <button class="filter-chip">影片</button>
+                <button class="filter-chip">未看</button>
+                <button class="filter-chip">已觀看</button>
+                <button class="filter-chip">最近上載</button>
+                <button class="filter-chip">直播</button>
+                <button class="filter-chip">4 分鐘內</button>
+                <button class="filter-chip">4 至 20 分鐘</button>
+                <button class="filter-chip">20 分鐘以上</button>
+            </div>
+            <button class="filter-button">
+                篩選器
+                <span>☰</span>
+            </button>
+        </div>
+        
+        <!-- Shorts Section -->
+        <div class="shorts-section">
+            <div class="section-header">
+                <div class="shorts-icon">S</div>
+                <span class="section-title">Shorts</span>
+            </div>
+            
+            <div class="shorts-grid">
+                <div class="shorts-card">
+                    <div class="shorts-thumbnail">
+                        <div style="width:100%;height:100%;background:linear-gradient(135deg, #4a7c59, #2d5a3f);"></div>
+                        <div class="shorts-options">
+                            <div class="shorts-options-icon">
+                                <span></span>
+                                <span></span>
+                                <span></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="shorts-title">Solo hiking to camp in the dark. Pushing comfort ...</div>
+                    <div class="shorts-meta">收看次數：2.3M 次</div>
+                </div>
+                
+                <div class="shorts-card">
+                    <div class="shorts-thumbnail">
+                        <div style="width:100%;height:100%;background:linear-gradient(135deg, #8b7355, #5d4e37);"></div>
+                        <div class="shorts-options">
+                            <div class="shorts-options-icon">
+                                <span></span>
+                                <span></span>
+                                <span></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="shorts-title">Backpacking South East Asia | Trying my 70L Ospr...</div>
+                    <div class="shorts-meta">收看次數：101K 次</div>
+                </div>
+                
+                <div class="shorts-card">
+                    <div class="shorts-thumbnail">
+                        <div style="width:100%;height:100%;background:linear-gradient(135deg, #7ca0b8, #4a6a7a);"></div>
+                        <div class="shorts-options">
+                            <div class="shorts-options-icon">
+                                <span></span>
+                                <span></span>
+                                <span></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="shorts-title">5 tips for beginner backpackers 🎒 ...</div>
+                    <div class="shorts-meta">收看次數：130K 次</div>
+                </div>
+                
+                <div class="shorts-card">
+                    <div class="shorts-thumbnail">
+                        <div style="width:100%;height:100%;background:linear-gradient(135deg, #a8b87a, #7a8a5a);"></div>
+                        <div class="shorts-options">
+                            <div class="shorts-options-icon">
+                                <span></span>
+                                <span></span>
+                                <span></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="shorts-title">My backpacking gear for the Pacific Crest Trail. Go t...</div>
+                    <div class="shorts-meta">收看次數：1.4M 次</div>
+                </div>
+                
+                <div class="shorts-card">
+                    <div class="shorts-thumbnail">
+                        <div style="width:100%;height:100%;background:linear-gradient(135deg, #6a8a7a, #4a6a5a);"></div>
+                        <div class="shorts-options">
+                            <div class="shorts-options-icon">
+                                <span></span>
+                                <span></span>
+                                <span></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="shorts-title">I have the Osprey 55L Fairview pack! ...</div>
+                    <div class="shorts-meta">收看次數：97K 次</div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Show More Button -->
+        <div class="show-more-container">
+            <button class="show-more-button">
+                顯示更多
+                <div class="show-more-icon"></div>
+            </button>
+        </div>
+        
+        <!-- Video List -->
+        <div class="video-list">
+            <div class="video-card">
+                <div class="video-thumbnail-container">
+                    <div class="video-thumbnail">
+                        <div style="width:100%;height:100%;background:linear-gradient(135deg, #6a8a7a, #4a6a5a);"></div>
+                        <div class="shorts-badge">
+                            <div class="shorts-badge-icon">S</div>
+                            SHORTS
+                        </div>
+                    </div>
+                </div>
+                <div class="video-info">
+                    <div class="video-title">I have the Osprey 55L Fairview pack! #backpacking #solotravel #travel #outfits #whatsinmybag</div>
+                    <div class="video-meta">收看次數：97K 次 • 11 個月前</div>
+                    <div class="video-channel">
+                        <div class="channel-avatar"></div>
+                        <span>alittlehobbs</span>
+                    </div>
+                </div>
+                <div class="video-options">
+                    <div class="video-options-icon">
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="video-card">
+                <div class="video-thumbnail-container">
+                    <div class="video-thumbnail">
+                        <div style="width:100%;height:100%;background:linear-gradient(135deg, #5a7a6a, #3a5a4a);"></div>
+                    </div>
+                </div>
+                <div class="video-info">
+                    <div class="video-title">How to pack a trekking backpack ?</div>
+                    <div class="video-meta">收看次數：209K 次 • 1 年</div>
+                    <div class="video-channel">
+                        <div class="channel-avatar"></div>
+                        <span>Subraj N Poyanam</span>
+                    </div>
+                </div>
+                <div class="video-options">
+                    <div class="video-options-icon">
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+    
+    <script>
+        // Filter chips interaction
+        document.querySelectorAll('.filter-chip').forEach(chip => {
+            chip.addEventListener('click', function() {
+                document.querySelectorAll('.filter-chip').forEach(c => c.classList.remove('active'));
+                this.classList.add('active');
+            });
+        });
+        
+        // Show more button interaction
+        document.querySelector('.show-more-button').addEventListener('click', function() {
+            const shortsGrid = document.querySelector('.shorts-grid');
+            if (shortsGrid.children.length > 5) {
+                for (let i = 5; i < shortsGrid.children.length; i++) {
+                    shortsGrid.children[i].style.display = 'block';
+                }
+                this.textContent = '顯示更少';
+            } else {
+                // Add more shorts cards if needed
+                for (let i = 0; i < 3; i++) {
+                    const card = document.createElement('div');
+                    card.className = 'shorts-card';
+                    card.innerHTML = `
+                        <div class="shorts-thumbnail">
+                            <div style="width:100%;height:100%;background:linear-gradient(135deg, #${Math.floor(Math.random()*16777215).toString(16)}, #${Math.floor(Math.random()*16777215).toString(16)});"></div>
+                            <div class="shorts-options">
+                                <div class="shorts-options-icon">
+                                    <span></span>
+                                    <span></span>
+                                    <span></span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="shorts-title">更多背包旅行相關內容...</div>
+                        <div class="shorts-meta">收看次數：${Math.floor(Math.random() * 500) + 50}K 次</div>
+                    `;
+                    shortsGrid.appendChild(card);
+                }
+                this.innerHTML = '顯示更少 <div class="show-more-icon" style="transform: rotate(-135deg);"></div>';
+            }
+        });
+        
+        // Video cards hover effects
+        document.querySelectorAll('.video-card').forEach(card => {
+            card.addEventListener('mouseenter', function() {
+                this.style.backgroundColor = '#f9f9f9';
+            });
+            card.addEventListener('mouseleave', function() {
+                this.style.backgroundColor = 'transparent';
+            });
+        });
+    </script>
+</body>
+</html>
+```

@@ -1,0 +1,421 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Accounting Placement Services</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: #f5f5f5;
+      line-height: 1.6;
+    }
+
+    header {
+      background-color: #fff;
+      padding: 12px 50px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.08);
+      position: relative;
+      z-index: 100;
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .logo-img {
+      width: 50px;
+      height: 50px;
+      background: linear-gradient(135deg, #e85d26 0%, #d94a1a 100%);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .logo-img::before {
+      content: '';
+      width: 30px;
+      height: 30px;
+      background: #fff;
+      border-radius: 50%;
+      position: relative;
+    }
+
+    .logo-img::after {
+      content: '';
+      position: absolute;
+      width: 15px;
+      height: 15px;
+      background: #e85d26;
+      border-radius: 50%;
+    }
+
+    .logo-text strong {
+      font-size: 16px;
+      color: #1a1a1a;
+      letter-spacing: 1px;
+      display: block;
+    }
+
+    .logo-text span {
+      font-size: 11px;
+      color: #666;
+      letter-spacing: 0.5px;
+    }
+
+    nav {
+      display: flex;
+      align-items: center;
+      gap: 28px;
+    }
+
+    nav a {
+      text-decoration: none;
+      color: #333;
+      font-size: 14px;
+      font-weight: 500;
+      transition: color 0.2s;
+    }
+
+    nav a:hover {
+      color: #007bff;
+    }
+
+    .dropdown-trigger {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      cursor: pointer;
+    }
+
+    .dropdown-arrow {
+      font-size: 10px;
+      color: #666;
+    }
+
+    .btn-job {
+      padding: 10px 20px;
+      background-color: #007bff;
+      color: white !important;
+      border-radius: 25px;
+      font-weight: 600;
+      font-size: 14px;
+    }
+
+    .btn-job:hover {
+      background-color: #0056b3;
+      color: white !important;
+    }
+
+    .main-container {
+      max-width: 1200px;
+      margin: 30px auto;
+      background-color: #fff;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+      padding: 50px 60px;
+    }
+
+    h1 {
+      font-size: 32px;
+      font-weight: 400;
+      text-align: center;
+      margin-bottom: 25px;
+      color: #1a1a1a;
+    }
+
+    .divider {
+      border-top: 1px solid #e0e0e0;
+      margin-bottom: 35px;
+    }
+
+    .content-row {
+      display: flex;
+      gap: 50px;
+      margin-bottom: 40px;
+    }
+
+    .text-col {
+      flex: 1;
+    }
+
+    .image-col {
+      flex: 1;
+      position: relative;
+      min-height: 400px;
+    }
+
+    .main-image {
+      width: 100%;
+      height: 420px;
+      background: linear-gradient(180deg, 
+        #87CEEB 0%, 
+        #B8D4E8 30%, 
+        #C9A96E 50%, 
+        #B8956A 100%);
+      border-radius: 8px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .main-image::before {
+      content: '';
+      position: absolute;
+      bottom: 40%;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 120px;
+      height: 200px;
+      background: linear-gradient(180deg, #2C3E50 0%, #34495E 50%, #C9A96E 100%);
+      border-radius: 30px 30px 0 0;
+    }
+
+    .overlay-text {
+      position: absolute;
+      bottom: 20px;
+      left: 20px;
+      color: #fff;
+      font-size: 20px;
+      font-weight: 700;
+      text-shadow: 1px 1px 4px rgba(0,0,0,0.5);
+    }
+
+    .section-text {
+      font-size: 15px;
+      line-height: 1.7;
+      color: #333;
+      margin-bottom: 25px;
+    }
+
+    h2 {
+      font-size: 22px;
+      font-weight: 700;
+      margin-bottom: 15px;
+      color: #1a1a1a;
+    }
+
+    ul {
+      list-style-type: disc;
+      padding-left: 25px;
+    }
+
+    ul li {
+      font-size: 15px;
+      color: #333;
+      margin-bottom: 8px;
+      line-height: 1.6;
+    }
+
+    /* Dropdown Menu Styles */
+    .nav-item {
+      position: relative;
+    }
+
+    .dropdown-menu {
+      display: none;
+      position: absolute;
+      top: 100%;
+      left: -20px;
+      background-color: #fff;
+      min-width: 280px;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.15);
+      border-radius: 4px;
+      padding: 0;
+      z-index: 1000;
+    }
+
+    .dropdown-menu.active {
+      display: block;
+    }
+
+    .dropdown-title {
+      font-weight: 600;
+      font-size: 15px;
+      color: #007bff;
+      padding: 15px 20px;
+      border-bottom: 1px solid #eee;
+    }
+
+    .dropdown-menu a {
+      display: block;
+      padding: 12px 20px;
+      color: #333;
+      text-decoration: none;
+      font-size: 14px;
+      font-weight: 400;
+      border-bottom: 1px solid #f5f5f5;
+      transition: background-color 0.2s, color 0.2s;
+    }
+
+    .dropdown-menu a:last-child {
+      border-bottom: none;
+    }
+
+    .dropdown-menu a:hover {
+      background-color: #f8f9fa;
+      color: #007bff;
+    }
+
+    .bottom-section {
+      display: flex;
+      gap: 50px;
+      margin-top: 40px;
+    }
+
+    .bottom-col {
+      flex: 1;
+    }
+
+    @media(max-width: 768px) {
+      header {
+        padding: 10px 20px;
+        flex-direction: column;
+        gap: 15px;
+      }
+
+      nav {
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 15px;
+      }
+
+      .main-container {
+        padding: 30px 20px;
+        margin: 20px 10px;
+      }
+
+      .content-row,
+      .bottom-section {
+        flex-direction: column;
+        gap: 30px;
+      }
+
+      .dropdown-menu {
+        left: 0;
+        min-width: 200px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="logo">
+      <div class="logo-img"></div>
+      <div class="logo-text">
+        <strong>SEARCHLOGIC</strong>
+        <span>RECRUITING, LLC</span>
+      </div>
+    </div>
+    <nav>
+      <a href="#">Home</a>
+      <a href="#">About Us</a>
+      <div class="nav-item" id="InteractionPart">
+        <a href="#" class="dropdown-trigger">
+          Placement Specialties
+          <span class="dropdown-arrow">▼</span>
+        </a>
+        <div class="dropdown-menu" id="placementDropdown">
+          <div class="dropdown-title">Our Placement Specialties</div>
+          <a href="#">Controller & Assistant Controller</a>
+          <a href="#">General Ledger Staff & Senior Accountants</a>
+          <a href="#">Financial Analysis</a>
+          <a href="#">Financial Planning & Budgeting</a>
+          <a href="#">Permanent Placement Services</a>
+          <a href="#">Temporary Staffing Solutions</a>
+        </div>
+      </div>
+      <a href="#" class="dropdown-trigger">For Employers <span class="dropdown-arrow">▼</span></a>
+      <a href="#" class="dropdown-trigger">For Candidates <span class="dropdown-arrow">▼</span></a>
+      <a href="#">Contact Us</a>
+      <a href="#" class="btn-job">Find a Job</a>
+    </nav>
+  </header>
+
+  <div class="main-container">
+    <h1>Accounting Placement Services</h1>
+    <div class="divider"></div>
+
+    <div class="content-row">
+      <div class="text-col">
+        <p class="section-text">
+          Recognition. Personalization. Flexibility. These are the qualities that SearchLogic Recruiting utilizes to meet the ever-changing requirements of your complex business environment. We take the time to recognize your goals, personalize each solution, and remain flexible in providing diverse staffing options to keep you on the leading edge of your market. Plus, our services are contingency-based, meaning there's no investment until you identify the right candidate.
+        </p>
+        <h2>Permanent Placement: Networking for Blue Chip Prospects</h2>
+        <p class="section-text">
+          Hiring the right employee is one of the most critical elements in building a successful company. Despite the fact that competing for top talent is both complicated and time consuming, we combine our extensive professional network with a thorough prescreening process to identify those hard-to-find candidates.
+        </p>
+      </div>
+
+      <div class="image-col">
+        <div class="main-image">
+          <img src="https://raw.githubusercontent.com/Mikivishy/imgs/main/folder1/People.jpg" alt="Success Stories" style="width: 100%; height: 100%; object-fit: cover; border-radius: 8px;">
+          <div class="overlay-text">Success Stories</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="bottom-section">
+      <div class="bottom-col">
+        <h2>Temporary Placement: The 'Quick Fix' Done Right</h2>
+        <p class="section-text">
+          We understand that your staffing needs can shift due to seasonal trends, special projects, or unanticipated absences—and temporary employment can be the ideal solution. Whether you need help for a day, a month, or longer, we'll provide skilled professionals ready to jump in and produce results.
+        </p>
+      </div>
+
+      <div class="bottom-col">
+        <h2>Placement Specialties:</h2>
+        <ul>
+          <li>Controller, Asst. Controller</li>
+          <li>General Ledger (Staff & Sr. Accnt)</li>
+          <li>Financial Analysis</li>
+          <li>Financial Planning & Budgeting</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      const interactionPart = document.getElementById('InteractionPart');
+      const dropdownMenu = document.getElementById('placementDropdown');
+      let hideTimeout;
+
+      // Show dropdown on hover
+      interactionPart.addEventListener('mouseenter', function() {
+        clearTimeout(hideTimeout);
+        dropdownMenu.classList.add('active');
+      });
+
+      // Hide dropdown when mouse leaves the nav item
+      interactionPart.addEventListener('mouseleave', function() {
+        hideTimeout = setTimeout(function() {
+          dropdownMenu.classList.remove('active');
+        }, 150);
+      });
+
+      // Keep dropdown visible when hovering over it
+      dropdownMenu.addEventListener('mouseenter', function() {
+        clearTimeout(hideTimeout);
+      });
+
+      // Hide dropdown when mouse leaves the dropdown menu
+      dropdownMenu.addEventListener('mouseleave', function() {
+        hideTimeout = setTimeout(function() {
+          dropdownMenu.classList.remove('active');
+        }, 150);
+      });
+    });
+  </script>
+</body>
+</html>

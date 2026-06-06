@@ -1,0 +1,1025 @@
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kanban Board</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+        }
+
+        body {
+            display: flex;
+            background-color: #f4f5f7;
+            color: #172b4d;
+        }
+
+        /* 左侧导航栏 */
+        .sidebar {
+            width: 200px;
+            background-color: #fff;
+            border-right: 1px solid #dfe1e6;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            flex-shrink: 0;
+            padding: 16px 0;
+        }
+
+        .sidebar-header {
+            display: flex;
+            align-items: center;
+            padding: 0 16px 20px;
+            gap: 12px;
+        }
+
+        .sidebar-logo {
+            width: 32px;
+            height: 32px;
+            background-color: #ff5630;
+            border-radius: 4px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            font-size: 14px;
+        }
+
+        .sidebar-project-info h3 {
+            font-size: 14px;
+            font-weight: 600;
+            color: #172b4d;
+        }
+
+        .sidebar-project-info span {
+            font-size: 12px;
+            color: #6b778c;
+        }
+
+        .sidebar-nav {
+            flex: 1;
+        }
+
+        .nav-item {
+            display: flex;
+            align-items: center;
+            padding: 8px 16px;
+            color: #42526e;
+            font-size: 14px;
+            cursor: pointer;
+            gap: 12px;
+            text-decoration: none;
+        }
+
+        .nav-item.active {
+            background-color: #e7f3ff;
+            color: #0052cc;
+        }
+
+        .nav-item:hover:not(.active) {
+            background-color: #f4f5f7;
+        }
+
+        .nav-icon {
+            width: 20px;
+            height: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .sidebar-footer {
+            padding: 16px;
+            border-top: 1px solid #dfe1e6;
+        }
+
+        /* 主要内容区域 */
+        .main-content {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+
+        /* 顶部栏 */
+        .topbar {
+            padding: 16px 32px 0;
+            background-color: #fff;
+            border-bottom: 1px solid #dfe1e6;
+        }
+
+        .breadcrumb {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 14px;
+            color: #6b778c;
+            margin-bottom: 12px;
+        }
+
+        .breadcrumb span {
+            color: #0052cc;
+            cursor: pointer;
+        }
+
+        .breadcrumb span:hover {
+            text-decoration: underline;
+        }
+
+        .header-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 16px;
+        }
+
+        .page-title {
+            font-size: 24px;
+            font-weight: 600;
+            color: #172b4d;
+        }
+
+        .github-link {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: #42526e;
+            font-size: 14px;
+            text-decoration: none;
+        }
+
+        .filters {
+            display: flex;
+            align-items: center;
+            padding: 12px 0;
+            gap: 16px;
+        }
+
+        .search-box {
+            display: flex;
+            align-items: center;
+            background-color: #f4f5f7;
+            border-radius: 4px;
+            padding: 6px 12px;
+            width: 240px;
+        }
+
+        .search-box input {
+            border: none;
+            background: transparent;
+            outline: none;
+            font-size: 14px;
+            margin-left: 8px;
+            width: 100%;
+        }
+
+        .avatars {
+            display: flex;
+            align-items: center;
+            margin-left: 8px;
+        }
+
+        .avatar {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            background-color: #c3cfe2;
+            border: 2px solid #fff;
+            margin-left: -8px;
+            position: relative;
+        }
+
+        .avatar:first-child {
+            margin-left: 0;
+            background: linear-gradient(135deg, #89f7fe 0%, #66a6ff 100%);
+        }
+
+        .avatar:nth-child(2) {
+            background: linear-gradient(135deg, #fddb92 0%, #d1fdff 100%);
+        }
+
+        .avatar:nth-child(3) {
+            background: linear-gradient(135deg, #96fbc4 0%, #f9f586 100%);
+        }
+
+        .filter-btn {
+            background: none;
+            border: none;
+            font-size: 14px;
+            color: #42526e;
+            cursor: pointer;
+            padding: 6px;
+        }
+
+        .filter-btn:hover {
+            color: #0052cc;
+        }
+
+        /* 看板区域 */
+        .board {
+            display: flex;
+            padding: 24px 32px;
+            gap: 16px;
+            overflow-x: auto;
+            flex: 1;
+        }
+
+        .column {
+            width: 300px;
+            background-color: #ebecf0;
+            border-radius: 4px;
+            display: flex;
+            flex-direction: column;
+            max-height: calc(100vh - 200px);
+            flex-shrink: 0;
+        }
+
+        .column-header {
+            padding: 12px 16px;
+            font-size: 12px;
+            font-weight: 700;
+            color: #5e6c84;
+            text-transform: uppercase;
+            letter-spacing: 0.04em;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .column-list {
+            padding: 0 8px 8px;
+            overflow-y: auto;
+            flex: 1;
+        }
+
+        .issue-card {
+            background-color: #fff;
+            border-radius: 4px;
+            padding: 12px;
+            margin-bottom: 8px;
+            box-shadow: 0 1px 0 rgba(9, 30, 66, 0.25);
+            cursor: pointer;
+            transition: background-color 0.1s ease;
+        }
+
+        .issue-card:hover {
+            background-color: #f4f5f7;
+        }
+
+        .issue-title {
+            font-size: 14px;
+            line-height: 1.4;
+            margin-bottom: 8px;
+            color: #172b4d;
+        }
+
+        .issue-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .issue-meta {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .issue-type-icon {
+            width: 16px;
+            height: 16px;
+            background-color: #4c9aff;
+            border-radius: 2px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .issue-type-icon.story {
+            background-color: #36b37e;
+        }
+
+        .issue-priority {
+            color: #ff8b00;
+            font-size: 16px;
+        }
+
+        .issue-priority.low {
+            color: #006644;
+            transform: rotate(180deg);
+        }
+
+        .issue-avatar-small {
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            background-color: #c3cfe2;
+        }
+
+        /* 遮罩层和详情弹窗 */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.6);
+            z-index: 1000;
+            display: none;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal-overlay.active {
+            display: flex;
+        }
+
+        .modal-content {
+            background-color: #fff;
+            width: 800px;
+            max-height: 90vh;
+            border-radius: 8px;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+            box-shadow: 0 4px 24px rgba(0, 0, 0, 0.15);
+        }
+
+        .modal-header {
+            padding: 16px 24px;
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            border-bottom: 1px solid #dfe1e6;
+        }
+
+        .issue-id {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: #6b778c;
+            font-size: 14px;
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+
+        .issue-id .icon {
+            width: 16px;
+            height: 16px;
+            background-color: #4c9aff;
+            border-radius: 2px;
+        }
+
+        .modal-actions {
+            display: flex;
+            gap: 16px;
+            color: #6b778c;
+        }
+
+        .modal-action-btn {
+            background: none;
+            border: none;
+            color: #6b778c;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            font-size: 14px;
+        }
+
+        .modal-action-btn:hover {
+            color: #0052cc;
+        }
+
+        .close-btn {
+            font-size: 20px;
+            color: #6b778c;
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 4px;
+        }
+
+        .modal-body {
+            display: flex;
+            padding: 24px;
+            overflow-y: auto;
+            flex: 1;
+        }
+
+        .main-section {
+            flex: 2;
+            padding-right: 32px;
+        }
+
+        .issue-summary {
+            font-size: 24px;
+            font-weight: 600;
+            margin-bottom: 24px;
+            color: #172b4d;
+        }
+
+        .section-label {
+            font-size: 14px;
+            font-weight: 600;
+            color: #6b778c;
+            margin-bottom: 8px;
+        }
+
+        .issue-description {
+            font-size: 14px;
+            line-height: 1.6;
+            color: #172b4d;
+            margin-bottom: 24px;
+        }
+
+        .issue-type-detail {
+            margin-bottom: 24px;
+        }
+
+        .type-header {
+            font-size: 20px;
+            font-weight: 600;
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .type-desc {
+            font-size: 14px;
+            color: #172b4d;
+            line-height: 1.5;
+        }
+
+        .comments-section {
+            margin-top: 32px;
+        }
+
+        .comment-input {
+            display: flex;
+            gap: 12px;
+            margin-bottom: 24px;
+        }
+
+        .comment-avatar {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            background-color: #c3cfe2;
+            flex-shrink: 0;
+        }
+
+        .comment-box {
+            flex: 1;
+            border: 1px solid #dfe1e6;
+            border-radius: 4px;
+            padding: 12px;
+            font-size: 14px;
+            resize: vertical;
+            min-height: 60px;
+        }
+
+        .pro-tip {
+            font-size: 12px;
+            color: #6b778c;
+            margin-top: 4px;
+        }
+
+        .comment-item {
+            display: flex;
+            gap: 12px;
+            margin-top: 16px;
+        }
+
+        .comment-author {
+            font-size: 14px;
+            font-weight: 600;
+        }
+
+        .comment-time {
+            font-size: 12px;
+            color: #6b778c;
+            margin-left: 8px;
+        }
+
+        .comment-text {
+            font-size: 14px;
+            line-height: 1.5;
+            margin-top: 4px;
+        }
+
+        .sidebar-section {
+            flex: 1;
+            padding-left: 32px;
+            border-left: 1px solid #dfe1e6;
+            min-width: 200px;
+        }
+
+        .sidebar-field {
+            margin-bottom: 24px;
+        }
+
+        .field-label {
+            font-size: 12px;
+            color: #6b778c;
+            text-transform: uppercase;
+            font-weight: 600;
+            letter-spacing: 0.02em;
+            margin-bottom: 8px;
+        }
+
+        .field-value {
+            font-size: 14px;
+            color: #172b4d;
+        }
+
+        .status-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            background-color: #f4f5f7;
+            border: 1px solid #dfe1e6;
+            border-radius: 4px;
+            padding: 6px 12px;
+            font-size: 14px;
+            cursor: pointer;
+        }
+
+        .assignee-tag {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background-color: #f4f5f7;
+            border-radius: 16px;
+            padding: 4px 12px 4px 4px;
+            font-size: 14px;
+        }
+
+        .assignee-avatar {
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+        }
+
+        .add-more {
+            color: #0052cc;
+            font-size: 14px;
+            cursor: pointer;
+            margin-left: 8px;
+        }
+
+        .priority-high {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            color: #ff8b00;
+        }
+
+        .estimate-input {
+            width: 100%;
+            padding: 8px 12px;
+            border: 1px solid #dfe1e6;
+            border-radius: 4px;
+            font-size: 14px;
+            margin-top: 4px;
+        }
+
+        .time-tracking {
+            margin-top: 16px;
+        }
+
+        .time-bar {
+            height: 8px;
+            background-color: #dfe1e6;
+            border-radius: 4px;
+            overflow: hidden;
+            margin-bottom: 8px;
+        }
+
+        .time-progress {
+            height: 100%;
+            width: 50%;
+            background-color: #0052cc;
+        }
+
+        .time-info {
+            display: flex;
+            justify-content: space-between;
+            font-size: 12px;
+            color: #6b778c;
+        }
+
+        .timestamp {
+            font-size: 12px;
+            color: #6b778c;
+            margin-top: 16px;
+        }
+
+        /* 左侧导航栏图标样式 */
+        .icon-placeholder {
+            width: 20px;
+            height: 20px;
+            border-radius: 2px;
+            display: inline-block;
+        }
+
+        .icon-board { background-color: #0052cc; }
+        .icon-settings { background-color: #6554c0; }
+        .icon-releases { background-color: #00b8d9; }
+        .icon-issues { background-color: #ff5630; }
+        .icon-pages { background-color: #36b37e; }
+        .icon-reports { background-color: #ff8b00; }
+        .icon-components { background-color: #006644; }
+    </style>
+</head>
+<body>
+    <!-- 左侧导航栏 -->
+    <div class="sidebar">
+        <div class="sidebar-header">
+            <div class="sidebar-logo">J</div>
+            <div class="sidebar-project-info">
+                <h3>singularity 1.0</h3>
+                <span>Software project</span>
+            </div>
+        </div>
+        <div class="sidebar-nav">
+            <a href="#" class="nav-item active">
+                <div class="nav-icon"><span class="icon-placeholder icon-board"></span></div>
+                Kanban Board
+            </a>
+            <a href="#" class="nav-item">
+                <div class="nav-icon"><span class="icon-placeholder icon-settings"></span></div>
+                Project settings
+            </a>
+            <a href="#" class="nav-item" style="margin-top: 32px;">
+                <div class="nav-icon"><span class="icon-placeholder icon-releases"></span></div>
+                Releases
+            </a>
+            <a href="#" class="nav-item">
+                <div class="nav-icon"><span class="icon-placeholder icon-issues"></span></div>
+                Issues and filters
+            </a>
+            <a href="#" class="nav-item">
+                <div class="nav-icon"><span class="icon-placeholder icon-pages"></span></div>
+                Pages
+            </a>
+            <a href="#" class="nav-item">
+                <div class="nav-icon"><span class="icon-placeholder icon-reports"></span></div>
+                Reports
+            </a>
+            <a href="#" class="nav-item">
+                <div class="nav-icon"><span class="icon-placeholder icon-components"></span></div>
+                Components
+            </a>
+        </div>
+        <div class="sidebar-footer">
+            <div style="width: 24px; height: 24px; border-radius: 50%; background: #dfe1e6; display: flex; align-items: center; justify-content: center; font-size: 12px; color: #6b778c;">?</div>
+        </div>
+    </div>
+
+    <!-- 主要内容区域 -->
+    <div class="main-content">
+        <!-- 顶部导航 -->
+        <div class="topbar">
+            <div class="breadcrumb">
+                Projects / singularity 1.0 / Kanban Board
+            </div>
+            <div class="header-top">
+                <h1 class="page-title">Kanban board</h1>
+                <a href="#" class="github-link">
+                    <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg>
+                    Github Repo
+                </a>
+            </div>
+            <div class="filters">
+                <div class="search-box">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#6b778c" stroke-width="2"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+                    <input type="text" placeholder="Search issues">
+                </div>
+                <div class="avatars">
+                    <div class="avatar" style="background: linear-gradient(135deg, #96fbc4 0%, #f9f586 100%);"></div>
+                    <div class="avatar" style="background: linear-gradient(135deg, #fddb92 0%, #d1fdff 100%);"></div>
+                    <div class="avatar" style="background: linear-gradient(135deg, #89f7fe 0%, #66a6ff 100%);"></div>
+                </div>
+                <button class="filter-btn">Only My Issues</button>
+                <button class="filter-btn">Recently Updated</button>
+            </div>
+        </div>
+
+        <!-- 看板区域 -->
+        <div class="board">
+            <!-- BACKLOG 列 -->
+            <div class="column">
+                <div class="column-header">BACKLOG 4</div>
+                <div class="column-list">
+                    <div class="issue-card" onclick="openModal('issue1')">
+                        <div class="issue-title">This is an issue of type: Task.</div>
+                        <div class="issue-footer">
+                            <div class="issue-meta">
+                                <div class="issue-type-icon">
+                                    <svg width="12" height="12" viewBox="0 0 24 24" fill="white"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg>
+                                </div>
+                                <div class="issue-priority">
+                                    <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 4l-8 8h5v8h6v-8h5z"/></svg>
+                                </div>
+                            </div>
+                            <div class="issue-avatar-small" style="background: linear-gradient(135deg, #96fbc4 0%, #f9f586 100%);"></div>
+                        </div>
+                    </div>
+                    <div class="issue-card" onclick="openModal('issue2')">
+                        <div class="issue-title">Click on an issue to see what's behind it.</div>
+                        <div class="issue-footer">
+                            <div class="issue-meta">
+                                <div class="issue-type-icon">
+                                    <svg width="12" height="12" viewBox="0 0 24 24" fill="white"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg>
+                                </div>
+                                <div class="issue-priority low">
+                                    <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 4l-8 8h5v8h6v-8h5z"/></svg>
+                                </div>
+                            </div>
+                            <div class="issue-avatar-small" style="background: linear-gradient(135deg, #96fbc4 0%, #f9f586 100%);"></div>
+                        </div>
+                    </div>
+                    <div class="issue-card" onclick="openModal('issue3')">
+                        <div class="issue-title">Try dragging issues to different columns to transition their status.</div>
+                        <div class="issue-footer">
+                            <div class="issue-meta">
+                                <div class="issue-type-icon story">
+                                    <svg width="12" height="12" viewBox="0 0 24 24" fill="white"><rect x="3" y="3" width="18" height="18" rx="2"/></svg>
+                                </div>
+                                <div class="issue-priority">
+                                    <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 4l-8 8h5v8h6v-8h5z"/></svg>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="issue-card" onclick="openModal('issue4')">
+                        <div class="issue-title">You can use rich text with images in issue descriptions.</div>
+                        <div class="issue-footer">
+                            <div class="issue-meta">
+                                <div class="issue-type-icon story">
+                                    <svg width="12" height="12" viewBox="0 0 24 24" fill="white"><rect x="3" y="3" width="18" height="18" rx="2"/></svg>
+                                </div>
+                                <div class="issue-priority low">
+                                    <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 4l-8 8h5v8h6v-8h5z"/></svg>
+                                </div>
+                            </div>
+                            <div class="issue-avatar-small" style="background: linear-gradient(135deg, #fddb92 0%, #d1fdff 100%);"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- SELECTED FOR DEVELOPMENT 列 -->
+            <div class="column">
+                <div class="column-header">SELECTED FOR DEVELOPMENT 2</div>
+                <div class="column-list">
+                    <div class="issue-card" onclick="openModal('issue5')">
+                        <div class="issue-title">Each issue can be assigned priority from lowest to highest.</div>
+                        <div class="issue-footer">
+                            <div class="issue-meta">
+                                <div class="issue-type-icon">
+                                    <svg width="12" height="12" viewBox="0 0 24 24" fill="white"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg>
+                                </div>
+                                <div class="issue-priority">
+                                    <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 4l-8 8h5v8h6v-8h5z"/></svg>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="issue-card" onclick="openModal('issue6')">
+                        <div class="issue-title">Each issue has a single reporter but can have multiple assignees.</div>
+                        <div class="issue-footer">
+                            <div class="issue-meta">
+                                <div class="issue-type-icon story">
+                                    <svg width="12" height="12" viewBox="0 0 24 24" fill="white"><rect x="3" y="3" width="18" height="18" rx="2"/></svg>
+                                </div>
+                                <div class="issue-priority">
+                                    <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 4l-8 8h5v8h6v-8h5z"/></svg>
+                                </div>
+                            </div>
+                            <div style="display: flex;">
+                                <div class="issue-avatar-small" style="background: linear-gradient(135deg, #fddb92 0%, #d1fdff 100%);"></div>
+                                <div class="issue-avatar-small" style="background: linear-gradient(135deg, #96fbc4 0%, #f9f586 100%); margin-left: -8px;"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- IN PROGRESS 列 -->
+            <div class="column">
+                <div class="column-header">IN PROGRESS 1</div>
+                <div class="column-list">
+                    <div class="issue-card" onclick="openModal('issue7')">
+                        <div class="issue-title">You can track how many hours were spent working on an issue, and how many hours remain.</div>
+                        <div class="issue-footer">
+                            <div class="issue-meta">
+                                <div class="issue-type-icon">
+                                    <svg width="12" height="12" viewBox="0 0 24 24" fill="white"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg>
+                                </div>
+                                <div class="issue-priority low">
+                                    <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 4l-8 8h5v8h6v-8h5z"/></svg>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- DONE 列 -->
+            <div class="column">
+                <div class="column-header">DONE 1</div>
+                <div class="column-list">
+                    <div class="issue-card" onclick="openModal('issue8')">
+                        <div class="issue-title">Try leaving a comment on this issue.</div>
+                        <div class="issue-footer">
+                            <div class="issue-meta">
+                                <div class="issue-type-icon">
+                                    <svg width="12" height="12" viewBox="0 0 24 24" fill="white"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg>
+                                </div>
+                                <div class="issue-priority">
+                                    <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 4l-8 8h5v8h6v-8h5z"/></svg>
+                                </div>
+                            </div>
+                            <div class="issue-avatar-small" style="background: linear-gradient(135deg, #96fbc4 0%, #f9f586 100%);"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 详情弹窗 -->
+    <div class="modal-overlay" id="issueModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <div>
+                    <div class="issue-id">
+                        <div class="icon"></div>
+                        TASK-2730537
+                    </div>
+                </div>
+                <div class="modal-actions">
+                    <button class="modal-action-btn">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4z"/></svg>
+                        Give feedback
+                    </button>
+                    <button class="modal-action-btn">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>
+                        Copy link
+                    </button>
+                    <button class="modal-action-btn">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 6h18M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg>
+                    </button>
+                    <button class="close-btn" onclick="closeModal()">×</button>
+                </div>
+            </div>
+            <div class="modal-body">
+                <div class="main-section">
+                    <div class="issue-summary" id="modalSummary">This is an issue of type: Task.</div>
+                    
+                    <div class="section-label">Description</div>
+                    <div class="issue-description">
+                        Your teams can collaborate in Jira applications by breaking down pieces of work into issues. Issues can represent tasks, software bugs, feature requests or any other type of project work.
+                    </div>
+                    
+                    <div class="section-label">Jira Software (software projects) issue types:</div>
+                    
+                    <div class="issue-type-detail" style="margin-top: 16px;">
+                        <div class="type-header">Bug 🐞</div>
+                        <div class="type-desc">A bug is a problem which impairs or prevents the functions of a product.</div>
+                    </div>
+                    
+                    <div class="issue-type-detail">
+                        <div class="type-header">Story 📖</div>
+                        <div class="type-desc">A user story is the smallest unit of work that needs to be done.</div>
+                    </div>
+                    
+                    <div class="issue-type-detail">
+                        <div class="type-header">Task 📦</div>
+                        <div class="type-desc">A task represents work that needs to be done.</div>
+                    </div>
+                    
+                    <div class="comments-section">
+                        <div class="section-label">Comments</div>
+                        <div class="comment-input">
+                            <div class="comment-avatar" style="background: linear-gradient(135deg, #96fbc4 0%, #f9f586 100%);"></div>
+                            <div>
+                                <textarea class="comment-box" placeholder="Add a comment..."></textarea>
+                                <div class="pro-tip">Pro tip: press <kbd style="background: #f4f5f7; padding: 2px 4px; border-radius: 2px; border: 1px solid #dfe1e6;">M</kbd> to comment</div>
+                            </div>
+                        </div>
+                        
+                        <div class="comment-item">
+                            <div class="comment-avatar" style="background: linear-gradient(135deg, #fddb92 0%, #d1fdff 100%);"></div>
+                            <div>
+                                <div>
+                                    <span class="comment-author">Lord Gaben</span>
+                                    <span class="comment-time">4 minutes ago</span>
+                                </div>
+                                <div class="comment-text">An old silent pond...</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="sidebar-section">
+                    <div class="sidebar-field">
+                        <div class="field-label">STATUS</div>
+                        <button class="status-btn">
+                            BACKLOG
+                            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                        </button>
+                    </div>
+                    
+                    <div class="sidebar-field">
+                        <div class="field-label">ASSIGNEES</div>
+                        <div>
+                            <span class="assignee-tag">
+                                <span class="assignee-avatar" style="background: linear-gradient(135deg, #96fbc4 0%, #f9f586 100%); display: inline-block;"></span>
+                                Pickle Rick
+                                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#6b778c" stroke-width="2" style="cursor: pointer;"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+                            </span>
+                            <span class="add-more">+ Add more</span>
+                        </div>
+                    </div>
+                    
+                    <div class="sidebar-field">
+                        <div class="field-label">REPORTER</div>
+                        <span class="assignee-tag">
+                            <span class="assignee-avatar" style="background: linear-gradient(135deg, #fddb92 0%, #d1fdff 100%); display: inline-block;"></span>
+                            Baby Yoda
+                        </span>
+                    </div>
+                    
+                    <div class="sidebar-field">
+                        <div class="field-label">PRIORITY</div>
+                        <div class="priority-high">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 4l-8 8h5v8h6v-8h5z"/></svg>
+                            High
+                        </div>
+                    </div>
+                    
+                    <div class="sidebar-field">
+                        <div class="field-label">ORIGINAL ESTIMATE (HOURS)</div>
+                        <input type="text" class="estimate-input" value="8">
+                    </div>
+                    
+                    <div class="sidebar-field">
+                        <div class="field-label">TIME TRACKING</div>
+                        <div class="time-tracking">
+                            <div class="time-bar">
+                                <div class="time-progress"></div>
+                            </div>
+                            <div class="time-info">
+                                <span>4h logged</span>
+                                <span>8h estimated</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="sidebar-field">
+                        <div class="timestamp">Created at 4 minutes ago</div>
+                        <div class="timestamp">Updated at 4 minutes ago</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function openModal(issueId) {
+            document.getElementById('issueModal').classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeModal() {
+            document.getElementById('issueModal').classList.remove('active');
+            document.body.style.overflow = 'auto';
+        }
+
+        // 点击遮罩层关闭弹窗
+        document.getElementById('issueModal').addEventListener('click', function(e) {
+            if (e.target === this) {
+                closeModal();
+            }
+        });
+
+        // ESC键关闭弹窗
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                closeModal();
+            }
+        });
+    </script>
+</body>
+</html>
+```

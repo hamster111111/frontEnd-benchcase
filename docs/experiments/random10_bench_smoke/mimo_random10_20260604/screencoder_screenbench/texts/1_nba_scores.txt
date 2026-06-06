@@ -1,0 +1,481 @@
+```html
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>百度一下，你就知道</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "Helvetica Neue", Helvetica, Arial, sans-serif;
+            background-color: #f2f3f5;
+            color: #333;
+            font-size: 14px;
+            line-height: 1.6;
+        }
+        a {
+            text-decoration: none;
+            color: #2440b3;
+        }
+        a:hover {
+            text-decoration: underline;
+            color: #d82c1f;
+        }
+        .header {
+            background: #fff;
+            padding: 15px 0 10px 0;
+            border-bottom: 1px solid #e3e8ee;
+        }
+        .header-inner {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+        }
+        .logo {
+            display: flex;
+            align-items: center;
+            font-size: 32px;
+            font-weight: bold;
+            margin-right: 25px;
+            cursor: pointer;
+        }
+        .logo b { color: #333; }
+        .logo span { color: #2932e1; }
+        .logo em { 
+            color: #fff; 
+            background: #2932e1; 
+            border-radius: 50%; 
+            width: 32px; 
+            height: 32px; 
+            display: flex; 
+            align-items: center; 
+            justify-content: center; 
+            font-size: 24px; 
+            font-style: normal; 
+            margin-left: 5px;
+        }
+        .search-box {
+            display: flex;
+            flex: 1;
+            max-width: 690px;
+            height: 44px;
+            border: 1px solid #c4c7ce;
+            border-radius: 24px 0 0 24px;
+            overflow: hidden;
+            transition: border-color 0.2s;
+        }
+        .search-box:focus-within {
+            border-color: #2932e1;
+        }
+        .search-box input {
+            flex: 1;
+            border: none;
+            outline: none;
+            padding: 0 20px;
+            font-size: 16px;
+        }
+        .search-icons {
+            display: flex;
+            align-items: center;
+            padding-right: 15px;
+            gap: 15px;
+        }
+        .icon {
+            width: 20px;
+            height: 20px;
+            background: #ccc;
+            border-radius: 50%;
+            cursor: pointer;
+        }
+        .search-btn {
+            background: #2932e1;
+            color: white;
+            border: none;
+            height: 44px;
+            padding: 0 40px;
+            font-size: 18px;
+            cursor: pointer;
+            border-radius: 0 24px 24px 0;
+        }
+        .top-right {
+            margin-left: auto;
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            font-size: 14px;
+            color: #666;
+        }
+        .login-btn {
+            color: #fff;
+            background: #2932e1;
+            padding: 6px 16px;
+            border-radius: 18px;
+        }
+        .nav {
+            background: #fff;
+            border-bottom: 1px solid #f2f3f5;
+        }
+        .nav-inner {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            gap: 25px;
+            padding-left: 185px;
+            height: 40px;
+            line-height: 40px;
+            font-size: 14px;
+            color: #666;
+        }
+        .nav-item.active {
+            color: #2932e1;
+            font-weight: bold;
+            border-bottom: 2px solid #2932e1;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            padding: 20px 0;
+            gap: 30px;
+        }
+        .main {
+            flex: 1;
+            width: 800px;
+        }
+        .sidebar {
+            width: 300px;
+            margin-left: 40px;
+        }
+        .search-result {
+            background: #fff;
+            padding: 20px;
+            margin-bottom: 15px;
+            border-radius: 8px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.02);
+        }
+        .result-title {
+            font-size: 18px;
+            margin-bottom: 5px;
+        }
+        .result-title span { color: #d82c1f; }
+        .result-meta {
+            font-size: 12px;
+            color: #999;
+            margin-bottom: 8px;
+        }
+        .result-desc {
+            font-size: 14px;
+            color: #4e5969;
+            margin-bottom: 15px;
+        }
+        .result-images {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 10px;
+            height: 120px;
+        }
+        .img-placeholder {
+            flex: 1;
+            background: #eee;
+            border-radius: 8px;
+            position: relative;
+        }
+        .img-placeholder::after {
+            content: '';
+            position: absolute;
+            inset: 10px;
+            background: rgba(0,0,0,0.1);
+            border-radius: 4px;
+        }
+        .img-count {
+            position: absolute;
+            bottom: 5px;
+            right: 5px;
+            background: rgba(0,0,0,0.6);
+            color: #fff;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-size: 12px;
+        }
+        .tags-box {
+            background: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 15px;
+        }
+        .tags-title {
+            font-size: 16px;
+            margin-bottom: 15px;
+        }
+        .tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+        .tag {
+            background: #f2f3f5;
+            padding: 6px 15px;
+            border-radius: 18px;
+            font-size: 14px;
+            cursor: pointer;
+        }
+        .ai-reply {
+            background: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 15px;
+            border: 1px solid #e3e8ee;
+        }
+        .ai-reply h3 { margin-bottom: 15px; color: #2932e1; }
+        .ai-tabs {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 15px;
+        }
+        .ai-tab {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            cursor: pointer;
+        }
+        .ai-avatar {
+            width: 40px;
+            height: 40px;
+            background: #e3e8ee;
+            border-radius: 50%;
+        }
+        .sidebar-card {
+            background: #fff;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 15px;
+        }
+        .ai-widget {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+        .related-list {
+            list-style: none;
+        }
+        .related-item {
+            padding: 8px 0;
+            border-bottom: 1px solid #f2f3f5;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 14px;
+        }
+        .hot-list-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+        .hot-list-header h3 {
+            font-size: 18px;
+            color: #333;
+        }
+        .hot-tabs {
+            display: flex;
+            gap: 15px;
+            border-bottom: 1px solid #e3e8ee;
+            margin-bottom: 15px;
+        }
+        .hot-tab {
+            padding: 10px 0;
+            font-size: 14px;
+            color: #666;
+            cursor: pointer;
+        }
+        .hot-tab.active {
+            color: #333;
+            font-weight: bold;
+            border-bottom: 2px solid #2932e1;
+        }
+        .hot-item {
+            display: flex;
+            align-items: flex-start;
+            margin-bottom: 15px;
+            font-size: 14px;
+            line-height: 1.4;
+        }
+        .hot-num {
+            width: 20px;
+            color: #999;
+            text-align: center;
+        }
+        .hot-num.top3 { color: #d82c1f; font-weight: bold; }
+        .hot-content { flex: 1; }
+        .hot-tag {
+            background: #f2f3f5;
+            color: #999;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-size: 12px;
+            margin-left: 8px;
+        }
+        .hot-tag.hot { background: #fff0f0; color: #d82c1f; }
+    </style>
+</head>
+<body>
+
+    <div class="header">
+        <div class="header-inner">
+            <div class="logo">
+                <b>百度</b><em>🐾</em>
+            </div>
+            <div class="search-box">
+                <input type="text" value="nba scores">
+                <div class="search-icons">
+                    <div class="icon" style="background:transparent; border:none; color:#999; font-size:18px; line-height:20px; text-align:center;">清除</div>
+                    <div class="icon" style="border-radius:4px; border:1px solid #ccc; width:24px; height:24px;"></div>
+                    <div class="icon" style="border-radius:4px; border:1px solid #ccc; width:24px; height:24px;"></div>
+                </div>
+            </div>
+            <button class="search-btn">百度一下</button>
+            <div class="top-right">
+                <a href="#">百度首页</a>
+                <a href="#">设置</a>
+                <a href="#" class="login-btn">登录</a>
+            </div>
+        </div>
+    </div>
+
+    <div class="nav">
+        <div class="nav-inner">
+            <div class="nav-item active">网页</div>
+            <div class="nav-item">AI+</div>
+            <div class="nav-item">图片</div>
+            <div class="nav-item">资讯</div>
+            <div class="nav-item">视频</div>
+            <div class="nav-item">笔记</div>
+            <div class="nav-item">地图</div>
+            <div class="nav-item">贴吧</div>
+            <div class="nav-item">文库</div>
+            <div class="nav-item">更多</div>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="main">
+            <div class="search-result">
+                <div class="result-title"><a href="#">The official site of the NBA for the latest NBA <span>Scores</span>, Stats...</a></div>
+                <div class="result-meta">查看此网页的中文翻译，请点击 <a href="#">翻译此页</a></div>
+                <div class="result-desc">Follow the action on NBA scores, schedules, stats, news, teams, and players. Buy tickets or watch the game anywhere with NBA League Pass.</div>
+                <div class="result-images">
+                    <div class="img-placeholder" style="background:#4a7ab5;"></div>
+                    <div class="img-placeholder" style="background:#8c5a4a;"></div>
+                    <div class="img-placeholder" style="background:#5a6c8c;"></div>
+                    <div class="img-placeholder" style="background:#7c7065; width:80px;">
+                        <div class="img-count">📷 46</div>
+                    </div>
+                </div>
+                <div class="result-meta">NBA</div>
+            </div>
+
+            <div class="search-result">
+                <div class="result-title"><a href="#">The official site of the NBA for the latest NBA <span>Scores</span>, Stats...</a></div>
+                <div class="result-meta">查看此网页的中文翻译，请点击 <a href="#">翻译此页</a></div>
+                <div class="result-desc">Follow the action on NBA scores, schedules, stats, news, teams, and players. Buy tickets or watch the game anywhere with NBA League Pass.</div>
+                <div class="result-meta">cdn-qa.nba.com</div>
+            </div>
+
+            <div class="search-result">
+                <div class="result-title"><a href="#">Nightly Pulse: <span>NBA</span> News & Highlights from Jan. 15 | NBA.com</a></div>
+                <div class="result-meta">查看此网页的中文翻译，请点击 <a href="#">翻译此页</a></div>
+                <div style="display:flex; gap:15px; margin-bottom:10px;">
+                    <div class="img-placeholder" style="width:120px; height:90px; background:#e3e8ee;"></div>
+                    <div style="flex:1;">
+                        <div class="result-desc" style="margin-bottom:0;">2025年1月16日 — Daeqwon Plowden saw the first NBA minutes of his career tonight and he made the most of them. The Bowling Green product who had been...</div>
+                        <div class="result-meta" style="margin-top:10px;">NBA</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="tags-box">
+                <div class="tags-title">大家还在搜</div>
+                <div class="tags">
+                    <div class="tag">🔍 nbalivegamescores</div>
+                    <div class="tag">🔍 nba scores today</div>
+                    <div class="tag">🔍 nba livescore</div>
+                    <div class="tag">🔍 com.espn.score_center</div>
+                    <div class="tag">🔍 nba中国官方网站</div>
+                    <div class="tag">🔍 NBA官网数据</div>
+                    <div class="tag">🔍 football score</div>
+                    <div class="tag">🔍 NBA ESPN</div>
+                    <div class="tag">🔍 NBA官网</div>
+                    <div class="tag">🔍 NBA数据查询</div>
+                </div>
+            </div>
+
+            <div class="ai-reply">
+                <h3>nba scores - 实时智能回复</h3>
+                <div class="ai-tabs">
+                    <div class="ai-tab"><div class="ai-avatar"></div> NBA数据大全<br><span style="font-size:12px; color:#999;">1.2万人聊过</span></div>
+                    <div class="ai-tab"><div class="ai-avatar"></div> NBA万事通<br><span style="font-size:12px; color:#999;">5.7万人聊过</span></div>
+                    <div class="ai-tab"><div class="ai-avatar"></div> 今日NBA<br><span style="font-size:12px; color:#999;">5817人聊过</span></div>
+                    <div class="ai-tab"><div class="ai-avatar"></div> NBA资讯<br><span style="font-size:12px; color:#999;">5717人聊过</span></div>
+                </div>
+                <div style="color:#666; font-size:14px; margin-bottom:15px;">您好！我是<b style="color:#2932e1;">NBA数据助手</b>，可以为您提供历史得分榜、篮板榜、助攻榜等名单查询服务。请问有什么需要我帮忙的吗？</div>
+                <div style="display:flex; border:1px solid #e3e8ee; border-radius:20px; padding:10px 15px; gap:10px;">
+                    <input type="text" placeholder="你可以输入比如得分榜" style="flex:1; border:none; outline:none;">
+                    <button style="background:#2932e1; color:#fff; border:none; border-radius:15px; padding:4px 15px; cursor:pointer;">继续问</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="sidebar">
+            <div class="sidebar-card">
+                <div class="ai-widget">
+                    <span style="font-size:16px; font-weight:bold; color:#2932e1;">百度AI+ nba scores</span>
+                    <span style="color:#2932e1; font-size:14px; border:1px solid #2932e1; padding:2px 10px; border-radius:15px; cursor:pointer;">问AI</span>
+                </div>
+                <div class="related-list" style="margin-bottom:20px;">
+                    <div style="font-size:16px; margin-bottom:10px;">相关搜索</div>
+                    <ul class="related-list">
+                        <li class="related-item">🔍 nbalivegamescores</li>
+                        <li class="related-item">🔍 nba scores today</li>
+                        <li class="related-item">🔍 nba livescore</li>
+                        <li class="related-item">🔍 com.espn.score_center</li>
+                        <li class="related-item">🔍 nba中国官方网站</li>
+                        <li class="related-item">🔍 NBA官网数据</li>
+                    </ul>
+                </div>
+
+                <div class="hot-list-header">
+                    <h3>百度热搜</h3>
+                    <span style="font-size:12px; color:#2932e1; cursor:pointer;">🔄 换一换</span>
+                </div>
+                <div class="hot-tabs">
+                    <div class="hot-tab active">热搜榜</div>
+                    <div class="hot-tab">民生榜</div>
+                    <div class="hot-tab">财经榜</div>
+                </div>
+                <div>
+                    <div class="hot-item"><span class="hot-num">↕</span><div class="hot-content">总书记部署全国统一大市场建设</div></div>
+                    <div class="hot-item"><span class="hot-num top3">1</span><div class="hot-content">589092元善款 全额退还28689位网友 <span class="hot-tag hot">热</span></div></div>
+                    <div class="hot-item"><span class="hot-num top3">2</span><div class="hot-content">人类首次“看见”的黑洞 身份照上新 <span class="hot-tag">新</span></div></div>
+                    <div class="hot-item"><span class="hot-num top3">3</span><div class="hot-content">杨靖宇之孙拿出一块“传家宝”</div></div>
+                    <div class="hot-item"><span class="hot-num">4</span><div class="hot-content">清华学霸晒1.67亿年薪 美方称其在逃 <span class="hot-tag hot">热</span></div></div>
+                    <div class="hot-item"><span class="hot-num">5</span><div class="hot-content">刘强东直播炒菜调侃马云 <span class="hot-tag hot">热</span></div></div>
+                    <div class="hot-item"><span class="hot-num">6</span><div class="hot-content">女神似刘亦菲 三条视频涨粉20万</div></div>
+                    <div class="hot-item"><span class="hot-num">7</span><div class="hot-content">20款水牛乳产品无一款原料达100%</div></div>
+                    <div class="hot-item"><span class="hot-num">8</span><div class="hot-content">多名穿寿衣服老人医院门前干活</div></div>
+                    <div class="hot-item"><span class="hot-num">9</span><div class="hot-content">联合国认定以色列犯种族灭绝罪</div></div>
+                    <div class="hot-item"><span class="hot-num">10</span><div class="hot-content">老人将无糖饮料当水喝 患糖尿病酮症</div></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</body>
+</html>
+```

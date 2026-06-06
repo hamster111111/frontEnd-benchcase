@@ -1,0 +1,314 @@
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Supabase Frameworks Interaction</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+        }
+
+        body {
+            background-color: #1c1c1c;
+            color: #ffffff;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            overflow-x: hidden;
+        }
+
+        /* Navigation */
+        nav {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 20px 40px;
+        }
+
+        .nav-left {
+            display: flex;
+            align-items: center;
+            gap: 40px;
+        }
+
+        .logo {
+            width: 130px;
+            height: 45px;
+            background-color: #0038ff; /* Blue placeholder for Supabase logo */
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 24px;
+            font-size: 14px;
+            font-weight: 500;
+            color: #e0e0e0;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: inherit;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .nav-links a:hover {
+            color: #ffffff;
+        }
+
+        .dropdown-arrow {
+            font-size: 10px;
+        }
+
+        .nav-right {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            font-size: 14px;
+            font-weight: 500;
+        }
+
+        .github-stats {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: #e0e0e0;
+        }
+
+        .btn-signin {
+            background: transparent;
+            border: 1px solid #4a4a4a;
+            color: #fff;
+            padding: 8px 16px;
+            border-radius: 6px;
+            cursor: pointer;
+        }
+
+        .btn-start {
+            background: #10b981; /* Green button */
+            border: none;
+            color: #fff;
+            padding: 10px 20px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 600;
+        }
+
+        /* Main Content */
+        main {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 40px;
+        }
+
+        .hero-content {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 60px;
+            max-width: 1200px;
+            width: 100%;
+        }
+
+        .hero-text {
+            font-size: 48px;
+            font-weight: 500;
+            line-height: 1.2;
+            color: #8a8a8a;
+            transition: all 0.3s ease;
+        }
+
+        .hero-text strong {
+            color: #ffffff;
+            display: block;
+            transition: opacity 0.3s ease;
+        }
+
+        /* Icons Container */
+        .icons-container {
+            display: flex;
+            gap: 20px;
+            align-items: center;
+        }
+
+        .icon-box {
+            width: 60px;
+            height: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 1px solid transparent;
+            border-radius: 8px;
+        }
+
+        .icon-box svg {
+            width: 32px;
+            height: 32px;
+            fill: #6b6b6b;
+            transition: fill 0.3s ease;
+        }
+
+        /* Hover States */
+        .icons-container:hover .icon-box:not(:hover) svg {
+            fill: #4a4a4a;
+        }
+
+        .icon-box:hover svg {
+            fill: #ffffff;
+        }
+
+        .icon-box.active {
+            border-color: #ffffff;
+            background-color: rgba(255, 255, 255, 0.05);
+        }
+
+        .icon-box.active svg {
+            fill: #ffffff;
+        }
+
+        .icon-box.active ~ .icon-box svg {
+            fill: #4a4a4a;
+        }
+
+        /* Footer Buttons */
+        .bottom-buttons {
+            position: absolute;
+            bottom: 40px;
+            left: 40px;
+            display: flex;
+            gap: 12px;
+        }
+
+        .btn-outline {
+            background: transparent;
+            border: 1px solid #4a4a4a;
+            color: #fff;
+            padding: 10px 16px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 14px;
+        }
+
+        .btn-green-outline {
+            background: transparent;
+            border: 1px solid #10b981;
+            color: #10b981;
+            padding: 10px 16px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 14px;
+        }
+    </style>
+</head>
+<body>
+
+    <nav>
+        <div class="nav-left">
+            <div class="logo"></div>
+            <div class="nav-links">
+                <a href="#">Product <span class="dropdown-arrow">▼</span></a>
+                <a href="#">Developers <span class="dropdown-arrow">▼</span></a>
+                <a href="#">Enterprise</a>
+                <a href="#">Pricing</a>
+                <a href="#">Docs</a>
+                <a href="#">Blog</a>
+            </div>
+        </div>
+        <div class="nav-right">
+            <div class="github-stats">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="#e0e0e0"><path d="M12 2C6.477 2 2 6.477 2 12c0 4.42 2.865 8.17 6.839 9.49.5.092.682-.217.682-.482 0-.237-.008-.866-.013-1.7-2.782.603-3.369-1.34-3.369-1.34-.454-1.156-1.11-1.462-1.11-1.462-.908-.62.069-.608.069-.608 1.003.07 1.531 1.03 1.531 1.03.892 1.529 2.341 1.087 2.91.831.092-.646.35-1.086.636-1.336-2.22-.253-4.555-1.11-4.555-4.943 0-1.091.39-1.984 1.029-2.683-.103-.253-.446-1.27.098-2.647 0 0 .84-.269 2.75 1.025A9.578 9.578 0 0112 6.836c.85.004 1.705.114 2.504.336 1.909-1.294 2.747-1.025 2.747-1.025.546 1.379.203 2.394.1 2.647.64.699 1.028 1.592 1.028 2.683 0 3.842-2.339 4.687-4.566 4.935.359.309.678.919.678 1.852 0 1.336-.012 2.415-.012 2.743 0 .267.18.578.688.48C19.138 20.167 22 16.418 22 12c0-5.523-4.477-10-10-10z"/></svg>
+                76.5K
+            </div>
+            <button class="btn-signin">Sign in</button>
+            <button class="btn-start">Start your project</button>
+        </div>
+    </nav>
+
+    <main>
+        <div class="hero-content">
+            <div class="hero-text">
+                Use Supabase with
+                <strong id="framework-name">any framework</strong>
+            </div>
+            <div class="icons-container" id="icons-container">
+                <!-- React -->
+                <div class="icon-box" data-name="React">
+                    <svg viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+                </div>
+                <!-- Next.js -->
+                <div class="icon-box" data-name="Next.js">
+                    <svg viewBox="0 0 24 24"><path d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm4.918 17.283L9.84 7.24v10.044H7.88V6.717h2.023l7.097 10.026h1.918z"/></svg>
+                </div>
+                <!-- Angular -->
+                <div class="icon-box" data-name="Angular">
+                    <svg viewBox="0 0 24 24"><path d="M11.45 2.44l-7.5 13.05h14.21zM12 2.44l7.5 13.05h-15zM12 21.56l-3-5.19h6z"/></svg>
+                </div>
+                <!-- Remix -->
+                <div class="icon-box" data-name="Remix">
+                    <svg viewBox="0 0 24 24"><path d="M15.3 13.7C15.3 16.7 12.9 18 9.8 18C7 18 5.5 16.7 5.5 14.8C5.5 11.5 11.4 11.8 11.4 9.5C11.4 8.4 10.3 7.7 8.8 7.7C7.1 7.7 6.4 8.8 6.4 8.8L2 6.8C2 6.8 2.9 2.4 8.5 2.4C11.4 2.4 13 3.7 13 5.6C13 8.8 7.1 8.6 7.1 11C7.1 11.9 8.1 12.6 9.6 12.6C11.2 12.6 12.1 11.6 12.1 11.6L16.5 13.6C16.5 13.6 15.3 13.7 15.3 13.7Z"/></svg>
+                </div>
+                <!-- Svelte -->
+                <div class="icon-box" data-name="Svelte">
+                    <svg viewBox="0 0 24 24"><path d="M20.1 4.8C18.2 1.5 13.3.4 9.5 2.8L5.2 7.4C3 8.5 2.5 11.5 4 13.5L5.5 15.5C5.5 15.5 2 15 2 11C2 7.4 4.6 4 8.2 3C11.1 2.3 14.3 3.8 15.8 6.4L18 10.1C18 10.1 21 9 21 13C21 17.3 17.7 20.1 14 19.8C11.1 19.6 9.4 17.2 9.4 17.2L7.2 13.5C7.2 13.5 4 15.3 4 19.5C4 23.6 7.5 26 11.3 25.2C14.4 24.5 16 21.6 16 21.6L18.8 17.5C18.8 17.5 22 18.6 22 14.3C22 9.9 18.5 7.3 14.8 7.6C11.7 7.8 9.9 10.2 9.9 10.2L7.7 13.9L20.1 4.8Z"/></svg>
+                </div>
+                <!-- Astro -->
+                <div class="icon-box" data-name="Astro">
+                    <svg viewBox="0 0 24 24"><path d="M12 2.5C10.1 7.6 5.5 9.6 5.5 9.6l2.5 2.1C8 11.7 10.2 11 12 10c1.8 1 4 1.7 4 1.7l2.5-2.1C18.5 9.6 13.9 7.6 12 2.5zM12 13c-2.8 0-5 1.2-5 2.8v4.4c0 1.6 2.2 2.8 5 2.8s5-1.2 5-2.8v-4.4c0-1.6-2.2-2.8-5-2.8z"/></svg>
+                </div>
+                <!-- Vue -->
+                <div class="icon-box" data-name="Vue">
+                    <svg viewBox="0 0 24 24"><path d="M12 21.3l-8.3-14.6h3.7l4.6 8.3 4.6-8.3h3.7z"/></svg>
+                </div>
+                <!-- SvelteKit -->
+                <div class="icon-box" data-name="SvelteKit">
+                    <svg viewBox="0 0 24 24"><path d="M19.5 6.5L14.5 2c-.6-.5-1.5-.5-2.1 0L7.3 7.1c-.4.3-.5.9-.3 1.4l3.3 9.7h.1l-.1-.3c-.2-.5-.1-1 .2-1.4l3.3-6.8c.2-.5.7-.8 1.2-.8h.1z"/></svg>
+                </div>
+                <!-- Qwik -->
+                <div class="icon-box" data-name="Qwik">
+                    <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="8"/></svg>
+                </div>
+                <!-- Solid -->
+                <div class="icon-box" data-name="Solid">
+                    <svg viewBox="0 0 24 24"><path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10 10-4.5 10-10S17.5 2 12 2zm0 18c-4.4 0-8-3.6-8-8s3.6-8 8-8 8 3.6 8 8-3.6 8-8 8z"/></svg>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <div class="bottom-buttons">
+        <button class="btn-green-outline">View all stories</button>
+        <button class="btn-outline">View Events</button>
+    </div>
+
+    <script>
+        const iconsContainer = document.getElementById('icons-container');
+        const frameworkName = document.getElementById('framework-name');
+        const iconBoxes = document.querySelectorAll('.icon-box');
+
+        iconBoxes.forEach(box => {
+            box.addEventListener('mouseenter', () => {
+                iconBoxes.forEach(b => b.classList.remove('active'));
+                box.classList.add('active');
+                frameworkName.textContent = box.getAttribute('data-name');
+            });
+        });
+
+        iconsContainer.addEventListener('mouseleave', () => {
+            iconBoxes.forEach(b => b.classList.remove('active'));
+            frameworkName.textContent = 'any framework';
+        });
+    </script>
+</body>
+</html>
+```

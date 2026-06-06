@@ -1,0 +1,859 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CzBiX (CzBiX) · GitHub</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Noto Sans", Helvetica, Arial, sans-serif;
+            font-size: 14px;
+            line-height: 1.5;
+            color: #24292f;
+            background-color: #ffffff;
+        }
+
+        a {
+            color: #0969da;
+            text-decoration: none;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+
+        /* Navigation Bar */
+        .header {
+            background-color: #24292e;
+            color: #ffffff;
+            padding: 16px 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .header-left {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .github-logo {
+            width: 32px;
+            height: 32px;
+            fill: #ffffff;
+        }
+
+        .header-nav {
+            display: flex;
+            gap: 16px;
+        }
+
+        .header-nav-item {
+            color: #ffffff;
+            font-size: 14px;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            cursor: pointer;
+        }
+
+        .header-nav-item:hover {
+            color: rgba(255, 255, 255, 0.7);
+        }
+
+        .dropdown-arrow {
+            width: 10px;
+            height: 10px;
+        }
+
+        .header-right {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .search-box {
+            position: relative;
+        }
+
+        .search-input {
+            width: 300px;
+            padding: 6px 12px;
+            font-size: 14px;
+            background-color: #0d1117;
+            border: 1px solid #57606a;
+            border-radius: 6px;
+            color: #ffffff;
+        }
+
+        .search-input::placeholder {
+            color: #8b949e;
+        }
+
+        .search-button {
+            position: absolute;
+            right: 8px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: none;
+            border: none;
+            color: #8b949e;
+            cursor: pointer;
+        }
+
+        .header-buttons {
+            display: flex;
+            gap: 12px;
+        }
+
+        .btn {
+            padding: 6px 12px;
+            font-size: 14px;
+            font-weight: 500;
+            border-radius: 6px;
+            cursor: pointer;
+            border: 1px solid;
+        }
+
+        .btn-ghost {
+            background: transparent;
+            color: #ffffff;
+            border-color: rgba(255, 255, 255, 0.3);
+        }
+
+        .btn-primary {
+            background-color: #238636;
+            color: #ffffff;
+            border-color: rgba(240, 246, 252, 0.1);
+        }
+
+        .btn-primary:hover {
+            background-color: #2ea043;
+        }
+
+        /* Profile Tabs */
+        .profile-tabs {
+            border-bottom: 1px solid #d0d7de;
+            background-color: #f6f8fa;
+            padding: 16px 0 0 0;
+        }
+
+        .profile-tabs-container {
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 0 20px;
+            display: flex;
+            gap: 16px;
+        }
+
+        .tab-item {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            padding: 8px 16px;
+            font-size: 14px;
+            color: #57606a;
+            border-bottom: 2px solid transparent;
+            cursor: pointer;
+        }
+
+        .tab-item:hover {
+            border-bottom-color: #d0d7de;
+        }
+
+        .tab-item.active {
+            font-weight: 600;
+            color: #24292f;
+            border-bottom: 2px solid #fd8c73;
+        }
+
+        .tab-badge {
+            background-color: rgba(110, 118, 129, 0.4);
+            color: #ffffff;
+            padding: 0 6px;
+            border-radius: 10px;
+            font-size: 12px;
+            line-height: 18px;
+        }
+
+        /* Main Content */
+        .main-content {
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 24px 20px;
+            display: flex;
+            gap: 24px;
+        }
+
+        /* Sidebar */
+        .sidebar {
+            width: 296px;
+            flex-shrink: 0;
+        }
+
+        .avatar {
+            width: 296px;
+            height: 296px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .avatar::before {
+            content: '';
+            position: absolute;
+            top: 40%;
+            left: 30%;
+            width: 150px;
+            height: 80px;
+            background: linear-gradient(135deg, #2d3436 0%, #636e72 100%);
+            border-radius: 50% 50% 20% 20%;
+            transform: rotate(-15deg);
+        }
+
+        .avatar::after {
+            content: '';
+            position: absolute;
+            top: 30%;
+            left: 40%;
+            width: 100px;
+            height: 120px;
+            background: linear-gradient(135deg, #2d3436 0%, #636e72 100%);
+            border-radius: 50%;
+        }
+
+        .user-name {
+            margin-top: 16px;
+            font-size: 26px;
+            font-weight: 600;
+            color: #24292f;
+            line-height: 1.25;
+        }
+
+        .follow-button {
+            margin-top: 16px;
+            width: 100%;
+            padding: 8px 16px;
+            font-size: 14px;
+            font-weight: 500;
+            background-color: #f6f8fa;
+            border: 1px solid #d0d7de;
+            border-radius: 6px;
+            cursor: pointer;
+            color: #24292f;
+        }
+
+        .follow-button:hover {
+            background-color: #f3f4f6;
+            border-color: #afb8c1;
+        }
+
+        .user-bio {
+            margin-top: 16px;
+            font-size: 14px;
+            color: #24292f;
+        }
+
+        .user-stats {
+            margin-top: 16px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 14px;
+            color: #57606a;
+        }
+
+        .user-link {
+            margin-top: 16px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 14px;
+            color: #57606a;
+        }
+
+        .achievements-title {
+            margin-top: 24px;
+            margin-bottom: 16px;
+            font-size: 14px;
+            font-weight: 600;
+            color: #24292f;
+        }
+
+        .achievements {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+
+        .achievement {
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            position: relative;
+        }
+
+        .achievement:nth-child(2) {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+        }
+
+        .achievement:nth-child(3) {
+            background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+        }
+
+        .achievement:nth-child(4) {
+            background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);
+        }
+
+        .achievement-count {
+            position: absolute;
+            bottom: -4px;
+            right: -4px;
+            background-color: #24292f;
+            color: #ffffff;
+            font-size: 10px;
+            padding: 1px 4px;
+            border-radius: 10px;
+        }
+
+        .block-report {
+            margin-top: 16px;
+            font-size: 14px;
+        }
+
+        /* Content Area */
+        .content {
+            flex: 1;
+            min-width: 0;
+        }
+
+        .pinned-title {
+            margin-bottom: 16px;
+            font-size: 16px;
+            font-weight: 600;
+            color: #24292f;
+        }
+
+        .repos-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+        }
+
+        .repo-card {
+            border: 1px solid #d0d7de;
+            border-radius: 6px;
+            padding: 16px;
+            background-color: #ffffff;
+        }
+
+        .repo-card:hover {
+            border-color: #0969da;
+        }
+
+        .repo-header {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 8px;
+        }
+
+        .repo-icon {
+            width: 16px;
+            height: 16px;
+            fill: #57606a;
+        }
+
+        .repo-name {
+            font-size: 14px;
+            font-weight: 600;
+            color: #0969da;
+        }
+
+        .repo-visibility {
+            font-size: 12px;
+            color: #57606a;
+            border: 1px solid #d0d7de;
+            border-radius: 20px;
+            padding: 0 6px;
+            line-height: 18px;
+        }
+
+        .repo-description {
+            font-size: 12px;
+            color: #57606a;
+            margin-bottom: 16px;
+            line-height: 1.5;
+        }
+
+        .repo-footer {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            font-size: 12px;
+            color: #57606a;
+        }
+
+        .repo-language {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .language-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+        }
+
+        .repo-stat {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .stat-icon {
+            width: 16px;
+            height: 16px;
+        }
+
+        /* Loading Indicator */
+        .loading-indicator {
+            margin-top: 24px;
+            text-align: center;
+            color: #57606a;
+            font-size: 14px;
+        }
+
+        /* Footer */
+        .footer {
+            border-top: 1px solid #d0d7de;
+            padding: 40px 20px;
+            margin-top: 24px;
+        }
+
+        .footer-content {
+            max-width: 1280px;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 16px;
+            font-size: 12px;
+            color: #57606a;
+        }
+
+        .footer-logo {
+            width: 24px;
+            height: 24px;
+            fill: #57606a;
+        }
+
+        .footer-links {
+            display: flex;
+            gap: 16px;
+        }
+
+        .footer-link {
+            color: #57606a;
+        }
+
+        .footer-link:hover {
+            color: #0969da;
+            text-decoration: underline;
+        }
+
+        /* Responsive */
+        @media (max-width: 1012px) {
+            .main-content {
+                flex-direction: column;
+            }
+
+            .sidebar {
+                width: 100%;
+            }
+
+            .avatar {
+                width: 200px;
+                height: 200px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .repos-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .header-nav {
+                display: none;
+            }
+
+            .search-input {
+                width: 200px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation Bar -->
+    <header class="header">
+        <div class="header-left">
+            <svg class="github-logo" viewBox="0 0 16 16" aria-hidden="true">
+                <path fill-rule="evenodd" d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"></path>
+            </svg>
+            <div class="header-nav">
+                <div class="header-nav-item">
+                    Platform
+                    <svg class="dropdown-arrow" viewBox="0 0 16 16" aria-hidden="true">
+                        <path d="M12.78 6.22a.75.75 0 010 1.06l-4.25 4.25a.75.75 0 01-1.06 0L3.22 7.28a.75.75 0 011.06-1.06L8 9.94l3.72-3.72a.75.75 0 011.06 0z"></path>
+                    </svg>
+                </div>
+                <div class="header-nav-item">
+                    Solutions
+                    <svg class="dropdown-arrow" viewBox="0 0 16 16" aria-hidden="true">
+                        <path d="M12.78 6.22a.75.75 0 010 1.06l-4.25 4.25a.75.75 0 01-1.06 0L3.22 7.28a.75.75 0 011.06-1.06L8 9.94l3.72-3.72a.75.75 0 011.06 0z"></path>
+                    </svg>
+                </div>
+                <div class="header-nav-item">
+                    Resources
+                    <svg class="dropdown-arrow" viewBox="0 0 16 16" aria-hidden="true">
+                        <path d="M12.78 6.22a.75.75 0 010 1.06l-4.25 4.25a.75.75 0 01-1.06 0L3.22 7.28a.75.75 0 011.06-1.06L8 9.94l3.72-3.72a.75.75 0 011.06 0z"></path>
+                    </svg>
+                </div>
+                <div class="header-nav-item">
+                    Open Source
+                    <svg class="dropdown-arrow" viewBox="0 0 16 16" aria-hidden="true">
+                        <path d="M12.78 6.22a.75.75 0 010 1.06l-4.25 4.25a.75.75 0 01-1.06 0L3.22 7.28a.75.75 0 011.06-1.06L8 9.94l3.72-3.72a.75.75 0 011.06 0z"></path>
+                    </svg>
+                </div>
+                <div class="header-nav-item">
+                    Enterprise
+                    <svg class="dropdown-arrow" viewBox="0 0 16 16" aria-hidden="true">
+                        <path d="M12.78 6.22a.75.75 0 010 1.06l-4.25 4.25a.75.75 0 01-1.06 0L3.22 7.28a.75.75 0 011.06-1.06L8 9.94l3.72-3.72a.75.75 0 011.06 0z"></path>
+                    </svg>
+                </div>
+                <div class="header-nav-item">Pricing</div>
+            </div>
+        </div>
+        <div class="header-right">
+            <div class="search-box">
+                <input type="text" class="search-input" placeholder="Search or jump to...">
+                <button class="search-button">
+                    <svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true">
+                        <path d="M10.68 11.74a6 6 0 01-7.922-8.982 6 6 0 018.982 7.922l3.04 3.04a.749.749 0 01-.326 1.275.749.749 0 01-.734-.215l-3.04-3.04zM11.5 7a4.499 4.499 0 10-8.998 0A4.499 4.499 0 0011.5 7z"></path>
+                    </svg>
+                </button>
+            </div>
+            <div class="header-buttons">
+                <button class="btn btn-ghost">Sign in</button>
+                <button class="btn btn-primary">Sign up</button>
+            </div>
+            <svg width="24" height="24" viewBox="0 0 16 16" aria-hidden="true" style="fill: #ffffff; cursor: pointer;">
+                <path d="M8 0a8 8 0 100 16A8 8 0 008 0zm0 14.5a6.5 6.5 0 110-13 6.5 6.5 0 010 13zM7.25 4h1.5v1.5h-1.5V4zm0 3h1.5v5h-1.5V7z"></path>
+            </svg>
+        </div>
+    </header>
+
+    <!-- Profile Tabs -->
+    <div class="profile-tabs">
+        <div class="profile-tabs-container">
+            <div class="tab-item active">
+                <svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true">
+                    <path d="M0 1.75A.75.75 0 01.75 1h4.253c.267 0 .496.166.587.404l.05.135.718 1.919a.75.75 0 00.569.476l.24.024H12.25a.75.75 0 010 1.5H7.096l-.292.782a.75.75 0 01-.569.476l-.24.024H6.25a.75.75 0 010-1.5h4.354l-.718-1.919a2.25 2.25 0 00-1.174-1.394L8.263 2.5H.75A.75.75 0 010 1.75zM14 14.5a.75.75 0 01-.75.75H.75a.75.75 0 010-1.5h12.5a.75.75 0 01.75.75z"></path>
+                </svg>
+                Overview
+            </div>
+            <div class="tab-item">
+                <svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true">
+                    <path d="M2 2.5A2.5 2.5 0 014.5 0h8.75a.75.75 0 01.75.75v12.5a.75.75 0 01-.75.75h-2.5a.75.75 0 110-1.5h1.75v-2h-8a1 1 0 00-.714 1.7.75.75 0 01-1.072 1.05A2.495 2.495 0 012 11.5v-9zm10.5-1h-8a1 1 0 00-1 1v6.708A2.486 2.486 0 014.5 9h8V1.5zM5 12.25v3.25a.25.25 0 00.4.2l1.45-1.087a.25.25 0 01.3 0L8.6 15.7a.25.25 0 00.4-.2v-3.25a.25.25 0 00-.25-.25h-3.5a.25.25 0 00-.25.25z"></path>
+                </svg>
+                Repositories
+                <span class="tab-badge">55</span>
+            </div>
+            <div class="tab-item">
+                <svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true">
+                    <path d="M1.75 0h12.5C15.216 0 16 .784 16 1.75v12.5A1.75 1.75 0 0114.25 16H1.75A1.75 1.75 0 010 14.25V1.75C0 .784.784 0 1.75 0zM1.5 1.75v12.5c0 .138.112.25.25.25h12.5a.25.25 0 00.25-.25V1.75a.25.25 0 00-.25-.25H1.75a.25.25 0 00-.25.25zM11.75 3a.75.75 0 01.75.75v7.5a.75.75 0 01-1.5 0v-7.5a.75.75 0 01.75-.75zm-8.25.75a.75.75 0 011.5 0v5.5a.75.75 0 01-1.5 0v-5.5zM8 3a.75.75 0 01.75.75v3.5a.75.75 0 01-1.5 0v-3.5A.75.75 0 018 3z"></path>
+                </svg>
+                Projects
+            </div>
+            <div class="tab-item">
+                <svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true">
+                    <path d="M8.75.75V2h.985c.304 0 .603.08.867.231l1.29.736c.038.022.08.033.124.033h2.234a.75.75 0 010 1.5h-.427l2.118 4.691a.75.75 0 01-.154.838l-.53-.53.529.531-.001.002-.002.002-.006.006-.006.005-.01.01-.045.04c-.21.176-.441.327-.686.45C14.556 10.78 13.88 11 13 11a4.498 4.498 0 01-2.023-.454 3.544 3.544 0 01-.686-.45l-.045-.04-.016-.015-.006-.006-.004-.004v-.001a.75.75 0 01-.154-.838L12.178 4.5h-.162c-.305 0-.604-.079-.868-.231l-1.29-.737a.245.245 0 00-.124-.033h-2.234a.75.75 0 010-1.5h.984v-1.25H8.75zm-2.25 0v1.25h.984c.305 0 .604.079.868.231l1.29.737a.245.245 0 00.124.033h2.234a.75.75 0 010 1.5h-.984v1.25h-.984a.75.75 0 01-.572-.262L5.29 3.221a1.745 1.745 0 00-.868-.231H3.5v14h1.75v-2.5h.5v2.5h1.75v-2.5h.5v2.5h1.75v-2.5h.5v2.5h1.75v-2.5h.5v2.5h1.75v-2.5h.5v2.5h1.75v-2.5h.5v2.5h1.75v-14h-1.246c.305 0 .604.079.868.231l1.29.737a.245.245 0 00.124.033h2.234a.75.75 0 010 1.5h-.984v1.25h-.984a1.745 1.745 0 01-.868-.231l-1.29-.737a1.745 1.745 0 00-.868-.231H12.5v-1.25H4.5v1.25h-.746c-.305 0-.604.079-.868.231l-1.29.737a.245.245 0 00-.124.033H.25a.75.75 0 010-1.5h.984V.75H.75a.75.75 0 010-1.5h8zM12.5 1.75V2h-.984c-.305 0-.604.079-.868.231l-1.29.737a1.745 1.745 0 01-.868.231H4.5v-1.25h8zM3.5 13.5a.75.75 0 010-1.5h9a.75.75 0 010 1.5h-9zm0-3a.75.75 0 010-1.5h9a.75.75 0 010 1.5h-9zm0-3a.75.75 0 010-1.5h9a.75.75 0 010 1.5h-9zm0-3a.75.75 0 010-1.5h9a.75.75 0 010 1.5h-9z"></path>
+                </svg>
+                Packages
+            </div>
+            <div class="tab-item">
+                <svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true">
+                    <path d="M8 .25a.75.75 0 01.673.418l1.882 3.815 4.21.612a.75.75 0 01.416 1.279l-3.046 2.97.719 4.192a.751.751 0 01-1.088.791L8 12.347l-3.766 1.98a.75.75 0 01-1.088-.79l.72-4.194L.818 6.374a.75.75 0 01.416-1.28l4.21-.611L7.327.668A.75.75 0 018 .25z"></path>
+                </svg>
+                Stars
+                <span class="tab-badge">272</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="main-content">
+        <!-- Sidebar -->
+        <div class="sidebar">
+            <div class="avatar"></div>
+            <h1 class="user-name">CzBiX</h1>
+            <button class="follow-button">Follow</button>
+            <p class="user-bio">A Google a day.</p>
+            <div class="user-stats">
+                <svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true">
+                    <path fill-rule="evenodd" d="M2 5.5a3.5 3.5 0 115.898 2.549 5.507 5.507 0 013.034 4.084.75.75 0 11-1.482.235 4.001 4.001 0 00-7.9 0 .75.75 0 01-1.482-.236A5.507 5.507 0 013.102 8.05 3.49 3.49 0 012 5.5zM11 4a.75.75 0 100 1.5 1.5 1.5 0 01.666 2.844.75.75 0 00-.416.672v.352a.75.75 0 00.574.73c1.2.289 2.162 1.2 2.522 2.372a.75.75 0 101.434-.44 5.01 5.01 0 00-2.56-3.012A3 3 0 0011 4z"></path>
+                </svg>
+                <span>193 followers</span>
+                <span>·</span>
+                <span>65 following</span>
+            </div>
+            <div class="user-link">
+                <svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true">
+                    <path fill-rule="evenodd" d="M7.775 3.275a.75.75 0 001.06 1.06l1.25-1.25a2 2 0 112.83 2.83l-2.5 2.5a2 2 0 01-2.83 0 .75.75 0 00-1.06 1.06 3.5 3.5 0 004.95 0l2.5-2.5a3.5 3.5 0 00-4.95-4.95l-1.25 1.25zm-4.69 9.64a2 2 0 010-2.83l2.5-2.5a2 2 0 012.83 0 .75.75 0 001.06-1.06 3.5 3.5 0 00-4.95 0l-2.5 2.5a3.5 3.5 0 004.95 4.95l1.25-1.25a.75.75 0 00-1.06-1.06l-1.25 1.25a2 2 0 01-2.83 0z"></path>
+                </svg>
+                <a href="#">https://czbix.com</a>
+            </div>
+            <h2 class="achievements-title">Achievements</h2>
+            <div class="achievements">
+                <div class="achievement"></div>
+                <div class="achievement" style="position: relative;">
+                    <span class="achievement-count">x3</span>
+                </div>
+                <div class="achievement"></div>
+                <div class="achievement" style="position: relative;">
+                    <span class="achievement-count">x2</span>
+                </div>
+            </div>
+            <div class="block-report">
+                <a href="#">Block or Report</a>
+            </div>
+        </div>
+
+        <!-- Content Area -->
+        <div class="content">
+            <h2 class="pinned-title">Pinned</h2>
+            <div class="repos-grid">
+                <!-- Repository 1 -->
+                <div class="repo-card">
+                    <div class="repo-header">
+                        <svg class="repo-icon" viewBox="0 0 16 16" aria-hidden="true">
+                            <path fill-rule="evenodd" d="M2 2.5A2.5 2.5 0 014.5 0h8.75a.75.75 0 01.75.75v12.5a.75.75 0 01-.75.75h-2.5a.75.75 0 110-1.5h1.75v-2h-8a1 1 0 00-.714 1.7.75.75 0 01-1.072 1.05A2.495 2.495 0 012 11.5v-9zm10.5-1h-8a1 1 0 00-1 1v6.708A2.486 2.486 0 014.5 9h8V1.5zM5 12.25v3.25a.25.25 0 00.4.2l1.45-1.087a.25.25 0 01.3 0L8.6 15.7a.25.25 0 00.4-.2v-3.25a.25.25 0 00-.25-.25h-3.5a.25.25 0 00-.25.25z"></path>
+                        </svg>
+                        <a href="#" class="repo-name">WSLHostPatcher</a>
+                        <span class="repo-visibility">Public</span>
+                    </div>
+                    <p class="repo-description">Dynamic patch WSL2 to listen port on any interface.</p>
+                    <div class="repo-footer">
+                        <div class="repo-language">
+                            <div class="language-dot" style="background-color: #f34b7d;"></div>
+                            C++
+                        </div>
+                        <div class="repo-stat">
+                            <svg class="stat-icon" viewBox="0 0 16 16" aria-hidden="true">
+                                <path fill-rule="evenodd" d="M8 .25a.75.75 0 01.673.418l1.882 3.815 4.21.612a.75.75 0 01.416 1.279l-3.046 2.97.719 4.192a.751.751 0 01-1.088.791L8 12.347l-3.766 1.98a.75.75 0 01-1.088-.79l.72-4.194L.818 6.374a.75.75 0 01.416-1.28l4.21-.611L7.327.668A.75.75 0 018 .25z"></path>
+                            </svg>
+                            757
+                        </div>
+                        <div class="repo-stat">
+                            <svg class="stat-icon" viewBox="0 0 16 16" aria-hidden="true">
+                                <path fill-rule="evenodd" d="M5 3.25a.75.75 0 11-1.5 0 .75.75 0 011.5 0zm0 2.122a2.25 2.25 0 10-1.5 0v.878A2.25 2.25 0 005.75 8.5h1.5v2.128a2.251 2.251 0 101.5 0V8.5h1.5a2.25 2.25 0 002.25-2.25v-.878a2.25 2.25 0 10-1.5 0v.878a.75.75 0 01-.75.75h-4.5A.75.75 0 015 6.25v-.878zm3.75 7.378a.75.75 0 11-1.5 0 .75.75 0 011.5 0zm3-8.75a.75.75 0 100-1.5.75.75 0 000 1.5z"></path>
+                            </svg>
+                            51
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Repository 2 -->
+                <div class="repo-card">
+                    <div class="repo-header">
+                        <svg class="repo-icon" viewBox="0 0 16 16" aria-hidden="true">
+                            <path fill-rule="evenodd" d="M2 2.5A2.5 2.5 0 014.5 0h8.75a.75.75 0 01.75.75v12.5a.75.75 0 01-.75.75h-2.5a.75.75 0 110-1.5h1.75v-2h-8a1 1 0 00-.714 1.7.75.75 0 01-1.072 1.05A2.495 2.495 0 012 11.5v-9zm10.5-1h-8a1 1 0 00-1 1v6.708A2.486 2.486 0 014.5 9h8V1.5zM5 12.25v3.25a.25.25 0 00.4.2l1.45-1.087a.25.25 0 01.3 0L8.6 15.7a.25.25 0 00.4-.2v-3.25a.25.25 0 00-.25-.25h-3.5a.25.25 0 00-.25.25z"></path>
+                        </svg>
+                        <a href="#" class="repo-name">qb-web</a>
+                        <span class="repo-visibility">Public</span>
+                    </div>
+                    <p class="repo-description">A qBittorrent Web UI, write in TypeScript+Vue.</p>
+                    <div class="repo-footer">
+                        <div class="repo-language">
+                            <div class="language-dot" style="background-color: #41b883;"></div>
+                            Vue
+                        </div>
+                        <div class="repo-stat">
+                            <svg class="stat-icon" viewBox="0 0 16 16" aria-hidden="true">
+                                <path fill-rule="evenodd" d="M8 .25a.75.75 0 01.673.418l1.882 3.815 4.21.612a.75.75 0 01.416 1.279l-3.046 2.97.719 4.192a.751.751 0 01-1.088.791L8 12.347l-3.766 1.98a.75.75 0 01-1.088-.79l.72-4.194L.818 6.374a.75.75 0 01.416-1.28l4.21-.611L7.327.668A.75.75 0 018 .25z"></path>
+                            </svg>
+                            1.8k
+                        </div>
+                        <div class="repo-stat">
+                            <svg class="stat-icon" viewBox="0 0 16 16" aria-hidden="true">
+                                <path fill-rule="evenodd" d="M5 3.25a.75.75 0 11-1.5 0 .75.75 0 011.5 0zm0 2.122a2.25 2.25 0 10-1.5 0v.878A2.25 2.25 0 005.75 8.5h1.5v2.128a2.251 2.251 0 101.5 0V8.5h1.5a2.25 2.25 0 002.25-2.25v-.878a2.25 2.25 0 10-1.5 0v.878a.75.75 0 01-.75.75h-4.5A.75.75 0 015 6.25v-.878zm3.75 7.378a.75.75 0 11-1.5 0 .75.75 0 011.5 0zm3-8.75a.75.75 0 100-1.5.75.75 0 000 1.5z"></path>
+                            </svg>
+                            141
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Repository 3 -->
+                <div class="repo-card">
+                    <div class="repo-header">
+                        <svg class="repo-icon" viewBox="0 0 16 16" aria-hidden="true">
+                            <path fill-rule="evenodd" d="M2 2.5A2.5 2.5 0 014.5 0h8.75a.75.75 0 01.75.75v12.5a.75.75 0 01-.75.75h-2.5a.75.75 0 110-1.5h1.75v-2h-8a1 1 0 00-.714 1.7.75.75 0 01-1.072 1.05A2.495 2.495 0 012 11.5v-9zm10.5-1h-8a1 1 0 00-1 1v6.708A2.486 2.486 0 014.5 9h8V1.5zM5 12.25v3.25a.25.25 0 00.4.2l1.45-1.087a.25.25 0 01.3 0L8.6 15.7a.25.25 0 00.4-.2v-3.25a.25.25 0 00-.25-.25h-3.5a.25.25 0 00-.25.25z"></path>
+                        </svg>
+                        <a href="#" class="repo-name">disasm-web</a>
+                        <span class="repo-visibility">Public</span>
+                    </div>
+                    <p class="repo-description">Online Assembler and Disassembler, support offline usage.</p>
+                    <div class="repo-footer">
+                        <div class="repo-language">
+                            <div class="language-dot" style="background-color: #3178c6;"></div>
+                            TypeScript
+                        </div>
+                        <div class="repo-stat">
+                            <svg class="stat-icon" viewBox="0 0 16 16" aria-hidden="true">
+                                <path fill-rule="evenodd" d="M8 .25a.75.75 0 01.673.418l1.882 3.815 4.21.612a.75.75 0 01.416 1.279l-3.046 2.97.719 4.192a.751.751 0 01-1.088.791L8 12.347l-3.766 1.98a.75.75 0 01-1.088-.79l.72-4.194L.818 6.374a.75.75 0 01.416-1.28l4.21-.611L7.327.668A.75.75 0 018 .25z"></path>
+                            </svg>
+                            50
+                        </div>
+                        <div class="repo-stat">
+                            <svg class="stat-icon" viewBox="0 0 16 16" aria-hidden="true">
+                                <path fill-rule="evenodd" d="M5 3.25a.75.75 0 11-1.5 0 .75.75 0 011.5 0zm0 2.122a2.25 2.25 0 10-1.5 0v.878A2.25 2.25 0 005.75 8.5h1.5v2.128a2.251 2.251 0 101.5 0V8.5h1.5a2.25 2.25 0 002.25-2.25v-.878a2.25 2.25 0 10-1.5 0v.878a.75.75 0 01-.75.75h-4.5A.75.75 0 015 6.25v-.878zm3.75 7.378a.75.75 0 11-1.5 0 .75.75 0 011.5 0zm3-8.75a.75.75 0 100-1.5.75.75 0 000 1.5z"></path>
+                            </svg>
+                            13
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Repository 4 -->
+                <div class="repo-card">
+                    <div class="repo-header">
+                        <svg class="repo-icon" viewBox="0 0 16 16" aria-hidden="true">
+                            <path fill-rule="evenodd" d="M2 2.5A2.5 2.5 0 014.5 0h8.75a.75.75 0 01.75.75v12.5a.75.75 0 01-.75.75h-2.5a.75.75 0 110-1.5h1.75v-2h-8a1 1 0 00-.714 1.7.75.75 0 01-1.072 1.05A2.495 2.495 0 012 11.5v-9zm10.5-1h-8a1 1 0 00-1 1v6.708A2.486 2.486 0 014.5 9h8V1.5zM5 12.25v3.25a.25.25 0 00.4.2l1.45-1.087a.25.25 0 01.3 0L8.6 15.7a.25.25 0 00.4-.2v-3.25a.25.25 0 00-.25-.25h-3.5a.25.25 0 00-.25.25z"></path>
+                        </svg>
+                        <a href="#" class="repo-name">buptczq/WinCryptSSHAgent</a>
+                        <span class="repo-visibility">Public</span>
+                    </div>
+                    <p class="repo-description">Using a Yubikey for SSH Authentication on Windows Seamlessly</p>
+                    <div class="repo-footer">
+                        <div class="repo-language">
+                            <div class="language-dot" style="background-color: #00add8;"></div>
+                            Go
+                        </div>
+                        <div class="repo-stat">
+                            <svg class="stat-icon" viewBox="0 0 16 16" aria-hidden="true">
+                                <path fill-rule="evenodd" d="M8 .25a.75.75 0 01.673.418l1.882 3.815 4.21.612a.75.75 0 01.416 1.279l-3.046 2.97.719 4.192a.751.751 0 01-1.088.791L8 12.347l-3.766 1.98a.75.75 0 01-1.088-.79l.72-4.194L.818 6.374a.75.75 0 01.416-1.28l4.21-.611L7.327.668A.75.75 0 018 .25z"></path>
+                            </svg>
+                            562
+                        </div>
+                        <div class="repo-stat">
+                            <svg class="stat-icon" viewBox="0 0 16 16" aria-hidden="true">
+                                <path fill-rule="evenodd" d="M5 3.25a.75.75 0 11-1.5 0 .75.75 0 011.5 0zm0 2.122a2.25 2.25 0 10-1.5 0v.878A2.25 2.25 0 005.75 8.5h1.5v2.128a2.251 2.251 0 101.5 0V8.5h1.5a2.25 2.25 0 002.25-2.25v-.878a2.25 2.25 0 10-1.5 0v.878a.75.75 0 01-.75.75h-4.5A.75.75 0 015 6.25v-.878zm3.75 7.378a.75.75 0 11-1.5 0 .75.75 0 011.5 0zm3-8.75a.75.75 0 100-1.5.75.75 0 000 1.5z"></path>
+                            </svg>
+                            65
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Repository 5 -->
+                <div class="repo-card">
+                    <div class="repo-header">
+                        <svg class="repo-icon" viewBox="0 0 16 16" aria-hidden="true">
+                            <path fill-rule="evenodd" d="M2 2.5A2.5 2.5 0 014.5 0h8.75a.75.75 0 01.75.75v12.5a.75.75 0 01-.75.75h-2.5a.75.75 0 110-1.5h1.75v-2h-8a1 1 0 00-.714 1.7.75.75 0 01-1.072 1.05A2.495 2.495 0 012 11.5v-9zm10.5-1h-8a1 1 0 00-1 1v6.708A2.486 2.486 0 014.5 9h8V1.5zM5 12.25v3.25a.25.25 0 00.4.2l1.45-1.087a.25.25 0 01.3 0L8.6 15.7a.25.25 0 00.4-.2v-3.25a.25.25 0 00-.25-.25h-3.5a.25.25 0 00-.25.25z"></path>
+                        </svg>
+                        <a href="#" class="repo-name">cloudbase/wnbd</a>
+                        <span class="repo-visibility">Public</span>
+                    </div>
+                    <p class="repo-description">Windows Ceph RBD NBD driver.</p>
+                    <div class="repo-footer">
+                        <div class="repo-language">
+                            <div class="language-dot" style="background-color: #f34b7d;"></div>
+                            C++
+                        </div>
+                        <div class="repo-stat">
+                            <svg class="stat-icon" viewBox="0 0 16 16" aria-hidden="true">
+                                <path fill-rule="evenodd" d="M8 .25a.75.75 0 01.673.418l1.882 3.815 4.21.612a.75.75 0 01.416 1.279l-3.046 2.97.719 4.192a.751.751 0 01-1.088.791L8 12.347l-3.766 1.98a.75.75 0 01-1.088-.79l.72-4.194L.818 6.374a.75.75 0 01.416-1.28l4.21-.611L7.327.668A.75.75 0 018 .25z"></path>
+                            </svg>
+                            68
+                        </div>
+                        <div class="repo-stat">
+                            <svg class="stat-icon" viewBox="0 0 16 16" aria-hidden="true">
+                                <path fill-rule="evenodd" d="M5 3.25a.75.75 0 11-1.5 0 .75.75 0 011.5 0zm0 2.122a2.25 2.25 0 10-1.5 0v.878A2.25 2.25 0 005.75 8.5h1.5v2.128a2.251 2.251 0 101.5 0V8.5h1.5a2.25 2.25 0 002.25-2.25v-.878a2.25 2.25 0 10-1.5 0v.878a.75.75 0 01-.75.75h-4.5A.75.75 0 015 6.25v-.878zm3.75 7.378a.75.75 0 11-1.5 0 .75.75 0 011.5 0zm3-8.75a.75.75 0 100-1.5.75.75 0 000 1.5z"></path>
+                            </svg>
+                            27
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="loading-indicator">
+                <svg width="24" height="24" viewBox="0 0 24 24" aria-hidden="true">
+                    <path d="M12 4V1L8 5l4 4V6c3.31 0 6 2.69 6 6 0 1.01-.25 1.97-.7 2.8l1.46 1.46A7.93 7.93 0 0020 12c0-4.42-3.58-8-8-8zm0 14c-3.31 0-6-2.69-6-6 0-1.01.25-1.97.7-2.8L5.24 7.74A7.93 7.93 0 004 12c0 4.42 3.58 8 8 8v3l4-4-4-4v3z"></path>
+                </svg>
+                <p>Loading more...</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-content">
+            <svg class="footer-logo" viewBox="0 0 16 16" aria-hidden="true">
+                <path fill-rule="evenodd" d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"></path>
+            </svg>
+            <span>© 2025 GitHub, Inc.</span>
+            <div class="footer-links">
+                <a href="#" class="footer-link">Terms</a>
+                <a href="#" class="footer-link">Privacy</a>
+                <a href="#" class="footer-link">Security</a>
+                <a href="#" class="footer-link">Status</a>
+                <a href="#" class="footer-link">Docs</a>
+                <a href="#" class="footer-link">Contact</a>
+                <a href="#" class="footer-link">Manage cookies</a>
+                <a href="#" class="footer-link">Do not share my personal information</a>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Simple interaction for Follow button
+        document.querySelector('.follow-button').addEventListener('click', function() {
+            if (this.textContent === 'Follow') {
+                this.textContent = 'Following';
+                this.style.backgroundColor = '#0969da';
+                this.style.color = '#ffffff';
+                this.style.borderColor = '#0969da';
+            } else {
+                this.textContent = 'Follow';
+                this.style.backgroundColor = '#f6f8fa';
+                this.style.color = '#24292f';
+                this.style.borderColor = '#d0d7de';
+            }
+        });
+
+        // Simple search functionality
+        document.querySelector('.search-input').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                alert('Search functionality would be implemented here: ' + this.value);
+            }
+        });
+
+        // Tab switching (simplified)
+        document.querySelectorAll('.tab-item').forEach(tab => {
+            tab.addEventListener('click', function() {
+                document.querySelectorAll('.tab-item').forEach(t => t.classList.remove('active'));
+                this.classList.add('active');
+            });
+        });
+    </script>
+</body>
+</html>

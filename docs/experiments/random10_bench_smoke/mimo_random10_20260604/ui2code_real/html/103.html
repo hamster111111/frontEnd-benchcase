@@ -1,0 +1,772 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Product Recommendations</title>
+    <style>
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+            background-color: #e3e6e6;
+            margin: 0;
+            padding: 0;
+            color: #0f1111;
+        }
+
+        .page-container {
+            max-width: 1480px;
+            margin: 0 auto;
+            padding: 16px;
+        }
+
+        .carousel-section {
+            background-color: #ffffff;
+            border-radius: 4px;
+            box-shadow: 0 1px 1px rgba(0,0,0,0.1);
+            margin-bottom: 16px;
+            padding: 20px;
+            position: relative;
+        }
+
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+            margin-bottom: 4px;
+        }
+
+        .section-title {
+            font-size: 20px;
+            font-weight: 700;
+            color: #0f1111;
+            margin: 0 0 4px 0;
+        }
+
+        .page-info {
+            font-size: 14px;
+            color: #565959;
+            margin: 0;
+        }
+
+        .sponsored-label {
+            font-size: 12px;
+            color: #8d9096;
+            margin-bottom: 12px;
+        }
+
+        .sponsored-label .info-icon {
+            display: inline-block;
+            width: 14px;
+            height: 14px;
+            background-color: #8d9096;
+            color: white;
+            border-radius: 50%;
+            text-align: center;
+            line-height: 14px;
+            font-size: 10px;
+            margin-left: 4px;
+            vertical-align: middle;
+        }
+
+        .carousel-wrapper {
+            position: relative;
+        }
+
+        .product-row {
+            display: flex;
+            gap: 12px;
+            overflow-x: auto;
+            scroll-behavior: smooth;
+            padding: 10px 0;
+            scrollbar-width: none; /* Firefox */
+        }
+
+        .product-row::-webkit-scrollbar {
+            display: none; /* Chrome, Safari, Edge */
+        }
+
+        .product-card {
+            flex: 0 0 calc(16.666% - 10px);
+            min-width: 195px;
+            background: #ffffff;
+            padding: 8px;
+            border-radius: 4px;
+            position: relative;
+            text-decoration: none;
+            color: inherit;
+            display: block;
+            transition: box-shadow 0.2s;
+        }
+
+        .product-card:hover {
+            box-shadow: 0 0 0 1px #e77600, 0 2px 5px rgba(213,213,213,0.5);
+        }
+
+        .product-image-container {
+            width: 100%;
+            aspect-ratio: 1 / 1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-bottom: 8px;
+            background-color: #f7f7f7;
+            border-radius: 4px;
+            overflow: hidden;
+        }
+
+        .product-image-placeholder {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+        }
+
+        /* 占位符样式 - 用不同颜色的块和图标来表示不同类型的产品 */
+        .placeholder-img {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: #f7f7f7;
+        }
+        .placeholder-img.gas-detector {
+            background: linear-gradient(135deg, #e1f5fe 0%, #b3e5fc 100%);
+        }
+        .placeholder-img.smoke-alarm {
+            background: linear-gradient(135deg, #f3e5f5 0%, #ce93d8 100%);
+        }
+        .placeholder-img.co-detector {
+            background: linear-gradient(135deg, #e8f5e8 0%, #a5d6a7 100%);
+        }
+        .placeholder-img.portable {
+            background: linear-gradient(135deg, #fff3e0 0%, #ffcc80 100%);
+        }
+
+        .product-title {
+            font-size: 14px;
+            line-height: 1.3;
+            margin-bottom: 4px;
+            display: -webkit-box;
+            -webkit-line-clamp: 3;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .rating-container {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            margin-bottom: 4px;
+            flex-wrap: wrap;
+        }
+
+        .stars {
+            color: #f0c14b;
+            font-size: 14px;
+            white-space: nowrap;
+        }
+
+        .rating-count {
+            color: #007185;
+            font-size: 14px;
+            white-space: nowrap;
+        }
+
+        .badge {
+            display: inline-block;
+            font-size: 12px;
+            font-weight: 700;
+            padding: 2px 6px;
+            border-radius: 2px;
+            margin-bottom: 4px;
+        }
+
+        .badge-limited {
+            background-color: #cc0c39;
+            color: #ffffff;
+        }
+
+        .badge-choice {
+            background-color: #232f3e;
+            color: #ffffff;
+        }
+
+        .price-container {
+            margin-bottom: 2px;
+        }
+
+        .price-discount {
+            color: #cc0c39;
+            font-size: 14px;
+            font-weight: 400;
+        }
+
+        .price-main {
+            color: #0f1111;
+            font-size: 20px;
+            font-weight: 400;
+        }
+
+        .price-decimal {
+            font-size: 14px;
+            vertical-align: super;
+        }
+
+        .price-secondary {
+            font-size: 14px;
+            color: #565959;
+            margin-bottom: 2px;
+        }
+
+        .prime-logo {
+            display: inline-flex;
+            align-items: center;
+            gap: 2px;
+        }
+
+        .prime-check {
+            color: #007185;
+            font-size: 14px;
+        }
+
+        .prime-text {
+            color: #007185;
+            font-size: 14px;
+            font-weight: 700;
+            font-style: italic;
+        }
+
+        .delivery-text {
+            font-size: 14px;
+            color: #565959;
+        }
+
+        .nav-button {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 40px;
+            height: 80px;
+            background-color: #ffffff;
+            border: 1px solid #d5d9d9;
+            border-radius: 4px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            z-index: 10;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+            font-size: 20px;
+            color: #0f1111;
+        }
+
+        .nav-button:hover {
+            background-color: #f7fafa;
+        }
+
+        .nav-button.prev {
+            left: 0;
+        }
+
+        .nav-button.next {
+            right: 0;
+        }
+
+        .manufacturer-section {
+            background-color: #ffffff;
+            border-radius: 4px;
+            box-shadow: 0 1px 1px rgba(0,0,0,0.1);
+            padding: 20px;
+        }
+
+        .manufacturer-title {
+            font-size: 20px;
+            font-weight: 700;
+            color: #0f1111;
+            margin: 0 0 16px 0;
+        }
+
+        .manufacturer-banner {
+            width: 100%;
+            height: 200px;
+            background: linear-gradient(135deg, #c2185b 0%, #c2185b 50%, #90a4ae 50%, #90a4ae 100%);
+            border-radius: 4px;
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
+            padding-left: 10%;
+            color: white;
+            font-size: 72px;
+            font-weight: bold;
+            overflow: hidden;
+        }
+
+        .manufacturer-product {
+            margin-left: auto;
+            width: 40%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, #eeeeee 0%, #bdbdbd 100%);
+        }
+
+        .manufacturer-product-label {
+            font-size: 48px;
+            font-weight: bold;
+            color: #1565c0;
+        }
+
+        /* 图标占位符 */
+        .icon-placeholder {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            font-size: 10px;
+            color: #8d9096;
+            text-align: center;
+            padding: 8px;
+        }
+
+        .icon-circle {
+            width: 50%;
+            height: 40%;
+            border-radius: 50%;
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+        }
+
+        .icon-circle.gas {
+            background-color: #90caf9;
+        }
+
+        .icon-circle.smoke {
+            background-color: #ce93d8;
+        }
+
+        .icon-circle.co {
+            background-color: #a5d6a7;
+        }
+
+        .icon-circle.portable {
+            background-color: #ffcc80;
+        }
+    </style>
+</head>
+<body>
+    <div class="page-container">
+        <!-- 第一个产品轮播区域 -->
+        <section class="carousel-section">
+            <div class="section-header">
+                <h2 class="section-title">Deals on related products</h2>
+                <p class="page-info">Page 1 of 2</p>
+            </div>
+            <div class="sponsored-label">
+                Sponsored <span class="info-icon">i</span>
+            </div>
+            
+            <div class="carousel-wrapper">
+                <button class="nav-button prev" onclick="scrollCarousel('deals', -1)">&lt;</button>
+                
+                <div class="product-row" id="deals-carousel">
+                    <!-- 产品1 -->
+                    <div class="product-card">
+                        <div class="product-image-container">
+                            <div class="icon-placeholder">
+                                <div class="icon-circle gas">🔥</div>
+                                <div>Natural Gas Detector</div>
+                            </div>
+                        </div>
+                        <h3 class="product-title">4-in-1 Natural Gas Leak Detector & Carbon Monoxide Detectors - Carbon Monoxide Dete...</h3>
+                        <div class="rating-container">
+                            <span class="stars">★★★★☆</span>
+                            <span class="rating-count">248</span>
+                        </div>
+                        <div class="badge badge-limited">Limited time deal</div>
+                        <div class="price-container">
+                            <span class="price-discount">-17%</span>
+                            <span class="price-main">$32<span class="price-decimal">37</span></span>
+                        </div>
+                        <div class="price-secondary">Typical: $38.99</div>
+                        <div class="prime-logo">
+                            <span class="prime-check">✓</span>
+                            <span class="prime-text">prime</span>
+                        </div>
+                    </div>
+
+                    <!-- 产品2 -->
+                    <div class="product-card">
+                        <div class="product-image-container">
+                            <div class="icon-placeholder">
+                                <div class="icon-circle smoke">💨</div>
+                                <div>Gas & CO Detector</div>
+                            </div>
+                        </div>
+                        <h3 class="product-title">2 Packs Combination Gas & Carbon Monoxide Detectors Plug in, 2-in-1 Natural Gas Det...</h3>
+                        <div class="rating-container">
+                            <span class="stars">★★★★☆</span>
+                            <span class="rating-count">10</span>
+                        </div>
+                        <div class="badge badge-limited">Limited time deal</div>
+                        <div class="price-container">
+                            <span class="price-discount">-47%</span>
+                            <span class="price-main">$27<span class="price-decimal">99</span></span>
+                        </div>
+                        <div class="price-secondary">Typical: $52.32</div>
+                        <div class="prime-logo">
+                            <span class="prime-check">✓</span>
+                            <span class="prime-text">prime</span>
+                        </div>
+                    </div>
+
+                    <!-- 产品3 -->
+                    <div class="product-card">
+                        <div class="product-image-container">
+                            <div class="icon-placeholder">
+                                <div class="icon-circle portable">📱</div>
+                                <div>Portable Detector</div>
+                            </div>
+                        </div>
+                        <h3 class="product-title">CT-300 Portable Carbon Monoxide Detector, CO Detector with Audible & Visual Alarm, ...</h3>
+                        <div class="rating-container">
+                            <span class="stars">★★★★☆</span>
+                            <span class="rating-count">778</span>
+                        </div>
+                        <div class="badge badge-limited">Limited time deal</div>
+                        <div class="price-container">
+                            <span class="price-discount">-19%</span>
+                            <span class="price-main">$37<span class="price-decimal">14</span></span>
+                        </div>
+                        <div class="price-secondary">Typical: $45.99</div>
+                        <div class="prime-logo">
+                            <span class="prime-check">✓</span>
+                            <span class="prime-text">prime</span>
+                        </div>
+                    </div>
+
+                    <!-- 产品4 -->
+                    <div class="product-card">
+                        <div class="product-image-container">
+                            <div class="icon-placeholder">
+                                <div class="icon-circle co">🔋</div>
+                                <div>Battery CO Detector</div>
+                            </div>
+                        </div>
+                        <h3 class="product-title">Carbon Monoxide Detector, Replaceable Battery-Operated Carbon Monoxide Alarm Detect...</h3>
+                        <div class="rating-container">
+                            <span class="stars">★★★★★</span>
+                            <span class="rating-count">823</span>
+                        </div>
+                        <div class="badge badge-choice">Amazon's Choice</div>
+                        <div class="badge badge-limited">Limited time deal</div>
+                        <div class="price-container">
+                            <span class="price-discount">-34%</span>
+                            <span class="price-main">$9<span class="price-decimal">18</span></span>
+                        </div>
+                        <div class="price-secondary">List: $13.99</div>
+                        <div class="prime-logo">
+                            <span class="prime-check">✓</span>
+                            <span class="prime-text">prime</span>
+                        </div>
+                    </div>
+
+                    <!-- 产品5 -->
+                    <div class="product-card">
+                        <div class="product-image-container">
+                            <div class="icon-placeholder">
+                                <div class="icon-circle smoke">💡</div>
+                                <div>Smoke & CO Detector</div>
+                            </div>
+                        </div>
+                        <h3 class="product-title">Smoke Detector and Carbon Monoxide Detector Co2 Detector Battery Powered with...</h3>
+                        <div class="rating-container">
+                            <span class="stars">★★★★☆</span>
+                            <span class="rating-count">765</span>
+                        </div>
+                        <div class="badge badge-limited">Limited time deal</div>
+                        <div class="price-container">
+                            <span class="price-discount">-28%</span>
+                            <span class="price-main">$50<span class="price-decimal">98</span></span>
+                        </div>
+                        <div class="price-secondary">List: $70.99</div>
+                        <div class="prime-logo">
+                            <span class="prime-check">✓</span>
+                            <span class="prime-text">prime</span>
+                        </div>
+                    </div>
+
+                    <!-- 产品6 -->
+                    <div class="product-card">
+                        <div class="product-image-container">
+                            <div class="icon-placeholder">
+                                <div class="icon-circle co">🔍</div>
+                                <div>Portable CO Detector</div>
+                            </div>
+                        </div>
+                        <h3 class="product-title">Carbon Monoxide Detectors, Portable CO Detector with Digital Display, ETL Listed Ca...</h3>
+                        <div class="rating-container">
+                            <span class="stars">★★★★☆</span>
+                            <span class="rating-count">81</span>
+                        </div>
+                        <div class="badge badge-limited">Limited time deal</div>
+                        <div class="price-container">
+                            <span class="price-discount">-50%</span>
+                            <span class="price-main">$49<span class="price-decimal">99</span></span>
+                        </div>
+                        <div class="price-secondary">List: $99.99</div>
+                        <div class="prime-logo">
+                            <span class="prime-check">✓</span>
+                            <span class="prime-text">prime</span>
+                        </div>
+                    </div>
+
+                    <!-- 产品7 -->
+                    <div class="product-card">
+                        <div class="product-image-container">
+                            <div class="icon-placeholder">
+                                <div class="icon-circle smoke">🔥</div>
+                                <div>10-Year Smoke Detector</div>
+                            </div>
+                        </div>
+                        <h3 class="product-title">AEGISLINK Smoke Detector 10-Year Battery with Test/Silence Button, Fire Alarm with ...</h3>
+                        <div class="rating-container">
+                            <span class="stars">★★★★☆</span>
+                            <span class="rating-count">2,641</span>
+                        </div>
+                        <div class="badge badge-choice">Amazon's Choice</div>
+                        <div class="badge badge-limited">Limited time deal</div>
+                        <div class="price-container">
+                            <span class="price-discount">-10%</span>
+                            <span class="price-main">$56<span class="price-decimal">69</span></span>
+                        </div>
+                        <div class="price-secondary">List: $62.99</div>
+                        <div class="prime-logo">
+                            <span class="prime-check">✓</span>
+                            <span class="prime-text">prime</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <button class="nav-button next" onclick="scrollCarousel('deals', 1)">&gt;</button>
+            </div>
+        </section>
+
+        <!-- 第二个产品轮播区域 -->
+        <section class="carousel-section">
+            <div class="section-header">
+                <h2 class="section-title">Products related to this item</h2>
+                <p class="page-info">Page 1 of 58</p>
+            </div>
+            <div class="sponsored-label">
+                Sponsored <span class="info-icon">i</span>
+            </div>
+            
+            <div class="carousel-wrapper">
+                <button class="nav-button prev" onclick="scrollCarousel('related', -1)">&lt;</button>
+                
+                <div class="product-row" id="related-carousel">
+                    <!-- 产品1 -->
+                    <div class="product-card">
+                        <div class="product-image-container">
+                            <div class="icon-placeholder">
+                                <div class="icon-circle co">🔌</div>
+                                <div>Plug-in CO Detector</div>
+                            </div>
+                        </div>
+                        <h3 class="product-title">Kidde Carbon Monoxide Detector, Plug In Wall with 9-Volt Battery Backup, Digital LE...</h3>
+                        <div class="rating-container">
+                            <span class="stars">★★★★☆</span>
+                            <span class="rating-count">27,169</span>
+                        </div>
+                        <div class="price-container">
+                            <span class="price-discount">-40%</span>
+                            <span class="price-main">$42<span class="price-decimal">94</span></span>
+                        </div>
+                        <div class="price-secondary">List: $71.59</div>
+                        <div class="prime-logo">
+                            <span class="prime-check">✓</span>
+                            <span class="prime-text">prime</span>
+                        </div>
+                    </div>
+
+                    <!-- 产品2 -->
+                    <div class="product-card">
+                        <div class="product-image-container">
+                            <div class="icon-placeholder">
+                                <div class="icon-circle gas">⛽</div>
+                                <div>Propane Detector</div>
+                            </div>
+                        </div>
+                        <h3 class="product-title">Kidde Carbon Monoxide Detector, Propane, Natural, Methane, & Explosive Gas Alarm, P...</h3>
+                        <div class="rating-container">
+                            <span class="stars">★★★★☆</span>
+                            <span class="rating-count">16,018</span>
+                        </div>
+                        <div class="badge badge-choice">Amazon's Choice</div>
+                        <div class="price-container">
+                            <span class="price-main">$62<span class="price-decimal">59</span></span>
+                        </div>
+                        <div class="prime-logo">
+                            <span class="prime-check">✓</span>
+                            <span class="prime-text">prime</span>
+                        </div>
+                    </div>
+
+                    <!-- 产品3 -->
+                    <div class="product-card">
+                        <div class="product-image-container">
+                            <div class="icon-placeholder">
+                                <div class="icon-circle smoke">🔌</div>
+                                <div>Hardwired Detector</div>
+                            </div>
+                        </div>
+                        <h3 class="product-title">Kidde Hardwired Smoke & Carbon Monoxide Detector, 10-Year Battery Backup, Voice Ale...</h3>
+                        <div class="rating-container">
+                            <span class="stars">★★★★☆</span>
+                            <span class="rating-count">557</span>
+                        </div>
+                        <div class="price-container">
+                            <span class="price-main">$61<span class="price-decimal">39</span></span>
+                        </div>
+                        <div class="prime-logo">
+                            <span class="prime-check">✓</span>
+                            <span class="prime-text">prime</span>
+                        </div>
+                    </div>
+
+                    <!-- 产品4 -->
+                    <div class="product-card">
+                        <div class="product-image-container">
+                            <div class="icon-placeholder">
+                                <div class="icon-circle co">🔋</div>
+                                <div>10-Year CO Detector</div>
+                            </div>
+                        </div>
+                        <h3 class="product-title">Siterwell Carbon Monoxide Detectors, 10 Year Product Life CO Detector with LCD Digi...</h3>
+                        <div class="rating-container">
+                            <span class="stars">★★★★☆</span>
+                            <span class="rating-count">751</span>
+                        </div>
+                        <div class="price-container">
+                            <span class="price-discount">-25%</span>
+                            <span class="price-main">$20<span class="price-decimal">24</span></span>
+                        </div>
+                        <div class="price-secondary">List: $26.99</div>
+                        <div class="prime-logo">
+                            <span class="prime-check">✓</span>
+                            <span class="prime-text">prime</span>
+                        </div>
+                    </div>
+
+                    <!-- 产品5 -->
+                    <div class="product-card">
+                        <div class="product-image-container">
+                            <div class="icon-placeholder">
+                                <div class="icon-circle gas">🔥</div>
+                                <div>Portable Gas Detector</div>
+                            </div>
+                        </div>
+                        <h3 class="product-title">Combination Gas & Carbon Monoxide Detector Plug in Wall, WESHLGD Portable...</h3>
+                        <div class="rating-container">
+                            <span class="stars">★★★★☆</span>
+                            <span class="rating-count">91</span>
+                        </div>
+                        <div class="price-container">
+                            <span class="price-discount">-6%</span>
+                            <span class="price-main">$31<span class="price-decimal">79</span></span>
+                        </div>
+                        <div class="price-secondary">Typical: $33.79</div>
+                        <div class="prime-logo">
+                            <span class="prime-check">✓</span>
+                            <span class="prime-text">prime</span>
+                        </div>
+                    </div>
+
+                    <!-- 产品6 -->
+                    <div class="product-card">
+                        <div class="product-image-container">
+                            <div class="icon-placeholder">
+                                <div class="icon-circle gas">🔥</div>
+                                <div>4-in-1 Gas Detector</div>
+                            </div>
+                        </div>
+                        <h3 class="product-title">4-in-1 Natural Gas Leak Detector & Carbon Monoxide Detectors - Carbon Monoxide Dete...</h3>
+                        <div class="rating-container">
+                            <span class="stars">★★★★☆</span>
+                            <span class="rating-count">248</span>
+                        </div>
+                        <div class="badge badge-limited">Limited time deal</div>
+                        <div class="price-container">
+                            <span class="price-discount">-17%</span>
+                            <span class="price-main">$32<span class="price-decimal">37</span></span>
+                        </div>
+                        <div class="price-secondary">Typical: $38.99</div>
+                        <div class="prime-logo">
+                            <span class="prime-check">✓</span>
+                            <span class="prime-text">prime</span>
+                        </div>
+                    </div>
+
+                    <!-- 产品7 -->
+                    <div class="product-card">
+                        <div class="product-image-container">
+                            <div class="icon-placeholder">
+                                <div class="icon-circle co">🔌</div>
+                                <div>Plug-in CO Alarm</div>
+                            </div>
+                        </div>
+                        <h3 class="product-title">Carbon Monoxide Detector Plug in Wall, CO Gas Monitor Alarm Detector with Digital Di...</h3>
+                        <div class="rating-container">
+                            <span class="stars">★★★★☆</span>
+                            <span class="rating-count">292</span>
+                        </div>
+                        <div class="badge badge-choice">Amazon's Choice</div>
+                        <div class="price-container">
+                            <span class="price-main">$19<span class="price-decimal">99</span></span>
+                        </div>
+                        <div class="prime-logo">
+                            <span class="prime-check">✓</span>
+                            <span class="prime-text">prime</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <button class="nav-button next" onclick="scrollCarousel('related', 1)">&gt;</button>
+            </div>
+        </section>
+
+        <!-- 制造商部分 -->
+        <section class="manufacturer-section">
+            <h2 class="manufacturer-title">From the manufacturer</h2>
+            <div class="manufacturer-banner">
+                <div class="manufacturer-product">
+                    <div class="manufacturer-product-label">Kidde</div>
+                </div>
+                <div style="padding: 0 20px; font-size: 24px;">Kidde</div>
+            </div>
+        </section>
+    </div>
+
+    <script>
+        function scrollCarousel(carouselId, direction) {
+            const carousel = document.getElementById(carouselId + '-carousel');
+            if (!carousel) return;
+            
+            const scrollAmount = 300; // 每次滚动的像素数
+            const newScrollPosition = carousel.scrollLeft + (direction * scrollAmount);
+            
+            carousel.scrollTo({
+                left: newScrollPosition,
+                behavior: 'smooth'
+            });
+        }
+    </script>
+</body>
+</html>

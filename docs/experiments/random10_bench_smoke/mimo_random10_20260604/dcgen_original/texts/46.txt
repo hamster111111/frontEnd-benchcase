@@ -1,0 +1,505 @@
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Google Trust Services</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Google Sans', Roboto, Arial, sans-serif;
+            color: #202124;
+            background-color: #fff;
+            line-height: 1.6;
+        }
+
+        /* Header */
+        .header {
+            display: flex;
+            align-items: center;
+            padding: 0 24px;
+            height: 48px;
+            background: #fff;
+            border-bottom: 1px solid #e0e0e0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            margin-right: 32px;
+        }
+
+        .logo-text {
+            font-size: 18px;
+            color: #5f6368;
+            font-weight: 400;
+        }
+
+        .google-text {
+            color: #202124;
+        }
+
+        .nav {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .nav a {
+            text-decoration: none;
+            color: #5f6368;
+            font-size: 14px;
+            padding: 12px 16px;
+            position: relative;
+        }
+
+        .nav a:hover {
+            color: #202124;
+        }
+
+        .nav a.active {
+            color: #1a73e8;
+        }
+
+        .nav a.active::after {
+            content: '';
+            position: absolute;
+            bottom: -1px;
+            left: 16px;
+            right: 16px;
+            height: 3px;
+            background: #1a73e8;
+            border-radius: 3px 3px 0 0;
+        }
+
+        /* Hero Section */
+        .hero {
+            text-align: center;
+            padding: 60px 24px 40px;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .hero h1 {
+            font-size: 44px;
+            font-weight: 400;
+            color: #202124;
+            margin-bottom: 20px;
+        }
+
+        .hero p {
+            font-size: 18px;
+            color: #5f6368;
+            line-height: 1.6;
+        }
+
+        /* Announcement Box */
+        .announcement {
+            max-width: 700px;
+            margin: 30px auto 50px;
+            padding: 28px 32px;
+            background: #e8f0fe;
+            border-radius: 8px;
+            text-align: center;
+        }
+
+        .announcement p {
+            font-size: 16px;
+            color: #202124;
+            line-height: 1.7;
+        }
+
+        .announcement a {
+            color: #1a73e8;
+            text-decoration: none;
+        }
+
+        .announcement a:hover {
+            text-decoration: underline;
+        }
+
+        /* Main Content */
+        .main-content {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 0 24px 60px;
+        }
+
+        .section-title {
+            font-size: 32px;
+            font-weight: 400;
+            color: #202124;
+            margin-bottom: 20px;
+        }
+
+        .section-text {
+            font-size: 16px;
+            color: #5f6368;
+            line-height: 1.7;
+            margin-bottom: 40px;
+            max-width: 700px;
+        }
+
+        /* Features Grid */
+        .features-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px 60px;
+            margin-top: 20px;
+        }
+
+        .feature-item {
+            padding: 20px 0;
+        }
+
+        .feature-item h3 {
+            font-size: 22px;
+            font-weight: 400;
+            color: #202124;
+            margin-bottom: 16px;
+        }
+
+        .feature-item p {
+            font-size: 14px;
+            color: #5f6368;
+            line-height: 1.7;
+        }
+
+        .feature-item.compliance {
+            display: grid;
+            grid-template-columns: 1fr auto;
+            gap: 16px;
+        }
+
+        .feature-item.compliance .feature-text {
+            grid-column: 1;
+        }
+
+        .feature-images {
+            display: flex;
+            gap: 12px;
+            align-items: flex-start;
+            grid-column: 2;
+            grid-row: 2;
+        }
+
+        .feature-img-placeholder {
+            width: 56px;
+            height: 56px;
+            background: linear-gradient(135deg, #e0e0e0 0%, #c0c0c0 100%);
+            border-radius: 4px;
+        }
+
+        /* Divider */
+        .divider {
+            border: none;
+            border-top: 1px solid #e0e0e0;
+            margin: 40px 0;
+        }
+
+        /* Info Section */
+        .info-section {
+            margin-top: 40px;
+        }
+
+        .info-section .section-title {
+            margin-bottom: 16px;
+        }
+
+        .info-section .section-text {
+            margin-bottom: 12px;
+        }
+
+        .info-link {
+            color: #1a73e8;
+            text-decoration: none;
+            font-size: 14px;
+            display: inline-block;
+            margin-top: 8px;
+        }
+
+        .info-link:hover {
+            text-decoration: underline;
+        }
+
+        .faq-section {
+            margin-top: 50px;
+        }
+
+        .faq-section .section-text {
+            margin-bottom: 8px;
+        }
+
+        .status-section {
+            margin-top: 30px;
+        }
+
+        .status-section .section-text {
+            margin-bottom: 8px;
+        }
+
+        /* Cookie Banner */
+        .cookie-banner {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: #fff;
+            border-top: 1px solid #e0e0e0;
+            padding: 16px 24px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            z-index: 200;
+            box-shadow: 0 -2px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .cookie-text {
+            font-size: 12px;
+            color: #5f6368;
+            flex: 1;
+        }
+
+        .cookie-actions {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            margin-left: 24px;
+        }
+
+        .cookie-actions a {
+            color: #1a73e8;
+            text-decoration: none;
+            font-size: 14px;
+        }
+
+        .cookie-actions a:hover {
+            text-decoration: underline;
+        }
+
+        .cookie-btn {
+            background: #1a73e8;
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 4px;
+            font-size: 14px;
+            cursor: pointer;
+        }
+
+        .cookie-btn:hover {
+            background: #1765cc;
+        }
+
+        /* Footer */
+        .footer {
+            background: #f8f9fa;
+            border-top: 1px solid #e0e0e0;
+            padding: 24px;
+            margin-top: 60px;
+        }
+
+        .footer-content {
+            max-width: 900px;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .footer-left {
+            display: flex;
+            align-items: center;
+            gap: 24px;
+        }
+
+        .footer-logo {
+            font-size: 22px;
+            color: #5f6368;
+        }
+
+        .footer-links {
+            display: flex;
+            gap: 20px;
+        }
+
+        .footer-links a {
+            color: #5f6368;
+            text-decoration: none;
+            font-size: 13px;
+        }
+
+        .footer-links a:hover {
+            color: #202124;
+        }
+
+        .footer-right {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .help-icon {
+            width: 18px;
+            height: 18px;
+            border: 2px solid #5f6368;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            color: #5f6368;
+        }
+
+        .footer-right span {
+            color: #5f6368;
+            font-size: 13px;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .features-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .hero h1 {
+                font-size: 32px;
+            }
+
+            .cookie-banner {
+                flex-direction: column;
+                gap: 12px;
+                padding: 16px;
+            }
+
+            .cookie-actions {
+                margin-left: 0;
+            }
+
+            .footer-content {
+                flex-direction: column;
+                gap: 16px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="logo">
+            <span class="logo-text"><span class="google-text">Google</span> Trust Services</span>
+        </div>
+        <nav class="nav">
+            <a href="#" class="active">Overview</a>
+            <a href="#">Services</a>
+            <a href="#">Repository</a>
+            <a href="#">FAQ and contact</a>
+            <a href="#">Testing</a>
+            <a href="#">Updates</a>
+        </nav>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <h1>Google Trust Services</h1>
+        <p>Helping build a safer Internet by providing a transparent, trusted, and reliable Certificate Authority.</p>
+    </section>
+
+    <!-- Announcement -->
+    <div class="announcement">
+        <p>We are excited to announce that we now offer publicly-trusted TLS certificates for free via the GTS ACME API. Learn <a href="#">how you can use the API using your GCP account</a> and read more about it on the <a href="#">Google Security Blog</a>.</p>
+    </div>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <h2 class="section-title">Overview & benefits</h2>
+        <p class="section-text">Encryption is an important building block for a safer internet. Google Trust Services provides Transport Layer Security (TLS) certificates for Google services and users helping to authenticate and encrypt internet traffic. The service is built on Google's geographically distributed infrastructure and backed by security and compliance audits helping to provide a transparent, trusted, and reliable Certificate Authority.</p>
+
+        <!-- Features Grid -->
+        <div class="features-grid">
+            <div class="feature-item">
+                <h3>Transparency</h3>
+                <p>Our Certificate Policy and Certification Practice Statement detail our issuance practices, as does this website. Our goal is to earn your trust and to lead in both transparency and security.</p>
+            </div>
+            <div class="feature-item compliance">
+                <div class="feature-text">
+                    <h3>Compliance</h3>
+                    <p>Google Trust Services regularly undergoes independent audits of security, privacy, and compliance controls, achieving certifications against global industry standards.</p>
+                </div>
+                <div class="feature-images">
+                    <div class="feature-img-placeholder"></div>
+                    <div class="feature-img-placeholder"></div>
+                </div>
+            </div>
+            <div class="feature-item">
+                <h3>Security</h3>
+                <p>The technical design of the service is underpinned by leading security expertise. In addition to the compliance audits, the service regularly undergoes independent assessments to confirm the security of the underlying infrastructure.</p>
+            </div>
+            <div class="feature-item">
+                <h3>Availability</h3>
+                <p>Google Trust Services operates from geographically distributed facilities and uses Google's proven technical infrastructure to provide a high level of availability globally.</p>
+            </div>
+        </div>
+
+        <hr class="divider">
+
+        <!-- Detailed Information -->
+        <section class="info-section">
+            <h2 class="section-title">Detailed information</h2>
+            <p class="section-text">Certificate details, log information, and other technical information.</p>
+            <a href="#" class="info-link">Repository</a>
+        </section>
+
+        <!-- FAQ Section -->
+        <section class="faq-section">
+            <h2 class="section-title">Are you experiencing an issue? Do you have any questions?</h2>
+            <p class="section-text">Head to our FAQ page to find helpful information.</p>
+            <a href="#" class="info-link">FAQ and contact</a>
+        </section>
+
+        <!-- Status Section -->
+        <section class="status-section">
+            <p class="section-text">Visit our status page for information on outages and upcoming maintenance.</p>
+            <a href="#" class="info-link">status.pki.goog</a>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-left">
+                <span class="footer-logo">Google</span>
+                <div class="footer-links">
+                    <a href="#">Privacy</a>
+                    <a href="#">Terms</a>
+                    <a href="#">About Google</a>
+                    <a href="#">Google Products</a>
+                </div>
+            </div>
+            <div class="footer-right">
+                <div class="help-icon">?</div>
+                <span>Help</span>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Cookie Banner -->
+    <div class="cookie-banner" id="cookieBanner">
+        <p class="cookie-text">This site uses cookies from Google to deliver and enhance the quality of its services and to analyze traffic.</p>
+        <div class="cookie-actions">
+            <a href="#">Learn more</a>
+            <button class="cookie-btn" onclick="document.getElementById('cookieBanner').style.display='none'">OK, got it</button>
+        </div>
+    </div>
+</body>
+</html>
+```

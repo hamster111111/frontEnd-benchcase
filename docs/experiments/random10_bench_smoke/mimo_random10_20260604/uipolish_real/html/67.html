@@ -1,0 +1,409 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Amazon Supplier Connect</title>
+<style>
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
+
+    body {
+        font-family: 'Amazon Ember', Arial, sans-serif;
+        background: linear-gradient(180deg, #f0f7fa 0%, #ffffff 100%);
+        color: #333333;
+        line-height: 1.6;
+    }
+
+    .header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 15px 40px;
+        background-color: #ffffff;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+        position: sticky;
+        top: 0;
+        z-index: 100;
+    }
+
+    .logo {
+        width: 120px;
+        height: 40px;
+        background: linear-gradient(135deg, #131921 0%, #232f3e 100%);
+        border-radius: 4px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        font-weight: bold;
+        font-size: 18px;
+        letter-spacing: 1px;
+    }
+
+    .header-right {
+        display: flex;
+        align-items: center;
+        gap: 30px;
+    }
+
+    .language-select {
+        display: flex;
+        align-items: center;
+        gap: 5px;
+        cursor: pointer;
+        color: #333;
+        font-size: 14px;
+    }
+
+    .globe-icon {
+        width: 18px;
+        height: 18px;
+        background-color: #333;
+        border-radius: 50%;
+        position: relative;
+    }
+
+    .globe-icon::before {
+        content: '';
+        position: absolute;
+        top: 4px;
+        left: 4px;
+        width: 10px;
+        height: 10px;
+        border: 2px solid white;
+        border-radius: 50%;
+    }
+
+    .login {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        cursor: pointer;
+        color: #333;
+        font-size: 14px;
+        text-decoration: none;
+    }
+
+    .lock-icon {
+        width: 16px;
+        height: 16px;
+        background-color: #333;
+        border-radius: 2px;
+        position: relative;
+    }
+
+    .lock-icon::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 3px;
+        width: 10px;
+        height: 8px;
+        border: 2px solid white;
+        border-radius: 5px 5px 0 0;
+        border-bottom: none;
+    }
+
+    .get-started {
+        background-color: #ff9900;
+        color: #111111;
+        border: none;
+        padding: 12px 24px;
+        border-radius: 24px;
+        font-size: 14px;
+        font-weight: bold;
+        cursor: pointer;
+        box-shadow: 0 2px 8px rgba(255, 153, 0, 0.3);
+    }
+
+    .hero {
+        display: flex;
+        max-width: 1200px;
+        margin: 40px auto;
+        padding: 0 40px;
+        gap: 60px;
+        align-items: flex-start;
+    }
+
+    .illustration {
+        width: 320px;
+        height: 500px;
+        position: relative;
+        flex-shrink: 0;
+    }
+
+    .person-base {
+        width: 120px;
+        height: 320px;
+        background: linear-gradient(180deg, #47b0d3 0%, #2a8fb8 100%);
+        border-radius: 10px 10px 0 0;
+        position: absolute;
+        bottom: 80px;
+        left: 50px;
+    }
+
+    .person-head {
+        width: 140px;
+        height: 140px;
+        background: linear-gradient(135deg, #333333 0%, #1a1a1a 100%);
+        border-radius: 50%;
+        position: absolute;
+        top: 60px;
+        left: 40px;
+    }
+
+    .person-body {
+        width: 160px;
+        height: 120px;
+        background: linear-gradient(135deg, #f6d365 0%, #fda085 100%);
+        border-radius: 30px;
+        position: absolute;
+        top: 180px;
+        left: 30px;
+    }
+
+    .megaphone {
+        width: 80px;
+        height: 50px;
+        background: linear-gradient(135deg, #ff9900 0%, #ff7700 100%);
+        border-radius: 10px;
+        position: absolute;
+        top: 140px;
+        left: 160px;
+        transform: rotate(-15deg);
+    }
+
+    .platform {
+        width: 220px;
+        height: 30px;
+        background: linear-gradient(135deg, #00a8e1 0%, #007eb9 100%);
+        border-radius: 5px;
+        position: absolute;
+        bottom: 50px;
+        left: 50px;
+    }
+
+    .hero-content {
+        flex: 1;
+    }
+
+    .hero-title {
+        font-size: 56px;
+        font-weight: bold;
+        color: #00303f;
+        margin-bottom: 40px;
+        line-height: 1.2;
+    }
+
+    .hero-title .amazon {
+        color: #ff9900;
+    }
+
+    .hero-description {
+        font-size: 16px;
+        color: #333;
+        margin-bottom: 24px;
+        line-height: 1.7;
+    }
+
+    .sell-link {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        color: #00303f;
+        font-weight: bold;
+        text-decoration: none;
+        margin-top: 20px;
+        font-size: 16px;
+    }
+
+    .sell-link-arrow {
+        font-size: 18px;
+        transition: transform 0.3s;
+    }
+
+    .sell-link:hover .sell-link-arrow {
+        transform: translateX(4px);
+    }
+
+    .supplying-section {
+        max-width: 1200px;
+        margin: 80px auto;
+        padding: 0 40px;
+    }
+
+    .section-title {
+        font-size: 48px;
+        font-weight: bold;
+        color: #00303f;
+        margin-bottom: 30px;
+    }
+
+    .section-description {
+        font-size: 16px;
+        color: #333;
+        margin-bottom: 50px;
+        line-height: 1.7;
+        max-width: 900px;
+    }
+
+    .cards-container {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 30px;
+    }
+
+    .card {
+        background-color: #ffffff;
+        border-radius: 12px;
+        overflow: hidden;
+        box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+        transition: transform 0.3s, box-shadow 0.3s;
+    }
+
+    .card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 12px 32px rgba(0, 0, 0, 0.12);
+    }
+
+    .card-image {
+        height: 220px;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        position: relative;
+        overflow: hidden;
+    }
+
+    .card-image:nth-child(2) {
+        background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+    }
+
+    .card-image:nth-child(3) {
+        background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+    }
+
+    .card-content {
+        padding: 24px;
+    }
+
+    .card-title {
+        font-size: 18px;
+        font-weight: bold;
+        color: #00303f;
+        margin-bottom: 12px;
+    }
+
+    .card-text {
+        font-size: 14px;
+        color: #555;
+        line-height: 1.6;
+    }
+
+    @media (max-width: 992px) {
+        .hero {
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .illustration {
+            width: 280px;
+            height: 400px;
+        }
+
+        .hero-title {
+            font-size: 42px;
+        }
+
+        .cards-container {
+            grid-template-columns: repeat(2, 1fr);
+        }
+    }
+
+    @media (max-width: 768px) {
+        .header {
+            padding: 15px 20px;
+        }
+
+        .hero {
+            padding: 0 20px;
+            gap: 40px;
+        }
+
+        .section-title {
+            font-size: 36px;
+        }
+
+        .cards-container {
+            grid-template-columns: 1fr;
+        }
+    }
+</style>
+</head>
+<body>
+    <header class="header">
+        <div class="logo">amazon</div>
+        <div class="header-right">
+            <div class="language-select">
+                <div class="globe-icon"></div>
+                <span>English</span>
+            </div>
+            <a href="#" class="login">
+                <div class="lock-icon"></div>
+                <span>Login</span>
+            </a>
+            <button class="get-started">Get Started</button>
+        </div>
+    </header>
+
+    <main>
+        <section class="hero">
+            <div class="illustration">
+                <div class="person-base"></div>
+                <div class="person-head"></div>
+                <div class="person-body"></div>
+                <div class="megaphone"></div>
+                <div class="platform"></div>
+            </div>
+            <div class="hero-content">
+                <h1 class="hero-title"><span class="amazon">amazon</span> Supplier Connect</h1>
+                <p class="hero-description">Supplier Connect will collect and retain information on prospective and current Amazon suppliers of non-inventory goods and services used in our operations. Prospective Amazon suppliers will be asked to provide company details, product, and capability information.</p>
+                <p class="hero-description">Registering on Supplier Connect does not guarantee your company will be an approved Amazon supplier. After reviewing the information provided, a procurement professional may contact you if an opportunity is available. We are always looking for new partners and ideas!</p>
+                <p class="hero-description">Supplying to Amazon is different from Selling on Amazon. If you are interested in selling on the Amazon retail page, click the below link for more information.</p>
+                <a href="#" class="sell-link">Sell on Amazon <span class="sell-link-arrow">→</span></a>
+            </div>
+        </section>
+
+        <section class="supplying-section">
+            <h2 class="section-title">Supplying to Amazon</h2>
+            <p class="section-description">Our indirect supply chain includes the products and services required across the Amazon network to run efficiently; from construction to packaging and everything in between.</p>
+            
+            <div class="cards-container">
+                <div class="card">
+                    <div class="card-image" style="background: linear-gradient(135deg, #f6d365 0%, #fda085 100%);"></div>
+                    <div class="card-content">
+                        <h3 class="card-title">Construction & Facilities</h3>
+                        <p class="card-text">Everything from design and construction to ongoing maintenance and facilities management.</p>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-image" style="background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);"></div>
+                    <div class="card-content">
+                        <h3 class="card-title">Professional Services</h3>
+                        <p class="card-text">Consulting, marketing, legal, financial, and other professional services to support our operations.</p>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-image" style="background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);"></div>
+                    <div class="card-content">
+                        <h3 class="card-title">Packaging & Supplies</h3>
+                        <p class="card-text">Corrugated boxes, poly bags, mailers, and other packaging materials for shipping and fulfillment.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+</body>
+</html>

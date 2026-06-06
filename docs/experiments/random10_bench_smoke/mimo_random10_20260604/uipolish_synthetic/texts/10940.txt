@@ -1,0 +1,796 @@
+```html
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>游戏排行推荐</title>
+<style>
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+    background-color: #121827;
+    color: #e2e8f0;
+    line-height: 1.6;
+    min-height: 100vh;
+  }
+
+  /* 顶部导航栏 */
+  .header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background-color: #1e293b;
+    padding: 0 24px;
+    height: 56px;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+  }
+
+  .logo {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 18px;
+    font-weight: 600;
+    color: #f8fafc;
+  }
+
+  .logo-icon {
+    width: 28px;
+    height: 28px;
+    background: linear-gradient(135deg, #ff4757, #ff6b81);
+    border-radius: 6px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-weight: bold;
+  }
+
+  .nav-links {
+    display: flex;
+    gap: 32px;
+  }
+
+  .nav-link {
+    color: #94a3b8;
+    text-decoration: none;
+    font-size: 14px;
+    padding: 4px 0;
+    transition: color 0.2s;
+    cursor: pointer;
+  }
+
+  .nav-link:hover, .nav-link.active {
+    color: #60a5fa;
+  }
+
+  .header-right {
+    color: #94a3b8;
+    cursor: pointer;
+  }
+
+  /* 主容器布局 */
+  .container {
+    display: flex;
+    flex-direction: column;
+    min-height: calc(100vh - 56px);
+  }
+
+  .content-wrapper {
+    display: flex;
+    flex: 1;
+    padding: 24px;
+    gap: 24px;
+  }
+
+  /* 左侧边栏 */
+  .left-sidebar {
+    width: 200px;
+    flex-shrink: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  .sidebar-btn {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 16px;
+    border-radius: 6px;
+    border: none;
+    font-size: 14px;
+    cursor: pointer;
+    transition: background 0.2s;
+  }
+
+  .btn-primary {
+    background: linear-gradient(135deg, #3b82f6, #60a5fa);
+    color: white;
+  }
+
+  .btn-primary:hover {
+    background: linear-gradient(135deg, #2563eb, #3b82f6);
+  }
+
+  .btn-secondary {
+    background-color: #1e293b;
+    color: #cbd5e1;
+  }
+
+  .btn-secondary:hover {
+    background-color: #334155;
+  }
+
+  .badge {
+    position: absolute;
+    top: -4px;
+    right: -4px;
+    background-color: #ef4444;
+    color: white;
+    font-size: 10px;
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .sidebar-section {
+    margin-top: 16px;
+  }
+
+  .sidebar-title {
+    color: #60a5fa;
+    font-size: 14px;
+    font-weight: 600;
+    margin-bottom: 12px;
+  }
+
+  .sidebar-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .sidebar-list li {
+    position: relative;
+    padding-left: 12px;
+    font-size: 13px;
+    color: #94a3b8;
+  }
+
+  .sidebar-list li::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 8px;
+    width: 4px;
+    height: 4px;
+    background-color: #3b82f6;
+    border-radius: 50%;
+  }
+
+  /* 主内容区 */
+  .main-content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+  }
+
+  .section-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 8px;
+  }
+
+  .section-icon {
+    font-size: 24px;
+    color: #f59e0b;
+  }
+
+  .section-title {
+    font-size: 20px;
+    font-weight: 600;
+    color: #f8fafc;
+  }
+
+  .section-subtitle {
+    font-size: 14px;
+    color: #94a3b8;
+    margin-bottom: 24px;
+  }
+
+  /* 游戏卡片列表 */
+  .game-list {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  .game-card {
+    background-color: #1e293b;
+    border-radius: 8px;
+    padding: 20px 24px;
+    border: 1px solid #334155;
+    transition: transform 0.2s, box-shadow 0.2s;
+  }
+
+  .game-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  }
+
+  .game-info {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin-bottom: 12px;
+  }
+
+  .game-rank {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    color: white;
+  }
+
+  .rank-1 { background-color: #ef4444; }
+  .rank-2 { background-color: #f97316; }
+  .rank-3 { background-color: #eab308; }
+  .rank-4 { background-color: #22c55e; }
+  .rank-5 { background-color: #3b82f6; }
+
+  .game-details {
+    flex: 1;
+  }
+
+  .game-name {
+    font-size: 18px;
+    font-weight: 600;
+    color: #f8fafc;
+    margin-bottom: 4px;
+  }
+
+  .game-meta {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .game-rating {
+    font-size: 16px;
+    font-weight: 600;
+    color: #f8fafc;
+  }
+
+  .stars {
+    color: #f59e0b;
+    font-size: 14px;
+  }
+
+  .heat-tag {
+    padding: 2px 8px;
+    border-radius: 4px;
+    font-size: 12px;
+    font-weight: 500;
+  }
+
+  .heat-high {
+    background-color: #ef4444;
+    color: white;
+  }
+
+  .heat-medium {
+    background-color: #f97316;
+    color: white;
+  }
+
+  .heat-low {
+    background-color: #3b82f6;
+    color: white;
+  }
+
+  /* 进度条 */
+  .progress-bar {
+    height: 6px;
+    background-color: #334155;
+    border-radius: 3px;
+    margin: 12px 0;
+    overflow: hidden;
+  }
+
+  .progress-fill {
+    height: 100%;
+    border-radius: 3px;
+    transition: width 0.8s ease;
+  }
+
+  .progress-red { background: linear-gradient(90deg, #ef4444, #f97316); }
+  .progress-orange { background: linear-gradient(90deg, #f97316, #eab308); }
+  .progress-yellow { background: linear-gradient(90deg, #eab308, #22c55e); }
+  .progress-green { background: linear-gradient(90deg, #22c55e, #3b82f6); }
+  .progress-blue { background: linear-gradient(90deg, #3b82f6, #8b5cf6); }
+
+  .game-actions {
+    display: flex;
+    justify-content: flex-end;
+  }
+
+  .view-detail {
+    color: #60a5fa;
+    font-size: 13px;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    transition: color 0.2s;
+  }
+
+  .view-detail:hover {
+    color: #93c5fd;
+  }
+
+  /* 底部信息区 */
+  .footer-info {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 32px;
+    margin-top: 24px;
+    padding-top: 24px;
+    border-top: 1px solid #334155;
+  }
+
+  .footer-section h3 {
+    color: #60a5fa;
+    font-size: 16px;
+    margin-bottom: 12px;
+  }
+
+  .footer-section p {
+    font-size: 13px;
+    color: #94a3b8;
+    line-height: 1.8;
+  }
+
+  .footer-section ul {
+    list-style: disc;
+    padding-left: 18px;
+    font-size: 13px;
+    color: #94a3b8;
+    line-height: 2;
+  }
+
+  /* 右侧边栏 */
+  .right-sidebar {
+    width: 280px;
+    flex-shrink: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+  }
+
+  .stat-card {
+    background-color: #1e293b;
+    border-radius: 8px;
+    padding: 20px;
+    border: 1px solid #334155;
+  }
+
+  .stat-title {
+    color: #60a5fa;
+    font-size: 14px;
+    font-weight: 600;
+    margin-bottom: 16px;
+  }
+
+  /* 圆环图 - 占位 */
+  .donut-chart {
+    width: 120px;
+    height: 120px;
+    margin: 0 auto 16px;
+    border-radius: 50%;
+    background: conic-gradient(
+      #ef4444 0deg 144deg,  /* 高: 40% (假设) */
+      #3b82f6 144deg 216deg, /* 中: 20% */
+      #22c55e 216deg 288deg, /* 低: 20% */
+      #334155 288deg 360deg  /* 其他: 20% */
+    );
+    position: relative;
+  }
+
+  .donut-chart::after {
+    content: '';
+    position: absolute;
+    top: 25px;
+    left: 25px;
+    width: 70px;
+    height: 70px;
+    background-color: #1e293b;
+    border-radius: 50%;
+  }
+
+  .chart-legend {
+    display: flex;
+    justify-content: center;
+    gap: 16px;
+    font-size: 12px;
+    color: #94a3b8;
+  }
+
+  .legend-item {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+  }
+
+  .legend-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+  }
+
+  /* 点图 - 月度新增排行 */
+  .dot-chart {
+    height: 120px;
+    position: relative;
+    margin: 16px 0;
+    background-color: #0f172a;
+    border-radius: 4px;
+    padding: 8px;
+  }
+
+  .chart-dots {
+    position: relative;
+    width: 100%;
+    height: 100%;
+  }
+
+  .dot {
+    position: absolute;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background-color: #3b82f6;
+  }
+
+  .dot-labels {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 8px;
+    font-size: 10px;
+    color: #64748b;
+  }
+
+  /* 操作统计 */
+  .stat-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 8px 0;
+    border-bottom: 1px solid #334155;
+    font-size: 13px;
+  }
+
+  .stat-item:last-child {
+    border-bottom: none;
+  }
+
+  .stat-label {
+    color: #94a3b8;
+  }
+
+  .stat-value {
+    color: #60a5fa;
+    font-weight: 600;
+  }
+
+  /* 响应式调整 */
+  @media (max-width: 1200px) {
+    .content-wrapper {
+      padding: 16px;
+      gap: 16px;
+    }
+    
+    .left-sidebar {
+      width: 180px;
+    }
+    
+    .right-sidebar {
+      width: 240px;
+    }
+  }
+
+  @media (max-width: 900px) {
+    .content-wrapper {
+      flex-direction: column;
+    }
+    
+    .left-sidebar, .right-sidebar {
+      width: 100%;
+    }
+    
+    .footer-info {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>
+</head>
+<body>
+  <!-- 顶部导航 -->
+  <header class="header">
+    <div class="logo">
+      <div class="logo-icon">R</div>
+      游戏排行推荐
+    </div>
+    <div class="nav-links">
+      <a class="nav-link active" href="#">首页</a>
+      <a class="nav-link" href="#">最新排行</a>
+      <a class="nav-link" href="#">分类游戏</a>
+    </div>
+    <div class="header-right">▼</div>
+  </header>
+
+  <div class="container">
+    <div class="content-wrapper">
+      <!-- 左侧边栏 -->
+      <aside class="left-sidebar">
+        <button class="sidebar-btn btn-primary">+ 发现新游戏</button>
+        <button class="sidebar-btn btn-secondary">☰ 排量管理</button>
+        <button class="sidebar-btn btn-secondary" style="position: relative;">
+          ? 帮助说明
+          <span class="badge">1</span>
+        </button>
+
+        <div class="sidebar-section">
+          <div class="sidebar-title">操作提示</div>
+          <ul class="sidebar-list">
+            <li>点击添加按钮进行新游戏添加</li>
+            <li>卡片可进行编辑排行</li>
+            <li>右侧统计数据提供时间分析</li>
+          </ul>
+        </div>
+      </aside>
+
+      <!-- 主内容区 -->
+      <main class="main-content">
+        <div>
+          <div class="section-header">
+            <div class="section-icon">🏆</div>
+            <h1 class="section-title">游戏排行榜</h1>
+          </div>
+          <p class="section-subtitle">展示最受欢迎的游戏作品</p>
+        </div>
+
+        <div class="game-list">
+          <!-- 游戏卡片 1 -->
+          <div class="game-card">
+            <div class="game-info">
+              <div class="game-rank rank-1">1</div>
+              <div class="game-details">
+                <div class="game-name">幻影战境</div>
+                <div class="game-meta">
+                  <span class="game-rating">9.2</span>
+                  <span class="stars">★★★★★</span>
+                  <span class="heat-tag heat-high">高热度</span>
+                </div>
+              </div>
+            </div>
+            <div class="progress-bar">
+              <div class="progress-fill progress-red" style="width: 92%;"></div>
+            </div>
+            <div class="game-actions">
+              <a href="#" class="view-detail">查看详情 &gt;</a>
+            </div>
+          </div>
+
+          <!-- 游戏卡片 2 -->
+          <div class="game-card">
+            <div class="game-info">
+              <div class="game-rank rank-2">2</div>
+              <div class="game-details">
+                <div class="game-name">永侠领主</div>
+                <div class="game-meta">
+                  <span class="game-rating">8.7</span>
+                  <span class="stars">★★★★☆</span>
+                  <span class="heat-tag heat-high">高热度</span>
+                </div>
+              </div>
+            </div>
+            <div class="progress-bar">
+              <div class="progress-fill progress-orange" style="width: 87%;"></div>
+            </div>
+            <div class="game-actions">
+              <a href="#" class="view-detail">查看详情 &gt;</a>
+            </div>
+          </div>
+
+          <!-- 游戏卡片 3 -->
+          <div class="game-card">
+            <div class="game-info">
+              <div class="game-rank rank-3">3</div>
+              <div class="game-details">
+                <div class="game-name">星际征服</div>
+                <div class="game-meta">
+                  <span class="game-rating">8.5</span>
+                  <span class="stars">★★★★☆</span>
+                  <span class="heat-tag heat-medium">中热度</span>
+                </div>
+              </div>
+            </div>
+            <div class="progress-bar">
+              <div class="progress-fill progress-yellow" style="width: 85%;"></div>
+            </div>
+            <div class="game-actions">
+              <a href="#" class="view-detail">查看详情 &gt;</a>
+            </div>
+          </div>
+
+          <!-- 游戏卡片 4 -->
+          <div class="game-card">
+            <div class="game-info">
+              <div class="game-rank rank-4">4</div>
+              <div class="game-details">
+                <div class="game-name">时光守望</div>
+                <div class="game-meta">
+                  <span class="game-rating">7.9</span>
+                  <span class="stars">★★★☆☆</span>
+                  <span class="heat-tag heat-medium">中热度</span>
+                </div>
+              </div>
+            </div>
+            <div class="progress-bar">
+              <div class="progress-fill progress-green" style="width: 79%;"></div>
+            </div>
+            <div class="game-actions">
+              <a href="#" class="view-detail">查看详情 &gt;</a>
+            </div>
+          </div>
+
+          <!-- 游戏卡片 5 -->
+          <div class="game-card">
+            <div class="game-info">
+              <div class="game-rank rank-5">5</div>
+              <div class="game-details">
+                <div class="game-name">方谋冒险</div>
+                <div class="game-meta">
+                  <span class="game-rating">7.6</span>
+                  <span class="stars">★★★☆☆</span>
+                  <span class="heat-tag heat-low">低热度</span>
+                </div>
+              </div>
+            </div>
+            <div class="progress-bar">
+              <div class="progress-fill progress-blue" style="width: 76%;"></div>
+            </div>
+            <div class="game-actions">
+              <a href="#" class="view-detail">查看详情 &gt;</a>
+            </div>
+          </div>
+        </div>
+
+        <!-- 底部信息 -->
+        <div class="footer-info">
+          <div class="footer-section">
+            <h3>主要特色介绍</h3>
+            <p>游戏排行系统为游戏爱好者提供详尽的游戏、数据分析及排行榜功能，让您深入了解游戏行业的热门趋势和玩家偏好。我们致力于为您提供准确可靠的游戏分析，构建游戏发现的桥梁。</p>
+          </div>
+          <div class="footer-section">
+            <h3>操作指引</h3>
+            <ul>
+              <li>点击游戏卡片可查看详细的分析数据</li>
+              <li>图表数据可查看各类游戏的分类分化</li>
+              <li>图表数据表态，让您获得全方位数据</li>
+            </ul>
+          </div>
+          <div class="footer-section">
+            <h3>小贴士</h3>
+            <p>使用查看按钮可快速游戏详情页面的游戏及介绍的详细分析，我们建议您不要轻信游戏分析不适合的个人分析，系统提供规范及分析的游戏行业分析。</p>
+          </div>
+        </div>
+      </main>
+
+      <!-- 右侧边栏 -->
+      <aside class="right-sidebar">
+        <div>
+          <h2 class="section-title" style="font-size: 18px; margin-bottom: 4px;">数据统计</h2>
+        </div>
+
+        <div class="stat-card">
+          <div class="stat-title">热度分布</div>
+          <div class="donut-chart"></div>
+          <div class="chart-legend">
+            <div class="legend-item">
+              <div class="legend-dot" style="background-color: #ef4444;"></div>
+              高: 2
+            </div>
+            <div class="legend-item">
+              <div class="legend-dot" style="background-color: #3b82f6;"></div>
+              中: 2
+            </div>
+            <div class="legend-item">
+              <div class="legend-dot" style="background-color: #22c55e;"></div>
+              低: 1
+            </div>
+          </div>
+        </div>
+
+        <div class="stat-card">
+          <div class="stat-title">月度新增排行</div>
+          <div class="dot-chart">
+            <div class="chart-dots">
+              <div class="dot" style="left: 10%; bottom: 20%; background-color: #ef4444;"></div>
+              <div class="dot" style="left: 25%; bottom: 60%; background-color: #3b82f6;"></div>
+              <div class="dot" style="left: 40%; bottom: 30%; background-color: #3b82f6;"></div>
+              <div class="dot" style="left: 55%; bottom: 70%; background-color: #3b82f6;"></div>
+              <div class="dot" style="left: 70%; bottom: 40%; background-color: #3b82f6;"></div>
+              <div class="dot" style="left: 85%; bottom: 50%; background-color: #3b82f6;"></div>
+            </div>
+          </div>
+          <div class="dot-labels">
+            <span>1月</span>
+            <span>2月</span>
+            <span>3月</span>
+            <span>4月</span>
+            <span>5月</span>
+            <span>6月</span>
+          </div>
+        </div>
+
+        <div class="stat-card">
+          <div class="stat-title">操作统计</div>
+          <div class="stat-item">
+            <span class="stat-label">编辑操作:</span>
+            <span class="stat-value">0</span>
+          </div>
+          <div class="stat-item">
+            <span class="stat-label">新增操作:</span>
+            <span class="stat-value">0</span>
+          </div>
+        </div>
+      </aside>
+    </div>
+  </div>
+
+  <script>
+    // 简单的交互：进度条动画和卡片悬停效果（已在CSS中处理）
+    // 可以添加点击事件，例如查看详情时显示alert
+    document.querySelectorAll('.view-detail').forEach(link => {
+      link.addEventListener('click', function(e) {
+        e.preventDefault();
+        const gameName = this.closest('.game-card').querySelector('.game-name').textContent;
+        alert(`即将查看 ${gameName} 的详细数据`);
+      });
+    });
+
+    // 左侧边栏按钮交互
+    document.querySelector('.btn-primary').addEventListener('click', function() {
+      alert('发现新游戏功能开发中...');
+    });
+
+    // 统计数据更新（模拟）
+    function updateStats() {
+      const editStats = document.querySelector('.stat-value');
+      editStats.textContent = Math.floor(Math.random() * 5);
+    }
+    setInterval(updateStats, 5000);
+  </script>
+</body>
+</html>
+```

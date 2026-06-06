@@ -1,0 +1,463 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Residence Saray - Ministry of Tourism and Antiquities</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Georgia', 'Times New Roman', serif;
+            background-color: #e8e0d4;
+            color: #1a1a2e;
+            line-height: 1.6;
+        }
+
+        /* Background with subtle pattern */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: 
+                linear-gradient(rgba(232, 224, 212, 0.7), rgba(232, 224, 212, 0.7)),
+                url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"><rect fill="%23d4ccc0" width="100" height="100"/><circle fill="%23c7bfb3" cx="50" cy="50" r="40" opacity="0.3"/></svg>');
+            background-size: cover, 200px 200px;
+            z-index: -1;
+        }
+
+        /* Header */
+        header {
+            background-color: rgba(232, 224, 212, 0.95);
+            border-bottom: 1px solid #d4ccc0;
+            padding: 1rem 2rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .header-left {
+            display: flex;
+            align-items: center;
+            gap: 2rem;
+        }
+
+        .menu-icon {
+            cursor: pointer;
+            width: 30px;
+            height: 20px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .menu-icon span {
+            display: block;
+            height: 2px;
+            background-color: #1a1a2e;
+            width: 100%;
+            border-radius: 1px;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            text-decoration: none;
+            color: #1a1a2e;
+        }
+
+        .logo-emblem {
+            width: 50px;
+            height: 50px;
+            background: radial-gradient(circle, #ffd700 60%, #b8860b 100%);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 2px solid #b8860b;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .logo-emblem::before {
+            content: '';
+            position: absolute;
+            width: 30px;
+            height: 30px;
+            border: 2px solid #fff;
+            border-radius: 50%;
+            opacity: 0.3;
+        }
+
+        .logo-emblem::after {
+            content: '';
+            position: absolute;
+            width: 15px;
+            height: 15px;
+            border: 1px solid #fff;
+            transform: rotate(45deg);
+            opacity: 0.5;
+        }
+
+        .logo-text {
+            font-size: 1.4rem;
+            font-weight: bold;
+        }
+
+        .header-right {
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+        }
+
+        .text-size-controls {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .text-size-controls span {
+            cursor: pointer;
+            font-weight: bold;
+            transition: color 0.2s;
+        }
+
+        .text-size-controls span:hover {
+            color: #b8860b;
+        }
+
+        .text-size-controls span:nth-child(1) { font-size: 0.8rem; }
+        .text-size-controls span:nth-child(2) { font-size: 1rem; }
+        .text-size-controls span:nth-child(3) { font-size: 1.2rem; }
+
+        .theme-toggle {
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #1a1a2e 50%, #e8e0d4 50%);
+            border: 1px solid #1a1a2e;
+            cursor: pointer;
+        }
+
+        .header-link {
+            color: #1a1a2e;
+            text-decoration: none;
+            font-size: 0.95rem;
+            transition: color 0.2s;
+        }
+
+        .header-link:hover {
+            color: #b8860b;
+        }
+
+        .search-icon {
+            cursor: pointer;
+            font-size: 1.2rem;
+        }
+
+        /* Main Content */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        /* Breadcrumb */
+        .breadcrumb {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-bottom: 1rem;
+            color: #555;
+            font-size: 0.95rem;
+        }
+
+        .breadcrumb a {
+            color: #1a1a2e;
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+
+        .breadcrumb a:hover {
+            color: #b8860b;
+        }
+
+        .breadcrumb .separator {
+            color: #888;
+        }
+
+        /* Page Title */
+        .page-title {
+            font-size: 3rem;
+            font-weight: bold;
+            margin-bottom: 2rem;
+            color: #1a1a2e;
+            border-bottom: 2px solid #d4ccc0;
+            padding-bottom: 1rem;
+        }
+
+        /* Content Area */
+        .content-area {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        .main-image {
+            width: 100%;
+            aspect-ratio: 4/3;
+            background: linear-gradient(135deg, #8d7b68 0%, #a69585 30%, #6d5d4e 70%, #4a3f36 100%);
+            border-radius: 4px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .main-image::before {
+            content: '';
+            position: absolute;
+            top: 20%;
+            left: 10%;
+            width: 80%;
+            height: 60%;
+            background: linear-gradient(45deg, rgba(255, 255, 255, 0.1) 0%, rgba(255, 255, 255, 0.3) 50%, rgba(255, 255, 255, 0.1) 100%);
+            border-radius: 4px;
+        }
+
+        .main-image::after {
+            content: '';
+            position: absolute;
+            bottom: 10%;
+            left: 20%;
+            width: 60%;
+            height: 30%;
+            background: linear-gradient(to right, rgba(139, 119, 101, 0.4), rgba(214, 196, 178, 0.6));
+            border-radius: 2px;
+        }
+
+        .info-card {
+            background-color: white;
+            border-radius: 8px;
+            padding: 2rem;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+        }
+
+        .action-buttons {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .action-btn {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.5rem 1rem;
+            background-color: #f8f9fa;
+            border: 1px solid #e9ecef;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 0.95rem;
+            transition: all 0.2s;
+        }
+
+        .action-btn:hover {
+            background-color: #e9ecef;
+        }
+
+        .action-btn .icon {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 24px;
+            height: 24px;
+            background-color: #1a1a2e;
+            color: white;
+            border-radius: 50%;
+            font-size: 0.8rem;
+        }
+
+        .location-tag {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-bottom: 1.5rem;
+            color: #b8860b;
+            font-weight: bold;
+        }
+
+        .location-tag .pin-icon {
+            font-size: 1.2rem;
+        }
+
+        .description {
+            color: #333;
+            line-height: 1.8;
+        }
+
+        /* Museum Info Section */
+        .museum-info {
+            background-color: rgba(232, 224, 212, 0.95);
+            border-radius: 8px;
+            padding: 2rem;
+            margin-top: 2rem;
+            border: 1px solid #d4ccc0;
+        }
+
+        .museum-header {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .ankh-icon {
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            color: #b8860b;
+        }
+
+        .museum-badge {
+            background-color: white;
+            color: #1a1a2e;
+            padding: 0.3rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            font-weight: bold;
+            border: 1px solid #d4ccc0;
+        }
+
+        .museum-title {
+            font-size: 2rem;
+            font-weight: bold;
+            margin-bottom: 1rem;
+            color: #1a1a2e;
+        }
+
+        .museum-description {
+            color: #333;
+            line-height: 1.8;
+        }
+
+        /* Responsive */
+        @media (max-width: 900px) {
+            .content-area {
+                grid-template-columns: 1fr;
+            }
+            
+            header {
+                padding: 1rem;
+            }
+            
+            .header-right {
+                gap: 1rem;
+            }
+            
+            .page-title {
+                font-size: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="header-left">
+            <div class="menu-icon">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+            
+            <a href="#" class="logo">
+                <div class="logo-emblem"></div>
+                <div class="logo-text">Ministry of Tourism and Antiquities</div>
+            </a>
+        </div>
+        
+        <div class="header-right">
+            <div class="text-size-controls">
+                <span>A</span>
+                <span>A</span>
+                <span>A</span>
+            </div>
+            
+            <div class="theme-toggle"></div>
+            
+            <a href="#" class="header-link">Register / Login</a>
+            
+            <a href="#" class="header-link">English <span>▾</span></a>
+            
+            <div class="search-icon">🔍</div>
+        </div>
+    </header>
+    
+    <div class="container">
+        <div class="breadcrumb">
+            <a href="#">🏠</a>
+            <span class="separator">›</span>
+            <a href="#">Collections</a>
+            <span class="separator">›</span>
+            <span>Residence Saray</span>
+        </div>
+        
+        <h1 class="page-title">Residence Saray</h1>
+        
+        <div class="content-area">
+            <div class="main-image"></div>
+            
+            <div class="info-card">
+                <div class="action-buttons">
+                    <button class="action-btn">
+                        <div class="icon">🔗</div>
+                        <span>Share</span>
+                    </button>
+                    
+                    <button class="action-btn">
+                        <div class="icon">+</div>
+                        <span>Add Story</span>
+                    </button>
+                </div>
+                
+                <div class="location-tag">
+                    <span class="pin-icon">📍</span>
+                    <span>Manial Palace Museum</span>
+                </div>
+                
+                <p class="description">
+                    The Residence Saray is one of the oldest buildings of the palace with its construction begun in 1321 AH / 1903 AD. It consists of a basement and two floors in addition to the tower. The basement contains a lot of rooms. The ground floor includes the foyer with a fountain in its centre. A number of rooms are accessed from here, including the Dining Room, Shell Salon with its furniture inlaid with mother of pearl, and the Fireplace Room attached to it. Across the entrance into the foyer is the doorway into the Mirrors Hall, where literature and poetry were read, a number of rooms and halls are attached to it: large Blue Salon with its ornate ceiling, beautiful oil paintings, and European-style leather couches, the office of Prince Muhammad Ali, and a room reserved for women. On the right side of the large salon is a smaller seating area with a wonderful muqarnas roof (stalactite-like shapes).
+                </p>
+            </div>
+        </div>
+        
+        <div class="museum-info">
+            <div class="museum-header">
+                <div class="ankh-icon">☥</div>
+                <div class="museum-badge">Museum</div>
+            </div>
+            
+            <h2 class="museum-title">Manial Palace Museum</h2>
+            
+            <p class="museum-description">
+                The Museum of Prince Muhammad Ali's Palace in Manial is one of the most beautiful and important historical museum in Egypt. The museum exhibits an extensive collection of artwork, furniture, textiles, jewelry, coins, ceramics, weapons, and other objects of art.
+            </p>
+        </div>
+    </div>
+</body>
+</html>

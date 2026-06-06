@@ -1,0 +1,561 @@
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mafia Franchise - Steam</title>
+    <style>
+        :root {
+            --bg-color: #1b2838;
+            --header-bg: #171a21;
+            --nav-bg: #274060;
+            --text-color: #c7d5e0;
+            --text-light: #ffffff;
+            --accent-green: #588a1b;
+            --accent-green-hover: #66b51c;
+            --border-color: #4c6b22;
+            --card-bg: #2a475e;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: Arial, Helvetica, sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            font-size: 14px;
+            line-height: 1.5;
+        }
+
+        /* Header */
+        .header {
+            background-color: var(--header-bg);
+            padding: 10px 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 12px;
+            border-bottom: 1px solid #000;
+        }
+
+        .header-left {
+            display: flex;
+            align-items: center;
+            gap: 30px;
+        }
+
+        .steam-logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: var(--text-light);
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 16px;
+        }
+
+        .logo-circle {
+            width: 30px;
+            height: 30px;
+            background: #1b2838;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 2px solid #fff;
+            font-size: 12px;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 20px;
+        }
+
+        .nav-links a {
+            color: #b8b6b4;
+            text-decoration: none;
+            text-transform: uppercase;
+            font-weight: bold;
+            font-size: 13px;
+        }
+
+        .nav-links a:hover {
+            color: var(--text-light);
+        }
+
+        .nav-links a.active {
+            color: var(--text-light);
+        }
+
+        .header-right {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            color: #b8b6b4;
+        }
+
+        .install-btn {
+            background: #3d6c8e;
+            color: var(--text-light);
+            padding: 5px 10px;
+            border-radius: 3px;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            text-decoration: none;
+            font-size: 11px;
+        }
+
+        .install-btn:hover {
+            background: #4d8db3;
+        }
+
+        /* Hero Section */
+        .hero {
+            position: relative;
+            height: 300px;
+            background: linear-gradient(135deg, #3b2415 0%, #683a18 30%, #2b1608 70%, #1b2838 100%);
+            display: flex;
+            align-items: center;
+            padding: 0 40px;
+            overflow: hidden;
+        }
+
+        .hero::after {
+            content: '';
+            position: absolute;
+            top: 0; right: 0; bottom: 0; left: 0;
+            background: linear-gradient(90deg, rgba(0,0,0,0.8) 0%, rgba(0,0,0,0.2) 50%, rgba(0,0,0,0) 100%);
+            pointer-events: none;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 10;
+            display: flex;
+            align-items: center;
+            gap: 40px;
+        }
+
+        .franchise-logo {
+            width: 160px;
+            height: 200px;
+            background: rgba(0,0,0,0.4);
+            border: 1px solid #555;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: serif;
+            color: white;
+            font-size: 42px;
+            font-weight: bold;
+            text-transform: uppercase;
+            box-shadow: 0 0 15px rgba(0,0,0,0.5);
+        }
+
+        .franchise-info h1 {
+            color: var(--text-light);
+            font-size: 34px;
+            font-weight: normal;
+            margin-bottom: 15px;
+        }
+
+        .follow-section {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .follow-btn {
+            background: var(--accent-green);
+            color: var(--text-light);
+            border: 1px solid var(--border-color);
+            padding: 5px 20px;
+            font-weight: bold;
+            font-size: 15px;
+            border-radius: 3px;
+            cursor: pointer;
+        }
+
+        .follow-btn:hover {
+            background: var(--accent-green-hover);
+        }
+
+        .followers-count {
+            color: #b8b6b4;
+            font-size: 12px;
+            line-height: 1.2;
+        }
+
+        .followers-count strong {
+            color: var(--text-light);
+            font-size: 16px;
+            display: block;
+        }
+
+        /* Tab Navigation */
+        .tab-nav {
+            background-color: #323e4c;
+            display: flex;
+            justify-content: space-between;
+            padding: 0 40px;
+            border-bottom: 1px solid #4c6b22; /* Green line on bottom of active */
+            position: relative;
+        }
+
+        .tabs {
+            display: flex;
+            gap: 5px;
+        }
+
+        .tab {
+            padding: 15px 20px;
+            color: #b8b6b4;
+            text-transform: uppercase;
+            font-size: 13px;
+            font-weight: bold;
+            cursor: pointer;
+            border-bottom: 3px solid transparent;
+        }
+
+        .tab:hover {
+            color: var(--text-light);
+        }
+
+        .tab.active {
+            color: var(--text-light);
+            border-bottom: 3px solid #588a1b; /* Green active indicator */
+            background: linear-gradient(180deg, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0) 100%);
+        }
+
+        .tab-settings {
+            display: flex;
+            align-items: center;
+            color: #b8b6b4;
+            cursor: pointer;
+        }
+
+        /* Main Content Area */
+        .main-content {
+            display: flex;
+            padding: 30px 40px;
+            gap: 30px;
+        }
+
+        .left-col {
+            flex: 1;
+        }
+
+        .right-col {
+            width: 300px;
+        }
+
+        /* Section Titles */
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+            margin-bottom: 15px;
+            text-transform: uppercase;
+            color: #b8b6b4;
+            font-size: 14px;
+            font-weight: bold;
+            letter-spacing: 0.5px;
+        }
+
+        .view-full-list {
+            font-size: 12px;
+            color: #b8b6b4;
+            border: 1px solid #5a6a7a;
+            padding: 3px 8px;
+            background: transparent;
+            cursor: pointer;
+            text-transform: none;
+            font-weight: normal;
+        }
+
+        /* Game Card Grid */
+        .pre-purchase-container {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 40px;
+        }
+
+        .main-game-card {
+            width: 300px;
+            background: #171a21;
+            padding: 10px;
+            border: 1px solid #344654;
+        }
+
+        .main-game-card img {
+            width: 100%;
+            height: 160px;
+            object-fit: cover;
+            background: linear-gradient(45deg, #4a3020, #8c5b25);
+            margin-bottom: 10px;
+            display: block;
+        }
+
+        .card-meta {
+            display: flex;
+            justify-content: flex-end;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 5px;
+        }
+
+        .platform-icon {
+            color: #b8b6b4;
+            font-size: 16px;
+        }
+
+        .price {
+            color: var(--text-light);
+            font-weight: bold;
+        }
+
+        .release-date {
+            color: #b8b6b4;
+            font-size: 12px;
+            text-align: right;
+            display: block;
+        }
+
+        .game-desc {
+            font-size: 12px;
+            color: #8b9bb4;
+            margin-top: 10px;
+            text-align: center;
+            padding: 0 10px;
+        }
+
+        .image-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            grid-template-rows: 1fr 1fr;
+            gap: 10px;
+            flex: 1;
+        }
+
+        .grid-img {
+            background: #2a475e;
+            border: 1px solid #344654;
+            width: 100%;
+            height: 100%;
+            min-height: 150px;
+        }
+
+        /* Featured Section below */
+        .featured-section {
+            margin-top: 40px;
+        }
+
+        /* Announcements Sidebar */
+        .announcement-item {
+            margin-bottom: 25px;
+        }
+
+        .announcement-item img {
+            width: 100%;
+            height: 140px;
+            object-fit: cover;
+            background: #344654;
+            border: 1px solid #344654;
+            margin-bottom: 10px;
+            display: block;
+        }
+
+        .announcement-item h4 {
+            color: var(--text-light);
+            font-size: 14px;
+            margin-bottom: 5px;
+        }
+
+        .announcement-item p {
+            color: #b8b6b4;
+            font-size: 12px;
+            line-height: 1.4;
+        }
+
+        /* Placeholder Colors for Images */
+        .img-placeholder-1 {
+            background: linear-gradient(135deg, #2c1b0e 0%, #5c3b1a 100%);
+        }
+        .img-placeholder-2 {
+            background: linear-gradient(135deg, #1b2533 0%, #324a66 100%);
+        }
+        .img-placeholder-3 {
+            background: linear-gradient(135deg, #3d2d1e 0%, #755230 100%);
+        }
+        .img-placeholder-4 {
+            background: linear-gradient(135deg, #1f2d1e 0%, #3d5c3a 100%);
+        }
+        
+        .mafia-logo-text {
+            font-family: "Times New Roman", Times, serif;
+            font-weight: 900;
+            font-style: italic;
+            font-size: 50px;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: white;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+            line-height: 1;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Top Navigation -->
+    <header class="header">
+        <div class="header-left">
+            <a href="#" class="steam-logo">
+                <div class="logo-circle">S</div>
+                STEAM
+            </a>
+            <nav class="nav-links">
+                <a href="#" class="active">STORE</a>
+                <a href="#">COMMUNITY</a>
+                <a href="#">ABOUT</a>
+                <a href="#">SUPPORT</a>
+            </nav>
+        </div>
+        <div class="header-right">
+            <a href="#" class="install-btn">
+                <span>⬇</span> Install Steam
+            </a>
+            <a href="#">login</a>
+            <span>|</span>
+            <a href="#">language ▾</a>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-content">
+            <div class="franchise-logo">
+                <div class="mafia-logo-text">MAFIA</div>
+            </div>
+            <div class="franchise-info">
+                <h1>Mafia Franchise</h1>
+                <div class="follow-section">
+                    <button class="follow-btn">Follow</button>
+                    <div class="followers-count">
+                        <strong>57,015</strong>
+                        FOLLOWERS
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Tab Navigation -->
+    <nav class="tab-nav">
+        <div class="tabs">
+            <div class="tab active">FEATURED</div>
+            <div class="tab">LISTS</div>
+            <div class="tab">BROWSE</div>
+            <div class="tab">ABOUT</div>
+            <div class="tab">NEWS</div>
+        </div>
+        <div class="tab-settings">
+            ⚙
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <div class="main-content">
+        
+        <!-- Left Column -->
+        <div class="left-col">
+            
+            <div class="section-header">
+                <span>PRE-PURCHASE NOW - COMING AUGUST 8TH</span>
+                <button class="view-full-list">View Full List</button>
+            </div>
+
+            <div class="pre-purchase-container">
+                <!-- Main Game Card -->
+                <div class="main-game-card">
+                    <div class="img-placeholder-1" style="height: 160px; display: flex; align-items: center; justify-content: center; color: white; font-size: 24px; font-family: serif; border: 1px solid #555;">MAFIA<br><span style="font-size: 10px; text-transform: uppercase;">THE OLD COUNTRY</span></div>
+                    <div class="card-meta">
+                        <span class="platform-icon">⊞</span>
+                        <span class="price">S$69.99</span>
+                    </div>
+                    <span class="release-date">Released on 8 Aug, 2025</span>
+                    <div class="game-desc">
+                        "Uncover the origins of organized crime in Mafia: The Old Country, a gritty mob story set in the brutal underworld of 1900s Sicily. Fight to survive as Enzo Favara and prove your worth to the Cosa Nostra in this immersive third-person action-adventure."
+                    </div>
+                </div>
+
+                <!-- Image Grid -->
+                <div class="image-grid">
+                    <div class="grid-img img-placeholder-1"></div>
+                    <div class="grid-img img-placeholder-2"></div>
+                    <div class="grid-img img-placeholder-3"></div>
+                    <div class="grid-img img-placeholder-4"></div>
+                </div>
+            </div>
+
+            <!-- Featured Section -->
+            <div class="featured-section">
+                <div class="section-header">
+                    <span>FEATURED</span>
+                </div>
+                <!-- Simplified featured list for static generation -->
+                <div style="display: flex; gap: 10px; height: 180px;">
+                    <div style="flex: 1; background: linear-gradient(45deg, #8b1a1a, #cc3333); border: 1px solid #344654; position: relative; display: flex; align-items: flex-end; padding: 10px;">
+                        <div style="background: rgba(0,0,0,0.6); padding: 5px; color: white; font-family: serif; font-size: 20px;">MAFIA</div>
+                        <div style="position: absolute; right: 10px; bottom: 10px; color: white; font-weight: bold;">S$59.90</div>
+                    </div>
+                    <div style="flex: 1; background: #4a607a; border: 1px solid #344654;"></div>
+                    <div style="flex: 1; background: #3b4a56; border: 1px solid #344654;"></div>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- Right Column -->
+        <div class="right-col">
+            <div class="section-header">
+                <span>ANNOUNCEMENTS</span>
+            </div>
+
+            <div class="announcement-item">
+                <div class="img-placeholder-2" style="height: 140px; border: 1px solid #344654; margin-bottom: 10px;"></div>
+                <h4>PAX Panel | Mafia: The Old Country</h4>
+            </div>
+
+            <div class="announcement-item">
+                <div class="img-placeholder-3" style="height: 140px; border: 1px solid #344654; margin-bottom: 10px;"></div>
+                <p>Mafia: The Old Country is available for pre-purchase, launching August 8!</p>
+            </div>
+
+            <div class="announcement-item">
+                <div style="background: #171a21; height: 140px; border: 1px solid #344654; margin-bottom: 10px; display: flex; align-items: center; justify-content: center;">
+                    <div class="mafia-logo-text" style="font-size: 30px; color: #b8b6b4;">MAFIA<br><span style="font-size: 10px; color: #588a1b;">FRANCHISE</span></div>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+    <script>
+        // Simple interaction for tabs
+        document.querySelectorAll('.tab').forEach(tab => {
+            tab.addEventListener('click', () => {
+                document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+                tab.classList.add('active');
+            });
+        });
+    </script>
+</body>
+</html>
+```

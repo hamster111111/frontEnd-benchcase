@@ -1,0 +1,514 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Saleor Showcase</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            background-color: #f8f9fa;
+        }
+
+        /* Navigation Bar */
+        .navbar {
+            background: white;
+            padding: 0 40px;
+            height: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            border-bottom: 1px solid #eee;
+        }
+
+        .navbar-left {
+            display: flex;
+            align-items: center;
+            gap: 40px;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 20px;
+            font-weight: bold;
+            color: #111;
+        }
+
+        .logo-icon {
+            width: 24px;
+            height: 12px;
+            background: #000;
+            display: flex;
+            gap: 2px;
+        }
+
+        .logo-icon div {
+            width: 10px;
+            height: 10px;
+            background: #000;
+            border-radius: 1px;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 24px;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: #555;
+            font-size: 14px;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .nav-links a:hover {
+            color: #111;
+        }
+
+        .dropdown-arrow {
+            width: 0;
+            height: 0;
+            border-left: 4px solid transparent;
+            border-right: 4px solid transparent;
+            border-top: 4px solid currentColor;
+        }
+
+        .navbar-right {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .github-count {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 14px;
+            color: #555;
+            font-weight: 500;
+        }
+
+        .github-icon {
+            width: 20px;
+            height: 20px;
+            background: #333;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 12px;
+        }
+
+        .login-link {
+            text-decoration: none;
+            color: #555;
+            font-size: 14px;
+            font-weight: 500;
+        }
+
+        .signup-btn {
+            background: #000;
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 6px;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+        }
+
+        /* Hero Section */
+        .hero-section {
+            background: linear-gradient(180deg, #0a1128 0%, #0b1c3f 30%, #0e2246 60%, #112a50 100%);
+            min-height: 80vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+            padding: 60px 80px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* Content Panels */
+        .content-panel {
+            position: absolute;
+            bottom: 120px;
+            left: 80px;
+            right: 80px;
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+            opacity: 0;
+            transition: opacity 0.5s ease;
+            pointer-events: none;
+        }
+
+        .content-panel.active {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        /* Left Content */
+        .left-content {
+            flex: 1;
+            max-width: 600px;
+        }
+
+        .brand-logo {
+            margin-bottom: 30px;
+        }
+
+        /* Breitling Logo */
+        .breitling-logo {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+        }
+
+        .breitling-logo .b-logo {
+            font-size: 42px;
+            font-weight: bold;
+            font-style: italic;
+            color: white;
+            margin-bottom: -10px;
+        }
+
+        .breitling-logo .brand-name {
+            font-size: 28px;
+            letter-spacing: 8px;
+            color: white;
+            font-weight: 500;
+        }
+
+        .breitling-logo .brand-year {
+            font-size: 20px;
+            color: white;
+            font-weight: 400;
+        }
+
+        /* Rough Trade Logo */
+        .rough-trade-logo {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+        }
+
+        .rough-trade-logo .brand-name {
+            font-size: 56px;
+            font-weight: 900;
+            color: white;
+            line-height: 0.9;
+            text-transform: uppercase;
+        }
+
+        .brand-description {
+            color: rgba(255, 255, 255, 0.8);
+            font-size: 16px;
+            line-height: 1.6;
+            max-width: 450px;
+        }
+
+        /* Right Content - Stats */
+        .right-content {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 40px 60px;
+            border-left: 1px solid rgba(255, 255, 255, 0.3);
+            padding-left: 60px;
+        }
+
+        .stat-item {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .stat-value {
+            font-size: 48px;
+            font-weight: bold;
+            color: white;
+            line-height: 1;
+            margin-bottom: 8px;
+        }
+
+        .stat-label {
+            font-size: 16px;
+            color: rgba(255, 255, 255, 0.7);
+            font-weight: 500;
+        }
+
+        /* Progress Indicators */
+        .progress-indicators {
+            position: absolute;
+            bottom: 40px;
+            left: 80px;
+            right: 80px;
+            display: flex;
+            gap: 16px;
+        }
+
+        .indicator-line {
+            flex: 1;
+            height: 4px;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 2px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .indicator-line.active {
+            background: transparent;
+        }
+
+        .indicator-line.active::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 40px;
+            height: 100%;
+            background: white;
+            border-radius: 2px;
+        }
+
+        .indicator-line:hover:not(.active) {
+            background: rgba(255, 255, 255, 0.4);
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 1200px) {
+            .hero-section {
+                padding: 40px;
+            }
+
+            .content-panel {
+                left: 40px;
+                right: 40px;
+            }
+
+            .progress-indicators {
+                left: 40px;
+                right: 40px;
+            }
+
+            .right-content {
+                gap: 30px 40px;
+                padding-left: 40px;
+            }
+
+            .stat-value {
+                font-size: 40px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .navbar {
+                padding: 0 20px;
+            }
+
+            .nav-links {
+                display: none;
+            }
+
+            .content-panel {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 40px;
+            }
+
+            .right-content {
+                border-left: none;
+                padding-left: 0;
+                border-top: 1px solid rgba(255, 255, 255, 0.3);
+                padding-top: 40px;
+                width: 100%;
+            }
+
+            .stat-value {
+                font-size: 36px;
+            }
+
+            .progress-indicators {
+                position: relative;
+                bottom: auto;
+                left: auto;
+                right: auto;
+                margin-top: 40px;
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation Bar -->
+    <nav class="navbar">
+        <div class="navbar-left">
+            <div class="logo">
+                <div class="logo-icon">
+                    <div></div>
+                    <div></div>
+                </div>
+                <span>saleor</span>
+            </div>
+            <div class="nav-links">
+                <a href="#">Product <span class="dropdown-arrow"></span></a>
+                <a href="#">Resources <span class="dropdown-arrow"></span></a>
+                <a href="#">Docs</a>
+                <a href="#">Showcase</a>
+                <a href="#">Experts</a>
+                <a href="#">Pricing</a>
+            </div>
+        </div>
+        <div class="navbar-right">
+            <div class="github-count">
+                <div class="github-icon">★</div>
+                21.0k
+            </div>
+            <a href="#" class="login-link">Log in</a>
+            <button class="signup-btn">Sign up</button>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <div class="hero-section">
+        <!-- Content Panel 1 - Breitling -->
+        <div class="content-panel active" id="panel-1">
+            <div class="left-content">
+                <div class="brand-logo">
+                    <div class="breitling-logo">
+                        <div class="b-logo">B</div>
+                        <div class="brand-name">BREITLING</div>
+                        <div class="brand-year">1884</div>
+                    </div>
+                </div>
+                <div class="brand-description">
+                    Swiss luxury watch brand synonymous with precision, technical innovation, and a rich aviation heritage. Saleor is at the center of Breitling's shift to composable technologies.
+                </div>
+            </div>
+            <div class="right-content">
+                <div class="stat-item">
+                    <div class="stat-value">2000</div>
+                    <div class="stat-label">Products</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-value">250+</div>
+                    <div class="stat-label">Stores worldwide</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-value">40+</div>
+                    <div class="stat-label">Countries</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Content Panel 2 - Rough Trade -->
+        <div class="content-panel" id="panel-2">
+            <div class="left-content">
+                <div class="brand-logo">
+                    <div class="rough-trade-logo">
+                        <div class="brand-name">ROUGH<br>TRADE</div>
+                    </div>
+                </div>
+                <div class="brand-description">
+                    Since 1976, Rough Trade's fiercely independent label has stood for excellence and originality in music. A replatform to Saleor allowed them to sustain their exponential, global growth.
+                </div>
+            </div>
+            <div class="right-content">
+                <div class="stat-item">
+                    <div class="stat-value">240k+</div>
+                    <div class="stat-label">Products</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-value">340k+</div>
+                    <div class="stat-label">Variants</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-value">120k+</div>
+                    <div class="stat-label">Attributes</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-value">3</div>
+                    <div class="stat-label">Languages</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Progress Indicators -->
+        <div class="progress-indicators">
+            <div class="indicator-line active" data-panel="1"></div>
+            <div class="indicator-line" data-panel="2"></div>
+            <div class="indicator-line" data-panel="3"></div>
+            <div class="indicator-line" data-panel="4"></div>
+            <div class="indicator-line" data-panel="5"></div>
+        </div>
+    </div>
+
+    <script>
+        // DOM Elements
+        const indicatorLines = document.querySelectorAll('.indicator-line');
+        const contentPanels = document.querySelectorAll('.content-panel');
+        
+        // Add click event listeners to indicator lines
+        indicatorLines.forEach(line => {
+            line.addEventListener('click', function() {
+                const panelId = this.getAttribute('data-panel');
+                
+                // Remove active class from all indicators
+                indicatorLines.forEach(indicator => {
+                    indicator.classList.remove('active');
+                });
+                
+                // Add active class to clicked indicator
+                this.classList.add('active');
+                
+                // Hide all content panels
+                contentPanels.forEach(panel => {
+                    panel.classList.remove('active');
+                });
+                
+                // Show the corresponding content panel
+                // For demonstration, we only have 2 panels
+                if (panelId === '1' || panelId === '2') {
+                    const targetPanel = document.getElementById(`panel-${panelId}`);
+                    if (targetPanel) {
+                        targetPanel.classList.add('active');
+                    }
+                }
+                
+                // Add a subtle animation effect
+                const activePanel = document.querySelector('.content-panel.active');
+                if (activePanel) {
+                    activePanel.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+                    activePanel.style.transform = 'translateY(0)';
+                }
+            });
+        });
+
+        // Auto-play functionality (optional)
+        let currentIndex = 1;
+        const maxPanels = 2; // Only 2 panels implemented
+        
+        setInterval(() => {
+            currentIndex = currentIndex >= maxPanels ? 1 : currentIndex + 1;
+            
+            // Find and click the corresponding indicator
+            const indicator = document.querySelector(`.indicator-line[data-panel="${currentIndex}"]`);
+            if (indicator) {
+                indicator.click();
+            }
+        }, 5000); // Switch every 5 seconds
+    </script>
+</body>
+</html>

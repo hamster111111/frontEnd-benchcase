@@ -1,0 +1,888 @@
+```html
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>品类总览</title>
+<style>
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+  background: #f5f7fa;
+  color: #333;
+  min-height: 100vh;
+}
+
+/* Header */
+.header {
+  background: #fff;
+  height: 56px;
+  display: flex;
+  align-items: center;
+  padding: 0 32px;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.08);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-right: 40px;
+}
+
+.logo-icon {
+  width: 28px;
+  height: 28px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 1fr 1fr;
+  gap: 2px;
+}
+
+.logo-icon span {
+  background: #f08c2e;
+  border-radius: 2px;
+}
+
+.logo-text {
+  font-size: 18px;
+  font-weight: 600;
+  color: #333;
+}
+
+.nav-tabs {
+  display: flex;
+  align-items: center;
+  gap: 0;
+  margin-right: auto;
+}
+
+.nav-tab {
+  padding: 8px 20px;
+  font-size: 14px;
+  color: #666;
+  cursor: pointer;
+  border-radius: 6px;
+  transition: all 0.2s;
+}
+
+.nav-tab:hover {
+  color: #333;
+  background: #f5f5f5;
+}
+
+.nav-tab.active {
+  background: #f08c2e;
+  color: #fff;
+}
+
+.header-right {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.search-box {
+  display: flex;
+  align-items: center;
+  background: #f5f7fa;
+  border: 1px solid #e8e8e8;
+  border-radius: 8px;
+  padding: 8px 14px;
+  width: 240px;
+}
+
+.search-box svg {
+  width: 16px;
+  height: 16px;
+  color: #999;
+  margin-right: 8px;
+  flex-shrink: 0;
+}
+
+.search-box input {
+  border: none;
+  background: transparent;
+  outline: none;
+  font-size: 14px;
+  color: #333;
+  width: 100%;
+}
+
+.search-box input::placeholder {
+  color: #bbb;
+}
+
+.btn-add {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  background: #f08c2e;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  padding: 10px 18px;
+  font-size: 14px;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.btn-add:hover {
+  background: #e07d22;
+}
+
+/* Main Layout */
+.main {
+  display: flex;
+  gap: 20px;
+  padding: 24px 32px;
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+/* Left Sidebar */
+.sidebar {
+  width: 220px;
+  flex-shrink: 0;
+  background: #fff;
+  border-radius: 12px;
+  padding: 20px 0;
+  height: fit-content;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.06);
+}
+
+.sidebar-title {
+  font-size: 15px;
+  font-weight: 600;
+  padding: 0 20px 16px;
+  color: #333;
+}
+
+.category-list {
+  list-style: none;
+}
+
+.category-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 11px 20px;
+  font-size: 14px;
+  color: #555;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+
+.category-item:hover {
+  background: #f8f8f8;
+}
+
+.category-item.active {
+  background: #e8f0fe;
+  color: #2563eb;
+  font-weight: 500;
+}
+
+.category-item .count {
+  font-size: 13px;
+  color: #999;
+}
+
+.category-item.active .count {
+  color: #2563eb;
+}
+
+.category-item .arrow {
+  font-size: 10px;
+  color: #bbb;
+}
+
+.sidebar-footer {
+  display: flex;
+  gap: 12px;
+  padding: 16px 20px 4px;
+  border-top: 1px solid #f0f0f0;
+  margin-top: 8px;
+}
+
+.sidebar-footer a {
+  font-size: 13px;
+  color: #2563eb;
+  text-decoration: none;
+}
+
+.sidebar-footer a:hover {
+  text-decoration: underline;
+}
+
+/* Center Content */
+.content {
+  flex: 1;
+  min-width: 0;
+}
+
+.content-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 16px;
+}
+
+.content-title {
+  font-size: 18px;
+  font-weight: 600;
+  color: #222;
+}
+
+.content-actions {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.action-btn {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 13px;
+  color: #2563eb;
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+.action-btn:hover {
+  text-decoration: underline;
+}
+
+.action-btn.danger {
+  color: #e53e3e;
+}
+
+.product-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+}
+
+.product-card {
+  background: #fff;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.06);
+  transition: box-shadow 0.2s;
+}
+
+.product-card:hover {
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+
+.product-image {
+  position: relative;
+  width: 100%;
+  padding-top: 65%;
+  overflow: hidden;
+}
+
+.product-image .img-bg {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.product-image .edit-icon {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  width: 28px;
+  height: 28px;
+  background: rgba(255,255,255,0.9);
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.15);
+}
+
+.product-image .edit-icon svg {
+  width: 14px;
+  height: 14px;
+  color: #666;
+}
+
+.product-info {
+  padding: 12px 14px 14px;
+}
+
+.product-name {
+  font-size: 14px;
+  font-weight: 500;
+  color: #333;
+  margin-bottom: 8px;
+}
+
+.product-meta {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  font-size: 13px;
+  color: #666;
+}
+
+.product-meta .row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.product-meta .price {
+  color: #f08c2e;
+  font-weight: 600;
+  font-size: 15px;
+}
+
+.product-meta .stock {
+  color: #555;
+  font-weight: 500;
+}
+
+.product-rating {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  margin-top: 6px;
+  font-size: 13px;
+  color: #f5a623;
+}
+
+.product-rating .score {
+  color: #999;
+  font-size: 12px;
+}
+
+.product-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 10px;
+}
+
+.tag {
+  display: inline-block;
+  padding: 3px 10px;
+  background: #f5f5f5;
+  border-radius: 4px;
+  font-size: 12px;
+  color: #777;
+}
+
+.btn-delete {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 4px;
+  display: flex;
+  align-items: center;
+}
+
+.btn-delete svg {
+  width: 16px;
+  height: 16px;
+  color: #e53e3e;
+}
+
+/* Right Sidebar */
+.stats-panel {
+  width: 220px;
+  flex-shrink: 0;
+  background: #fff;
+  border-radius: 12px;
+  padding: 20px;
+  height: fit-content;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.06);
+}
+
+.stats-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 16px;
+}
+
+.stats-title {
+  font-size: 15px;
+  font-weight: 600;
+  color: #333;
+}
+
+.stats-header .arrow-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: #999;
+  font-size: 16px;
+}
+
+.section-label {
+  font-size: 13px;
+  color: #666;
+  margin-bottom: 12px;
+}
+
+.chart-placeholder {
+  width: 100%;
+  height: 80px;
+  margin-bottom: 16px;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Line Chart */
+.line-chart {
+  position: relative;
+  height: 100%;
+}
+
+.line-chart svg {
+  width: 100%;
+  height: 100%;
+}
+
+/* Donut Chart */
+.donut-section {
+  margin-bottom: 16px;
+}
+
+.donut-chart {
+  width: 90px;
+  height: 90px;
+  margin: 0 auto 12px;
+}
+
+.legend {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.legend-item {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 12px;
+  color: #666;
+}
+
+.legend-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+}
+
+.btn-export {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  padding: 10px;
+  background: #f5f5f5;
+  border: 1px solid #e8e8e8;
+  border-radius: 8px;
+  font-size: 13px;
+  color: #555;
+  cursor: pointer;
+  margin-bottom: 12px;
+}
+
+.btn-export:hover {
+  background: #eee;
+}
+
+.btn-export svg {
+  width: 14px;
+  height: 14px;
+}
+
+.tips {
+  font-size: 11px;
+  color: #aaa;
+  line-height: 1.5;
+}
+
+/* Footer */
+.footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px 32px;
+  font-size: 13px;
+  color: #999;
+  background: #fff;
+  margin-top: 20px;
+  border-top: 1px solid #f0f0f0;
+}
+
+.footer-center {
+  color: #888;
+}
+
+.footer a {
+  color: #555;
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.footer a:hover {
+  color: #333;
+}
+</style>
+</head>
+<body>
+
+<!-- Header -->
+<header class="header">
+  <div class="logo">
+    <div class="logo-icon">
+      <span></span><span></span><span></span><span></span>
+    </div>
+    <span class="logo-text">品类总览</span>
+  </div>
+  <div class="nav-tabs">
+    <div class="nav-tab active">数码家电</div>
+    <div class="nav-tab">服装配饰</div>
+    <div class="nav-tab">家居厨具</div>
+    <div class="nav-tab">美妆护肤</div>
+  </div>
+  <div class="header-right">
+    <div class="search-box">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+      <input type="text" placeholder="搜索商品...">
+    </div>
+    <button class="btn-add">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+      添加新商品
+    </button>
+  </div>
+</header>
+
+<!-- Main -->
+<div class="main">
+  <!-- Left Sidebar -->
+  <aside class="sidebar">
+    <div class="sidebar-title">商品分类</div>
+    <ul class="category-list">
+      <li class="category-item active">
+        <span>数码家电</span>
+        <span class="count">12</span>
+      </li>
+      <li class="category-item">
+        <span>手机</span>
+        <span class="count">5</span>
+      </li>
+      <li class="category-item">
+        <span>电脑</span>
+        <span class="count">4</span>
+      </li>
+      <li class="category-item">
+        <span>家电</span>
+        <span class="count">3</span>
+      </li>
+      <li class="category-item">
+        <span>服装配饰</span>
+        <span class="count">8</span>
+        <span class="arrow">▾</span>
+      </li>
+      <li class="category-item">
+        <span>家居厨具</span>
+        <span class="count">6</span>
+        <span class="arrow">▾</span>
+      </li>
+      <li class="category-item">
+        <span>美妆护肤</span>
+        <span class="count">9</span>
+        <span class="arrow">▾</span>
+      </li>
+    </ul>
+    <div class="sidebar-footer">
+      <a href="#">全部折扣</a>
+      <a href="#">全部展开</a>
+    </div>
+  </aside>
+
+  <!-- Center Content -->
+  <div class="content">
+    <div class="content-header">
+      <div class="content-title">数码家电</div>
+      <div class="content-actions">
+        <button class="action-btn">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 4H4a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 013 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
+          编辑分类
+        </button>
+        <button class="action-btn danger">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 6h18"/><path d="M19 6v14a2 2 0 01-2 2H7a2 2 0 01-2-2V6m3 0V4a2 2 0 012-2h4a2 2 0 012 2v2"/></svg>
+          删除分类
+        </button>
+      </div>
+    </div>
+
+    <div class="product-grid">
+      <!-- Product 1 -->
+      <div class="product-card">
+        <div class="product-image">
+          <div class="img-bg" style="background: linear-gradient(135deg, #2c3e50 0%, #4a6741 30%, #7f8c6a 60%, #b8a88a 100%);"></div>
+          <div class="edit-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 4H4a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 013 3L12 15l-4 1 1-4 9.5-9.5z"/></svg></div>
+        </div>
+        <div class="product-info">
+          <div class="product-name">高清智能手机</div>
+          <div class="product-meta">
+            <div class="row">
+              <span>价格：</span>
+              <span class="price">¥2999</span>
+            </div>
+            <div class="row">
+              <span>库存：</span>
+              <span class="stock">100</span>
+            </div>
+          </div>
+          <div class="product-rating">
+            <span>★★★★★</span>
+            <span class="score">4.5</span>
+          </div>
+          <div class="product-footer">
+            <span class="tag">手机</span>
+            <button class="btn-delete"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 6h18"/><path d="M19 6v14a2 2 0 01-2 2H7a2 2 0 01-2-2V6m3 0V4a2 2 0 012-2h4a2 2 0 012 2v2"/></svg></button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Product 2 -->
+      <div class="product-card">
+        <div class="product-image">
+          <div class="img-bg" style="background: linear-gradient(135deg, #1a1a2e 0%, #16213e 40%, #0f3460 70%, #533483 100%);"></div>
+          <div class="edit-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 4H4a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 013 3L12 15l-4 1 1-4 9.5-9.5z"/></svg></div>
+        </div>
+        <div class="product-info">
+          <div class="product-name">轻薄笔记本电脑</div>
+          <div class="product-meta">
+            <div class="row">
+              <span>价格：</span>
+              <span class="price">¥5999</span>
+            </div>
+            <div class="row">
+              <span>库存：</span>
+              <span class="stock">50</span>
+            </div>
+          </div>
+          <div class="product-rating">
+            <span>★★★★★</span>
+            <span class="score">4.8</span>
+          </div>
+          <div class="product-footer">
+            <span class="tag">电脑</span>
+            <button class="btn-delete"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 6h18"/><path d="M19 6v14a2 2 0 01-2 2H7a2 2 0 01-2-2V6m3 0V4a2 2 0 012-2h4a2 2 0 012 2v2"/></svg></button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Product 3 -->
+      <div class="product-card">
+        <div class="product-image">
+          <div class="img-bg" style="background: linear-gradient(135deg, #d4a574 0%, #c4956a 30%, #8b6f5c 60%, #4a3728 100%);"></div>
+          <div class="edit-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 4H4a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 013 3L12 15l-4 1 1-4 9.5-9.5z"/></svg></div>
+        </div>
+        <div class="product-info">
+          <div class="product-name">智能电视</div>
+          <div class="product-meta">
+            <div class="row">
+              <span>价格：</span>
+              <span class="price">¥3999</span>
+            </div>
+            <div class="row">
+              <span>库存：</span>
+              <span class="stock">30</span>
+            </div>
+          </div>
+          <div class="product-rating">
+            <span>★★★★☆</span>
+            <span class="score">4.6</span>
+          </div>
+          <div class="product-footer">
+            <span class="tag">家电</span>
+            <button class="btn-delete"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 6h18"/><path d="M19 6v14a2 2 0 01-2 2H7a2 2 0 01-2-2V6m3 0V4a2 2 0 012-2h4a2 2 0 012 2v2"/></svg></button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Product 4 -->
+      <div class="product-card">
+        <div class="product-image">
+          <div class="img-bg" style="background: linear-gradient(135deg, #87ceeb 0%, #6bb5d6 30%, #4a9ab5 60%, #2d7d9a 100%);"></div>
+          <div class="edit-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 4H4a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 013 3L12 15l-4 1 1-4 9.5-9.5z"/></svg></div>
+        </div>
+        <div class="product-info">
+          <div class="product-name">全自动洗衣机</div>
+          <div class="product-meta">
+            <div class="row">
+              <span>价格：</span>
+              <span class="price">¥2499</span>
+            </div>
+            <div class="row">
+              <span>库存：</span>
+              <span class="stock">25</span>
+            </div>
+          </div>
+          <div class="product-rating">
+            <span>★★★★☆</span>
+            <span class="score">4.4</span>
+          </div>
+          <div class="product-footer">
+            <span class="tag">家电</span>
+            <button class="btn-delete"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 6h18"/><path d="M19 6v14a2 2 0 01-2 2H7a2 2 0 01-2-2V6m3 0V4a2 2 0 012-2h4a2 2 0 012 2v2"/></svg></button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Product 5 -->
+      <div class="product-card">
+        <div class="product-image">
+          <div class="img-bg" style="background: linear-gradient(135deg, #2c3e50 0%, #3d5266 30%, #5a7a8a 60%, #8aa0b0 100%);"></div>
+          <div class="edit-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 4H4a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 013 3L12 15l-4 1 1-4 9.5-9.5z"/></svg></div>
+        </div>
+        <div class="product-info">
+          <div class="product-name">智能手表</div>
+          <div class="product-meta">
+            <div class="row">
+              <span>价格：</span>
+              <span class="price">¥1299</span>
+            </div>
+            <div class="row">
+              <span>库存：</span>
+              <span class="stock">150</span>
+            </div>
+          </div>
+          <div class="product-rating">
+            <span>★★★★☆</span>
+            <span class="score">4.3</span>
+          </div>
+          <div class="product-footer">
+            <span class="tag">手机</span>
+            <button class="btn-delete"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 6h18"/><path d="M19 6v14a2 2 0 01-2 2H7a2 2 0 01-2-2V6m3 0V4a2 2 0 012-2h4a2 2 0 012 2v2"/></svg></button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Product 6 -->
+      <div class="product-card">
+        <div class="product-image">
+          <div class="img-bg" style="background: linear-gradient(135deg, #3a3a3a 0%, #5a5a5a 30%, #8a7a6a 60%, #b0a090 100%);"></div>
+          <div class="edit-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 4H4a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 013 3L12 15l-4 1 1-4 9.5-9.5z"/></svg></div>
+        </div>
+        <div class="product-info">
+          <div class="product-name">游戏手柄</div>
+          <div class="product-meta">
+            <div class="row">
+              <span>价格：</span>
+              <span class="price">¥299</span>
+            </div>
+            <div class="row">
+              <span>库存：</span>
+              <span class="stock">200</span>
+            </div>
+          </div>
+          <div class="product-rating">
+            <span>★★★★★</span>
+            <span class="score">4.7</span>
+          </div>
+          <div class="product-footer">
+            <span class="tag">电脑</span>
+            <button class="btn-delete"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 6h18"/><path d="M19 6v14a2 2 0 01-2 2H7a2 2 0 01-2-2V6m3 0V4a2 2 0 012-2h4a2 2 0 012 2v2"/></svg></button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Right Stats Panel -->
+  <aside class="stats-panel">
+    <div class="stats-header">
+      <div class="stats-title">数据统计</div>
+      <button class="arrow-btn">›</button>
+    </div>
+
+    <div class="section-label">近7天销售趋势</div>
+    <div class="chart-placeholder">
+      <div class="line-chart">
+        <svg viewBox="0 0 200 80" preserveAspectRatio="none">
+          <polyline points="10,65 40,55 70,50 100,35 130,30 160,22 190,15" fill="none" stroke="#2563eb" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </div>
+    </div>
+
+    <div class="donut-section">
+      <div class="section-label">分类占比</div>
+      <div class="donut-chart">
+        <svg viewBox="0 0 90 90">
+          <circle cx="45" cy="45" r="35" fill="none" stroke="#e8e8e8" stroke-width="10"/>
+          <circle cx="45" cy="45" r="35" fill="none" stroke="#2563eb" stroke-width="10" 
+            stroke-dasharray="70 150" stroke-dashoffset="0" transform="rotate(-90 45 45)"/>
+          <circle cx="45" cy="45" r="35" fill="none" stroke="#f08c2e" stroke-width="10" 
+            stroke-dasharray="55 165" stroke-dashoffset="-70" transform="rotate(-90 45 45)"/>
+          <circle cx="45" cy="45" r="35" fill="none" stroke="#e53e3e" stroke-width="10" 
+            stroke-dasharray="30 190" stroke-dashoffset="-125" transform="rotate(-90 45 45)"/>
+        </svg>
+      </div>
+      <div class="legend">
+        <div class="legend-item">
+          <span class="legend-dot" style="background:#2563eb;"></span>
+          <span>手机</span>
+        </div>
+        <div class="legend-item">
+          <span class="legend-dot" style="background:#f08c2e;"></span>
+          <span>电脑</span>
+        </div>
+        <div class="legend-item">
+          <span class="legend-dot" style="background:#e53e3e;"></span>
+          <span>家电</span>
+        </div>
+      </div>
+    </div>
+
+    <button class="btn-export">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+      导出报表
+    </button>
+
+    <div class="tips">提示：点击图表可查看详细数据，双击可放大查看。</div>
+  </aside>
+</div>
+
+<!-- Footer -->
+<footer class="footer">
+  <a href="#">
+    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 015.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+    帮助中心
+  </a>
+  <span class="footer-center">各品类一键管理，一键分类跳跃，查时数据可视化</span>
+  <span>©2024 全部权，版本 v1.0</span>
+</footer>
+
+</body>
+</html>
+```

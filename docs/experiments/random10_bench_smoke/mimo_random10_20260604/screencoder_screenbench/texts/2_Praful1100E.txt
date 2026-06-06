@@ -1,0 +1,879 @@
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>GitHub Profile - Praful Thakur</title>
+<style>
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
+    background-color: #0d1117;
+    color: #c9d1d9;
+    min-height: 100vh;
+  }
+
+  /* Top Navigation */
+  .top-nav {
+    background-color: #161b22;
+    border-bottom: 1px solid #30363d;
+    height: 62px;
+    display: flex;
+    align-items: center;
+    padding: 0 32px;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+  }
+
+  .nav-logo {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+  }
+
+  .github-icon {
+    width: 32px;
+    height: 32px;
+    fill: #c9d1d9;
+  }
+
+  .nav-links {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin-left: 16px;
+  }
+
+  .nav-links a {
+    color: #c9d1d9;
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: 500;
+    padding: 6px 12px;
+    border-radius: 6px;
+    transition: background-color 0.2s;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+  }
+
+  .nav-links a:hover {
+    background-color: rgba(255,255,255,0.08);
+  }
+
+  .dropdown-arrow {
+    font-size: 10px;
+    opacity: 0.7;
+  }
+
+  .nav-right {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-left: auto;
+  }
+
+  .search-box {
+    background-color: #0d1117;
+    border: 1px solid #30363d;
+    border-radius: 6px;
+    padding: 5px 12px;
+    color: #c9d1d9;
+    font-size: 14px;
+    width: 280px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .search-box input {
+    background: none;
+    border: none;
+    color: #c9d1d9;
+    font-size: 14px;
+    width: 100%;
+    outline: none;
+  }
+
+  .search-box input::placeholder {
+    color: #8b949e;
+  }
+
+  .search-slash {
+    background-color: #30363d;
+    border-radius: 4px;
+    padding: 1px 6px;
+    font-size: 12px;
+    color: #8b949e;
+    border: 1px solid #484f58;
+  }
+
+  .sign-in, .sign-up {
+    color: #c9d1d9;
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: 500;
+    padding: 5px 16px;
+    border-radius: 6px;
+  }
+
+  .sign-up {
+    border: 1px solid #c9d1d9;
+  }
+
+  .sign-up:hover {
+    border-color: #c9d1d9;
+    background: rgba(255,255,255,0.08);
+  }
+
+  .nav-profile-icon {
+    width: 20px;
+    height: 20px;
+    fill: #c9d1d9;
+  }
+
+  /* Sub Navigation */
+  .sub-nav {
+    background-color: #161b22;
+    border-bottom: 1px solid #30363d;
+    padding: 0 32px;
+    display: flex;
+    gap: 4px;
+    position: sticky;
+    top: 62px;
+    z-index: 99;
+  }
+
+  .sub-nav a {
+    color: #8b949e;
+    text-decoration: none;
+    font-size: 14px;
+    padding: 12px 16px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    border-bottom: 2px solid transparent;
+    transition: color 0.2s;
+  }
+
+  .sub-nav a:hover {
+    color: #c9d1d9;
+  }
+
+  .sub-nav a.active {
+    color: #f0f6fc;
+    border-bottom-color: #f78166;
+    font-weight: 600;
+  }
+
+  .sub-nav .count {
+    background-color: #30363d;
+    color: #c9d1d9;
+    border-radius: 10px;
+    padding: 1px 8px;
+    font-size: 12px;
+    font-weight: 500;
+  }
+
+  .sub-nav-icon {
+    width: 16px;
+    height: 16px;
+    fill: currentColor;
+  }
+
+  /* Main Layout */
+  .main-container {
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 24px 32px;
+    display: flex;
+    gap: 24px;
+  }
+
+  /* Left Sidebar */
+  .sidebar {
+    width: 296px;
+    flex-shrink: 0;
+  }
+
+  .avatar-container {
+    position: relative;
+    margin-bottom: 16px;
+  }
+
+  .avatar {
+    width: 296px;
+    height: 296px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #c9a87c 0%, #8b7355 30%, #a68b6b 50%, #7d6b5a 70%, #6b5a4a 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    border: 1px solid #30363d;
+  }
+
+  .avatar-face {
+    width: 100%;
+    height: 100%;
+    position: relative;
+    background: linear-gradient(180deg, #d4b896 0%, #c4a07a 40%, #b09070 60%, #8b7060 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .avatar-face::before {
+    content: '';
+    position: absolute;
+    width: 80px;
+    height: 60px;
+    background: linear-gradient(180deg, #5a4535 0%, #4a3828 100%);
+    border-radius: 40px 40px 0 0;
+    top: 30%;
+    left: 50%;
+    transform: translateX(-50%);
+  }
+
+  .status-indicator {
+    position: absolute;
+    bottom: 8px;
+    right: 8px;
+    width: 34px;
+    height: 34px;
+    background-color: #238636;
+    border-radius: 50%;
+    border: 3px solid #0d1117;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .status-emoji {
+    font-size: 16px;
+  }
+
+  .profile-name {
+    font-size: 26px;
+    font-weight: 600;
+    color: #f0f6fc;
+    line-height: 1.25;
+  }
+
+  .profile-username {
+    font-size: 20px;
+    font-weight: 300;
+    color: #8b949e;
+    margin-bottom: 16px;
+  }
+
+  .follow-btn {
+    width: 100%;
+    padding: 5px 16px;
+    font-size: 14px;
+    font-weight: 500;
+    color: #f0f6fc;
+    background-color: #238636;
+    border: 1px solid rgba(63,185,80,0.4);
+    border-radius: 6px;
+    cursor: pointer;
+    margin-bottom: 16px;
+    text-align: center;
+  }
+
+  .follow-btn:hover {
+    background-color: #2ea043;
+  }
+
+  .profile-bio {
+    font-size: 14px;
+    color: #c9d1d9;
+    line-height: 1.5;
+    margin-bottom: 16px;
+  }
+
+  .followers-info {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    font-size: 14px;
+    color: #c9d1d9;
+    margin-bottom: 16px;
+  }
+
+  .followers-icon {
+    width: 16px;
+    height: 16px;
+    fill: #8b949e;
+  }
+
+  .followers-info strong {
+    font-weight: 600;
+  }
+
+  .profile-meta {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    margin-bottom: 16px;
+  }
+
+  .meta-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 14px;
+    color: #c9d1d9;
+  }
+
+  .meta-icon {
+    width: 16px;
+    height: 16px;
+    fill: #8b949e;
+    flex-shrink: 0;
+  }
+
+  .meta-item a {
+    color: #58a6ff;
+    text-decoration: none;
+    word-break: break-all;
+  }
+
+  .meta-item a:hover {
+    text-decoration: underline;
+  }
+
+  .block-report {
+    font-size: 12px;
+    color: #8b949e;
+    text-decoration: none;
+    margin-top: 8px;
+    display: inline-block;
+  }
+
+  .block-report:hover {
+    color: #58a6ff;
+    text-decoration: underline;
+  }
+
+  /* Main Content */
+  .main-content {
+    flex: 1;
+    min-width: 0;
+  }
+
+  .readme-card {
+    border: 1px solid #30363d;
+    border-radius: 6px;
+    background-color: #0d1117;
+  }
+
+  .readme-header {
+    padding: 12px 16px;
+    border-bottom: 1px solid #30363d;
+    font-size: 14px;
+    color: #8b949e;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+  }
+
+  .readme-body {
+    padding: 32px;
+  }
+
+  .profile-banner {
+    width: 100%;
+    height: 120px;
+    background: linear-gradient(135deg, #1a1e24 0%, #2d333b 50%, #1a1e24 100%);
+    border-radius: 6px;
+    margin-bottom: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #8b949e;
+    font-size: 14px;
+    overflow: hidden;
+    position: relative;
+  }
+
+  .profile-banner::before {
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background: repeating-linear-gradient(
+      45deg,
+      transparent,
+      transparent 10px,
+      rgba(255,255,255,0.02) 10px,
+      rgba(255,255,255,0.02) 20px
+    );
+  }
+
+  .profile-banner img {
+    height: 100%;
+    width: 100%;
+    object-fit: cover;
+  }
+
+  .greeting {
+    text-align: center;
+    font-size: 32px;
+    font-weight: 700;
+    color: #f0f6fc;
+    margin-bottom: 16px;
+  }
+
+  .subtitle {
+    text-align: center;
+    font-size: 20px;
+    color: #8b949e;
+    margin-bottom: 24px;
+  }
+
+  .projects-btn-container {
+    text-align: center;
+    margin-bottom: 32px;
+  }
+
+  .projects-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: linear-gradient(135deg, #da3633 0%, #b62324 100%);
+    color: #ffffff;
+    text-decoration: none;
+    padding: 8px 20px;
+    border-radius: 6px;
+    font-size: 14px;
+    font-weight: 600;
+    border: 1px solid rgba(218,54,51,0.5);
+  }
+
+  .projects-btn:hover {
+    opacity: 0.9;
+  }
+
+  .section-divider {
+    border: none;
+    border-top: 1px solid #30363d;
+    margin: 32px 0;
+  }
+
+  .section-title {
+    font-size: 22px;
+    font-weight: 600;
+    color: #f0f6fc;
+    margin-bottom: 16px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .section-emoji {
+    font-size: 20px;
+  }
+
+  .section-text {
+    font-size: 14px;
+    color: #c9d1d9;
+    line-height: 1.6;
+    margin-bottom: 16px;
+  }
+
+  .about-list {
+    list-style: disc;
+    padding-left: 24px;
+    margin-bottom: 16px;
+  }
+
+  .about-list li {
+    font-size: 14px;
+    color: #c9d1d9;
+    line-height: 1.8;
+    margin-bottom: 4px;
+  }
+
+  .about-list li strong {
+    color: #f0f6fc;
+    font-weight: 600;
+  }
+
+  .about-list a {
+    color: #58a6ff;
+    text-decoration: none;
+  }
+
+  .about-list a:hover {
+    text-decoration: underline;
+  }
+
+  /* Tech Stack Icons */
+  .tech-icons {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    justify-content: center;
+    margin-top: 16px;
+  }
+
+  .tech-icon {
+    width: 52px;
+    height: 52px;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+    font-weight: 700;
+    color: #ffffff;
+  }
+
+  .tech-python { background: linear-gradient(135deg, #3776AB, #FFD43B); }
+  .tech-c { background: #A8B9CC; color: #03599C; }
+  .tech-html { background: #E34F26; }
+  .tech-bootstrap { background: #7952B3; }
+  .tech-git { background: #F05032; }
+  .tech-vscode { background: linear-gradient(135deg, #007ACC, #1E90FF); }
+  .tech-css { background: #1572B6; }
+  .tech-mysql { background: #4479A1; }
+  .tech-flask { background: #000000; border: 1px solid #30363d; }
+  .tech-postman { background: #FF6C37; }
+  .tech-raspberry { background: #C51A4A; }
+
+  /* GitHub Stats Cards */
+  .stats-grid {
+    display: flex;
+    gap: 16px;
+    margin-top: 16px;
+    flex-wrap: wrap;
+  }
+
+  .stats-card {
+    background-color: #161b22;
+    border: 1px solid #30363d;
+    border-radius: 6px;
+    padding: 16px;
+    flex: 1;
+    min-width: 200px;
+  }
+
+  .stats-card-title {
+    font-size: 14px;
+    font-weight: 600;
+    color: #f0f6fc;
+    margin-bottom: 12px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .stats-card-title .icon {
+    font-size: 16px;
+  }
+
+  .stat-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 14px;
+    padding: 6px 0;
+    border-bottom: 1px solid #21262d;
+  }
+
+  .stat-row:last-child {
+    border-bottom: none;
+  }
+
+  .stat-label {
+    color: #8b949e;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  .stat-value {
+    color: #f0f6fc;
+    font-weight: 600;
+  }
+
+  .streak-cards {
+    display: flex;
+    gap: 16px;
+    margin-top: 16px;
+    flex-wrap: wrap;
+  }
+
+  .streak-card {
+    background-color: #161b22;
+    border: 1px solid #30363d;
+    border-radius: 6px;
+    padding: 20px;
+    flex: 1;
+    min-width: 150px;
+    text-align: center;
+  }
+
+  .streak-number {
+    font-size: 40px;
+    font-weight: 700;
+    color: #f0f6fc;
+    line-height: 1;
+  }
+
+  .streak-label {
+    font-size: 13px;
+    color: #8b949e;
+    margin-top: 8px;
+  }
+
+  .streak-card.active .streak-number {
+    color: #f78166;
+  }
+
+  /* Footer */
+  .footer {
+    margin-top: 40px;
+    padding: 24px 0;
+    text-align: center;
+    font-size: 12px;
+    color: #484f58;
+    border-top: 1px solid #21262d;
+  }
+</style>
+</head>
+<body>
+
+<!-- Top Navigation -->
+<nav class="top-nav">
+  <div class="nav-logo">
+    <svg class="github-icon" viewBox="0 0 16 16">
+      <path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/>
+    </svg>
+  </div>
+  <div class="nav-links">
+    <a href="#">Platform <span class="dropdown-arrow">▾</span></a>
+    <a href="#">Solutions <span class="dropdown-arrow">▾</span></a>
+    <a href="#">Resources <span class="dropdown-arrow">▾</span></a>
+    <a href="#">Open Source <span class="dropdown-arrow">▾</span></a>
+    <a href="#">Enterprise <span class="dropdown-arrow">▾</span></a>
+    <a href="#">Pricing</a>
+  </div>
+  <div class="nav-right">
+    <div class="search-box">
+      <svg width="16" height="16" viewBox="0 0 16 16" fill="#8b949e"><path d="M10.68 11.74a6 6 0 01-7.922-8.982 6 6 0 018.982 7.922l3.04 3.04a.749.749 0 01-.326 1.275.749.749 0 01-.734-.215zM11.5 7a4.499 4.499 0 10-8.997 0A4.499 4.499 0 0011.5 7z"/></svg>
+      <input type="text" placeholder="Search or jump to...">
+      <span class="search-slash">/</span>
+    </div>
+    <a href="#" class="sign-in">Sign in</a>
+    <a href="#" class="sign-up">Sign up</a>
+    <svg class="nav-profile-icon" viewBox="0 0 16 16"><path d="M8 0a8.2 8.2 0 01.701.031C10.444.095 11.717.827 12.43 1.962c.655 1.048.96 2.374.92 3.593.001.167.001.334.001.501 0 1.074-.157 2.237-.448 3.289C11.44 7.69 10.24 8.456 10.24 8.456c-1.458.638-2.24 1.268-2.56 1.768a1.12 1.12 0 01-.273.234c-.09.06-.159.14-.17.233a1.296 1.296 0 00.163 1.022 1.286 1.286 0 00.685.404c.114.018.232.022.35.012.402-.034.77-.193 1.072-.452.164-.147.31-.317.42-.5.138-.22.228-.463.25-.715.007-.093.007-.187.007-.28 0-.136-.015-.27-.045-.4a7.8 7.8 0 01-.045-.394c0-.548-.094-1.085-.273-1.594-.164-.472-.414-.933-.74-1.363a12.045 12.045 0 00-1.055-1.179c-.517-.488-1.116-.867-1.778-1.115-.037-.014-.073-.028-.111-.043a5.01 5.01 0 00-.162-.058c-.018-.006-.037-.012-.056-.016a.012.012 0 00-.007-.001c-.003-.001-.006-.002-.01-.002L8 2.5a.01.01 0 00-.01.002zm3.98 5.438c.392 1.038.104 2.278-.624 3.172a5.387 5.387 0 01-1.09.837c-.49.284-.978.368-1.393.358l-.12-.003-.005-.001c-.091-.008-.18-.023-.267-.045a3.12 3.12 0 01-.66-.288l.004-.003.146-.093c.107-.068.18-.17.18-.284 0-.035-.005-.07-.015-.103a.953.953 0 01.075-.77c.172-.262.442-.47.748-.608.346-.157.72-.24 1.095-.24.385 0 .65.074.847.198.174.11.279.263.307.454.016.107.012.217-.012.323-.03.131-.102.25-.194.343l-.033.034c-.09.091-.208.154-.34.181a.952.952 0 01-.267.007.95.95 0 01-.255-.042c-.094-.028-.175-.076-.236-.138a.949.949 0 01-.155-.249.954.954 0 01-.023-.304c.021-.163.087-.31.178-.428a.961.961 0 01.145-.155c.133-.105.29-.176.465-.214a.952.952 0 01.273-.036c.114 0 .226.02.332.057.13.046.244.12.332.217l.01.012.003.004c.076.092.117.215.117.35 0 .054-.01.108-.031.159a.565.565 0 01-.085.138.563.563 0 01-.138.091.58.58 0 01-.176.053.606.606 0 01-.205-.011c-.116-.031-.203-.1-.246-.212a.604.604 0 01-.037-.235c.01-.178.08-.347.198-.484.147-.17.361-.298.617-.375.19-.057.384-.084.58-.084.162 0 .31.017.448.053.194.05.363.134.502.25a.82.82 0 01.273.43c.026.187.01.375-.046.55-.084.265-.244.498-.466.683a2.402 2.402 0 01-.163.13c.08.035.158.074.233.118.207.12.386.286.521.486.186.274.28.59.27.916-.012.397-.153.773-.407 1.077z"/></svg>
+  </div>
+</nav>
+
+<!-- Sub Navigation -->
+<nav class="sub-nav">
+  <a href="#" class="active">
+    <svg class="sub-nav-icon" viewBox="0 0 16 16"><path d="M0 1.75A.75.75 0 01.75 1h4.253c1.227 0 2.317.59 3 1.501A3.744 3.744 0 0111.006 1h4.245a.75.75 0 01.75.75v10.5a.75.75 0 01-.75.75h-4.507a2.25 2.25 0 00-1.591.659l-.622.621a.75.75 0 01-1.06 0l-.622-.621A2.25 2.25 0 005.258 13H.75a.75.75 0 01-.75-.75zm7.251 10.324l.004-5.073-.002-2.253A2.25 2.25 0 005.003 2.5H1.5v9h3.757a3.75 3.75 0 011.994.574zM8.755 4.75l-.004 7.322a3.752 3.752 0 011.992-.572H14.5v-9h-3.495a2.251 2.251 0 00-2.25 2.25z"/></svg>
+    Overview
+  </a>
+  <a href="#">
+    <svg class="sub-nav-icon" viewBox="0 0 16 16"><path d="M2 2.5A2.5 2.5 0 014.5 0h8.75a.75.75 0 01.75.75v12.5a.75.75 0 01-.75.75h-2.5a.75.75 0 110-1.5h1.75v-2h-8a1 1 0 00-.714 1.7.75.75 0 01-1.072 1.05A2.495 2.495 0 012 11.5zm10.5-1h-8a1 1 0 00-1 1v6.708A2.486 2.486 0 014.5 9h8.5zM5 12.25v3.25a.25.25 0 00.4.2l1.45-1.087a.25.25 0 01.3 0L8.6 15.7a.25.25 0 00.4-.2v-3.25a.25.25 0 00-.25-.25h-3.5a.25.25 0 00-.25.25z"/></svg>
+    Repositories <span class="count">29</span>
+  </a>
+  <a href="#">
+    <svg class="sub-nav-icon" viewBox="0 0 16 16"><path d="M1.75 0h12.5C15.216 0 16 .784 16 1.75v12.5A1.75 1.75 0 0114.25 16H1.75A1.75 1.75 0 010 14.25V1.75C0 .784.784 0 1.75 0zM1.5 1.75v12.5c0 .138.112.25.25.25h12.5a.25.25 0 00.25-.25V1.75a.25.25 0 00-.25-.25H1.75a.25.25 0 00-.25.25z"/></svg>
+    Projects
+  </a>
+  <a href="#">
+    <svg class="sub-nav-icon" viewBox="0 0 16 16"><path d="M8.878.392a1.75 1.75 0 00-1.756 0l-5.25 3.045A1.75 1.75 0 001 4.951v6.098c0 .624.332 1.2.872 1.514l5.25 3.045a1.75 1.75 0 001.756 0l5.25-3.045c.54-.313.872-.89.872-1.514V4.951c0-.624-.332-1.2-.872-1.514L8.878.392zM7.875 1.69a.25.25 0 01.25 0l4.63 2.685L8 7.133 3.245 4.375l4.63-2.685zM2.5 5.677v5.372c0 .09.047.171.125.216l4.625 2.683V8.432l-4.875-2.864a.25.25 0 00-.125.032zm7.25 8.271l4.625-2.683a.25.25 0 00.125-.216V5.677l-4.875 2.864a.25.25 0 01-.25 0L5.875 8.432v4.476l.375-.322z"/></svg>
+    Packages
+  </a>
+  <a href="#">
+    <svg class="sub-nav-icon" viewBox="0 0 16 16"><path d="M8 .25a.75.75 0 01.673.418l1.882 3.815 4.21.612a.75.75 0 01.416 1.279l-3.046 2.97.719 4.192a.751.751 0 01-1.088.791L8 12.347l-3.766 1.98a.75.75 0 01-1.088-.79l.72-4.194L.818 6.374a.75.75 0 01.416-1.28l4.21-.611L7.327.668A.75.75 0 018 .25z"/></svg>
+    Stars <span class="count">2</span>
+  </a>
+</nav>
+
+<!-- Main Content -->
+<div class="main-container">
+  <!-- Left Sidebar -->
+  <aside class="sidebar">
+    <div class="avatar-container">
+      <div class="avatar">
+        <div class="avatar-face" style="background: linear-gradient(180deg, #c9a882 0%, #b89872 30%, #a08060 60%, #706050 100%); position: relative;">
+          <div style="position: absolute; top: 25%; left: 50%; transform: translateX(-50%); width: 60%; height: 45%; background: radial-gradient(ellipse at center, #c49a7a 0%, #b08868 50%, #987060 100%); border-radius: 50% 50% 45% 45%;"></div>
+          <div style="position: absolute; top: 22%; left: 30%; width: 14%; height: 8%; background: linear-gradient(180deg, #2a1a0a 0%, #1a0e05 100%); border-radius: 50%; transform: rotate(-5deg);"></div>
+          <div style="position: absolute; top: 22%; right: 30%; width: 14%; height: 8%; background: linear-gradient(180deg, #2a1a0a 0%, #1a0e05 100%); border-radius: 50%; transform: rotate(5deg);"></div>
+          <div style="position: absolute; top: 35%; left: 50%; transform: translateX(-50%); width: 12px; height: 20px; background: linear-gradient(180deg, #a07858 0%, #8b6848 100%); border-radius: 50%;"></div>
+          <div style="position: absolute; top: 44%; left: 50%; transform: translateX(-50%); width: 24%; height: 3px; background: #8b6048; border-radius: 2px;"></div>
+          <div style="position: absolute; top: 18%; left: 25%; right: 25%; height: 18%; background: linear-gradient(180deg, #2a1a0a 0%, #3a2515 50%, transparent 100%); border-radius: 0 0 50% 50%;"></div>
+          <div style="position: absolute; bottom: 0; left: 0; right: 0; height: 30%; background: linear-gradient(180deg, transparent 0%, #806050 100%);"></div>
+        </div>
+      </div>
+      <div class="status-indicator">
+        <span class="status-emoji">☕</span>
+      </div>
+    </div>
+
+    <h1 class="profile-name">Praful Thakur</h1>
+    <div class="profile-username">Praful1100E</div>
+
+    <button class="follow-btn">Follow</button>
+
+    <p class="profile-bio">
+      I am Praful Thakur, and I am from India. Currently I'm pursuing Bachelor of technology and majoring in computer science at Career Point University Hamirpur....
+    </p>
+
+    <div class="followers-info">
+      <svg class="followers-icon" viewBox="0 0 16 16"><path d="M2 5.5a3.5 3.5 0 115.898 2.549 5.507 5.507 0 013.034 4.084.75.75 0 11-1.482.235 4.001 4.001 0 00-7.9 0 .75.75 0 01-1.482-.236A5.507 5.507 0 013.102 8.05 3.49 3.49 0 012 5.5zM11 4a.75.75 0 100 1.5 1.5 1.5 0 01.666 2.844.75.75 0 00-.416.672v.352a.75.75 0 00.574.73c1.2.289 2.162 1.2 2.522 2.372a.75.75 0 101.434-.44 5.01 5.01 0 00-2.56-3.012A3 3 0 0011 4z"/></svg>
+      <strong>4</strong> followers · <strong>3</strong> following
+    </div>
+
+    <div class="profile-meta">
+      <div class="meta-item">
+        <svg class="meta-icon" viewBox="0 0 16 16"><path d="M12.596 11.596l-3.535 3.535a1.5 1.5 0 01-2.122 0l-3.535-3.535a6.5 6.5 0 119.192 0zM8 14.93l3.535-3.535a5 5 0 10-7.07 0L8 14.93zM8 8a2 2 0 100-4 2 2 0 000 4z"/></svg>
+        India
+      </div>
+      <div class="meta-item">
+        <svg class="meta-icon" viewBox="0 0 16 16"><path d="M7.775 3.275a.75.75 0 001.06 1.06l1.25-1.25a2 2 0 112.83 2.83l-2.5 2.5a2 2 0 01-2.83 0 .75.75 0 00-1.06 1.06 3.5 3.5 0 004.95 0l2.5-2.5a3.5 3.5 0 00-4.95-4.95l-1.25 1.25zm-4.69 9.64a2 2 0 010-2.83l2.5-2.5a2 2 0 012.83 0 .75.75 0 001.06-1.06 3.5 3.5 0 00-4.95 0l-2.5 2.5a3.5 3.5 0 004.95 4.95l1.25-1.25a.75.75 0 00-1.06-1.06l-1.25 1.25a2 2 0 01-2.83 0z"/></svg>
+        <a href="#">https://www.linkedin.com/in/praful-thakur-b983a1349?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app</a>
+      </div>
+    </div>
+
+    <a href="#" class="block-report">Block or Report</a>
+  </aside>
+
+  <!-- Main Content Area -->
+  <main class="main-content">
+    <div class="readme-card">
+      <div class="readme-header">
+        <span>Praful1100E / README.md</span>
+      </div>
+      <div class="readme-body">
+        <!-- Profile Banner -->
+        <div class="profile-banner">
+          <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='800' height='120'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' y1='0' x2='1' y2='1'%3E%3Cstop offset='0%25' stop-color='%231a1e24'/%3E%3Cstop offset='50%25' stop-color='%232d333b'/%3E%3Cstop offset='100%25' stop-color='%231a1e24'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect fill='url(%23g)' width='800' height='120'/%3E%3C/svg%3E" alt="Praful Thakur's Profile Banner">
+        </div>
+
+        <!-- Greeting -->
+        <h1 class="greeting">Hi there 👋, I'm Praful Thakur</h1>
+        <p class="subtitle">A passionate Python developer from India, specializing in automation and web development.</p>
+
+        <!-- Projects Button -->
+        <div class="projects-btn-container">
+          <a href="#" class="projects-btn">
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="white"><path d="M2 2.5A2.5 2.5 0 014.5 0h8.75a.75.75 0 01.75.75v12.5a.75.75 0 01-.75.75h-2.5a.75.75 0 110-1.5h1.75v-2h-8a1 1 0 00-.714 1.7.75.75 0 01-1.072 1.05A2.495 2.495 0 012 11.5zm10.5-1h-8a1 1 0 00-1 1v6.708A2.486 2.486 0 014.5 9h8.5z"/></svg>
+            PROJECTS
+          </a>
+          <a href="#" style="background: linear-gradient(135deg, #f0883e 0%, #da3633 100%); color: #fff; text-decoration: none; padding: 8px 20px; border-radius: 0 6px 6px 0; font-size: 14px; font-weight: 600; margin-left: 2px; display: inline-flex; align-items: center;">VIEW HERE</a>
+        </div>
+
+        <hr class="section-divider">
+
+        <!-- About Me -->
+        <h2 class="section-title"><span class="section-emoji">👨‍💻</span> About Me</h2>
+        <p class="section-text">
+          I'm a developer with a strong interest in building practical solutions with Python. I enjoy tackling challenges and am always looking for opportunities to learn new technologies and collaborate with others.
+        </p>
+        <ul class="about-list">
+          <li>🔍 I'm currently diving deeper into <strong>AI and Machine Learning</strong>.</li>
+          <li>🚀 I'm working on a <strong>face recognition attendance system</strong> [8].</li>
+          <li>💬 Ask me about <strong>Python, Flask, and building automation tools</strong>.</li>
+          <li>📧 You can reach me at: <a href="mailto:rajputpraful791@gmail.com">rajputpraful791@gmail.com</a></li>
+        </ul>
+
+        <hr class="section-divider">
+
+        <!-- My Tech Stack -->
+        <h2 class="section-title"><span class="section-emoji">⚡</span> My Tech Stack</h2>
+        <p class="section-text">
+          This section showcases the technologies I work with. The icons are dynamically generated and provide a quick visual overview of my skills.
+        </p>
+        <div class="tech-icons">
+          <div class="tech-icon tech-python">🐍</div>
+          <div class="tech-icon tech-c">C</div>
+          <div class="tech-icon tech-html">5</div>
+          <div class="tech-icon tech-bootstrap">B</div>
+          <div class="tech-icon tech-git">
+            <svg width="28" height="28" viewBox="0 0 16 16" fill="white"><path d="M15.698 7.287L8.712.302a1.03 1.03 0 00-1.457 0L5.633 2.03l1.782 1.78a.984.984 0 01.246.742v4.59a.99.99 0 01-.276.702L4.157 8.37l-1.492 1.492a.42.42 0 000 .594l1.13 1.13a.42.42 0 00.594 0l1.492-1.492 2.854 2.854a.984.984 0 01.742.246l1.78 1.782a1.03 1.03 0 001.458 0l6.986-6.985a1.025 1.025 0 000-1.458zM6.117 11.117l-2.854-2.853 5.55-5.55 2.854 2.854-5.55 5.55z"/></svg>
+          </div>
+          <div class="tech-icon tech-vscode">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="white"><path d="M17.583 2.427L9.292 10.719l-4.125-2.875-2.25 1.542v2.725l2.25 1.542 4.125-2.875 8.292 8.291 3.125-3.125V5.552z"/></svg>
+          </div>
+          <div class="tech-icon tech-css">CSS</div>
+          <div class="tech-icon tech-mysql">My</div>
+          <div class="tech-icon tech-postman">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="white"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/></svg>
+          </div>
+          <div class="tech-icon tech-raspberry">R</div>
+        </div>
+
+        <hr class="section-divider">
+
+        <!-- My GitHub Stats -->
+        <h2 class="section-title"><span class="section-emoji">📊</span> My GitHub Stats</h2>
+        <p class="section-text">
+          Here are some stats that showcase my activity and language preferences on GitHub. The new layout uses a table for a cleaner, more organized look, and the streak counter focuses on your current momentum this year.
+        </p>
+
+        <div class="stats-grid">
+          <div class="stats-card" style="background-color: #1e1e2e;">
+            <div class="stats-card-title">
+              <span class="icon">⭐</span> Praful Thakur's GitHub Stats
+            </div>
+            <div class="stat-row">
+              <span class="stat-label">⭐ Total Stars Earned:</span>
+              <span class="stat-value">2</span>
+            </div>
+            <div class="stat-row">
+              <span class="stat-label">📊 Total Commits (2025):</span>
+              <span class="stat-value">166</span>
+            </div>
+            <div class="stat-row">
+              <span class="stat-label">🔀 Total PRs:</span>
+              <span class="stat-value">1</span>
+            </div>
+            <div class="stat-row">
+              <span class="stat-label">🎯 Total Issues:</span>
+              <span class="stat-value">0</span>
+            </div>
+            <div class="stat-row">
+              <span class="stat-label">🏢 Contributed to:</span>
+              <span class="stat-value">0</span>
+            </div>
+          </div>
+
+          <div class="streak-cards">
+            <div class="streak-card" style="background-color: #1e1e2e; border: 1px solid #30363d;">
+              <div class="streak-number" style="color: #c9d1d9;">239</div>
+              <div class="streak-label">Total Contributions</div>
+            </div>
+            <div class="streak-card active" style="background-color: #1e1e2e; border: 2px solid #f78166; position: relative;">
+              <div style="position: absolute; top: -12px; left: 50%; transform: translateX(-50%); width: 24px; height: 24px; background: #f78166; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 12px;">🔥</div>
+              <div class="streak-number" style="color: #f78166; margin-top: 8px;">69</div>
+              <div class="streak-label">Current Streak</div>
+            </div>
+            <div class="streak-card" style="background-color: #1e1e2e; border: 1px solid #30363d;">
+              <div class="streak-number" style="color: #c9d1d9;">69</div>
+              <div class="streak-label">Longest Streak</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+</div>
+
+</body>
+</html>
+```

@@ -1,0 +1,372 @@
+你是一个严谨的前端工程师。请根据输入材料生成一个完整、可直接运行的单文件 HTML。
+
+要求：
+1. 输出必须包含 <!DOCTYPE html>、<html>、<head>、<style>、<body>。
+2. CSS 写在 <style> 中，不要依赖外部 CSS、JS、图片、字体或网络资源。
+3. 尽可能还原截图或描述中的布局、颜色、字号、间距、组件层级和视觉密度。
+4. 如果截图中有真实图片、头像、图标或复杂素材，无法复用原图时用 CSS 色块/渐变/简化图形占位，但尺寸和位置要对齐。
+5. 如果任务涉及交互，请在单文件内写必要的 JavaScript。
+6. 只输出一个 fenced code block，格式为 ```html ... ```，不要输出额外解释。
+
+Benchmark：fullfront
+任务类型：Interaction_Authoring
+原始任务提示：
+
+You are a web developer proficient in HTML, CSS, and JavaScript. The user will provide you with two web page screenshots. The first screenshot shows the original state of the web page, while the second screenshot shows the result after the user has performed a specific operation on a particular element on the page. Please carefully analyze the differences between the two images and determine the type of interaction. You must set the ID of the interactive element to "#InteractionPart", so please ensure that this ID is unique and that the element is interactive. The possible types of interactions and the requirements for each type are as follows:
+
+**Interaction_click_1**
+- Function Description: When the element with id="InteractionPart" is clicked, a dropdown box should be displayed. The content of the dropdown should be generated based on the understanding of the page content, and its position, size, and style should be adapted according to the page structure.
+- The element must include the attribute aria-expanded="false", which changes to aria-expanded="true" upon clicking.
+- The dropdown content must use one of the following selectors: .dropdown-menu, .dropdown-content, or [role='menu'].
+- Ensure that the dropdown box is hidden before clicking and visible after clicking.
+**Interaction_click_2**
+- Function Description: Generate a checkbox that can be checked by clicking, with its id='InteractionPart'. The associated text content and position should be adapted based on the layout and context of the page. Ensure that the checkbox can toggle its state (checked/unchecked) when clicked.
+- Must use an <input type="checkbox"> element or an element with the attribute [role='checkbox'].
+- After clicking, it must display a checked state (:checked or aria-checked='true').
+**Interaction_click_3**
+- Function Description: Implement an interactive element (id="InteractionPart") that changes its background color significantly when clicked. The color change should be determined based on the page design style, but it must be detectable.
+- The initial background color must not be transparent or white.
+- The background color must change significantly after clicking (it cannot change from one transparency to another).
+**Interaction_click_4**
+- Function Description: Implement an interactive element (id="InteractionPart") that, when clicked, triggers the display of a modal window or dialog box. The content of the popup should be generated based on the existing content of the page and should match the page style.
+- After clicking, an element that matches one of the following selectors must be displayed: .modal, .dialog, [role='dialog'], or [aria-modal='true'].
+- The modal window must be hidden before clicking.
+**Interaction_click_5**
+- Function Description: Implement an interactive element (id="InteractionPart") that, when clicked, displays a tooltip providing additional information or explanation. The position, style, and content of the tooltip should be adapted according to the needs of the page.
+- After clicking, one of the following elements must be displayed: an element with the class .tooltip or .tip; an element with the attribute [role='tooltip'] or [data-tooltip]; an element with an ID ending in Tooltip or tooltip; an element with the class .tooltip-text inside #InteractionPart.
+**Interaction_click_6**
+- Function Description: Implement an interactive element (id="InteractionPart") that, when clicked, displays a text box or input area for users to enter content. The position and size of the text box should be adjusted according to the page design and should include a clear input prompt or label.
+- After clicking, one of the following elements must be displayed: <input type='text'> or <input type='email'>; <textarea>; an element with the attribute [contenteditable='true']; an element with the attribute [role='textbox']; or the container with the ID newsletterContainer becomes visible.
+
+You need to decide for yourself what kind of interaction to use, and you must meet the requirements for the implementation of each type of interaction.
+If any images are required in the page code, you must classify each image into one of the following categories: People, Animal, Food, Plant, Landscape, Icon, Logo, Architecture, Technology, Transportation, Map, Texture, Art, Movie, Other. The URL for each image is in the format: https://raw.githubusercontent.com/Mikivishy/imgs/main/folder1/{category}.jpg. For example, if you want to use an image from the Animal category, the image URL would be: https://raw.githubusercontent.com/Mikivishy/imgs/main/folder1/Animal.jpg. Since the width and height of each image in the URLs are unknown, you need to set the image sizes manually in the HTML code to ensure that the rendered result matches the layout requirements of the webpage image.
+Your code should accurately reflect the interaction and restore the overall static appearance of the page, ensuring the changes in the screenshots are faithfully reproduced. Please place the HTML, CSS, and JavaScript code in a single file, and your response must be a code that starts with `<!DOCTYPE html>` and ends with `</html>`, without any other content.
+
+
+Interaction type: click_6
+
+Current HTML:
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>By Mölle - Recycled Denim</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+      line-height: 1.6;
+      color: #333;
+      background: #fff;
+    }
+
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 20px 40px;
+      border-bottom: 1px solid #eee;
+    }
+
+    .logo {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .logo img {
+      width: 40px;
+      height: auto;
+    }
+
+    .logo span {
+      font-size: 18px;
+      font-weight: normal;
+      margin-top: 5px;
+    }
+
+    .header-icons {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+    }
+
+    .header-icons img {
+      width: 24px;
+      cursor: pointer;
+    }
+
+    .top-note {
+      text-align: center;
+      padding: 10px;
+      font-size: 14px;
+      position: relative;
+    }
+
+    .rating-reviews {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 20px 40px 0;
+    }
+
+    .stars {
+      color: #f5c518;
+    }
+
+    main {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 40px;
+    }
+
+    .content-section {
+      display: flex;
+      width: 100%;
+      max-width: 1200px;
+      margin-bottom: 60px;
+    }
+
+    .image-section img {
+      width: 100%;
+      max-width: 600px;
+      object-fit: cover;
+    }
+
+    .text-section {
+      flex: 1;
+      padding: 40px;
+    }
+
+    .text-section h2 {
+      font-size: 14px;
+      text-transform: uppercase;
+      color: #555;
+      margin-bottom: 10px;
+    }
+
+    .text-section h1 {
+      font-size: 32px;
+      font-weight: normal;
+      margin-bottom: 20px;
+    }
+
+    .text-section p {
+      font-size: 16px;
+      margin-bottom: 20px;
+    }
+
+    .text-section p:last-child {
+      font-style: italic;
+      color: #777;
+    }
+
+    .tabs {
+      display: flex;
+      justify-content: center;
+      gap: 40px;
+      border-top: 1px solid #eee;
+      border-bottom: 1px solid #eee;
+      margin: 40px 0;
+      padding: 10px 0;
+    }
+
+    .tabs span {
+      cursor: pointer;
+      font-size: 14px;
+      font-weight: bold;
+      text-transform: uppercase;
+      color: #333;
+    }
+
+    .product-list {
+      display: flex;
+      justify-content: center;
+      gap: 40px;
+      padding-bottom: 60px;
+    }
+
+    .product {
+      width: 150px;
+      height: 150px;
+      background-color: #f8f8f8;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .product img {
+      width: 100%;
+      height: auto;
+    }
+
+    #InteractionPart {
+      cursor: pointer;
+    }
+
+    .input-container {
+      display: none;
+      position: absolute;
+      top: 100%;
+      left: 0;
+      right: 0;
+      padding: 15px;
+      background-color: #fff;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+      z-index: 100;
+      text-align: center;
+    }
+
+    .input-container input {
+      width: 90%;
+      max-width: 500px;
+      padding: 10px;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+      font-size: 14px;
+      font-family: inherit;
+    }
+
+    .input-container button {
+      padding: 10px 15px;
+      background-color: #333;
+      color: #fff;
+      border: none;
+      border-radius: 4px;
+      margin-left: 5px;
+      cursor: pointer;
+      font-family: inherit;
+    }
+
+    @media (max-width: 768px) {
+      .content-section {
+        flex-direction: column;
+        align-items: center;
+      }
+
+      .text-section {
+        padding: 20px;
+      }
+
+      .tabs {
+        flex-direction: column;
+        align-items: center;
+        gap: 10px;
+      }
+
+      .product-list {
+        flex-direction: column;
+        align-items: center;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <div class="header-icons">
+      <img src="https://raw.githubusercontent.com/Mikivishy/imgs/main/folder1/Icon.jpg" alt="menu" />
+      <img src="https://raw.githubusercontent.com/Mikivishy/imgs/main/folder1/Icon.jpg" alt="search" />
+    </div>
+    <div class="logo">
+      <img src="https://raw.githubusercontent.com/Mikivishy/imgs/main/folder1/Logo.jpg" alt="logo" />
+      <span>by mölle</span>
+    </div>
+    <div class="header-icons">
+      <img src="https://raw.githubusercontent.com/Mikivishy/imgs/main/folder1/Icon.jpg" alt="account" />
+      <img src="https://raw.githubusercontent.com/Mikivishy/imgs/main/folder1/Icon.jpg" alt="heart" />
+      <img src="https://raw.githubusercontent.com/Mikivishy/imgs/main/folder1/Icon.jpg" alt="cart" />
+    </div>
+  </header>
+
+  <div class="top-note" id="InteractionPart">
+    🎁 Is this a gift? Let us know in the order notes and we'll wrap it for you.
+    <div class="input-container" id="inputContainer">
+      <input type="text" placeholder="Add your gift message here..." id="giftMessage">
+      <button id="submitMessage">Save</button>
+    </div>
+  </div>
+
+  <div class="rating-reviews">
+    <div class="stars">★★★★★</div> <span>4 Reviews</span>
+  </div>
+
+  <main>
+    <div class="content-section">
+      <div class="image-section">
+        <img src="https://raw.githubusercontent.com/Mikivishy/imgs/main/folder1/Texture.jpg" alt="Recycled Denim Yarn" />
+      </div>
+      <div class="text-section">
+        <h2>natural materials</h2>
+        <h1>recycled denim</h1>
+        <p>Everyone has their own favorite jeans. What happens when they are worn out? In the Netherlands we throw away 210.000 kilotons textiles every year. We want to change this and give textiles a second life by removing zips and buttons and spinning the fibre to a soft, high quality yarn that we use for our recycled denim collection.</p>
+        <p>The pieces are selected by color, reduced to fibers and spun to beautiful yarn for our soft, knitted blankets and cushions. Eco-friendly, a good alternative for cotton and a great way to dress your home. Recycling reduces waste, saves energy, and reduces the consumption of raw materials. #zerowaste</p>
+      </div>
+    </div>
+
+    <div class="tabs">
+      <span>RELATED PRODUCTS</span>
+      <span>RECENTLY VIEWED</span>
+    </div>
+
+    <div class="product-list">
+      <div class="product">
+        <img src="https://raw.githubusercontent.com/Mikivishy/imgs/main/folder1/Other.jpg" alt="Product 1" />
+      </div>
+      <div class="product">
+        <img src="https://raw.githubusercontent.com/Mikivishy/imgs/main/folder1/Other.jpg" alt="Product 2" />
+      </div>
+      <div class="product">
+        <img src="https://raw.githubusercontent.com/Mikivishy/imgs/main/folder1/Other.jpg" alt="Product 3" />
+      </div>
+    </div>
+  </main>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      const interactionPart = document.getElementById('InteractionPart');
+      const inputContainer = document.getElementById('inputContainer');
+      const giftMessage = document.getElementById('giftMessage');
+      const submitButton = document.getElementById('submitMessage');
+      
+      interactionPart.addEventListener('click', function(e) {
+        // Prevent the click from propagating if it's on the input or button
+        if (e.target !== giftMessage && e.target !== submitButton) {
+          inputContainer.style.display = inputContainer.style.display === 'block' ? 'none' : 'block';
+          if (inputContainer.style.display === 'block') {
+            giftMessage.focus();
+          }
+        }
+      });
+      
+      submitButton.addEventListener('click', function() {
+        const message = giftMessage.value.trim();
+        if (message) {
+          // Here you would normally send the message to a server or store it
+          alert('Your gift message has been saved: "' + message + '"');
+          giftMessage.value = '';
+          inputContainer.style.display = 'none';
+        } else {
+          alert('Please enter a gift message');
+        }
+      });
+      
+      // Close the input container when clicking outside of it
+      document.addEventListener('click', function(e) {
+        if (!interactionPart.contains(e.target)) {
+          inputContainer.style.display = 'none';
+        }
+      });
+      
+      // Prevent the click inside input container from closing it
+      inputContainer.addEventListener('click', function(e) {
+        e.stopPropagation();
+      });
+    });
+  </script>
+</body>
+</html>
+```

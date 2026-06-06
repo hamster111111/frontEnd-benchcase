@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Beauty Brand</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        .app-container {
+            width: 100%;
+            max-width: 1100px;
+            height: 85vh;
+            background-color: #808080;
+            padding: 40px;
+            box-sizing: border-box;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+        }
+
+        .header-content {
+            text-align: left;
+            margin-bottom: 40px;
+        }
+
+        h1 {
+            color: white;
+            font-size: 2.5rem;
+            margin: 0 0 15px 0;
+            font-weight: 600;
+        }
+
+        p {
+            color: #e0e0e0;
+            font-size: 1.1rem;
+            margin: 0 0 30px 0;
+            line-height: 1.5;
+        }
+
+        .search-bar {
+            display: flex;
+            max-width: 650px;
+        }
+
+        .search-bar input {
+            flex: 1;
+            padding: 14px 18px;
+            border: none;
+            border-radius: 4px 0 0 4px;
+            font-size: 1rem;
+            outline: none;
+            color: #333;
+        }
+
+        .search-bar button {
+            background-color: #2196F3;
+            color: white;
+            border: none;
+            padding: 0 30px;
+            border-radius: 0 4px 4px 0;
+            font-size: 1rem;
+            cursor: pointer;
+            font-weight: bold;
+            transition: background-color 0.3s;
+        }
+
+        .search-bar button:hover {
+            background-color: #1976D2;
+        }
+
+        .content-grid {
+            flex: 1;
+            display: flex;
+            margin-top: 20px;
+        }
+
+        .main-col {
+            flex: 6;
+            border-right: 1px solid rgba(255, 255, 255, 0.6);
+        }
+
+        .side-col {
+            flex: 1;
+            border-right: 1px solid rgba(255, 255, 255, 0.6);
+        }
+
+        .side-col:last-child {
+            border-right: none;
+        }
+
+        /* React-ready structure markers */
+        [data-react-root] {
+            width: 100%;
+            height: 100%;
+        }
+    </style>
+</head>
+<body>
+    <div data-react-root id="root">
+        <div class="app-container">
+            <header class="header-content">
+                <h1>Welcome to our Beauty Brand</h1>
+                <p>Discover our full line of high-quality cosmetic products for you and your loved ones.</p>
+                <div class="search-bar">
+                    <input type="text" placeholder="Search products...">
+                    <button>Search</button>
+                </div>
+            </header>
+            
+            <main class="content-grid">
+                <div class="main-col"></div>
+                <div class="side-col"></div>
+                <div class="side-col"></div>
+                <div class="side-col"></div>
+            </main>
+        </div>
+    </div>
+</body>
+</html>

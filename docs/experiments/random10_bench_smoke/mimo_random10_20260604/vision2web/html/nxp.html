@@ -1,0 +1,987 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NXP Community</title>
+<style>
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
+  background: #f5f5f5;
+  color: #333;
+  line-height: 1.5;
+}
+
+/* Top Navigation */
+.top-nav {
+  background: #fff;
+  border-bottom: 1px solid #e0e0e0;
+  padding: 0 24px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 56px;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+.nav-left {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+}
+
+.nxp-logo {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 18px;
+  font-weight: 600;
+}
+
+.nxp-logo .nxp-text {
+  color: #00a3e0;
+  font-weight: 700;
+}
+
+.nxp-logo .community-text {
+  color: #333;
+}
+
+.nav-links {
+  display: flex;
+  gap: 20px;
+  font-size: 13px;
+}
+
+.nav-links a {
+  text-decoration: none;
+  color: #333;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.nav-links a:hover {
+  color: #00a3e0;
+}
+
+.nav-right {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  font-size: 13px;
+}
+
+.nav-right a {
+  text-decoration: none;
+  color: #333;
+  font-weight: 500;
+  text-transform: uppercase;
+}
+
+.nav-right a:hover {
+  color: #00a3e0;
+}
+
+.mobile-menu-btn {
+  display: none;
+  background: none;
+  border: none;
+  font-size: 24px;
+  cursor: pointer;
+}
+
+/* Main Content */
+.main-content {
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 16px 24px 40px;
+  background: #fff;
+  min-height: calc(100vh - 56px - 120px);
+}
+
+/* Breadcrumbs */
+.breadcrumbs {
+  font-size: 13px;
+  color: #666;
+  margin-bottom: 16px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid #e0e0e0;
+}
+
+.breadcrumbs a {
+  color: #00a3e0;
+  text-decoration: none;
+}
+
+.breadcrumbs a:hover {
+  text-decoration: underline;
+}
+
+.breadcrumbs span {
+  margin: 0 6px;
+  color: #999;
+}
+
+/* Page Title */
+.page-title {
+  font-size: 28px;
+  font-weight: 600;
+  color: #1a1a1a;
+  margin-bottom: 16px;
+  line-height: 1.3;
+}
+
+/* Search Bar */
+.search-bar {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 16px;
+}
+
+.community-dropdown {
+  padding: 10px 16px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 14px;
+  background: #fff;
+  cursor: pointer;
+}
+
+.search-input {
+  flex: 1;
+  padding: 10px 16px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 14px;
+}
+
+.search-input::placeholder {
+  color: #999;
+}
+
+/* Options */
+.options-row {
+  display: flex;
+  justify-content: flex-end;
+  padding: 12px 0;
+  border-bottom: 1px solid #e0e0e0;
+}
+
+.options-btn {
+  background: none;
+  border: none;
+  color: #00a3e0;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+/* Post */
+.post {
+  padding: 24px 0;
+  border-bottom: 1px solid #e0e0e0;
+}
+
+.post-meta {
+  font-size: 13px;
+  color: #666;
+  margin-bottom: 12px;
+}
+
+.post-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 16px;
+}
+
+.user-info {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.avatar {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background: #666;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  font-weight: 600;
+}
+
+.avatar.igorpadykov {
+  background: linear-gradient(135deg, #ff6b35, #00a3e0);
+}
+
+.avatar.adamzhu {
+  background: #4a5568;
+}
+
+.user-details {
+  display: flex;
+  flex-direction: column;
+}
+
+.username {
+  font-weight: 600;
+  color: #00a3e0;
+  font-size: 15px;
+}
+
+.user-role {
+  font-size: 12px;
+  color: #666;
+}
+
+.more-options {
+  background: none;
+  border: none;
+  font-size: 24px;
+  color: #999;
+  cursor: pointer;
+}
+
+/* Post Content */
+.post-content {
+  font-size: 15px;
+  line-height: 1.7;
+  margin-bottom: 16px;
+}
+
+.post-content p {
+  margin-bottom: 12px;
+}
+
+.code-block {
+  background: #f8f8f8;
+  padding: 16px;
+  border-radius: 4px;
+  font-family: 'Courier New', monospace;
+  font-size: 13px;
+  overflow-x: auto;
+  margin: 12px 0;
+  border: 1px solid #e0e0e0;
+  white-space: pre-wrap;
+  word-break: break-all;
+}
+
+/* Labels */
+.labels-section {
+  margin: 16px 0;
+  font-size: 13px;
+}
+
+.labels-section strong {
+  color: #666;
+}
+
+.label {
+  color: #00a3e0;
+  text-decoration: none;
+  margin-left: 8px;
+}
+
+.label:hover {
+  text-decoration: underline;
+}
+
+/* Attachments */
+.attachments {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin: 16px 0;
+}
+
+.attachment {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 8px 12px;
+  background: #f5f5f5;
+  border: 1px solid #e0e0e0;
+  border-radius: 4px;
+}
+
+.attachment-info {
+  display: flex;
+  flex-direction: column;
+}
+
+.attachment-name {
+  font-size: 13px;
+  font-weight: 500;
+  color: #333;
+}
+
+.attachment-size {
+  font-size: 11px;
+  color: #999;
+}
+
+.download-icon {
+  width: 20px;
+  height: 20px;
+  color: #666;
+}
+
+/* Kudos */
+.kudos-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 16px;
+  border: 1px solid #ccc;
+  border-radius: 20px;
+  background: #fff;
+  cursor: pointer;
+  font-size: 14px;
+  color: #666;
+}
+
+.kudos-btn:hover {
+  border-color: #00a3e0;
+  color: #00a3e0;
+}
+
+.thumb-icon {
+  width: 16px;
+  height: 16px;
+}
+
+/* Reply Button */
+.reply-section {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 16px;
+}
+
+.reply-btn {
+  padding: 10px 24px;
+  background: #50c878;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  font-size: 13px;
+  font-weight: 600;
+  text-transform: uppercase;
+  cursor: pointer;
+}
+
+.reply-btn:hover {
+  background: #3da862;
+}
+
+/* Topic Navigation */
+.topic-nav {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 24px;
+  padding: 20px 0;
+  border-bottom: 1px solid #e0e0e0;
+  font-size: 14px;
+}
+
+.topic-nav a {
+  color: #00a3e0;
+  text-decoration: none;
+}
+
+.topic-nav a:hover {
+  text-decoration: underline;
+}
+
+/* Replies Section */
+.replies-section {
+  padding: 24px 0;
+}
+
+.replies-title {
+  font-size: 22px;
+  font-weight: 600;
+  margin-bottom: 24px;
+  padding-bottom: 16px;
+  border-bottom: 1px solid #e0e0e0;
+}
+
+.reply-item {
+  padding: 20px 0;
+  border-bottom: 1px solid #e0e0e0;
+}
+
+.reply-content {
+  margin-bottom: 16px;
+  font-size: 15px;
+}
+
+.signature-divider {
+  border-top: 1px dashed #ccc;
+  margin: 16px 0;
+  padding-top: 12px;
+}
+
+.signature-note {
+  font-size: 12px;
+  color: #666;
+  line-height: 1.6;
+}
+
+/* Warning Box */
+.warning-box {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 16px;
+  background: #f8f8f8;
+  border-radius: 8px;
+  margin: 24px 0;
+}
+
+.warning-icon {
+  width: 40px;
+  height: 40px;
+  background: #e53e3e;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  font-size: 20px;
+  flex-shrink: 0;
+}
+
+.warning-text {
+  font-size: 13px;
+  color: #666;
+  flex: 1;
+}
+
+.post-reply-btn {
+  padding: 8px 16px;
+  background: #e0e0e0;
+  color: #666;
+  border: none;
+  border-radius: 4px;
+  font-size: 12px;
+  font-weight: 600;
+  text-transform: uppercase;
+  cursor: not-allowed;
+}
+
+/* Footer */
+.footer {
+  background: #fff;
+  border-top: 1px solid #e0e0e0;
+  padding: 32px 24px;
+  margin-top: 40px;
+}
+
+.footer-logo {
+  margin-bottom: 20px;
+}
+
+.footer-logo .nxp-logo {
+  font-size: 24px;
+}
+
+.footer-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+  margin-bottom: 20px;
+  font-size: 12px;
+  text-transform: uppercase;
+  font-weight: 500;
+}
+
+.footer-links a {
+  color: #333;
+  text-decoration: none;
+}
+
+.footer-links a:hover {
+  color: #00a3e0;
+}
+
+.footer-bottom {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 16px;
+  padding-top: 20px;
+  border-top: 1px solid #e0e0e0;
+}
+
+.social-icons {
+  display: flex;
+  gap: 12px;
+}
+
+.social-icon {
+  width: 32px;
+  height: 32px;
+  background: #333;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  text-decoration: none;
+  font-size: 14px;
+}
+
+.footer-legal {
+  font-size: 11px;
+  color: #666;
+}
+
+.footer-legal a {
+  color: #666;
+  text-decoration: none;
+}
+
+.copyright {
+  font-size: 11px;
+  color: #999;
+}
+
+/* Tablet Styles */
+@media (max-width: 992px) {
+  .nav-links {
+    display: none;
+  }
+  
+  .nav-right {
+    gap: 12px;
+  }
+  
+  .mobile-menu-btn {
+    display: block;
+  }
+  
+  .main-content {
+    padding: 16px;
+  }
+  
+  .page-title {
+    font-size: 24px;
+  }
+}
+
+/* Mobile Styles */
+@media (max-width: 768px) {
+  .top-nav {
+    padding: 0 16px;
+  }
+  
+  .nav-right {
+    font-size: 12px;
+  }
+  
+  .nav-right .faqs-link {
+    display: none;
+  }
+  
+  .main-content {
+    padding: 12px;
+  }
+  
+  .page-title {
+    font-size: 20px;
+  }
+  
+  .search-bar {
+    flex-direction: column;
+  }
+  
+  .community-dropdown {
+    width: 100%;
+  }
+  
+  .post-header {
+    flex-wrap: wrap;
+  }
+  
+  .attachments {
+    flex-direction: column;
+  }
+  
+  .attachment {
+    width: 100%;
+  }
+  
+  .topic-nav {
+    flex-direction: column;
+    gap: 12px;
+  }
+  
+  .footer-links {
+    gap: 12px;
+  }
+  
+  .footer-bottom {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}
+
+/* Mobile Menu */
+.mobile-menu {
+  display: none;
+  position: fixed;
+  top: 56px;
+  left: 0;
+  right: 0;
+  background: #fff;
+  border-bottom: 1px solid #e0e0e0;
+  padding: 16px;
+  z-index: 99;
+}
+
+.mobile-menu.active {
+  display: block;
+}
+
+.mobile-menu a {
+  display: block;
+  padding: 12px 0;
+  color: #333;
+  text-decoration: none;
+  font-size: 14px;
+  border-bottom: 1px solid #eee;
+}
+
+.mobile-menu a:last-child {
+  border-bottom: none;
+}
+</style>
+</head>
+<body>
+
+<!-- Top Navigation -->
+<nav class="top-nav">
+  <div class="nav-left">
+    <button class="mobile-menu-btn" onclick="toggleMobileMenu()">☰</button>
+    <div class="nxp-logo">
+      <span class="nxp-text">NXP</span>
+      <span class="community-text">Community</span>
+    </div>
+    <div class="nav-links">
+      <a href="#">Forums</a>
+      <a href="#">Knowledge Bases</a>
+      <a href="#">NXP Tech Blogs</a>
+      <a href="#">NXP.COM ↗</a>
+    </div>
+  </div>
+  <div class="nav-right">
+    <a href="#">Language</a>
+    <a href="#" class="faqs-link">FAQs</a>
+    <a href="#">Sign In</a>
+  </div>
+</nav>
+
+<!-- Mobile Menu -->
+<div class="mobile-menu" id="mobileMenu">
+  <a href="#">Forums</a>
+  <a href="#">Knowledge Bases</a>
+  <a href="#">NXP Tech Blogs</a>
+  <a href="#">NXP.COM</a>
+  <a href="#">Language</a>
+  <a href="#">FAQs</a>
+</div>
+
+<!-- Main Content -->
+<main class="main-content">
+  <!-- Breadcrumbs -->
+  <div class="breadcrumbs">
+    <a href="#">Home</a><span>/</span>
+    <a href="#">i.MX Forums</a><span>/</span>
+    <a href="#">i.MX Processors</a>
+    <br>
+    <span>/</span>
+    there are many garbage when play video with overlaysink for yocto2.0 on imx6q development board
+  </div>
+
+  <!-- Page Title -->
+  <h1 class="page-title">there are many garbage when play video with overlaysink for yocto2.0 on imx6q development board</h1>
+
+  <!-- Search Bar -->
+  <div class="search-bar">
+    <select class="community-dropdown">
+      <option>All community</option>
+    </select>
+    <input type="text" class="search-input" placeholder="Search all content">
+  </div>
+
+  <!-- Options -->
+  <div class="options-row">
+    <button class="options-btn">Options ▾</button>
+  </div>
+
+  <!-- Main Post -->
+  <div class="post">
+    <div class="post-meta">04-13-2018 12:48 AM • 2,650 Views</div>
+    
+    <div class="post-header">
+      <div class="user-info">
+        <div class="avatar adamzhu">👤</div>
+        <div class="user-details">
+          <span class="username">adamzhu</span>
+          <span class="user-role">Contributor I</span>
+        </div>
+      </div>
+      <button class="more-options">⋮</button>
+    </div>
+    
+    <div class="post-content">
+      <p>&nbsp;&nbsp;&nbsp;&nbsp;when play a video with "overlaysink" on Freescale development board (the process is imx6q), the color will be changed unsmooth, like the marked in picture1.jpg . But it will be fine if replace "overlaysink" with "imxv4l2sink", like the marked in picture2.jpg.</p>
+      
+      <p>Commands as follow:</p>
+      
+      <div class="code-block">gst-launch-1.0 playbin uri=file:///H.264_1080x1920_30fps_40M_mp3.mov video-sink="overlaysink"
+gst-launch-1.0 playbin uri=file:///H.264_1080x1920_30fps_40M_mp3.mov video-sink="imxv4l2sink"</div>
+      
+      <p>&nbsp;&nbsp;&nbsp;&nbsp;The software system is yocto2.0 . The image download from NXP office web named L4.1.15_1.0.0-ga_images_MX6QDLSOLO.tar.gz.</p>
+      
+      <p>Did anyone meet the problem? Can you tell me what 's the root reason for this issue and how to fix it please?</p>
+    </div>
+    
+    <!-- Labels -->
+    <div class="labels-section">
+      <strong>Labels:</strong>
+      <a href="#" class="label">Graphics & Display</a>
+      <a href="#" class="label">i.MX6DL</a>
+      <a href="#" class="label">i.MX6Quad</a>
+      <a href="#" class="label">i.MX6SoloX</a>
+      <a href="#" class="label">Multimedia</a>
+      <a href="#" class="label">SCM-i.MX6DQ</a>
+      <a href="#" class="label">Yocto Project</a>
+    </div>
+    
+    <!-- Attachments -->
+    <div class="attachments">
+      <div class="attachment">
+        <div class="attachment-info">
+          <span class="attachment-name">picture1.jpg</span>
+          <span class="attachment-size">291 KB</span>
+        </div>
+        <svg class="download-icon" viewBox="0 0 24 24" fill="currentColor">
+          <path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/>
+        </svg>
+      </div>
+      <div class="attachment">
+        <div class="attachment-info">
+          <span class="attachment-name">picture2.jpg</span>
+          <span class="attachment-size">318 KB</span>
+        </div>
+        <svg class="download-icon" viewBox="0 0 24 24" fill="currentColor">
+          <path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/>
+        </svg>
+      </div>
+    </div>
+    
+    <!-- Kudos -->
+    <div style="margin-top: 16px;">
+      <button class="kudos-btn">
+        <svg class="thumb-icon" viewBox="0 0 24 24" fill="currentColor">
+          <path d="M1 21h4V9H1v12zm22-11c0-1.1-.9-2-2-2h-6.31l.95-4.57.03-.32c0-.41-.17-.79-.44-1.06L14.17 1 7.59 7.59C7.22 7.95 7 8.45 7 9v10c0 1.1.9 2 2 2h9c.83 0 1.54-.5 1.84-1.22l3.02-7.05c.09-.23.14-.47.14-.73v-2z"/>
+        </svg>
+        0 Kudos
+      </button>
+    </div>
+    
+    <!-- Reply Button -->
+    <div class="reply-section">
+      <button class="reply-btn">Reply</button>
+    </div>
+  </div>
+
+  <!-- Topic Navigation -->
+  <div class="topic-nav">
+    <a href="#">All forum topics</a>
+    <a href="#">‹ Previous Topic</a>
+    <a href="#">Next Topic ›</a>
+  </div>
+
+  <!-- Replies Section -->
+  <div class="replies-section">
+    <h2 class="replies-title">2 Replies</h2>
+    
+    <!-- Reply 1 -->
+    <div class="reply-item">
+      <div class="post-meta">04-13-2018 04:32 PM • 2,323 Views</div>
+      
+      <div class="post-header">
+        <div class="user-info">
+          <div class="avatar igorpadykov">😎</div>
+          <div class="user-details">
+            <span class="username">igorpadykov</span>
+            <span class="user-role">NXP Employee</span>
+          </div>
+        </div>
+        <button class="more-options">⋮</button>
+      </div>
+      
+      <div class="post-content">
+        <p>Hi Adam</p>
+        <p>one can recheck overlaysink usage with attached Linux Guide</p>
+        <p>sect:7.5 Overlaysink usage</p>
+        <p>Best regards</p>
+        <p>igor</p>
+        
+        <div class="signature-divider"></div>
+        
+        <p class="signature-note">
+          Note: If this post answers your question, please click the Correct Answer button. Thank you!
+        </p>
+        
+        <div class="signature-divider"></div>
+      </div>
+      
+      <!-- Attachment -->
+      <div class="attachments" style="margin-top: 16px;">
+        <div class="attachment">
+          <div class="attachment-info">
+            <span class="attachment-name">i.MX_Linux_User's_Guide.pdf</span>
+            <span class="attachment-size">568 KB</span>
+          </div>
+          <svg class="download-icon" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/>
+          </svg>
+        </div>
+      </div>
+      
+      <!-- Kudos -->
+      <div style="margin-top: 16px;">
+        <button class="kudos-btn">
+          <svg class="thumb-icon" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M1 21h4V9H1v12zm22-11c0-1.1-.9-2-2-2h-6.31l.95-4.57.03-.32c0-.41-.17-.79-.44-1.06L14.17 1 7.59 7.59C7.22 7.95 7 8.45 7 9v10c0 1.1.9 2 2 2h9c.83 0 1.54-.5 1.84-1.22l3.02-7.05c.09-.23.14-.47.14-.73v-2z"/>
+          </svg>
+          0 Kudos
+        </button>
+      </div>
+      
+      <!-- Reply Button -->
+      <div class="reply-section">
+        <button class="reply-btn">Reply</button>
+      </div>
+    </div>
+    
+    <!-- Reply 2 -->
+    <div class="reply-item">
+      <div class="post-meta">05-09-2018 05:33 AM • 2,323 Views</div>
+      
+      <div class="post-header">
+        <div class="user-info">
+          <div class="avatar adamzhu">👤</div>
+          <div class="user-details">
+            <span class="username">adamzhu</span>
+            <span class="user-role">Contributor I</span>
+          </div>
+        </div>
+        <button class="more-options">⋮</button>
+      </div>
+      
+      <div class="post-content">
+        <p>Hi Igorpadykov</p>
+        <p>&nbsp;&nbsp;&nbsp;&nbsp;Thanks for your answer, I have fixed it through enable g2d 'dither' feature. But it has another question that when playing a picture with qt4 , the color will be changed unsmooth. Please give me some advice , thanks!!!</p>
+      </div>
+      
+      <!-- Kudos -->
+      <div style="margin-top: 16px;">
+        <button class="kudos-btn">
+          <svg class="thumb-icon" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M1 21h4V9H1v12zm22-11c0-1.1-.9-2-2-2h-6.31l.95-4.57.03-.32c0-.41-.17-.79-.44-1.06L14.17 1 7.59 7.59C7.22 7.95 7 8.45 7 9v10c0 1.1.9 2 2 2h9c.83 0 1.54-.5 1.84-1.22l3.02-7.05c.09-.23.14-.47.14-.73v-2z"/>
+          </svg>
+          0 Kudos
+        </button>
+      </div>
+      
+      <!-- Reply Button -->
+      <div class="reply-section">
+        <button class="reply-btn">Reply</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Warning Box -->
+  <div class="warning-box">
+    <div class="warning-icon">⚠</div>
+    <div class="warning-text">
+      Sorry, either you cannot reply to this topic or you have not verified your email address by clicking on the verification link in the email we sent you when you registered. If you did not
+    </div>
+    <button class="post-reply-btn">Post Reply</button>
+  </div>
+</main>
+
+<!-- Footer -->
+<footer class="footer">
+  <div class="footer-logo">
+    <div class="nxp-logo" style="font-size: 28px;">
+      <span style="color: #00a3e0;">NXP</span>
+    </div>
+  </div>
+  
+  <div class="footer-links">
+    <a href="#">About NXP</a>
+    <a href="#">Careers</a>
+    <a href="#">Investors</a>
+    <a href="#">Media</a>
+    <a href="#">Contact</a>
+    <a href="#">My NXP Account Benefits</a>
+  </div>
+  
+  <div class="footer-bottom">
+    <div class="footer-legal">
+      <a href="#">Privacy</a> |
+      <a href="#">Terms of Use</a> |
+      <a href="#">Terms of Sale</a> |
+      <a href="#">Modern Slavery Report</a> |
+      <a href="#">Accessibility</a> |
+      <a href="#">Website Feedback</a>
+    </div>
+    
+    <div class="social-icons">
+      <a href="#" class="social-icon">f</a>
+      <a href="#" class="social-icon">▶</a>
+      <a href="#" class="social-icon">𝕏</a>
+      <a href="#" class="social-icon">in</a>
+    </div>
+    
+    <div class="copyright">©2006-2026 NXP Semiconductors. All rights reserved.</div>
+  </div>
+</footer>
+
+<script>
+function toggleMobileMenu() {
+  const menu = document.getElementById('mobileMenu');
+  menu.classList.toggle('active');
+}
+
+// Close mobile menu when clicking outside
+document.addEventListener('click', function(event) {
+  const menu = document.getElementById('mobileMenu');
+  const menuBtn = document.querySelector('.mobile-menu-btn');
+  
+  if (!menu.contains(event.target) && !menuBtn.contains(event.target)) {
+    menu.classList.remove('active');
+  }
+});
+</script>
+
+</body>
+</html>

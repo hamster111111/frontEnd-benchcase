@@ -1,0 +1,266 @@
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Weather Forecast</title>
+  <script src="https://unpkg.com/react@18/umd/react.development.js" crossorigin></script>
+  <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js" crossorigin></script>
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+  <style>
+    body {
+      margin: 0;
+      padding: 20px;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background-color: #fff;
+    }
+    .weather-container {
+      max-width: 800px;
+      margin: 0 auto;
+    }
+    .header {
+      background-color: #fffacd;
+      padding: 40px 20px;
+      text-align: center;
+      border-radius: 8px;
+      margin-bottom: 30px;
+    }
+    .header h1 {
+      margin: 0;
+      color: #333;
+      font-size: 32px;
+      font-weight: bold;
+    }
+    .search-controls {
+      display: flex;
+      justify-content: center;
+      gap: 12px;
+      margin-bottom: 20px;
+      flex-wrap: wrap;
+    }
+    .search-controls select,
+    .search-controls input {
+      padding: 10px 12px;
+      font-size: 16px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      background-color: white;
+    }
+    .search-controls select {
+      min-width: 150px;
+    }
+    .search-controls input[type="date"] {
+      min-width: 180px;
+    }
+    .search-btn {
+      background-color: #1e90ff;
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      font-size: 16px;
+      border-radius: 4px;
+      cursor: pointer;
+      font-weight: 500;
+    }
+    .search-btn:hover {
+      background-color: #0077cc;
+    }
+    .instructions {
+      text-align: center;
+      color: #666;
+      margin: 20px 0 30px 0;
+      font-size: 16px;
+    }
+    .update-btn {
+      display: block;
+      margin: 0 auto;
+      background-color: #32cd32;
+      color: white;
+      border: none;
+      padding: 12px 24px;
+      font-size: 16px;
+      border-radius: 4px;
+      cursor: pointer;
+      font-weight: 500;
+    }
+    .update-btn:hover {
+      background-color: #28a428;
+    }
+    .weather-display {
+      margin-top: 30px;
+      padding: 20px;
+      text-align: center;
+    }
+    .weather-info {
+      background-color: #f8f9fa;
+      padding: 20px;
+      border-radius: 8px;
+      border: 1px solid #e9ecef;
+    }
+    .city-name {
+      font-size: 24px;
+      font-weight: bold;
+      margin-bottom: 10px;
+    }
+    .temperature {
+      font-size: 48px;
+      font-weight: bold;
+      color: #333;
+      margin: 10px 0;
+    }
+    .condition {
+      font-size: 18px;
+      color: #666;
+      margin-bottom: 5px;
+    }
+    .date-display {
+      font-size: 14px;
+      color: #888;
+    }
+  </style>
+</head>
+<body>
+  <div id="root"></div>
+
+  <script type="text/babel">
+    const WeatherForecast = () => {
+      const [city, setCity] = React.useState('');
+      const [date, setDate] = React.useState('');
+      const [weather, setWeather] = React.useState(null);
+      const [loading, setLoading] = React.useState(false);
+
+      const cities = [
+        'New York',
+        'London',
+        'Tokyo',
+        'Paris',
+        'Sydney',
+        'Beijing',
+        'Dubai',
+        'Singapore'
+      ];
+
+      const handleSearch = () => {
+        if (!city || !date) {
+          alert('Please select a city and date first.');
+          return;
+        }
+        
+        setLoading(true);
+        
+        // Simulate API call with setTimeout
+        setTimeout(() => {
+          const mockWeather = {
+            city: city,
+            date: date,
+            temperature: Math.floor(Math.random() * 30) + 5,
+            condition: ['Sunny', 'Cloudy', 'Rainy', 'Partly Cloudy'][Math.floor(Math.random() * 4)],
+            humidity: Math.floor(Math.random() * 40) + 40,
+            wind: Math.floor(Math.random() * 20) + 5
+          };
+          
+          setWeather(mockWeather);
+          setLoading(false);
+        }, 500);
+      };
+
+      const handleUpdate = () => {
+        if (!weather) {
+          alert('Please search for weather first.');
+          return;
+        }
+        
+        setLoading(true);
+        
+        setTimeout(() => {
+          setWeather({
+            ...weather,
+            temperature: Math.floor(Math.random() * 30) + 5,
+            condition: ['Sunny', 'Cloudy', 'Rainy', 'Partly Cloudy'][Math.floor(Math.random() * 4)],
+            humidity: Math.floor(Math.random() * 40) + 40,
+            wind: Math.floor(Math.random() * 20) + 5
+          });
+          setLoading(false);
+        }, 300);
+      };
+
+      const formatDate = (dateString) => {
+        if (!dateString) return '';
+        const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+        return new Date(dateString).toLocaleDateString('en-US', options);
+      };
+
+      return (
+        <div className="weather-container">
+          <div className="header">
+            <h1>Weather Forecast</h1>
+          </div>
+
+          <div className="search-controls">
+            <select
+              value={city}
+              onChange={(e) => setCity(e.target.value)}
+              aria-label="Select city"
+            >
+              <option value="">Select city</option>
+              {cities.map((c) => (
+                <option key={c} value={c}>{c}</option>
+              ))}
+            </select>
+            
+            <input
+              type="date"
+              value={date}
+              onChange={(e) => setDate(e.target.value)}
+              aria-label="Select date"
+            />
+            
+            <button 
+              className="search-btn"
+              onClick={handleSearch}
+              disabled={loading}
+            >
+              {loading ? 'Searching...' : 'Search'}
+            </button>
+          </div>
+
+          {!weather && (
+            <p className="instructions">
+              Please select a city and date first.
+            </p>
+          )}
+
+          <button 
+            className="update-btn"
+            onClick={handleUpdate}
+            disabled={loading}
+          >
+            Update Weather
+          </button>
+
+          {weather && (
+            <div className="weather-display">
+              <div className="weather-info">
+                <div className="city-name">{weather.city}</div>
+                <div className="temperature">{weather.temperature}°C</div>
+                <div className="condition">{weather.condition}</div>
+                <div className="date-display">
+                  {formatDate(weather.date)}
+                </div>
+                <div style={{ marginTop: '15px', fontSize: '14px', color: '#888' }}>
+                  Humidity: {weather.humidity}% | Wind: {weather.wind} km/h
+                </div>
+              </div>
+            </div>
+          )}
+        </div>
+      );
+    };
+
+    const root = ReactDOM.createRoot(document.getElementById('root'));
+    root.render(<WeatherForecast />);
+  </script>
+</body>
+</html>
+```

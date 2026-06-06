@@ -1,0 +1,33 @@
+你会看到一张编码题相关的图。请结合图像和函数签名，补全 Python 解法。
+
+要求：
+1. 只输出一个 fenced code block，格式为 ```python ... ```。
+2. 必须实现给定的 `solution` 函数签名。
+3. 不要输出解释。
+
+函数签名：
+```python
+from typing import List
+
+def solution(colors: List[int], line_position: int) -> List[int]:
+    """
+    Transforms a 1D color array based on a given dashed line position.
+
+    Args:
+        colors (List[int]): A 1D array representing colors where:
+            - 0 = white
+            - 1 = light blue  
+            - 2 = dark blue
+        line_position (int): The position of the dashed line used for transformation
+
+    Returns:
+        List[int]: A new 1D array with transformed colors where:
+            - 0 = white
+            - 1 = light blue
+            - 2 = dark blue
+    """
+
+```
+
+任务类型：Direct Calculation
+能力标签：{"Common Sense": null, "Data Structures": ["Sequence"], "Dynamic Patterns": ["Mirror Reflection"], "Geometric Objects": ["Rectangle", "Grid", "Line"], "Mathematical Operations": ["Value Comparison", "Basic Arithmetic"], "Spatial Transformations": ["Flipping", "Mapping"], "Topological Relations": ["Adjacency"]}

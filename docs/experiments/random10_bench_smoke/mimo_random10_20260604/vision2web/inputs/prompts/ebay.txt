@@ -1,0 +1,17 @@
+你是一个严谨的前端工程师。请根据输入材料生成一个完整、可直接运行的单文件 HTML。
+
+要求：
+1. 输出必须包含 <!DOCTYPE html>、<html>、<head>、<style>、<body>。
+2. CSS 写在 <style> 中，不要依赖外部 CSS、JS、图片、字体或网络资源。
+3. 尽可能还原截图或描述中的布局、颜色、字号、间距、组件层级和视觉密度。
+4. 如果截图中有真实图片、头像、图标或复杂素材，无法复用原图时用 CSS 色块/渐变/简化图形占位，但尺寸和位置要对齐。
+5. 如果任务涉及交互，请在单文件内写必要的 JavaScript。
+6. 只输出一个 fenced code block，格式为 ```html ... ```，不要输出额外解释。
+
+Benchmark：vision2web
+任务类型：level1_static_webpage
+原始任务提示：
+Vision2Web Level 1 静态网页任务。输入包含同一网页的 desktop/tablet/mobile 原型图。请生成一个响应式单文件 HTML，使页面在不同宽度下尽可能匹配这些原型。
+Task name: ebay
+Prototype files: desktop.jpg, mobile.jpg, tablet.jpg
+Workflow steps: 3; resources_count: 3.

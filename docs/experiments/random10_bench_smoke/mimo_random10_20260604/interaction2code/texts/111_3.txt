@@ -1,0 +1,410 @@
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Accent - Developer Translation Tool</title>
+    <style>
+        :root {
+            --primary-blue: #0040FF;
+            --primary-green: #00CC66;
+            --text-main: #1a1a1a;
+            --text-muted: #666;
+            --bg-color: #ffffff;
+            --border-color: #e5e7eb;
+        }
+        
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+        }
+
+        body {
+            color: var(--text-main);
+            background-color: var(--bg-color);
+            line-height: 1.5;
+        }
+
+        /* Navigation */
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1.5rem 2rem;
+            font-size: 1rem;
+        }
+
+        .nav-left {
+            display: flex;
+            align-items: center;
+            gap: 2rem;
+            font-weight: 500;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-weight: 700;
+            font-size: 1.2rem;
+            cursor: pointer;
+        }
+
+        .logo-icon {
+            width: 20px;
+            height: 20px;
+            background-color: var(--primary-blue);
+            display: inline-block;
+        }
+
+        .nav-link {
+            cursor: pointer;
+            text-decoration: none;
+            color: inherit;
+        }
+
+        .nav-link:hover {
+            color: var(--text-muted);
+        }
+
+        .nav-link.active {
+            color: var(--primary-green);
+        }
+
+        .nav-right {
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+        }
+
+        .github-link {
+            display: flex;
+            align-items: center;
+            gap: 0.25rem;
+        }
+
+        .icon {
+            width: 24px;
+            height: 24px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+        }
+
+        /* Pages */
+        .page {
+            display: none;
+            min-height: calc(100vh - 80px);
+        }
+
+        .page.active {
+            display: block;
+        }
+
+        /* Home Page Styles */
+        .home-hero {
+            text-align: center;
+            padding: 6rem 2rem;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        h1 {
+            font-size: 4.5rem;
+            line-height: 1.1;
+            letter-spacing: -0.03em;
+            margin-bottom: 2rem;
+        }
+
+        h1 span {
+            color: var(--primary-blue);
+        }
+
+        .subtitle {
+            font-size: 1.25rem;
+            color: var(--text-muted);
+            margin-bottom: 3rem;
+        }
+
+        .cta-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin-bottom: 4rem;
+        }
+
+        .btn {
+            padding: 1rem 1.5rem;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .btn-primary {
+            background-color: var(--primary-blue);
+            color: white;
+            border: none;
+        }
+
+        .btn-secondary {
+            background-color: transparent;
+            color: var(--primary-blue);
+            border: 1px solid var(--primary-blue);
+        }
+
+        .demo-card {
+            background-color: #f9fafb;
+            border-radius: 12px;
+            padding: 2rem;
+            display: inline-flex;
+            flex-direction: column;
+            align-items: center;
+            margin-bottom: 4rem;
+        }
+
+        .btn-try {
+            background-color: white;
+            border: 1px solid var(--border-color);
+            color: var(--text-main);
+            margin-bottom: 1rem;
+        }
+
+        .demo-note {
+            font-size: 0.875rem;
+            color: var(--text-muted);
+        }
+
+        .blue-bar {
+            background-color: var(--primary-blue);
+            height: 60px;
+            width: 100%;
+            margin-top: 4rem;
+        }
+
+        /* Blog Page Styles */
+        .blog-container {
+            display: flex;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 4rem 2rem;
+            gap: 4rem;
+        }
+
+        .sidebar {
+            width: 250px;
+            flex-shrink: 0;
+        }
+
+        .sidebar h3 {
+            font-size: 1.25rem;
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+        }
+
+        .sidebar ul {
+            list-style: none;
+        }
+
+        .sidebar li {
+            margin-bottom: 1rem;
+            color: var(--text-main);
+            font-weight: 500;
+        }
+
+        .sidebar li.active {
+            color: var(--primary-green);
+        }
+
+        .sidebar li:not(.active):hover {
+            color: var(--text-muted);
+            cursor: pointer;
+        }
+
+        .article-content {
+            max-width: 700px;
+        }
+
+        .article-title {
+            font-size: 3.5rem;
+            color: var(--primary-green);
+            line-height: 1.1;
+            margin-bottom: 1.5rem;
+        }
+
+        .article-meta {
+            color: var(--text-muted);
+            margin-bottom: 2rem;
+        }
+
+        .author {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 2.5rem;
+        }
+
+        .avatar {
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            background-color: var(--primary-blue);
+        }
+
+        .author-info {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .author-name {
+            color: var(--primary-green);
+            font-weight: 600;
+        }
+
+        .author-role {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+        }
+
+        .article-body p {
+            margin-bottom: 1.5rem;
+            font-size: 1.1rem;
+            line-height: 1.7;
+        }
+
+        .article-body h2 {
+            font-size: 2rem;
+            margin-top: 3rem;
+            margin-bottom: 1.5rem;
+        }
+    </style>
+</head>
+<body>
+
+    <nav>
+        <div class="nav-left">
+            <div class="logo" onclick="showPage('home')">
+                <span class="logo-icon"></span> Accent
+            </div>
+            <a class="nav-link" onclick="showPage('home')">Guides</a>
+            <a class="nav-link" id="nav-blog" onclick="showPage('blog')">Blog</a>
+        </div>
+        <div class="nav-right">
+            <a href="#" class="nav-link github-link">
+                GitHub 
+                <svg width="14" height="14" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M3.5 3H8.5V8M3.5 8.5L8.5 3.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+            </a>
+            <div class="icon">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <circle cx="12" cy="12" r="4"></circle>
+                    <path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"></path>
+                </svg>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Home Page -->
+    <div id="page-home" class="page active">
+        <div class="home-hero">
+            <h1><span>Accent</span> is your simple,<br>developer-oriented<br>translation tool</h1>
+            <p class="subtitle">100% open-source, easily deployable, featured-packed translation solution.</p>
+            
+            <div class="cta-buttons">
+                <a href="#" class="btn btn-primary">
+                    Getting started 
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M5 12h14M12 5l7 7-7 7"/>
+                    </svg>
+                </a>
+                <a href="#" class="btn btn-secondary">
+                    GitHub
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M5 12h14M12 5l7 7-7 7"/>
+                    </svg>
+                </a>
+            </div>
+
+            <div class="demo-card">
+                <a href="#" class="btn btn-try">
+                    Try it now
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M5 12h14M12 5l7 7-7 7"/>
+                    </svg>
+                </a>
+                <div class="demo-note">Instance is for demo purpose only, the database is pruned periodically.</div>
+            </div>
+        </div>
+        <div class="blue-bar"></div>
+    </div>
+
+    <!-- Blog Page -->
+    <div id="page-blog" class="page">
+        <div class="blog-container">
+            <div class="sidebar">
+                <h3>Recent posts</h3>
+                <ul>
+                    <li class="active">Productive machine translations</li>
+                    <li>Introducing spellchecking</li>
+                    <li>Yet another AI assistant</li>
+                    <li>New home</li>
+                </ul>
+            </div>
+            <div class="article-content">
+                <h1 class="article-title">Productive machine translations</h1>
+                <div class="article-meta">October 26, 2023 · 2 min read</div>
+                
+                <div class="author">
+                    <div class="avatar"></div>
+                    <div class="author-info">
+                        <span class="author-name">Simon Prévost</span>
+                        <span class="author-role">Maintainer of Accent</span>
+                    </div>
+                </div>
+
+                <div class="article-body">
+                    <p><strong>♫ Domo arigato machine translations ♫</strong></p>
+                    <p>Leveraging machine translations can significantly enhance the experiences of both translators and developers. The process of developing features in an application with multiple languages can be time-consuming. When adding a new translation in your mother tongue, it entails opening translation files, inserting the same key, and then endeavoring to craft coherent translations. This task is error-prone and can be nearly impossible when you lack fluency in every language supported by your app.</p>
+                    <p>Now, utilizing machine translations, you can effortlessly translate strings using external services such as Google Translate!</p>
+                    
+                    <h2>Inline translation</h2>
+                    <p>Here is some placeholder content for the inline translation section. This feature allows users to see translations directly within the context of their application code or interface, making the review process much faster and more intuitive.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function showPage(pageName) {
+            // Hide all pages
+            document.querySelectorAll('.page').forEach(page => {
+                page.classList.remove('active');
+            });
+            
+            // Show target page
+            document.getElementById('page-' + pageName).classList.add('active');
+            
+            // Update nav active state
+            const navBlog = document.getElementById('nav-blog');
+            if (pageName === 'blog') {
+                navBlog.classList.add('active');
+            } else {
+                navBlog.classList.remove('active');
+            }
+            
+            // Scroll to top
+            window.scrollTo(0, 0);
+        }
+    </script>
+</body>
+</html>
+```

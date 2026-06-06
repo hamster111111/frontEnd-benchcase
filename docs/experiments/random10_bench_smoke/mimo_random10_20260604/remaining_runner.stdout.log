@@ -1,0 +1,94 @@
+{"event": "build_samples", "bench": "designbench"}
+{"event": "run_bench", "bench": "designbench", "available": 120, "selected": 10}
+{"bench": "designbench", "sample_id": "generation_vanilla_46", "http_status": 200, "html": true, "code": null, "text": null}
+{"bench": "designbench", "sample_id": "generation_vanilla_15", "http_status": 200, "html": true, "code": null, "text": null}
+{"bench": "designbench", "sample_id": "generation_vanilla_102", "http_status": 200, "html": true, "code": null, "text": null}
+{"bench": "designbench", "sample_id": "generation_vanilla_27", "http_status": 200, "html": true, "code": null, "text": null}
+{"bench": "designbench", "sample_id": "generation_vanilla_10", "http_status": 200, "html": true, "code": null, "text": null}
+{"bench": "designbench", "sample_id": "generation_vanilla_85", "http_status": 200, "html": true, "code": null, "text": null}
+{"bench": "designbench", "sample_id": "generation_vanilla_26", "http_status": 200, "html": true, "code": null, "text": null}
+{"bench": "designbench", "sample_id": "generation_vanilla_93", "http_status": 200, "html": true, "code": null, "text": null}
+{"bench": "designbench", "sample_id": "generation_vanilla_48", "http_status": 200, "html": true, "code": null, "text": null}
+{"bench": "designbench", "sample_id": "generation_vanilla_74", "http_status": 200, "html": true, "code": null, "text": null}
+{"event": "build_samples", "bench": "fullfront"}
+{"event": "run_bench", "bench": "fullfront", "available": 60, "selected": 10}
+{"bench": "fullfront", "sample_id": "Interaction_Authoring_59_click_6_6", "http_status": 200, "html": true, "code": null, "text": null}
+{"bench": "fullfront", "sample_id": "Interaction_Authoring_69_hover_1_5", "http_status": 200, "html": true, "code": null, "text": null}
+{"bench": "fullfront", "sample_id": "Interaction_Authoring_72_hover_2_14", "http_status": 200, "html": true, "code": null, "text": null}
+{"bench": "fullfront", "sample_id": "Text_to_code_14_new-img-code_127", "http_status": 200, "html": true, "code": null, "text": null}
+{"bench": "fullfront", "sample_id": "Interaction_Authoring_62_hover_1_13", "http_status": 200, "html": true, "code": null, "text": null}
+{"bench": "fullfront", "sample_id": "Interaction_Authoring_82_hover_3_15", "http_status": 200, "html": true, "code": null, "text": null}
+{"bench": "fullfront", "sample_id": "Image_to_code_79_new-img-code_173", "http_status": 200, "html": true, "code": null, "text": null}
+{"bench": "fullfront", "sample_id": "Interaction_Authoring_9_click_1_55", "http_status": 200, "html": true, "code": null, "text": null}
+{"bench": "fullfront", "sample_id": "Image_to_code_175_new-img-code_521", "http_status": 200, "html": true, "code": null, "text": null}
+{"bench": "fullfront", "sample_id": "Image_to_code_70_new-img-code_165", "http_status": 200, "html": true, "code": null, "text": null}
+{"event": "build_samples", "bench": "screencoder_screenbench"}
+{"event": "run_bench", "bench": "screencoder_screenbench", "available": 1000, "selected": 10}
+{"bench": "screencoder_screenbench", "sample_id": "2_Praful1100E", "http_status": 200, "html": true, "code": null, "text": null}
+{"bench": "screencoder_screenbench", "sample_id": "2_CyberMonitor", "http_status": 200, "html": true, "code": null, "text": null}
+{"bench": "screencoder_screenbench", "sample_id": "1_How_to_fold_a_shirt", "http_status": 200, "html": true, "code": null, "text": null}
+{"bench": "screencoder_screenbench", "sample_id": "2_feross", "http_status": 200, "html": true, "code": null, "text": null}
+{"bench": "screencoder_screenbench", "sample_id": "3_backpacking", "http_status": 200, "html": true, "code": null, "text": null}
+{"bench": "screencoder_screenbench", "sample_id": "2_tannerlinsley", "http_status": 200, "html": true, "code": null, "text": null}
+{"bench": "screencoder_screenbench", "sample_id": "1_game", "http_status": 200, "html": true, "code": null, "text": null}
+{"bench": "screencoder_screenbench", "sample_id": "4_Computer_vision_projects", "http_status": 200, "html": true, "code": null, "text": null}
+{"bench": "screencoder_screenbench", "sample_id": "2_CzBiX", "http_status": 200, "html": true, "code": null, "text": null}
+{"bench": "screencoder_screenbench", "sample_id": "1_nba_scores", "http_status": 200, "html": true, "code": null, "text": null}
+{"event": "build_samples", "bench": "vision2web"}
+{"event": "run_bench", "bench": "vision2web", "available": 100, "selected": 10}
+{"bench": "vision2web", "sample_id": "splunk", "http_status": 200, "html": true, "code": null, "text": null}
+{"bench": "vision2web", "sample_id": "humankinetics", "http_status": 200, "html": true, "code": null, "text": null}
+{"bench": "vision2web", "sample_id": "eventgroove", "http_status": 200, "html": true, "code": null, "text": null}
+{"bench": "vision2web", "sample_id": "ebay", "http_status": 200, "html": true, "code": null, "text": null}
+{"bench": "vision2web", "sample_id": "klamath", "http_status": 200, "html": true, "code": null, "text": null}
+{"bench": "vision2web", "sample_id": "eventbrite", "http_status": 200, "html": true, "code": null, "text": null}
+{"bench": "vision2web", "sample_id": "pagerduty", "http_status": 200, "html": true, "code": null, "text": null}
+{"bench": "vision2web", "sample_id": "nxp", "http_status": 200, "html": true, "code": null, "text": null}
+{"bench": "vision2web", "sample_id": "rottentomatoes", "http_status": 200, "html": true, "code": null, "text": null}
+{"bench": "vision2web", "sample_id": "visitseoul", "http_status": 200, "html": true, "code": null, "text": null}
+{"event": "build_samples", "bench": "visualwebbench"}
+{"event": "run_bench", "bench": "visualwebbench", "available": 1536, "selected": 10}
+{"bench": "visualwebbench", "sample_id": "element_ground_284", "http_status": 200, "html": null, "code": null, "text": true}
+{"bench": "visualwebbench", "sample_id": "action_prediction_36", "http_status": 200, "html": null, "code": null, "text": true}
+{"bench": "visualwebbench", "sample_id": "webqa_10", "http_status": 200, "html": null, "code": null, "text": true}
+{"bench": "visualwebbench", "sample_id": "element_ocr_145", "http_status": 200, "html": null, "code": null, "text": true}
+{"bench": "visualwebbench", "sample_id": "webqa_86", "http_status": 200, "html": null, "code": null, "text": true}
+{"bench": "visualwebbench", "sample_id": "element_ground_405", "http_status": 200, "html": null, "code": null, "text": true}
+{"bench": "visualwebbench", "sample_id": "element_ocr_242", "http_status": 200, "html": null, "code": null, "text": true}
+{"bench": "visualwebbench", "sample_id": "action_prediction_48", "http_status": 200, "html": null, "code": null, "text": true}
+{"bench": "visualwebbench", "sample_id": "webqa_208", "http_status": 200, "html": null, "code": null, "text": true}
+{"bench": "visualwebbench", "sample_id": "webqa_84", "http_status": 200, "html": null, "code": null, "text": true}
+{"event": "build_samples", "bench": "humaneval_v"}
+{"event": "run_bench", "bench": "humaneval_v", "available": 253, "selected": 10}
+{"bench": "humaneval_v", "sample_id": "q57-2", "http_status": 200, "html": null, "code": true, "text": null}
+{"bench": "humaneval_v", "sample_id": "q38", "http_status": 200, "html": null, "code": true, "text": null}
+{"bench": "humaneval_v", "sample_id": "q56-3", "http_status": 200, "html": null, "code": true, "text": null}
+{"bench": "humaneval_v", "sample_id": "q100", "http_status": 200, "html": null, "code": true, "text": null}
+{"bench": "humaneval_v", "sample_id": "q61-2", "http_status": 200, "html": null, "code": true, "text": null}
+{"bench": "humaneval_v", "sample_id": "q46", "http_status": 200, "html": null, "code": true, "text": null}
+{"bench": "humaneval_v", "sample_id": "q55", "http_status": 200, "html": null, "code": true, "text": null}
+{"bench": "humaneval_v", "sample_id": "q62-2", "http_status": 200, "html": null, "code": true, "text": null}
+{"bench": "humaneval_v", "sample_id": "q25", "http_status": 200, "html": null, "code": true, "text": null}
+{"bench": "humaneval_v", "sample_id": "q9-3", "http_status": 200, "html": null, "code": true, "text": null}
+{
+  "run_dir": "D:\\Code\\frontEnd-direction\\experiments\\random10_bench_smoke\\mimo_random10_20260604",
+  "benches": [
+    "designbench",
+    "fullfront",
+    "screencoder_screenbench",
+    "vision2web",
+    "visualwebbench",
+    "humaneval_v"
+  ],
+  "skipped": [
+    {
+      "bench": "vab_css",
+      "reason": "本地缺少官方 `data/css_dataset`，README 只给 VAB-CSS 配置说明，没有可直接抽样的测试数据；该任务还依赖 CSS edit agent 环境，不适合用单轮截图到 HTML smoke 代替。",
+      "source": "benchmarks/vab_css_visualagentbench/configs/tasks/css.yaml"
+    },
+    {
+      "bench": "frontendbench",
+      "reason": "论文页此前说明 data/code will be released soon；当前本地没有官方数据或仓库，暂不能补跑。"
+    }
+  ]
+}

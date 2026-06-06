@@ -1,0 +1,996 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>导游电子手册</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "PingFang SC", "Microsoft YaHei", sans-serif;
+            background-color: #f5f6fa;
+            color: #333;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Header */
+        .header {
+            background: linear-gradient(135deg, #4a6cf7 0%, #5b7cfa 100%);
+            height: 56px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 24px;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 100;
+            box-shadow: 0 2px 8px rgba(74, 108, 247, 0.3);
+        }
+
+        .header-left {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .header-logo {
+            width: 28px;
+            height: 28px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .header-logo svg {
+            width: 28px;
+            height: 28px;
+            fill: white;
+        }
+
+        .header-title {
+            color: white;
+            font-size: 18px;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+        }
+
+        .header-right {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 8px 16px;
+            border-radius: 6px;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            border: none;
+            transition: all 0.2s ease;
+        }
+
+        .btn-primary {
+            background: #ff7a45;
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: #ff9566;
+        }
+
+        .btn-secondary {
+            background: rgba(255, 255, 255, 0.15);
+            color: white;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+
+        .btn-secondary:hover {
+            background: rgba(255, 255, 255, 0.25);
+        }
+
+        .btn svg {
+            width: 16px;
+            height: 16px;
+        }
+
+        /* Main Layout */
+        .main-container {
+            display: flex;
+            margin-top: 56px;
+            min-height: calc(100vh - 56px);
+            flex: 1;
+        }
+
+        /* Left Sidebar */
+        .sidebar-left {
+            width: 190px;
+            background: white;
+            border-right: 1px solid #e8e8e8;
+            padding: 16px 0;
+            flex-shrink: 0;
+            height: calc(100vh - 56px);
+            position: fixed;
+            left: 0;
+            top: 56px;
+            overflow-y: auto;
+        }
+
+        .sidebar-nav {
+            padding: 0 12px 16px 12px;
+            border-bottom: 1px solid #eee;
+            margin-bottom: 8px;
+        }
+
+        .sidebar-nav a {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            color: #666;
+            text-decoration: none;
+            font-size: 14px;
+        }
+
+        .sidebar-nav a:hover {
+            color: #4a6cf7;
+        }
+
+        .nav-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 10px 16px;
+            color: #444;
+            text-decoration: none;
+            font-size: 14px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .nav-item:hover {
+            background: #f5f7ff;
+        }
+
+        .nav-item.active {
+            background: #e8edff;
+            color: #4a6cf7;
+            font-weight: 500;
+        }
+
+        .nav-item .icon {
+            width: 18px;
+            height: 18px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .nav-item .icon svg {
+            width: 18px;
+            height: 18px;
+        }
+
+        .nav-item.active .icon svg {
+            fill: #4a6cf7;
+        }
+
+        .nav-sub {
+            padding-left: 36px;
+        }
+
+        .nav-sub-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 7px 16px;
+            color: #555;
+            text-decoration: none;
+            font-size: 13px;
+            cursor: pointer;
+        }
+
+        .nav-sub-item:hover {
+            color: #4a6cf7;
+        }
+
+        .nav-sub-item .pin {
+            width: 8px;
+            height: 8px;
+            background: #ff6b6b;
+            border-radius: 50%;
+        }
+
+        /* Content Area */
+        .content {
+            flex: 1;
+            margin-left: 190px;
+            margin-right: 280px;
+            padding: 24px 32px;
+            background: #f5f6fa;
+            min-height: calc(100vh - 56px);
+        }
+
+        .content-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 16px;
+        }
+
+        .content-header h1 {
+            font-size: 22px;
+            font-weight: 600;
+            color: #1a1a2e;
+        }
+
+        .content-actions {
+            display: flex;
+            gap: 8px;
+        }
+
+        .icon-btn {
+            width: 32px;
+            height: 32px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: none;
+            background: transparent;
+            color: #999;
+            cursor: pointer;
+            border-radius: 6px;
+            transition: all 0.2s;
+        }
+
+        .icon-btn:hover {
+            background: #f0f0f0;
+            color: #666;
+        }
+
+        .icon-btn svg {
+            width: 18px;
+            height: 18px;
+        }
+
+        /* Hero Image */
+        .hero-image {
+            width: 100%;
+            height: 280px;
+            border-radius: 12px;
+            overflow: hidden;
+            margin-bottom: 20px;
+            background: linear-gradient(135deg, #1a3a5c 0%, #2d5a7b 20%, #3d7a9b 40%, #1e4a3e 60%, #2d5a4a 80%, #1a3a2e 100%);
+            position: relative;
+        }
+
+        .hero-image::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: 
+                radial-gradient(ellipse at 30% 80%, #2d5a4a 0%, transparent 50%),
+                radial-gradient(ellipse at 70% 70%, #3d6a5a 0%, transparent 40%),
+                radial-gradient(ellipse at 50% 20%, #4a8ab0 0%, transparent 60%),
+                linear-gradient(180deg, #3a7aaa 0%, #2a5a7a 30%, #1a4a3a 70%, #2a5a4a 100%);
+        }
+
+        .hero-image::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 60%;
+            background: 
+                url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 100'%3E%3Cpath d='M0,80 Q50,20 100,60 T200,40 T300,70 T400,50 L400,100 L0,100 Z' fill='%231a4a2a' opacity='0.7'/%3E%3Cpath d='M0,90 Q80,40 160,70 T320,50 T400,80 L400,100 L0,100 Z' fill='%232d5a3a' opacity='0.8'/%3E%3C/svg%3E") repeat-x;
+            background-size: cover;
+        }
+
+        .lake-area {
+            position: absolute;
+            top: 20%;
+            left: 10%;
+            right: 30%;
+            height: 35%;
+            background: linear-gradient(180deg, #3a8ab5 0%, #2a7aa5 50%, #1a6a95 100%);
+            border-radius: 0 0 50% 50%;
+            opacity: 0.8;
+        }
+
+        .tree-line {
+            position: absolute;
+            bottom: 25%;
+            left: 0;
+            right: 0;
+            height: 45%;
+            background: 
+                url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 100'%3E%3Cpath d='M10,100 L20,40 L30,100' fill='%231a4a2a'/%3E%3Cpath d='M25,100 L40,20 L55,100' fill='%232d5a3a'/%3E%3Cpath d='M50,100 L65,30 L80,100' fill='%231a4a2a'/%3E%3Cpath d='M75,100 L90,15 L105,100' fill='%232d5a3a'/%3E%3Cpath d='M100,100 L115,25 L130,100' fill='%231a4a2a'/%3E%3Cpath d='M125,100 L140,35 L155,100' fill='%232d5a3a'/%3E%3Cpath d='M150,100 L165,20 L180,100' fill='%231a4a2a'/%3E%3Cpath d='M175,100 L190,45 L205,100' fill='%232d5a3a'/%3E%3C/svg%3E") repeat-x;
+            background-size: 200px 100px;
+            opacity: 0.9;
+        }
+
+        /* Rating Badge */
+        .rating-section {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 12px;
+        }
+
+        .rating-badge {
+            background: #4a6cf7;
+            color: white;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 15px;
+            font-weight: 600;
+        }
+
+        .rating-text {
+            color: #666;
+            font-size: 15px;
+        }
+
+        .description {
+            color: #555;
+            font-size: 14px;
+            line-height: 1.6;
+            margin-bottom: 28px;
+        }
+
+        /* Spots Section */
+        .spots-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .spots-header h2 {
+            font-size: 18px;
+            font-weight: 600;
+            color: #1a1a2e;
+        }
+
+        .btn-add-spot {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 10px 18px;
+            background: #4a6cf7;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .btn-add-spot:hover {
+            background: #5a7cfa;
+        }
+
+        .btn-add-spot svg {
+            width: 16px;
+            height: 16px;
+        }
+
+        .spots-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+        }
+
+        .spot-card {
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+            transition: all 0.2s;
+            cursor: pointer;
+        }
+
+        .spot-card:hover {
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.12);
+            transform: translateY(-2px);
+        }
+
+        .spot-image {
+            width: 100%;
+            height: 140px;
+            background: linear-gradient(135deg, #c9d6df 0%, #e2e8f0 100%);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .spot-image::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: 
+                linear-gradient(45deg, #b8c5d0 25%, transparent 25%),
+                linear-gradient(-45deg, #b8c5d0 25%, transparent 25%),
+                linear-gradient(45deg, transparent 75%, #a8b5c0 75%),
+                linear-gradient(-45deg, transparent 75%, #a8b5c0 75%);
+            background-size: 20px 20px;
+            background-position: 0 0, 0 10px, 10px -10px, -10px 0px;
+            opacity: 0.3;
+        }
+
+        .spot-info {
+            padding: 14px 16px;
+        }
+
+        .spot-name {
+            font-size: 15px;
+            font-weight: 600;
+            color: #1a1a2e;
+            margin-bottom: 6px;
+        }
+
+        .spot-tag {
+            font-size: 12px;
+            color: #4a6cf7;
+            background: #f0f4ff;
+            padding: 3px 10px;
+            border-radius: 12px;
+            display: inline-block;
+        }
+
+        /* Right Sidebar */
+        .sidebar-right {
+            width: 280px;
+            background: white;
+            border-left: 1px solid #e8e8e8;
+            padding: 24px 20px;
+            flex-shrink: 0;
+            height: calc(100vh - 56px);
+            position: fixed;
+            right: 0;
+            top: 56px;
+            overflow-y: auto;
+        }
+
+        .sidebar-right h3 {
+            font-size: 16px;
+            font-weight: 600;
+            color: #1a1a2e;
+            margin-bottom: 20px;
+        }
+
+        .edit-route-title {
+            font-size: 14px;
+            color: #1a1a2e;
+            margin-bottom: 16px;
+        }
+
+        .edit-route-title span {
+            font-weight: 600;
+        }
+
+        .stat-label {
+            font-size: 13px;
+            color: #888;
+            margin-bottom: 4px;
+        }
+
+        .stat-description {
+            font-size: 13px;
+            color: #555;
+            line-height: 1.6;
+            margin-bottom: 20px;
+        }
+
+        .stat-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px 0;
+            border-bottom: 1px solid #f0f0f0;
+        }
+
+        .stat-row:last-child {
+            border-bottom: none;
+        }
+
+        .stat-row-label {
+            font-size: 14px;
+            color: #444;
+        }
+
+        .stat-row-value {
+            font-size: 14px;
+            font-weight: 600;
+            color: #4a6cf7;
+        }
+
+        .stat-row-value.black {
+            color: #1a1a2e;
+        }
+
+        .rating-display {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            justify-content: flex-end;
+        }
+
+        .star {
+            color: #fbbf24;
+            font-size: 16px;
+        }
+
+        .rating-number {
+            font-size: 14px;
+            color: #4a6cf7;
+            font-weight: 600;
+        }
+
+        .rating-scale {
+            font-size: 14px;
+            color: #666;
+        }
+
+        /* Circular Rating */
+        .circular-rating {
+            width: 80px;
+            height: 80px;
+            margin: 16px auto 24px;
+            position: relative;
+        }
+
+        .circular-rating svg {
+            width: 80px;
+            height: 80px;
+            transform: rotate(-90deg);
+        }
+
+        .circular-rating .bg {
+            fill: none;
+            stroke: #e8e8e8;
+            stroke-width: 4;
+        }
+
+        .circular-rating .progress {
+            fill: none;
+            stroke: #4a6cf7;
+            stroke-width: 4;
+            stroke-linecap: round;
+            stroke-dasharray: 226;
+            stroke-dashoffset: 24;
+        }
+
+        .circular-rating .value {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 18px;
+            font-weight: 700;
+            color: #4a6cf7;
+        }
+
+        /* Distribution Section */
+        .distribution-section {
+            margin-top: 24px;
+        }
+
+        .distribution-title {
+            font-size: 14px;
+            font-weight: 600;
+            color: #1a1a2e;
+            margin-bottom: 16px;
+        }
+
+        .distribution-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 0;
+            border-bottom: 1px solid #f0f0f0;
+        }
+
+        .distribution-item:last-child {
+            border-bottom: none;
+        }
+
+        .distribution-label {
+            font-size: 14px;
+            color: #444;
+        }
+
+        .distribution-value {
+            font-size: 14px;
+            font-weight: 600;
+            color: #4a6cf7;
+        }
+
+        .export-link {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-top: 24px;
+            color: #4a6cf7;
+            font-size: 14px;
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+        .export-link:hover {
+            text-decoration: underline;
+        }
+
+        .export-link svg {
+            width: 16px;
+            height: 16px;
+        }
+
+        /* Footer */
+        .footer {
+            background: #1a1a2e;
+            color: white;
+            padding: 48px 60px;
+            margin-left: 190px;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 60px;
+            max-width: 1200px;
+        }
+
+        .footer-section h4 {
+            font-size: 16px;
+            font-weight: 600;
+            margin-bottom: 20px;
+            color: white;
+        }
+
+        .footer-links {
+            list-style: none;
+        }
+
+        .footer-links li {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 12px;
+        }
+
+        .footer-links a {
+            color: #a0a0b0;
+            text-decoration: none;
+            font-size: 14px;
+            transition: color 0.2s;
+        }
+
+        .footer-links a:hover {
+            color: white;
+        }
+
+        .footer-links svg {
+            width: 16px;
+            height: 16px;
+            fill: #a0a0b0;
+        }
+
+        .footer-contact svg {
+            fill: #a0a0b0;
+        }
+
+        .copyright {
+            margin-top: 24px;
+            font-size: 13px;
+            color: #666;
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 1400px) {
+            .sidebar-right {
+                width: 260px;
+            }
+            .content {
+                margin-right: 260px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="header-left">
+            <div class="header-logo">
+                <svg viewBox="0 0 24 24" fill="white">
+                    <path d="M4 4h4v16H4V4zm6 0h4v16h-4V4zm6 0h4v16h-4V4z"/>
+                </svg>
+            </div>
+            <span class="header-title">导游电子手册</span>
+        </div>
+        <div class="header-right">
+            <button class="btn btn-primary">
+                <svg viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/>
+                </svg>
+                添加新线路
+            </button>
+            <button class="btn btn-secondary">
+                <svg viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M17 3H5c-1.11 0-2 .9-2 2v14c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V7l-4-4zm-5 16c-1.66 0-3-1.34-3-3s1.34-3 3-3 3 1.34 3 3-1.34 3-3 3zm3-10H5V5h10v4z"/>
+                </svg>
+                保存手册
+            </button>
+            <button class="btn btn-secondary">
+                <svg viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/>
+                </svg>
+                导出PDF
+            </button>
+        </div>
+    </header>
+
+    <!-- Main Container -->
+    <div class="main-container">
+        <!-- Left Sidebar -->
+        <aside class="sidebar-left">
+            <div class="sidebar-nav">
+                <a href="#">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"/>
+                    </svg>
+                    线路导航
+                </a>
+            </div>
+            
+            <nav class="nav-menu">
+                <div class="nav-item active">
+                    <span class="icon">
+                        <svg viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/>
+                        </svg>
+                    </span>
+                    经典路线A
+                </div>
+                <div class="nav-sub">
+                    <a class="nav-sub-item" href="#">
+                        <span class="pin"></span>
+                        历史博物馆
+                    </a>
+                    <a class="nav-sub-item" href="#">
+                        <span class="pin"></span>
+                        中央广场
+                    </a>
+                    <a class="nav-sub-item" href="#">
+                        <span class="pin"></span>
+                        古城墙
+                    </a>
+                </div>
+
+                <div class="nav-item">
+                    <span class="icon">
+                        <svg viewBox="0 0 24 24" fill="currentColor">
+                            <circle cx="12" cy="12" r="3.2"/>
+                            <path d="M9 2L7.17 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2h-3.17L15 2H9zm3 15c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5z"/>
+                        </svg>
+                    </span>
+                    网红打卡B
+                </div>
+
+                <div class="nav-item">
+                    <span class="icon">
+                        <svg viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/>
+                        </svg>
+                    </span>
+                    亲子休闲C
+                </div>
+            </nav>
+        </aside>
+
+        <!-- Content Area -->
+        <main class="content">
+            <div class="content-header">
+                <h1>经典路线A</h1>
+                <div class="content-actions">
+                    <button class="icon-btn">
+                        <svg viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34c-.39-.39-1.02-.39-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"/>
+                        </svg>
+                    </button>
+                    <button class="icon-btn">
+                        <svg viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z"/>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Hero Image -->
+            <div class="hero-image">
+                <div class="lake-area"></div>
+                <div class="tree-line"></div>
+            </div>
+
+            <!-- Rating -->
+            <div class="rating-section">
+                <span class="rating-badge">4.8</span>
+                <span class="rating-text">4.8</span>
+            </div>
+
+            <!-- Description -->
+            <p class="description">这是城市最经典的旅游线路，包含主要历史景点和文化场馆，适合第一次来本地的游客，可以在一天内游览完毕。</p>
+
+            <!-- Spots Section -->
+            <div class="spots-header">
+                <h2>景点列表</h2>
+                <button class="btn-add-spot">
+                    <svg viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/>
+                    </svg>
+                    添加新景点
+                </button>
+            </div>
+
+            <div class="spots-grid">
+                <div class="spot-card">
+                    <div class="spot-image"></div>
+                    <div class="spot-info">
+                        <div class="spot-name">历史博物馆</div>
+                        <span class="spot-tag">历史</span>
+                    </div>
+                </div>
+                <div class="spot-card">
+                    <div class="spot-image"></div>
+                    <div class="spot-info">
+                        <div class="spot-name">中央广场</div>
+                        <span class="spot-tag">地标</span>
+                    </div>
+                </div>
+                <div class="spot-card">
+                    <div class="spot-image"></div>
+                    <div class="spot-info">
+                        <div class="spot-name">古城墙</div>
+                        <span class="spot-tag">景点</span>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <!-- Right Sidebar -->
+        <aside class="sidebar-right">
+            <h3>统计数据</h3>
+            
+            <div class="edit-route-title">编辑路线: <span>经典路线A</span></div>
+            
+            <div class="stat-label">描述</div>
+            <p class="stat-description">这是城市最经典的旅游线路，包含主要历史景点和文化场馆，适合第一次来本地的游客，可以在一天内游览完毕。</p>
+
+            <div class="stat-row">
+                <span class="stat-row-label">线路数量</span>
+                <span class="stat-row-value black">3</span>
+            </div>
+            <div class="stat-row">
+                <span class="stat-row-label">景点数量</span>
+                <span class="stat-row-value">9</span>
+            </div>
+            <div class="stat-row">
+                <span class="stat-row-label">平均评分</span>
+                <div class="rating-display">
+                    <span class="star">⭐</span>
+                    <span class="rating-number">4.7</span>
+                    <span class="rating-scale">/5</span>
+                </div>
+            </div>
+
+            <!-- Circular Rating -->
+            <div class="circular-rating">
+                <svg viewBox="0 0 80 80">
+                    <circle class="bg" cx="40" cy="40" r="36"/>
+                    <circle class="progress" cx="40" cy="40" r="36"/>
+                </svg>
+                <span class="value">4.7</span>
+            </div>
+
+            <!-- Distribution -->
+            <div class="distribution-section">
+                <div class="distribution-title">线路类型分布</div>
+                <div class="distribution-item">
+                    <span class="distribution-label">经典</span>
+                    <span class="distribution-value">1</span>
+                </div>
+                <div class="distribution-item">
+                    <span class="distribution-label">网红</span>
+                    <span class="distribution-value">1</span>
+                </div>
+                <div class="distribution-item">
+                    <span class="distribution-label">亲子</span>
+                    <span class="distribution-value">1</span>
+                </div>
+            </div>
+
+            <a class="export-link" href="#">
+                <svg viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-5 14H7v-2h7v2zm3-4H7v-2h10v2zm0-4H7V7h10v2z"/>
+                </svg>
+                导出统计报告
+            </a>
+        </aside>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-section">
+                <h4>使用帮助</h4>
+                <ul class="footer-links">
+                    <li>
+                        <svg viewBox="0 0 24 24"><path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"/></svg>
+                        <a href="#">如何创建新线路</a>
+                    </li>
+                    <li>
+                        <svg viewBox="0 0 24 24"><path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"/></svg>
+                        <a href="#">添加和编辑景点</a>
+                    </li>
+                    <li>
+                        <svg viewBox="0 0 24 24"><path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"/></svg>
+                        <a href="#">导出手册为PDF</a>
+                    </li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h4>常见问题</h4>
+                <ul class="footer-links">
+                    <li>
+                        <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 17h-2v-2h2v2zm2.07-7.75l-.9.92C13.45 12.9 13 13.5 13 15h-2v-.5c0-1.1.45-2.1 1.17-2.83l1.24-1.26c.37-.36.59-.86.59-1.41 0-1.1-.9-2-2-2s-2 .9-2 2H8c0-2.21 1.79-4 4-4s4 1.79 4 4c0 .88-.36 1.68-.93 2.25z"/></svg>
+                        <a href="#">如何修复已损坏的内容</a>
+                    </li>
+                    <li>
+                        <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 17h-2v-2h2v2zm2.07-7.75l-.9.92C13.45 12.9 13 13.5 13 15h-2v-.5c0-1.1.45-2.1 1.17-2.83l1.24-1.26c.37-.36.59-.86.59-1.41 0-1.1-.9-2-2-2s-2 .9-2 2H8c0-2.21 1.79-4 4-4s4 1.79 4 4c0 .88-.36 1.68-.93 2.25z"/></svg>
+                        <a href="#">照片上传大小限制</a>
+                    </li>
+                    <li>
+                        <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 17h-2v-2h2v2zm2.07-7.75l-.9.92C13.45 12.9 13 13.5 13 15h-2v-.5c0-1.1.45-2.1 1.17-2.83l1.24-1.26c.37-.36.59-.86.59-1.41 0-1.1-.9-2-2-2s-2 .9-2 2H8c0-2.21 1.79-4 4-4s4 1.79 4 4c0 .88-.36 1.68-.93 2.25z"/></svg>
+                        <a href="#">支持哪些语言</a>
+                    </li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h4>联系我们</h4>
+                <ul class="footer-links footer-contact">
+                    <li>
+                        <svg viewBox="0 0 24 24"><path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>
+                        <a href="mailto:support@tourguide.com">support@tourguide.com</a>
+                    </li>
+                    <li>
+                        <svg viewBox="0 0 24 24"><path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/></svg>
+                        <a href="tel:400-123-4567">400-123-4567</a>
+                    </li>
+                    <li>
+                        <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/></svg>
+                        <a href="#">© 2023 导游电子手册系统</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>

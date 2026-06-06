@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Adventures in Disney 1953</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+            color: #333;
+        }
+        .header-image {
+            width: 100%;
+            height: 300px;
+            background: #c0c0c0;
+        }
+        .nav-bar {
+            background: #76b900;
+            padding: 10px 0;
+            text-align: center;
+        }
+        .nav-bar a {
+            color: white;
+            text-decoration: none;
+            margin: 0 15px;
+            font-size: 16px;
+        }
+        .subscribe-section {
+            background: white;
+            padding: 15px 0;
+            border-bottom: 1px solid #ddd;
+        }
+        .subscribe-container {
+            max-width: 1100px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 20px;
+        }
+        .subscribe-left {
+            font-weight: bold;
+            font-size: 16px;
+        }
+        .subscribe-right {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .social-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            font-size: 20px;
+        }
+        .icon-instagram {
+            background: linear-gradient(45deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888);
+        }
+        .icon-spotify {
+            background: #1DB954;
+        }
+        .arrow {
+            font-size: 24px;
+            color: #333;
+        }
+        .main-content {
+            background: white;
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 30px;
+        }
+        .episode-title {
+            text-align: center;
+            font-size: 24px;
+            font-weight: bold;
+            margin-bottom: 30px;
+        }
+        .audio-player {
+            background: #f8f8f8;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            padding: 15px;
+            margin-bottom: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        .player-left {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        .play-btn {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: #e0e0e0;
+            border: none;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+        }
+        .play-btn::after {
+            content: '';
+            width: 0;
+            height: 0;
+            border-top: 8px solid transparent;
+            border-bottom: 8px solid transparent;
+            border-left: 12px solid #666;
+            margin-left: 4px;
+        }
+        .player-info {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .player-info .title {
+            font-weight: bold;
+        }
+        .player-info .duration {
+            color: #888;
+            font-size: 14px;
+        }
+        .player-controls {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        .progress-bar {
+            width: 400px;
+            height: 6px;
+            background: #ddd;
+            border-radius: 3px;
+            position: relative;
+        }
+        .progress-fill {
+            width: 30%;
+            height: 100%;
+            background: #76b900;
+            border-radius: 3px;
+        }
+        .progress-thumb {
+            width: 12px;
+            height: 12px;
+            background: #76b900;
+            border-radius: 50%;
+            position: absolute;
+            top: 50%;
+            left: 30%;
+            transform: translate(-50%, -50%);
+        }
+        .download-btn {
+            font-size: 20px;
+            color: #666;
+            cursor: pointer;
+        }
+        .description {
+            line-height: 1.6;
+            margin-bottom: 20px;
+        }
+        .description p {
+            margin-bottom: 15px;
+        }
+        .links-section {
+            margin-top: 30px;
+            line-height: 1.8;
+        }
+        .links-section a {
+            color: #333;
+            text-decoration: underline;
+        }
+        .footer {
+            background: #76b900;
+            padding: 20px 0;
+            margin-top: 50px;
+        }
+        .footer-container {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        .footer-links {
+            margin-bottom: 15px;
+        }
+        .footer-links a {
+            color: white;
+            text-decoration: none;
+            margin-right: 20px;
+            font-size: 14px;
+        }
+        .copyright {
+            color: white;
+            font-size: 12px;
+        }
+    </style>
+</head>
+<body>
+    <div class="header-image"></div>
+    <div class="nav-bar">
+        <a href="#">Facebook</a>
+        <a href="#">Instagram</a>
+        <a href="#">Twitter</a>
+        <a href="#">Contact</a>
+    </div>
+    <div class="subscribe-section">
+        <div class="subscribe-container">
+            <div class="subscribe-left">Subscribe with</div>
+            <div class="subscribe-right">
+                <div class="social-icon icon-instagram">I</div>
+                <div class="social-icon icon-spotify">S</div>
+                <span class="arrow">→</span>
+            </div>
+        </div>
+    </div>
+    <div class="main-content">
+        <h1 class="episode-title">Adventures in Disney 1953</h1>
+        <div class="audio-player">
+            <div class="player-left">
+                <button class="play-btn" id="playBtn"></button>
+                <div class="player-info">
+                    <span class="title">Adventures in Disney 1953</span>
+                    <span class="duration">· 01:05:47</span>
+                </div>
+            </div>
+            <div class="player-controls">
+                <div class="progress-bar">
+                    <div class="progress-fill"></div>
+                    <div class="progress-thumb"></div>
+                </div>
+                <div class="download-btn">⬇</div>
+            </div>
+        </div>
+        <div class="description">
+            <p>Part 1 in the Rare Cuts Time Warp 1953!</p>
+            <p>Join us on a captivating journey as we delve into three forgotten Disney films from 1953. In this episode, we shine a spotlight on The Living Desert, a mesmerizing nature documentary that takes us deep into the vibrant and diverse world of desert wildlife. We also explore the controversial animated shorts Melody and Toot Whistle Plunk and Boom from the Adventures in Music series, where Disney's signature storytelling combines with the magic of music to create experimental animated experiences.</p>
+            <p>Through engaging discussions, we uncover the artistry, cultural impact, and problematic imagery. Not all Animation ages well! Don't miss this immersive exploration of The Living Desert, Melody, and Toot Whistle Plunk and Boom, as we celebrate the beauty of nature and the power of music in the world of Disney. Join the Rare Cuts Media Society as we embark on this nostalgic journey through the enchanting films of 1953.</p>
+        </div>
+        <div class="links-section">
+            <p>Find out more at http://rarecutsmediasociety.com</p>
+            <p>Melody (Animated Short) https://www.youtube.com/watch?v=K3_TQp_fyrg</p>
+            <p>Toot Whistle Plunk Boom (Animated Short) https://www.youtube.com/watch?v=8IVf0pPHvjc</p>
+            <p>The Living Desert (True Life Adventure Documentary) https://vimeo.com/339307897</p>
+            <p>Find out more at http://rarecutsmediasociety.com</p>
+            <p>Follow RCMS: Facebook: facebook.com/rarecutsmediasociety Instagram: @rcmsociety Twitter: @RCMSociety Email: rarecutsmediasociety@gmail.com</p>
+            <p>Support Rare Cuts Media Society by contributing to their Tip Jar: https://tips.pinecast.com/jar/rare-cuts-media-society</p>
+        </div>
+    </div>
+    <div class="footer">
+        <div class="footer-container">
+            <div class="footer-links">
+                <a href="#">Contact</a>
+                <a href="#">Facebook</a>
+                <a href="#">Instagram</a>
+                <a href="#">Twitter</a>
+            </div>
+            <div class="copyright">All rights reserved.</div>
+        </div>
+    </div>
+
+    <script>
+        document.getElementById('playBtn').addEventListener('click', function() {
+            // 模拟播放/暂停状态切换
+            const btn = this;
+            if (btn.classList.contains('playing')) {
+                btn.classList.remove('playing');
+                btn.style.background = '#e0e0e0';
+                btn.style.setProperty('--play-icon', '8px solid transparent, 8px solid transparent, 12px solid #666');
+            } else {
+                btn.classList.add('playing');
+                btn.style.background = '#76b900';
+                btn.style.setProperty('--play-icon', '8px solid transparent, 8px solid transparent, 12px solid white');
+            }
+        });
+    </script>
+</body>
+</html>

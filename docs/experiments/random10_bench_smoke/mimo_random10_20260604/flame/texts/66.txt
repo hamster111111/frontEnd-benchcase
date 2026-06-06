@@ -1,0 +1,206 @@
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stock Dashboard</title>
+    <script src="https://unpkg.com/react@18/umd/react.development.js" crossorigin></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js" crossorigin></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            background-color: #e5e5e5;
+            color: #333;
+            line-height: 1.5;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+            min-height: 100vh;
+        }
+        .dashboard-container {
+            max-width: 800px;
+            width: 100%;
+        }
+        .price-panel {
+            background-color: #d9d9d9;
+            padding: 12px 16px;
+            border-bottom: 1px solid #ccc;
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 14px;
+            font-weight: bold;
+            color: #000;
+            margin-bottom: 0;
+        }
+        .chart-container {
+            background-color: #ffffff;
+            border: 1px solid #d9d9d9;
+            padding: 20px;
+            margin-bottom: 0;
+            height: 350px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+        .chart-area {
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            position: relative;
+        }
+        .chart-y-axis {
+            position: absolute;
+            top: 0;
+            left: 0;
+            bottom: 20px;
+            width: 50px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            align-items: flex-end;
+            padding-right: 10px;
+            font-size: 12px;
+            color: #666;
+        }
+        .chart-grid {
+            flex-grow: 1;
+            margin-left: 50px;
+            border-left: 1px solid #d9d9d9;
+            border-bottom: 1px solid #d9d9d9;
+            position: relative;
+        }
+        .grid-line {
+            position: absolute;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background-color: #f0f0f0;
+        }
+        .chart-x-axis {
+            margin-left: 50px;
+            display: flex;
+            justify-content: space-between;
+            padding-top: 8px;
+            font-size: 12px;
+            color: #666;
+        }
+        .line-chart {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            overflow: visible;
+        }
+        .news-panel {
+            background-color: #f5f5f5;
+            padding: 16px;
+            font-size: 14px;
+            line-height: 1.6;
+        }
+        .news-headline {
+            margin-bottom: 4px;
+        }
+        .news-sub-headline {
+            color: #555;
+        }
+    </style>
+</head>
+<body>
+    <div id="root"></div>
+
+    <script type="text/babel">
+        function StockDashboard() {
+            const stockData = [
+                { symbol: 'AAPL', price: 150.10 },
+                { symbol: 'GOOGL', price: 2735.20 }
+            ];
+
+            const news = [
+                { text: 'Market opens mixed amid economic uncertainty' },
+                { text: 'Tech stocks rally on earnings beat' }
+            ];
+
+            // Chart dimensions and data mapping (based on screenshot values)
+            const yMin = 0;
+            const yMax = 2800;
+            const yTicks = [0, 700, 1400, 2100, 2800]; // Y-axis tick values
+
+            // Calculate line coordinates
+            const chartWidth = 100; // percent
+            const chartHeight = 100; // percent
+            const getPointY = (price) => {
+                // Map price to vertical position (0% at bottom, 100% at top)
+                const normalized = (price - yMin) / (yMax - yMin);
+                return 100 - (normalized * 100); // invert for SVG coordinate system
+            };
+
+            const lineData = stockData.map((stock, index) => ({
+                x: index === 0 ? 0 : 100, // Percentage from left: 0% for first stock, 100% for second
+                y: getPointY(stock.price),
+                price: stock.price
+            }));
+
+            return (
+                <div className="dashboard-container">
+                    <div className="price-panel">
+                        {stockData.map((stock, index) => (
+                            <div key={stock.symbol}>
+                                {stock.symbol}: ${stock.price.toFixed(2)}
+                            </div>
+                        ))}
+                    </div>
+                    
+                    <div className="chart-container">
+                        <div className="chart-area">
+                            <div className="chart-y-axis">
+                                {yTicks.reverse().map(tick => (
+                                    <div key={tick}>{tick}</div>
+                                ))}
+                            </div>
+                            <div className="chart-grid">
+                                {yTicks.map(tick => (
+                                    <div key={tick} className="grid-line" style={{ bottom: `${getPointY(tick)}%` }}></div>
+                                ))}
+                                <svg className="line-chart" viewBox="0 0 100 100" preserveAspectRatio="none">
+                                    <polyline
+                                        points={lineData.map(p => `${p.x},${p.y}`).join(' ')}
+                                        fill="none"
+                                        stroke="#6666ff"
+                                        strokeWidth="0.5"
+                                        vectorEffect="non-scaling-stroke"
+                                    />
+                                </svg>
+                            </div>
+                            <div className="chart-x-axis">
+                                {stockData.map(stock => (
+                                    <div key={stock.symbol}>{stock.symbol}</div>
+                                ))}
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div className="news-panel">
+                        {news.map((item, index) => (
+                            <div key={index} className={index === 0 ? 'news-headline' : 'news-sub-headline'}>
+                                {item.text}
+                            </div>
+                        ))}
+                    </div>
+                </div>
+            );
+        }
+
+        const root = ReactDOM.createRoot(document.getElementById('root'));
+        root.render(<StockDashboard />);
+    </script>
+</body>
+</html>
+```

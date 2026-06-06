@@ -1,0 +1,296 @@
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Flair Flowers</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Helvetica Neue', Arial, sans-serif;
+      color: #333;
+      background-color: #fff;
+    }
+
+    .product-grid {
+      display: flex;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      padding: 40px 60px;
+    }
+
+    .product-card {
+      width: 220px;
+      margin-bottom: 40px;
+      text-align: left;
+      position: relative;
+    }
+
+    .product-card img {
+      width: 220px;
+      height: 180px;
+      object-fit: cover;
+      border-radius: 4px;
+    }
+
+    .product-card h4 {
+      font-size: 15px;
+      margin: 12px 0 6px 0;
+      line-height: 1.4;
+      font-weight: 600;
+    }
+
+    .product-card p {
+      font-weight: bold;
+      color: #4a4a4a;
+      font-size: 15px;
+      margin: 0;
+    }
+
+    footer {
+      background-color: #f8f8f8;
+      padding: 50px 60px 30px 60px;
+      border-top: 1px solid #e0e0e0;
+    }
+
+    .footer-content {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 40px;
+    }
+
+    .footer-column {
+      min-width: 200px;
+    }
+
+    .footer-column ul {
+      list-style: none;
+      padding-left: 0;
+      margin: 0;
+    }
+
+    .footer-column ul li {
+      margin: 10px 0;
+      color: #666;
+      cursor: pointer;
+      font-size: 15px;
+    }
+
+    .footer-column ul li:hover {
+      color: #333;
+    }
+
+    .newsletter-section h5 {
+      margin-bottom: 15px;
+      font-size: 16px;
+      font-weight: 600;
+    }
+
+    .newsletter-form {
+      display: flex;
+    }
+
+    .newsletter-form input[type="email"] {
+      padding: 12px 15px;
+      width: 260px;
+      border: 1px solid #ccc;
+      border-right: none;
+      border-radius: 3px 0 0 3px;
+      font-size: 14px;
+      outline: none;
+    }
+
+    .newsletter-form button {
+      padding: 12px 24px;
+      background-color: #555;
+      color: #fff;
+      border: none;
+      border-radius: 0 3px 3px 0;
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+      letter-spacing: 1px;
+    }
+
+    .newsletter-form button:hover {
+      background-color: #333;
+    }
+
+    .footer-bottom {
+      border-top: 1px solid #e0e0e0;
+      padding-top: 25px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 14px;
+      color: #888;
+    }
+
+    .social-icons {
+      display: flex;
+      gap: 12px;
+    }
+
+    .social-icons img {
+      width: 20px;
+      height: 20px;
+      cursor: pointer;
+      opacity: 0.7;
+    }
+
+    .social-icons img:hover {
+      opacity: 1;
+    }
+
+    #InteractionPart {
+      position: relative;
+      cursor: pointer;
+    }
+
+    .dropdown-menu {
+      position: absolute;
+      top: 240px; /* Adjust based on image height + spacing */
+      left: 0;
+      width: 220px;
+      background-color: white;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+      border-radius: 4px;
+      padding: 12px 0;
+      z-index: 100;
+      display: none;
+      text-align: left;
+    }
+
+    #InteractionPart:hover .dropdown-menu {
+      display: block;
+    }
+
+    .dropdown-menu .dropdown-item {
+      padding: 10px 20px;
+      cursor: pointer;
+      font-size: 14px;
+      color: #333;
+      transition: background-color 0.2s;
+    }
+
+    .dropdown-menu .dropdown-item:hover {
+      background-color: #f5f5f5;
+    }
+
+    .dropdown-menu .dropdown-btn {
+      display: block;
+      width: calc(100% - 40px);
+      margin: 10px 20px 10px 20px;
+      padding: 10px 0;
+      background-color: #555;
+      color: white;
+      border: none;
+      border-radius: 3px;
+      cursor: pointer;
+      text-align: center;
+      font-size: 14px;
+      font-weight: 500;
+    }
+
+    .dropdown-menu .dropdown-btn:hover {
+      background-color: #333;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="product-grid">
+    <div id="InteractionPart" class="product-card">
+      <img src="https://raw.githubusercontent.com/Mikivishy/imgs/main/folder1/Plant.jpg" alt="Christmas Lily Vase Arrangement" />
+      <h4>Christmas Lily Vase Arrangement</h4>
+      <p>$120.00</p>
+      <div class="dropdown-menu">
+        <div class="dropdown-item">Add to Cart</div>
+        <div class="dropdown-item">Add to Wishlist</div>
+        <div class="dropdown-item">View Details</div>
+        <button class="dropdown-btn">Quick Buy</button>
+      </div>
+    </div>
+
+    <div class="product-card">
+      <img src="https://raw.githubusercontent.com/Mikivishy/imgs/main/folder1/Plant.jpg" alt="Lux Christmas Side Board Flowers" />
+      <h4>Lux Christmas Side Board Flowers</h4>
+      <p>$450.00</p>
+    </div>
+
+    <div class="product-card">
+      <img src="https://raw.githubusercontent.com/Mikivishy/imgs/main/folder1/Plant.jpg" alt="Christmas Table Floral" />
+      <h4>Christmas Table Floral</h4>
+      <p>$130.00</p>
+    </div>
+
+    <div class="product-card">
+      <img src="https://raw.githubusercontent.com/Mikivishy/imgs/main/folder1/Plant.jpg" alt="Christmas table Posy" />
+      <h4>Christmas table Posy</h4>
+      <p>$70.00</p>
+    </div>
+  </div>
+
+  <footer>
+    <div class="footer-content">
+      <div class="footer-column">
+        <ul>
+          <li>Search</li>
+          <li>Gallery</li>
+          <li>About Us</li>
+          <li>Contact Us</li>
+          <li>Terms and conditions</li>
+        </ul>
+      </div>
+
+      <div class="footer-column newsletter-section">
+        <h5>Newsletter</h5>
+        <form class="newsletter-form" onsubmit="handleSubscribe(event)">
+          <input type="email" placeholder="Email address" required />
+          <button type="submit">SUBSCRIBE</button>
+        </form>
+      </div>
+    </div>
+
+    <div class="footer-bottom">
+      <div class="social-icons">
+        <img src="https://raw.githubusercontent.com/Mikivishy/imgs/main/folder1/Icon.jpg" alt="Facebook" />
+        <img src="https://raw.githubusercontent.com/Mikivishy/imgs/main/folder1/Icon.jpg" alt="Pinterest" />
+        <img src="https://raw.githubusercontent.com/Mikivishy/imgs/main/folder1/Icon.jpg" alt="Instagram" />
+      </div>
+      <div>© 2024, Flair flowers & design</div>
+    </div>
+  </footer>
+
+  <script>
+    function handleSubscribe(event) {
+      event.preventDefault();
+      const email = event.target.querySelector('input[type="email"]').value;
+      alert(`Subscribed with email: ${email}`);
+      event.target.reset();
+    }
+
+    document.addEventListener('DOMContentLoaded', function() {
+      const interactionElement = document.getElementById('InteractionPart');
+      const dropdownItems = interactionElement.querySelectorAll('.dropdown-item, .dropdown-btn');
+      
+      dropdownItems.forEach(item => {
+        item.addEventListener('click', function(e) {
+          e.stopPropagation();
+          const productName = interactionElement.querySelector('h4').textContent;
+          const productPrice = interactionElement.querySelector('p').textContent;
+          const action = this.textContent;
+          
+          if (this.textContent === 'Quick Buy') {
+            alert(`Quick buy: ${productName} for ${productPrice}`);
+          } else {
+            console.log(`Action: ${action} - Product: ${productName} (${productPrice})`);
+          }
+        });
+      });
+    });
+  </script>
+</body>
+</html>
+```

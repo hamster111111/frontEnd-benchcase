@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>医疗服务页面</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            background-color: #ffffff;
+            color: #333333;
+            line-height: 1.6;
+        }
+
+        .hero-section {
+            position: relative;
+            width: 100%;
+            height: 320px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+
+        .hero-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg, rgba(102, 126, 234, 0.9) 0%, rgba(118, 75, 162, 0.9) 100%);
+        }
+
+        .search-container {
+            position: relative;
+            z-index: 10;
+        }
+
+        .search-input {
+            width: 320px;
+            padding: 14px 20px;
+            font-size: 16px;
+            border: 1px solid #cccccc;
+            border-radius: 4px;
+            background-color: #ffffff;
+            outline: none;
+            transition: border-color 0.3s ease;
+        }
+
+        .search-input:focus {
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.2);
+        }
+
+        .search-input::placeholder {
+            color: #999999;
+        }
+
+        .reviews-section {
+            padding: 50px 20px;
+            max-width: 1280px;
+            margin: 0 auto;
+        }
+
+        .reviews-title {
+            font-size: 24px;
+            font-weight: 600;
+            color: #000000;
+            margin-bottom: 24px;
+        }
+
+        .review-card {
+            border: 1px solid #333333;
+            padding: 24px 28px;
+            margin-bottom: 24px;
+            background-color: #ffffff;
+        }
+
+        .review-card:last-child {
+            margin-bottom: 0;
+        }
+
+        .reviewer-name {
+            font-size: 16px;
+            font-weight: 600;
+            color: #000000;
+            margin-bottom: 12px;
+        }
+
+        .review-content {
+            font-size: 15px;
+            color: #333333;
+            line-height: 1.7;
+        }
+    </style>
+</head>
+<body>
+    <section class="hero-section">
+        <div class="search-container">
+            <input type="text" class="search-input" placeholder="Search...">
+        </div>
+    </section>
+
+    <section class="reviews-section">
+        <h2 class="reviews-title">患者评价</h2>
+
+        <div class="review-card">
+            <div class="reviewer-name">Rachel L</div>
+            <p class="review-content">Dr. Brown及其团队的专业水准和慷慨令人敬畏。他们非常关心和尊重我，并且非常耐心。</p>
+        </div>
+
+        <div class="review-card">
+            <div class="reviewer-name">Tom S</div>
+            <p class="review-content">我非常高兴能有机会见到Dr. Brown。她对我提出的问题有很好的回答，并能清楚解释。</p>
+        </div>
+    </section>
+</body>
+</html>

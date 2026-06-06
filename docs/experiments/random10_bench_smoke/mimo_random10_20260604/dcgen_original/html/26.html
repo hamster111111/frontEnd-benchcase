@@ -1,0 +1,636 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Taboola - Reach Your Customers on Websites They Trust</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            color: #333;
+            line-height: 1.5;
+        }
+
+        /* Top Banner */
+        .top-banner {
+            background-color: #d4a843;
+            color: #000;
+            text-align: center;
+            padding: 10px 20px;
+            font-size: 14px;
+        }
+
+        .top-banner a {
+            color: #000;
+            text-decoration: underline;
+            font-weight: 500;
+        }
+
+        /* Navigation */
+        .navbar {
+            background-color: #4a4a4a;
+            padding: 15px 40px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .nav-left {
+            display: flex;
+            align-items: center;
+            gap: 40px;
+        }
+
+        .logo {
+            color: white;
+            font-size: 28px;
+            font-weight: bold;
+            letter-spacing: -0.5px;
+        }
+
+        .logo span {
+            color: #d4a843;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 25px;
+        }
+
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 500;
+        }
+
+        .nav-links a:hover {
+            text-decoration: underline;
+        }
+
+        .nav-right {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .btn-outline {
+            border: 1px solid white;
+            background: transparent;
+            color: white;
+            padding: 8px 18px;
+            border-radius: 20px;
+            font-size: 12px;
+            cursor: pointer;
+            font-weight: 500;
+        }
+
+        .btn-outline:hover {
+            background: white;
+            color: #4a4a4a;
+        }
+
+        .lang-selector {
+            color: white;
+            font-size: 14px;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            cursor: pointer;
+        }
+
+        .lang-icon {
+            width: 20px;
+            height: 20px;
+            border: 1px solid white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 10px;
+        }
+
+        .hamburger {
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+            cursor: pointer;
+        }
+
+        .hamburger span {
+            width: 24px;
+            height: 2px;
+            background: white;
+        }
+
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(135deg, #4a4a4a 0%, #5a5a5a 50%, #6a6a6a 100%);
+            min-height: 500px;
+            padding: 80px 40px 60px;
+            position: relative;
+            display: flex;
+            align-items: center;
+        }
+
+        .hero-content {
+            max-width: 600px;
+            z-index: 2;
+        }
+
+        .hero-title {
+            font-size: 48px;
+            font-weight: 900;
+            color: #d4a843;
+            line-height: 1.1;
+            margin-bottom: 20px;
+            text-transform: uppercase;
+        }
+
+        .hero-subtitle {
+            color: white;
+            font-size: 18px;
+            margin-bottom: 30px;
+            max-width: 450px;
+        }
+
+        .hero-buttons {
+            display: flex;
+            gap: 15px;
+        }
+
+        .btn-primary {
+            background-color: #d4a843;
+            color: white;
+            border: none;
+            padding: 14px 30px;
+            border-radius: 25px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+        }
+
+        .btn-primary:hover {
+            background-color: #c49a35;
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: white;
+            border: 2px solid white;
+            padding: 12px 28px;
+            border-radius: 25px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+        }
+
+        .btn-secondary:hover {
+            background: rgba(255,255,255,0.1);
+        }
+
+        .hero-image {
+            position: absolute;
+            right: 15%;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 250px;
+            height: 200px;
+            background: #7a7a7a;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .hero-image-placeholder {
+            width: 60px;
+            height: 60px;
+            border: 2px solid #999;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #999;
+        }
+
+        .hero-dots {
+            position: absolute;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 10px;
+        }
+
+        .hero-dots span {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.5);
+        }
+
+        .hero-dots span.active {
+            background: white;
+        }
+
+        /* Partners Section */
+        .partners-section {
+            padding: 50px 40px;
+            background: white;
+            text-align: center;
+        }
+
+        .partners-title {
+            font-size: 18px;
+            color: #333;
+            margin-bottom: 30px;
+        }
+
+        .partners-logos {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            flex-wrap: wrap;
+        }
+
+        .partner-logo {
+            width: 80px;
+            height: 50px;
+            background: #f0f0f0;
+            border-radius: 5px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .partner-logo .placeholder-icon {
+            width: 20px;
+            height: 20px;
+            border: 1px solid #ccc;
+        }
+
+        /* Features Section */
+        .features-section {
+            padding: 60px 40px;
+            max-width: 1100px;
+            margin: 0 auto;
+            display: flex;
+            gap: 60px;
+            align-items: flex-start;
+        }
+
+        .features-image {
+            flex: 1;
+            min-width: 400px;
+            height: 350px;
+            background: #f5f5f5;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .features-image-placeholder {
+            width: 80px;
+            height: 80px;
+            border: 2px solid #ddd;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #bbb;
+        }
+
+        .features-content {
+            flex: 1;
+        }
+
+        .feature-item {
+            margin-bottom: 30px;
+        }
+
+        .feature-title {
+            font-size: 20px;
+            font-weight: 700;
+            color: #333;
+            margin-bottom: 10px;
+        }
+
+        .feature-description {
+            font-size: 15px;
+            color: #555;
+            line-height: 1.6;
+        }
+
+        .feature-description a {
+            color: #333;
+            text-decoration: underline;
+        }
+
+        .features-btn {
+            margin-top: 20px;
+        }
+
+        .features-btn .btn-primary {
+            background-color: #d4a843;
+            color: white;
+            border: none;
+            padding: 12px 28px;
+            border-radius: 25px;
+            font-size: 15px;
+            font-weight: 600;
+            cursor: pointer;
+        }
+
+        /* Footer */
+        .footer {
+            border-top: 1px solid #e0e0e0;
+            padding: 50px 40px 30px;
+            background: white;
+        }
+
+        .footer-content {
+            max-width: 1100px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .footer-columns {
+            display: flex;
+            gap: 80px;
+        }
+
+        .footer-column h4 {
+            font-size: 14px;
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 15px;
+        }
+
+        .footer-column ul {
+            list-style: none;
+        }
+
+        .footer-column ul li {
+            margin-bottom: 10px;
+        }
+
+        .footer-column ul li a {
+            color: #666;
+            text-decoration: none;
+            font-size: 13px;
+        }
+
+        .footer-column ul li a:hover {
+            text-decoration: underline;
+        }
+
+        .footer-right {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+            gap: 20px;
+        }
+
+        .contact-us-btn {
+            background-color: #2d3e50;
+            color: white;
+            border: none;
+            padding: 14px 35px;
+            border-radius: 25px;
+            font-size: 15px;
+            font-weight: 600;
+            cursor: pointer;
+        }
+
+        .social-icons {
+            display: flex;
+            gap: 15px;
+        }
+
+        .social-icon {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            background: #e0e0e0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .footer-bottom {
+            max-width: 1100px;
+            margin: 40px auto 0;
+            padding-top: 25px;
+            border-top: 1px solid #e0e0e0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        .footer-legal {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+
+        .footer-legal a {
+            color: #666;
+            text-decoration: none;
+            font-size: 12px;
+        }
+
+        .footer-legal a:hover {
+            text-decoration: underline;
+        }
+
+        .footer-badge {
+            width: 25px;
+            height: 25px;
+            background: #d4a843;
+            border-radius: 3px;
+        }
+    </style>
+</head>
+<body>
+    <!-- Top Banner -->
+    <div class="top-banner">
+        A New Way to Create High-Quality Ads Effortlessly: <a href="#">Discover GenAI Ad Maker >></a>
+    </div>
+
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-left">
+            <div class="logo">T<span>ab</span>oola</div>
+            <div class="nav-links">
+                <a href="#">Advertisers</a>
+                <a href="#">Publishers</a>
+                <a href="#">Taboola News</a>
+                <a href="#">About</a>
+                <a href="#">Resources</a>
+                <a href="#">Investors</a>
+            </div>
+        </div>
+        <div class="nav-right">
+            <button class="btn-outline">CONTACT</button>
+            <button class="btn-outline">LOGIN</button>
+            <div class="lang-selector">
+                <div class="lang-icon">🌐</div>
+                <span>EN ▾</span>
+            </div>
+            <div class="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-content">
+            <h1 class="hero-title">REACH YOUR CUSTOMERS ON WEBSITES THEY TRUST</h1>
+            <p class="hero-subtitle">Drive business results by reaching people genuinely, effectively and at the right moment.</p>
+            <div class="hero-buttons">
+                <button class="btn-primary">Contact Us</button>
+                <button class="btn-secondary">Learn More</button>
+            </div>
+        </div>
+        <div class="hero-image">
+            <div class="hero-image-placeholder">📷</div>
+        </div>
+        <div class="hero-dots">
+            <span class="active"></span>
+        </div>
+    </section>
+
+    <!-- Partners Section -->
+    <section class="partners-section">
+        <h2 class="partners-title">Exclusive Partnerships with Top Publishers Around the Globe</h2>
+        <div class="partners-logos">
+            <div class="partner-logo"><div class="placeholder-icon"></div></div>
+            <div class="partner-logo"><div class="placeholder-icon"></div></div>
+            <div class="partner-logo"><div class="placeholder-icon"></div></div>
+            <div class="partner-logo"><div class="placeholder-icon"></div></div>
+            <div class="partner-logo"><div class="placeholder-icon"></div></div>
+            <div class="partner-logo"><div class="placeholder-icon"></div></div>
+            <div class="partner-logo"><div class="placeholder-icon"></div></div>
+            <div class="partner-logo"><div class="placeholder-icon"></div></div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="features-section">
+        <div class="features-image">
+            <div class="features-image-placeholder">📷</div>
+        </div>
+        <div class="features-content">
+            <div class="feature-item">
+                <h3 class="feature-title">Reach your audience in new places</h3>
+                <p class="feature-description">Find and engage over one billion relevant users across premium publishers at massive scale on the world leading <a href="#">native advertising</a> platform.</p>
+            </div>
+            <div class="feature-item">
+                <h3 class="feature-title">Create meaningful engagements</h3>
+                <p class="feature-description">Create unique and relevant ad experiences using Taboola's user behaviour data and flexible creative formats.</p>
+            </div>
+            <div class="feature-item">
+                <h3 class="feature-title">Drive marketing results</h3>
+                <p class="feature-description">Meet your marketing objectives – <a href="#">build awareness</a>, <a href="#">generate high value leads</a> and encourage customers to take action online.</p>
+            </div>
+            <div class="features-btn">
+                <button class="btn-primary">Learn More</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-columns">
+                <div class="footer-column">
+                    <h4>Advertisers</h4>
+                    <ul>
+                        <li><a href="#">Advertise</a></li>
+                        <li><a href="#">Awareness</a></li>
+                        <li><a href="#">Consideration</a></li>
+                        <li><a href="#">Conversions</a></li>
+                        <li><a href="#">Native Advertising</a></li>
+                        <li><a href="#">GenAI Ad Maker</a></li>
+                        <li><a href="#">Creative Shop</a></li>
+                        <li><a href="#">Connexity</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h4>Digital Properties</h4>
+                    <ul>
+                        <li><a href="#">Publishers</a></li>
+                        <li><a href="#">Taboola Newsroom</a></li>
+                        <li><a href="#">Taboola News</a></li>
+                        <li><a href="#">Skimlinks</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h4>About</h4>
+                    <ul>
+                        <li><a href="#">Our Story</a></li>
+                        <li><a href="#">Social Responsibility</a></li>
+                        <li><a href="#">Careers</a></li>
+                        <li><a href="#">Offices</a></li>
+                        <li><a href="#">Press Center</a></li>
+                        <li><a href="#">Management</a></li>
+                        <li><a href="#">Board</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h4>Resources</h4>
+                    <ul>
+                        <li><a href="#">Taboola Blog</a></li>
+                        <li><a href="#">Engineering Blog</a></li>
+                        <li><a href="#">All Resources</a></li>
+                        <li><a href="#">Brand Guidelines</a></li>
+                        <li><a href="#">Advertisers Help Center</a></li>
+                        <li><a href="#">Publishers Help Center</a></li>
+                        <li><a href="#">Dev Center</a></li>
+                        <li><a href="#">Content Policies</a></li>
+                        <li><a href="#">Trust Center</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-right">
+                <button class="contact-us-btn">Contact Us</button>
+                <div class="social-icons">
+                    <div class="social-icon"></div>
+                    <div class="social-icon"></div>
+                    <div class="social-icon"></div>
+                    <div class="social-icon"></div>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <div class="footer-legal">
+                <a href="#">Cookie Policy</a>
+                <a href="#">Terms of Use</a>
+                <a href="#">Opt Out</a>
+                <a href="#">3rd Party Online Advertising</a>
+                <a href="#">Do Not Sell or Share My Personal Info</a>
+                <a href="#">OSS Attribution</a>
+                <a href="#">Privacy Policy</a>
+            </div>
+            <div class="footer-badges" style="display:flex;gap:10px;">
+                <div class="footer-badge"></div>
+                <div class="footer-badge"></div>
+                <div class="footer-badge"></div>
+                <div class="footer-badge"></div>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>

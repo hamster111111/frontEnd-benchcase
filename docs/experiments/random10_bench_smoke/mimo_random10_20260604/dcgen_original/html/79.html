@@ -1,0 +1,756 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>μTorrent Web - Download Torrents</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
+            color: #333;
+            line-height: 1.6;
+        }
+        
+        /* Navigation */
+        .navbar {
+            display: flex;
+            justify-content: flex-end;
+            align-items: center;
+            padding: 15px 40px;
+            background: #fff;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .nav-links {
+            display: flex;
+            gap: 30px;
+        }
+        
+        .nav-links a {
+            text-decoration: none;
+            color: #333;
+            font-size: 14px;
+            font-weight: 500;
+        }
+        
+        .nav-links a:hover {
+            color: #6bc539;
+        }
+        
+        /* Hero Section */
+        .hero {
+            background: #2d2d2d;
+            padding: 60px 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 80px;
+        }
+        
+        .hero-image {
+            width: 400px;
+            height: 280px;
+            background: linear-gradient(135deg, #e0e0e0 0%, #c0c0c0 100%);
+            border-radius: 4px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .hero-content {
+            color: #fff;
+        }
+        
+        .hero-content h1 {
+            font-size: 32px;
+            margin-bottom: 15px;
+        }
+        
+        .hero-content h1 span {
+            font-weight: 300;
+        }
+        
+        .hero-content p {
+            font-size: 16px;
+            margin-bottom: 25px;
+            color: #ccc;
+        }
+        
+        .btn-download {
+            background: #6bc539;
+            color: #fff;
+            border: none;
+            padding: 12px 30px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        
+        .btn-download:hover {
+            background: #5aa82e;
+        }
+        
+        /* Classic Section */
+        .classic-section {
+            padding: 80px 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 80px;
+            background: #fff;
+        }
+        
+        .classic-content {
+            max-width: 400px;
+        }
+        
+        .classic-content h2 {
+            font-size: 32px;
+            margin-bottom: 15px;
+        }
+        
+        .classic-content h2 span {
+            font-weight: 300;
+        }
+        
+        .classic-content p {
+            font-size: 16px;
+            color: #666;
+            margin-bottom: 25px;
+        }
+        
+        .classic-image {
+            width: 350px;
+            height: 280px;
+            background: linear-gradient(135deg, #e8e8e8 0%, #d0d0d0 100%);
+            border-radius: 4px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        /* Features Section */
+        .features-section {
+            padding: 60px 40px 80px;
+            text-align: center;
+            background: #fff;
+        }
+        
+        .features-section h2 {
+            font-size: 42px;
+            margin-bottom: 10px;
+        }
+        
+        .features-section > p {
+            font-size: 16px;
+            color: #666;
+            margin-bottom: 50px;
+        }
+        
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 40px;
+            max-width: 900px;
+            margin: 0 auto;
+            text-align: left;
+        }
+        
+        .feature-item {
+            display: flex;
+            gap: 15px;
+        }
+        
+        .feature-icon {
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(135deg, #6bc539 0%, #4a9a2a 100%);
+            border-radius: 4px;
+            flex-shrink: 0;
+        }
+        
+        .feature-item h3 {
+            font-size: 16px;
+            margin-bottom: 8px;
+            color: #333;
+        }
+        
+        .feature-item p {
+            font-size: 14px;
+            color: #666;
+            line-height: 1.5;
+        }
+        
+        /* Premium Section */
+        .premium-section {
+            padding: 60px 40px 80px;
+            text-align: center;
+            background: #fff;
+        }
+        
+        .premium-section h2 {
+            font-size: 42px;
+            margin-bottom: 10px;
+        }
+        
+        .premium-section > p {
+            font-size: 16px;
+            color: #666;
+            margin-bottom: 40px;
+        }
+        
+        .pricing-cards {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            flex-wrap: wrap;
+        }
+        
+        .pricing-card {
+            width: 260px;
+            background: #fff;
+            border: 1px solid #e0e0e0;
+            padding: 30px 25px;
+            position: relative;
+        }
+        
+        .pricing-card.popular {
+            border-color: #6bc539;
+        }
+        
+        .popular-badge {
+            position: absolute;
+            top: -35px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: #6bc539;
+            color: #fff;
+            padding: 8px 20px;
+            font-size: 12px;
+            font-weight: 600;
+            letter-spacing: 1px;
+        }
+        
+        .pricing-card h3 {
+            font-size: 28px;
+            font-weight: 300;
+            margin-bottom: 8px;
+            color: #333;
+        }
+        
+        .pricing-card > p {
+            font-size: 14px;
+            color: #666;
+            margin-bottom: 25px;
+        }
+        
+        .limited-time {
+            font-size: 11px;
+            color: #6bc539;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            margin-bottom: 8px;
+        }
+        
+        .price {
+            font-size: 40px;
+            font-weight: 700;
+            color: #6bc539;
+            margin-bottom: 5px;
+        }
+        
+        .price.dark {
+            color: #333;
+        }
+        
+        .list-price {
+            font-size: 13px;
+            color: #999;
+            margin-bottom: 5px;
+        }
+        
+        .list-price s {
+            color: #6bc539;
+        }
+        
+        .per-year {
+            font-size: 13px;
+            color: #999;
+            margin-bottom: 20px;
+        }
+        
+        .card-buttons {
+            display: flex;
+            gap: 10px;
+        }
+        
+        .btn-web, .btn-classic {
+            flex: 1;
+            padding: 10px 15px;
+            font-size: 12px;
+            font-weight: 600;
+            border: 1px solid #6bc539;
+            cursor: pointer;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        
+        .btn-web {
+            background: #fff;
+            color: #6bc539;
+        }
+        
+        .btn-classic {
+            background: #6bc539;
+            color: #fff;
+        }
+        
+        /* Screenshot Section */
+        .screenshot-section {
+            background: #f5f5f5;
+            padding: 0 40px 60px;
+        }
+        
+        .screenshot-large {
+            max-width: 1000px;
+            margin: 0 auto;
+            height: 400px;
+            background: linear-gradient(135deg, #e0e0e0 0%, #d0d0d0 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+        }
+        
+        .screenshot-placeholder {
+            width: 100px;
+            height: 100px;
+            background: rgba(255,255,255,0.5);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        /* Mobile Section */
+        .mobile-section {
+            padding: 80px 40px;
+            text-align: center;
+            background: #fff;
+        }
+        
+        .mobile-section h2 {
+            font-size: 42px;
+            margin-bottom: 10px;
+        }
+        
+        .mobile-section > p {
+            font-size: 16px;
+            color: #666;
+            margin-bottom: 50px;
+        }
+        
+        .mobile-content {
+            display: flex;
+            align-items: flex-start;
+            justify-content: center;
+            gap: 60px;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+        
+        .mobile-image {
+            width: 350px;
+            height: 400px;
+            background: linear-gradient(135deg, #e8e8e8 0%, #d8d8d8 100%);
+            border-radius: 4px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .mobile-info {
+            text-align: left;
+            max-width: 350px;
+        }
+        
+        .mobile-info h3 {
+            font-size: 28px;
+            margin-bottom: 15px;
+        }
+        
+        .mobile-info h3 span {
+            font-weight: 300;
+        }
+        
+        .mobile-info > p {
+            font-size: 14px;
+            color: #666;
+            margin-bottom: 20px;
+            line-height: 1.6;
+        }
+        
+        .mobile-info ul {
+            list-style: disc;
+            padding-left: 20px;
+            margin-bottom: 25px;
+        }
+        
+        .mobile-info ul li {
+            font-size: 14px;
+            color: #666;
+            margin-bottom: 8px;
+        }
+        
+        .play-store-btn {
+            display: inline-block;
+            width: 120px;
+            height: 40px;
+            background: linear-gradient(135deg, #e0e0e0 0%, #ccc 100%);
+            border-radius: 4px;
+        }
+        
+        /* Footer */
+        .footer {
+            background: #2d2d2d;
+            color: #fff;
+            padding: 50px 40px 30px;
+        }
+        
+        .footer-top {
+            display: flex;
+            justify-content: space-between;
+            gap: 40px;
+            margin-bottom: 40px;
+            flex-wrap: wrap;
+        }
+        
+        .footer-logo {
+            width: 50px;
+            height: 50px;
+            background: #6bc539;
+            border-radius: 4px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 18px;
+        }
+        
+        .footer-links {
+            display: flex;
+            gap: 60px;
+        }
+        
+        .footer-column h4 {
+            font-size: 14px;
+            font-weight: 600;
+            margin-bottom: 15px;
+            color: #fff;
+        }
+        
+        .footer-column a {
+            display: block;
+            color: #aaa;
+            text-decoration: none;
+            font-size: 13px;
+            margin-bottom: 8px;
+        }
+        
+        .footer-column a:hover {
+            color: #6bc539;
+        }
+        
+        .languages-section {
+            border-top: 1px solid #444;
+            padding-top: 30px;
+            margin-bottom: 30px;
+        }
+        
+        .languages-section h4 {
+            font-size: 14px;
+            font-weight: 600;
+            margin-bottom: 10px;
+        }
+        
+        .languages-section > p {
+            font-size: 12px;
+            color: #aaa;
+            margin-bottom: 15px;
+        }
+        
+        .languages-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 8px 20px;
+        }
+        
+        .languages-grid a {
+            color: #888;
+            text-decoration: none;
+            font-size: 12px;
+        }
+        
+        .footer-bottom {
+            border-top: 1px solid #444;
+            padding-top: 20px;
+            display: flex;
+            justify-content: space-between;
+            font-size: 11px;
+            color: #888;
+        }
+        
+        .footer-bottom a {
+            color: #888;
+            text-decoration: none;
+        }
+        
+        .footer-bottom a:hover {
+            color: #6bc539;
+        }
+        
+        /* Icon placeholders */
+        .icon-placeholder {
+            display: inline-block;
+            width: 24px;
+            height: 24px;
+            background: #888;
+            border-radius: 50%;
+            margin-right: 8px;
+        }
+        
+        .social-icons {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 5px;
+        }
+        
+        .social-icon {
+            width: 20px;
+            height: 20px;
+            background: #666;
+            border-radius: 50%;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-links">
+            <a href="#">Products</a>
+            <a href="#">Forum</a>
+            <a href="#">Languages</a>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-image">
+            <div class="screenshot-placeholder"></div>
+        </div>
+        <div class="hero-content">
+            <h1>μTorrent <span>Web</span></h1>
+            <p>Play torrents while you download.<br>Ideal for new users.</p>
+            <button class="btn-download">FREE DOWNLOAD</button>
+        </div>
+    </section>
+
+    <!-- Classic Section -->
+    <section class="classic-section">
+        <div class="classic-content">
+            <h2>μTorrent <span>Classic</span></h2>
+            <p>A very tiny desktop torrent client for experienced users.</p>
+            <button class="btn-download">FREE DOWNLOAD</button>
+        </div>
+        <div class="classic-image">
+            <div class="screenshot-placeholder"></div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="features-section">
+        <h2>Features</h2>
+        <p>μTorrent Classic Torrent Client Features.</p>
+        <div class="features-grid">
+            <div class="feature-item">
+                <div class="feature-icon"></div>
+                <div>
+                    <h3>Download torrents in bulk</h3>
+                    <p>μTorrent Classic enables simultaneous torrent downloads that you can manage in a single location.</p>
+                </div>
+            </div>
+            <div class="feature-item">
+                <div class="feature-icon"></div>
+                <div>
+                    <h3>Optimize your bandwidth</h3>
+                    <p>μTorrent Classic auto-adjusts bandwidth usage, based on your network and internet connection, to ensure fast downloads.</p>
+                </div>
+            </div>
+            <div class="feature-item">
+                <div class="feature-icon"></div>
+                <div>
+                    <h3>Schedule your downloads</h3>
+                    <p>Set the day and time for your torrent downloads to start, stop or seed.</p>
+                </div>
+            </div>
+            <div class="feature-item">
+                <div class="feature-icon"></div>
+                <div>
+                    <h3>Remotely connect to μTorrent Classic</h3>
+                    <p>Add torrents to μTorrent Classic remotely from a web browser on any device.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Premium Section -->
+    <section class="premium-section">
+        <h2>Premium</h2>
+        <p>Go Pro for Added Security and No Distractions.</p>
+        <div class="pricing-cards">
+            <div class="pricing-card">
+                <h3>PRO+VPN</h3>
+                <p>Privacy Online</p>
+                <p class="limited-time">LIMITED TIME ONLY</p>
+                <div class="price">30% OFF</div>
+                <p class="list-price">List Price: <s>$69.95</s></p>
+                <p class="per-year">per year</p>
+                <div class="card-buttons">
+                    <button class="btn-web">WEB</button>
+                    <button class="btn-classic">CLASSIC</button>
+                </div>
+            </div>
+            <div class="pricing-card popular">
+                <div class="popular-badge">POPULAR</div>
+                <h3>PRO</h3>
+                <p>Enhanced Security</p>
+                <p class="limited-time">LIMITED TIME ONLY</p>
+                <div class="price">30% OFF</div>
+                <p class="list-price">List Price: <s>$19.95</s></p>
+                <p class="per-year">per year</p>
+                <div class="card-buttons">
+                    <button class="btn-web">WEB</button>
+                    <button class="btn-classic">CLASSIC</button>
+                </div>
+            </div>
+            <div class="pricing-card">
+                <h3>AD-FREE</h3>
+                <p>No Distractions</p>
+                <p class="limited-time">&nbsp;</p>
+                <div class="price dark">$4.95</div>
+                <p class="list-price">&nbsp;</p>
+                <p class="per-year">per year</p>
+                <div class="card-buttons">
+                    <button class="btn-web">WEB</button>
+                    <button class="btn-classic">CLASSIC</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Screenshot Section -->
+    <section class="screenshot-section">
+        <div class="screenshot-large">
+            <div class="screenshot-placeholder"></div>
+        </div>
+    </section>
+
+    <!-- Mobile Section -->
+    <section class="mobile-section">
+        <h2>Mobile</h2>
+        <p>Learn more About our Mobile Torrent Application.</p>
+        <div class="mobile-content">
+            <div class="mobile-image">
+                <div class="screenshot-placeholder"></div>
+            </div>
+            <div class="mobile-info">
+                <h3>μTorrent <span>Android</span></h3>
+                <p>Get the #1 torrent downloader on Google Play with over 100 million downloads. μTorrent Android helps you download torrent files or magnet links from your Android smartphone or tablet. Enjoy a simplified torrent download experience with no speed or size limits!</p>
+                <ul>
+                    <li>Download torrents and magnet links</li>
+                    <li>Choose your file download location</li>
+                    <li>Fast, light and powerful</li>
+                </ul>
+                <div class="play-store-btn"></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-top">
+            <div class="footer-logo">μ</div>
+            <div class="footer-links">
+                <div class="footer-column">
+                    <h4>Company</h4>
+                    <a href="#">About</a>
+                    <a href="#">Contact</a>
+                    <a href="#">Press</a>
+                    <a href="#">Jobs</a>
+                    <a href="#">Blog</a>
+                </div>
+                <div class="footer-column">
+                    <h4>Downloads</h4>
+                    <a href="#">Windows</a>
+                    <a href="#">Mac</a>
+                    <a href="#">Android</a>
+                    <a href="#">Linux</a>
+                </div>
+                <div class="footer-column">
+                    <h4>Support</h4>
+                    <a href="#">Help</a>
+                    <a href="#">Forum</a>
+                    <a href="#">Site Feedback</a>
+                </div>
+                <div class="footer-column">
+                    <h4>Social</h4>
+                    <a href="#">Facebook</a>
+                    <a href="#">Twitter</a>
+                    <a href="#">Instagram</a>
+                    <a href="#">Discord</a>
+                </div>
+            </div>
+        </div>
+        
+        <div class="languages-section">
+            <h4>Languages</h4>
+            <p>μTorrent is global! Our website is fully translated in 37 languages.</p>
+            <div class="languages-grid">
+                <a href="#">下载 μTorrent</a>
+                <a href="#">Télécharger μTorrent</a>
+                <a href="#">μTorrentをダウンロード</a>
+                <a href="#">Transferir μTorrent</a>
+                <a href="#">下载 uTorrent</a>
+                <a href="#">μTorrent डाउनलोड करें</a>
+                <a href="#">Download uTorrent</a>
+                <a href="#">Скачать μTorrent</a>
+                <a href="#">μTorrent herunterladen</a>
+                <a href="#">Scarica μTorrent</a>
+                <a href="#">Pobierz μTorrent</a>
+                <a href="#">I-download ang μTorrent</a>
+                <a href="#">Descargar μTorrent</a>
+                <a href="#">μTorrent 다운로드</a>
+                <a href="#">Baixar μTorrent</a>
+                <a href="#">μTorrent'ı İndir</a>
+            </div>
+        </div>
+        
+        <div class="footer-bottom">
+            <span>Version 1.1.27 © 2024 μTorrent is a trademark of BitTorrent Limited.</span>
+            <span>
+                <a href="#">EULA</a> | 
+                <a href="#">Copyright</a> | 
+                <a href="#">Terms of Use</a> | 
+                <a href="#">Privacy</a>
+            </span>
+        </div>
+    </footer>
+</body>
+</html>

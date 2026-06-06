@@ -1,0 +1,414 @@
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Firefox Browser ADD-ONS</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+        }
+
+        body {
+            background-color: #f9f9fb;
+            color: #1c1c1c;
+        }
+
+        /* 顶部黄色横幅 */
+        .top-banner {
+            background-color: #ffd33c;
+            text-align: center;
+            padding: 10px;
+            font-size: 14px;
+            color: #333;
+            position: relative;
+        }
+        .top-banner a {
+            color: #0060df;
+            text-decoration: underline;
+        }
+        .top-banner .close-btn {
+            position: absolute;
+            right: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: none;
+            border: none;
+            font-size: 18px;
+            color: #333;
+            cursor: pointer;
+        }
+        .login-link {
+            position: absolute;
+            right: 20px;
+            top: 10px;
+            color: #fff;
+            text-decoration: none;
+            font-size: 14px;
+            z-index: 10;
+        }
+
+        /* 导航栏 */
+        .navbar {
+            background-color: #2a2a3e;
+            padding: 0 40px;
+            display: flex;
+            align-items: center;
+            height: 60px;
+            position: relative;
+        }
+        .logo {
+            display: flex;
+            align-items: center;
+            color: #fff;
+            text-decoration: none;
+            margin-right: 30px;
+        }
+        .logo-icon {
+            width: 36px;
+            height: 36px;
+            background: linear-gradient(135deg, #ff9640 0%, #ff4d6a 50%, #ff2375 100%);
+            border-radius: 50%;
+            margin-right: 10px;
+            position: relative;
+        }
+        .logo-icon::after {
+            content: '';
+            position: absolute;
+            top: 8px;
+            left: 8px;
+            width: 20px;
+            height: 20px;
+            background: #fff;
+            border-radius: 50%;
+        }
+        .logo-text {
+            font-size: 18px;
+            line-height: 1;
+        }
+        .logo-text .small {
+            font-size: 10px;
+            display: block;
+            font-weight: normal;
+        }
+        .logo-text .large {
+            font-weight: bold;
+            letter-spacing: 1px;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 25px;
+            flex-grow: 1;
+        }
+        .nav-link {
+            color: #d6d6d6;
+            text-decoration: none;
+            font-size: 15px;
+            padding: 8px 0;
+            transition: color 0.2s;
+        }
+        .nav-link:hover {
+            color: #fff;
+        }
+
+        /* "More..." 按钮及其下拉菜单 */
+        .more-btn {
+            position: relative;
+        }
+        .more-btn .nav-link {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+        .more-btn .nav-link::after {
+            content: '▼';
+            font-size: 10px;
+        }
+
+        .dropdown-menu {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            background: #fff;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+            border-radius: 4px;
+            width: 220px;
+            padding: 10px 0;
+            display: none; /* 初始隐藏 */
+            z-index: 100;
+        }
+        /* 悬停时显示 */
+        .more-btn:hover .dropdown-menu {
+            display: block;
+        }
+        .dropdown-section {
+            padding: 5px 20px 10px;
+        }
+        .dropdown-section-title {
+            font-size: 12px;
+            color: #757575;
+            margin-bottom: 8px;
+        }
+        .dropdown-link {
+            display: block;
+            padding: 6px 0;
+            color: #1c1c1c;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 14px;
+        }
+        .dropdown-link:hover {
+            text-decoration: underline;
+        }
+
+        .search-box {
+            display: flex;
+            align-items: center;
+            background: #fff;
+            border-radius: 4px;
+            padding: 0 10px;
+            width: 280px;
+            height: 36px;
+            margin-left: auto;
+        }
+        .search-box input {
+            border: none;
+            outline: none;
+            flex-grow: 1;
+            font-size: 14px;
+            padding: 0 8px;
+        }
+        .search-icon {
+            color: #757575;
+        }
+        .search-arrow {
+            color: #0060df;
+            font-size: 18px;
+            cursor: pointer;
+        }
+
+        /* 推荐区域 */
+        .hero-section {
+            background-color: #2a2a3e;
+            padding: 0 40px;
+            display: flex;
+            gap: 50px;
+            align-items: center;
+            min-height: 400px;
+        }
+        .hero-image {
+            width: 450px;
+            height: 350px;
+            background: linear-gradient(135deg, #666 0%, #444 100%);
+            position: relative;
+            overflow: hidden;
+            flex-shrink: 0;
+        }
+        /* 模拟建筑图像 */
+        .hero-image::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: repeating-linear-gradient(
+                90deg,
+                transparent,
+                transparent 30px,
+                rgba(0,0,0,0.1) 30px,
+                rgba(0,0,0,0.1) 32px
+            ),
+            repeating-linear-gradient(
+                0deg,
+                transparent,
+                transparent 30px,
+                rgba(0,0,0,0.1) 30px,
+                rgba(0,0,0,0.1) 32px
+            );
+        }
+        .hero-image::after {
+            content: '';
+            position: absolute;
+            width: 100px;
+            height: 80px;
+            background: #ff5522;
+            top: 50px;
+            left: 50px;
+        }
+        .hero-content {
+            color: #fff;
+        }
+        .hero-subtitle {
+            font-size: 14px;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            color: #b6b6b6;
+            margin-bottom: 15px;
+            font-weight: bold;
+        }
+        .hero-title {
+            font-size: 40px;
+            font-weight: bold;
+            margin-bottom: 20px;
+            line-height: 1.2;
+        }
+        .hero-description {
+            font-size: 18px;
+            color: #d6d6d6;
+            margin-bottom: 35px;
+            max-width: 500px;
+        }
+        .hero-btn {
+            display: inline-block;
+            background: transparent;
+            color: #fff;
+            border: 2px solid #fff;
+            border-radius: 4px;
+            padding: 12px 30px;
+            font-size: 16px;
+            font-weight: bold;
+            text-decoration: none;
+            transition: all 0.2s;
+        }
+        .hero-btn:hover {
+            background: rgba(255,255,255,0.1);
+        }
+
+        /* 底部功能卡片区域 */
+        .features-section {
+            padding: 40px;
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            gap: 30px;
+            flex-wrap: wrap;
+        }
+        .feature-text {
+            flex: 1;
+            min-width: 280px;
+        }
+        .feature-text h2 {
+            font-size: 28px;
+            margin-bottom: 15px;
+            line-height: 1.3;
+        }
+        .feature-text p {
+            font-size: 16px;
+            color: #555;
+            line-height: 1.5;
+        }
+        .feature-card {
+            background: #fff;
+            border-radius: 8px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+            padding: 30px;
+            width: 200px;
+            text-align: center;
+            min-height: 200px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+        .feature-icon {
+            font-size: 36px;
+            margin-bottom: 15px;
+            color: #1c1c1c;
+        }
+        .feature-card h3 {
+            font-size: 16px;
+            margin-bottom: 15px;
+            line-height: 1.3;
+        }
+        .feature-card a {
+            color: #0060df;
+            text-decoration: none;
+            font-size: 14px;
+        }
+        .feature-card a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="top-banner">
+        To use these add-ons, you'll need to <a href="#">download Firefox</a>.
+        <button class="close-btn">×</button>
+    </div>
+    <a href="#" class="login-link">Log in</a>
+
+    <nav class="navbar">
+        <a href="#" class="logo">
+            <div class="logo-icon"></div>
+            <div class="logo-text">
+                <span class="small">Firefox Browser</span>
+                <span class="large">ADD-ONS</span>
+            </div>
+        </a>
+
+        <div class="nav-links">
+            <a href="#" class="nav-link">Extensions</a>
+            <a href="#" class="nav-link">Themes</a>
+            <div class="more-btn">
+                <a href="#" class="nav-link">More...</a>
+                <div class="dropdown-menu">
+                    <div class="dropdown-section">
+                        <div class="dropdown-section-title">for Firefox</div>
+                        <a href="#" class="dropdown-link">Dictionaries & Language Packs</a>
+                    </div>
+                    <div class="dropdown-section">
+                        <div class="dropdown-section-title">Other Browser Sites</div>
+                        <a href="#" class="dropdown-link">Add-ons for Android</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="search-box">
+            <span class="search-icon">🔍</span>
+            <input type="text" placeholder="Find add-ons">
+            <span class="search-arrow">→</span>
+        </div>
+    </nav>
+
+    <section class="hero-section">
+        <div class="hero-image"></div>
+        <div class="hero-content">
+            <div class="hero-subtitle">RECOMMENDED</div>
+            <h1 class="hero-title">Tab Reloader (page auto refresh)</h1>
+            <p class="hero-description">Automatically reload tabs based on time intervals you set.</p>
+            <a href="#" class="hero-btn">Get the extension</a>
+        </div>
+    </section>
+
+    <section class="features-section">
+        <div class="feature-text">
+            <h2>Extensions are like apps for Firefox.</h2>
+            <p>They add features to Firefox to make browsing faster, safer, or just plain fun.</p>
+        </div>
+        <div class="feature-card">
+            <div class="feature-icon">🎭</div>
+            <h3>Privacy & Security extensions</h3>
+            <a href="#">See staff picks</a>
+        </div>
+        <div class="feature-card">
+            <div class="feature-icon">📑</div>
+            <h3>Tab managers</h3>
+            <a href="#">See staff picks</a>
+        </div>
+        <div class="feature-card">
+            <div class="feature-icon">✨</div>
+            <h3>Spotlight: Adaptive Tab Bar Colour</h3>
+        </div>
+    </section>
+
+</body>
+</html>
+```

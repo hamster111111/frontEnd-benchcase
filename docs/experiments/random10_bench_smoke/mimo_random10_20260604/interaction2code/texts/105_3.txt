@@ -1,0 +1,909 @@
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Project Management - singularity 1.0</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
+            background-color: #f4f5f7;
+            display: flex;
+            min-height: 100vh;
+        }
+
+        /* Left Sidebar */
+        .sidebar-left {
+            width: 48px;
+            background-color: #1a3353;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 16px 0;
+            flex-shrink: 0;
+        }
+
+        .sidebar-left-icon {
+            width: 32px;
+            height: 32px;
+            background-color: #505f79;
+            border-radius: 4px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 16px;
+            cursor: pointer;
+        }
+
+        .sidebar-left-icon svg {
+            fill: white;
+            width: 20px;
+            height: 20px;
+        }
+
+        .sidebar-left-action {
+            width: 32px;
+            height: 32px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 12px;
+            cursor: pointer;
+            color: #b3c1d1;
+            font-size: 20px;
+        }
+
+        .sidebar-left-bottom {
+            margin-top: auto;
+        }
+
+        .help-icon {
+            width: 32px;
+            height: 32px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 2px solid #505f79;
+            border-radius: 50%;
+            color: #505f79;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+        }
+
+        /* Project Sidebar */
+        .project-sidebar {
+            width: 224px;
+            background-color: #f8f9fa;
+            border-right: 1px solid #dfe1e6;
+            display: flex;
+            flex-direction: column;
+            flex-shrink: 0;
+        }
+
+        .project-header {
+            padding: 16px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .project-icon {
+            width: 36px;
+            height: 36px;
+            background-color: #f5694a;
+            border-radius: 4px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .project-icon svg {
+            width: 24px;
+            height: 24px;
+            fill: white;
+        }
+
+        .project-info h2 {
+            font-size: 14px;
+            font-weight: 600;
+            color: #172b4d;
+        }
+
+        .project-info p {
+            font-size: 12px;
+            color: #6b778c;
+        }
+
+        .sidebar-nav {
+            padding: 8px 0;
+            flex: 1;
+        }
+
+        .nav-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 8px 16px;
+            cursor: pointer;
+            font-size: 14px;
+            color: #172b4d;
+            text-decoration: none;
+            transition: background-color 0.15s;
+        }
+
+        .nav-item:hover {
+            background-color: #e9ecef;
+        }
+
+        .nav-item.active {
+            background-color: #deebff;
+            color: #0052cc;
+        }
+
+        .nav-item svg {
+            width: 18px;
+            height: 18px;
+            fill: currentColor;
+        }
+
+        .sidebar-divider {
+            height: 1px;
+            background-color: #dfe1e6;
+            margin: 8px 16px;
+        }
+
+        .nav-section-label {
+            padding: 16px 16px 8px;
+            font-size: 11px;
+            color: #6b778c;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+
+        /* Main Content */
+        .main-content {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            overflow-x: auto;
+        }
+
+        /* Kanban Board Page */
+        #kanban-page {
+            display: block;
+        }
+
+        #settings-page {
+            display: none;
+        }
+
+        .page-header {
+            padding: 16px 24px 0;
+        }
+
+        .breadcrumb {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 13px;
+            color: #6b778c;
+            margin-bottom: 8px;
+        }
+
+        .breadcrumb a {
+            color: #6b778c;
+            text-decoration: none;
+        }
+
+        .breadcrumb a:hover {
+            color: #0052cc;
+        }
+
+        .breadcrumb span {
+            color: #6b778c;
+        }
+
+        .page-title-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 16px;
+        }
+
+        .page-title {
+            font-size: 24px;
+            font-weight: 600;
+            color: #172b4d;
+        }
+
+        .github-btn {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 6px 12px;
+            border: 1px solid #dfe1e6;
+            border-radius: 4px;
+            background: white;
+            color: #42526e;
+            font-size: 14px;
+            cursor: pointer;
+            text-decoration: none;
+        }
+
+        .github-btn svg {
+            width: 18px;
+            height: 18px;
+        }
+
+        .github-btn:hover {
+            background-color: #f4f5f7;
+        }
+
+        /* Kanban Filters */
+        .kanban-filters {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            padding: 0 24px 16px;
+        }
+
+        .search-input {
+            display: flex;
+            align-items: center;
+            background: white;
+            border: 1px solid #dfe1e6;
+            border-radius: 4px;
+            padding: 6px 10px;
+            gap: 8px;
+            width: 180px;
+        }
+
+        .search-input svg {
+            width: 16px;
+            height: 16px;
+            fill: #6b778c;
+        }
+
+        .search-input input {
+            border: none;
+            outline: none;
+            font-size: 14px;
+            flex: 1;
+            color: #172b4d;
+        }
+
+        .avatar-group {
+            display: flex;
+            margin-left: 8px;
+        }
+
+        .avatar {
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            border: 2px solid white;
+            margin-left: -8px;
+            background-size: cover;
+            background-position: center;
+        }
+
+        .avatar:first-child {
+            margin-left: 0;
+        }
+
+        .filter-text {
+            font-size: 14px;
+            color: #42526e;
+            cursor: pointer;
+        }
+
+        .filter-text:hover {
+            color: #0052cc;
+        }
+
+        /* Kanban Board */
+        .kanban-board {
+            display: flex;
+            gap: 16px;
+            padding: 0 24px 24px;
+            overflow-x: auto;
+        }
+
+        .kanban-column {
+            min-width: 280px;
+            max-width: 280px;
+            background-color: #ebecf0;
+            border-radius: 4px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .column-header {
+            padding: 12px 12px 8px;
+            font-size: 12px;
+            font-weight: 600;
+            color: #5e6c84;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .column-content {
+            padding: 0 12px 12px;
+            flex: 1;
+            min-height: 100px;
+        }
+
+        .issue-card {
+            background: white;
+            border-radius: 4px;
+            padding: 12px;
+            margin-bottom: 8px;
+            box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+            cursor: pointer;
+        }
+
+        .issue-card:hover {
+            background-color: #f4f5f7;
+        }
+
+        .issue-title {
+            font-size: 14px;
+            color: #172b4d;
+            line-height: 1.4;
+            margin-bottom: 8px;
+        }
+
+        .issue-meta {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .issue-icons {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .issue-icon {
+            width: 16px;
+            height: 16px;
+        }
+
+        .issue-icon.blue-check {
+            fill: #0052cc;
+        }
+
+        .issue-icon.red-up {
+            fill: #e74c3c;
+        }
+
+        .issue-icon.green-book {
+            fill: #36b37e;
+        }
+
+        .issue-icon.green-down {
+            fill: #36b37e;
+        }
+
+        .issue-avatars {
+            display: flex;
+        }
+
+        .issue-avatar {
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            margin-left: -6px;
+            border: 2px solid white;
+            background-size: cover;
+            background-position: center;
+        }
+
+        .issue-avatar:first-child {
+            margin-left: 0;
+        }
+
+        /* Settings Page */
+        #settings-page {
+            padding: 24px 48px;
+            background: white;
+            min-height: calc(100vh - 0px);
+        }
+
+        .settings-breadcrumb {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 13px;
+            color: #6b778c;
+            margin-bottom: 8px;
+        }
+
+        .settings-breadcrumb a {
+            color: #6b778c;
+            text-decoration: none;
+        }
+
+        .settings-breadcrumb a:hover {
+            color: #0052cc;
+        }
+
+        .settings-title {
+            font-size: 28px;
+            font-weight: 600;
+            color: #172b4d;
+            margin-bottom: 32px;
+        }
+
+        .form-group {
+            margin-bottom: 24px;
+            max-width: 600px;
+        }
+
+        .form-label {
+            display: block;
+            font-size: 12px;
+            font-weight: 600;
+            color: #5e6c84;
+            margin-bottom: 6px;
+        }
+
+        .form-input {
+            width: 100%;
+            padding: 8px 12px;
+            font-size: 14px;
+            border: 1px solid #dfe1e6;
+            border-radius: 4px;
+            color: #172b4d;
+            background: #f8f9fa;
+        }
+
+        .form-input:focus {
+            outline: none;
+            border-color: #4c9aff;
+            background: white;
+        }
+
+        .rich-editor {
+            border: 1px solid #dfe1e6;
+            border-radius: 4px;
+            overflow: hidden;
+        }
+
+        .editor-toolbar {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            padding: 8px 12px;
+            background: #f8f9fa;
+            border-bottom: 1px solid #dfe1e6;
+        }
+
+        .toolbar-btn {
+            width: 28px;
+            height: 28px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: none;
+            background: transparent;
+            cursor: pointer;
+            border-radius: 4px;
+            color: #6b778c;
+            font-size: 14px;
+        }
+
+        .toolbar-btn:hover {
+            background: #e9ecef;
+        }
+
+        .toolbar-divider {
+            width: 1px;
+            height: 20px;
+            background: #dfe1e6;
+            margin: 0 4px;
+        }
+
+        .toolbar-select {
+            padding: 4px 8px;
+            border: 1px solid #dfe1e6;
+            border-radius: 4px;
+            background: white;
+            font-size: 13px;
+            color: #42526e;
+            cursor: pointer;
+        }
+
+        .editor-content {
+            min-height: 120px;
+            padding: 12px;
+            font-size: 14px;
+            color: #172b4d;
+            line-height: 1.6;
+        }
+
+        .editor-content:focus {
+            outline: none;
+        }
+
+        .form-hint {
+            font-size: 12px;
+            color: #6b778c;
+            margin-top: 6px;
+        }
+
+        .form-select {
+            width: 100%;
+            padding: 8px 12px;
+            font-size: 14px;
+            border: 1px solid #dfe1e6;
+            border-radius: 4px;
+            color: #172b4d;
+            background: #f8f9fa;
+            appearance: none;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%236b778c'%3E%3Cpath d='M7 10l5 5 5-5z'/%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right 12px center;
+            background-size: 20px;
+            cursor: pointer;
+        }
+
+        .form-select:focus {
+            outline: none;
+            border-color: #4c9aff;
+            background-color: white;
+        }
+
+        .save-btn {
+            display: inline-block;
+            padding: 8px 16px;
+            background-color: #0052cc;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            margin-top: 8px;
+        }
+
+        .save-btn:hover {
+            background-color: #0065ff;
+        }
+
+        /* Avatar backgrounds */
+        .avatar-1 { background: linear-gradient(135deg, #9b59b6, #8e44ad); }
+        .avatar-2 { background: linear-gradient(135deg, #e67e22, #d35400); }
+        .avatar-3 { background: linear-gradient(135deg, #27ae60, #229954); }
+        .avatar-4 { background: linear-gradient(135deg, #3498db, #2980b9); }
+        .avatar-5 { background: linear-gradient(135deg, #e74c3c, #c0392b); }
+        .avatar-6 { background: linear-gradient(135deg, #1abc9c, #16a085); }
+    </style>
+</head>
+<body>
+    <!-- Left Sidebar -->
+    <div class="sidebar-left">
+        <div class="sidebar-left-icon">
+            <svg viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
+        </div>
+        <div class="sidebar-left-action">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/></svg>
+        </div>
+        <div class="sidebar-left-action">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/></svg>
+        </div>
+        <div class="sidebar-left-bottom">
+            <div class="help-icon">?</div>
+        </div>
+    </div>
+
+    <!-- Project Sidebar -->
+    <div class="project-sidebar">
+        <div class="project-header">
+            <div class="project-icon">
+                <svg viewBox="0 0 24 24"><path d="M3 3h7v7H3V3zm11 0h7v7h-7V3zM3 14h7v7H3v-7zm11 0h7v7h-7v-7z"/></svg>
+            </div>
+            <div class="project-info">
+                <h2>singularity 1.0</h2>
+                <p>Software project</p>
+            </div>
+        </div>
+        <nav class="sidebar-nav">
+            <a class="nav-item active" id="nav-kanban" onclick="showPage('kanban')">
+                <svg viewBox="0 0 24 24"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zM9 17H7v-7h2v7zm4 0h-2V7h2v10zm4 0h-2v-4h2v4z"/></svg>
+                Kanban Board
+            </a>
+            <a class="nav-item" id="nav-settings" onclick="showPage('settings')">
+                <svg viewBox="0 0 24 24"><path d="M19.14 12.94c.04-.3.06-.61.06-.94 0-.32-.02-.64-.07-.94l2.03-1.58a.49.49 0 00.12-.61l-1.92-3.32a.49.49 0 00-.59-.22l-2.39.96c-.5-.38-1.03-.7-1.62-.94l-.36-2.54a.484.484 0 00-.48-.41h-3.84c-.24 0-.43.17-.47.41l-.36 2.54c-.59.24-1.13.57-1.62.94l-2.39-.96a.49.49 0 00-.59.22L2.74 8.87c-.12.21-.08.47.12.61l2.03 1.58c-.05.3-.07.62-.07.94s.02.64.07.94l-2.03 1.58a.49.49 0 00-.12.61l1.92 3.32c.12.22.37.29.59.22l2.39-.96c.5.38 1.03.7 1.62.94l.36 2.54c.05.24.24.41.48.41h3.84c.24 0 .44-.17.47-.41l.36-2.54c.59-.24 1.13-.56 1.62-.94l2.39.96c.22.08.47 0 .59-.22l1.92-3.32c.12-.22.07-.47-.12-.61l-2.01-1.58zM12 15.6A3.6 3.6 0 1115.6 12 3.6 3.6 0 0112 15.6z"/></svg>
+                Project settings
+            </a>
+            <div class="sidebar-divider"></div>
+            <a class="nav-item">
+                <svg viewBox="0 0 24 24"><path d="M20 2H4c-1.1 0-2 .9-2 2v18l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm0 14H5.17L4 17.17V4h16v12z"/></svg>
+                Releases
+            </a>
+            <a class="nav-item">
+                <svg viewBox="0 0 24 24"><path d="M14 2H6c-1.1 0-1.99.9-1.99 2L4 20c0 1.1.89 2 1.99 2H18c1.1 0 2-.9 2-2V8l-6-6zm2 16H8v-2h8v2zm0-4H8v-2h8v2zm-3-5V3.5L18.5 9H13z"/></svg>
+                Issues and filters
+            </a>
+            <a class="nav-item">
+                <svg viewBox="0 0 24 24"><path d="M14 2H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V8l-6-6zm-1 7V3.5L18.5 9H13zM8 15h8v2H8v-2zm0-4h8v2H8v-2z"/></svg>
+                Pages
+            </a>
+            <a class="nav-item">
+                <svg viewBox="0 0 24 24"><path d="M3.5 18.49l6-6.01 4 4L22 6.92l-1.41-1.41-7.09 7.97-4-4L2 16.99z"/></svg>
+                Reports
+            </a>
+            <a class="nav-item">
+                <svg viewBox="0 0 24 24"><path d="M17.63 5.84C17.27 5.33 16.67 5 16 5L5 5.01C3.9 5.01 3 5.9 3 7v10c0 1.1.9 1.99 2 1.99L16 19c.67 0 1.27-.33 1.63-.84L22 12l-4.37-6.16z"/></svg>
+                Components
+            </a>
+        </nav>
+    </div>
+
+    <!-- Main Content -->
+    <div class="main-content">
+        <!-- Kanban Board Page -->
+        <div id="kanban-page">
+            <div class="page-header">
+                <div class="breadcrumb">
+                    <a href="#">Projects</a>
+                    <span>/</span>
+                    <a href="#">singularity 1.0</a>
+                    <span>/</span>
+                    <span>Kanban Board</span>
+                </div>
+                <div class="page-title-row">
+                    <h1 class="page-title">Kanban board</h1>
+                    <a href="#" class="github-btn">
+                        <svg viewBox="0 0 24 24"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z" fill="#42526e"/></svg>
+                        Github Repo
+                    </a>
+                </div>
+            </div>
+
+            <div class="kanban-filters">
+                <div class="search-input">
+                    <svg viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/></svg>
+                    <input type="text" placeholder="Filter issues...">
+                </div>
+                <div class="avatar-group">
+                    <div class="avatar avatar-1"></div>
+                    <div class="avatar avatar-2"></div>
+                    <div class="avatar avatar-3"></div>
+                </div>
+                <span class="filter-text">Only My Issues</span>
+                <span class="filter-text">Recently Updated</span>
+            </div>
+
+            <div class="kanban-board">
+                <!-- Backlog Column -->
+                <div class="kanban-column">
+                    <div class="column-header">BACKLOG 4</div>
+                    <div class="column-content">
+                        <div class="issue-card">
+                            <div class="issue-title">This is an issue of type: Task.</div>
+                            <div class="issue-meta">
+                                <div class="issue-icons">
+                                    <svg class="issue-icon blue-check" viewBox="0 0 24 24"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-9 14l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/></svg>
+                                    <svg class="issue-icon red-up" viewBox="0 0 24 24"><path d="M7 14l5-5 5 5H7z"/></svg>
+                                </div>
+                                <div class="issue-avatars">
+                                    <div class="issue-avatar avatar-4"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="issue-card">
+                            <div class="issue-title">Click on an issue to see what's behind it.</div>
+                            <div class="issue-meta">
+                                <div class="issue-icons">
+                                    <svg class="issue-icon blue-check" viewBox="0 0 24 24"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-9 14l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/></svg>
+                                    <svg class="issue-icon green-down" viewBox="0 0 24 24"><path d="M7 10l5 5 5-5H7z"/></svg>
+                                </div>
+                                <div class="issue-avatars">
+                                    <div class="issue-avatar avatar-5"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="issue-card">
+                            <div class="issue-title">Try dragging issues to different columns to transition their status.</div>
+                            <div class="issue-meta">
+                                <div class="issue-icons">
+                                    <svg class="issue-icon green-book" viewBox="0 0 24 24"><path d="M18 2H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zM6 4h5v8l-2.5-1.5L6 12V4z"/></svg>
+                                    <svg class="issue-icon red-up" viewBox="0 0 24 24"><path d="M7 14l5-5 5 5H7z"/></svg>
+                                </div>
+                                <div class="issue-avatars"></div>
+                            </div>
+                        </div>
+                        <div class="issue-card">
+                            <div class="issue-title">You can use rich text with images in issue descriptions.</div>
+                            <div class="issue-meta">
+                                <div class="issue-icons">
+                                    <svg class="issue-icon green-book" viewBox="0 0 24 24"><path d="M18 2H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zM6 4h5v8l-2.5-1.5L6 12V4z"/></svg>
+                                    <svg class="issue-icon green-down" viewBox="0 0 24 24"><path d="M7 10l5 5 5-5H7z"/></svg>
+                                </div>
+                                <div class="issue-avatars">
+                                    <div class="issue-avatar avatar-6"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Selected for Development Column -->
+                <div class="kanban-column">
+                    <div class="column-header">SELECTED FOR DEVELOPMENT 2</div>
+                    <div class="column-content">
+                        <div class="issue-card">
+                            <div class="issue-title">Each issue can be assigned priority from lowest to highest.</div>
+                            <div class="issue-meta">
+                                <div class="issue-icons">
+                                    <svg class="issue-icon blue-check" viewBox="0 0 24 24"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-9 14l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/></svg>
+                                    <svg class="issue-icon red-up" viewBox="0 0 24 24"><path d="M7 14l5-5 5 5H7z"/></svg>
+                                </div>
+                                <div class="issue-avatars"></div>
+                            </div>
+                        </div>
+                        <div class="issue-card">
+                            <div class="issue-title">Each issue has a single reporter but can have multiple assignees.</div>
+                            <div class="issue-meta">
+                                <div class="issue-icons">
+                                    <svg class="issue-icon green-book" viewBox="0 0 24 24"><path d="M18 2H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zM6 4h5v8l-2.5-1.5L6 12V4z"/></svg>
+                                    <svg class="issue-icon red-up" viewBox="0 0 24 24"><path d="M7 14l5-5 5 5H7z"/></svg>
+                                </div>
+                                <div class="issue-avatars">
+                                    <div class="issue-avatar avatar-2"></div>
+                                    <div class="issue-avatar avatar-4"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- In Progress Column -->
+                <div class="kanban-column">
+                    <div class="column-header">IN PROGRESS 1</div>
+                    <div class="column-content">
+                        <div class="issue-card">
+                            <div class="issue-title">You can track how many hours were spent working on an issue, and how many hours remain.</div>
+                            <div class="issue-meta">
+                                <div class="issue-icons">
+                                    <svg class="issue-icon blue-check" viewBox="0 0 24 24"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-9 14l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/></svg>
+                                    <svg class="issue-icon green-down" viewBox="0 0 24 24"><path d="M7 10l5 5 5-5H7z"/></svg>
+                                </div>
+                                <div class="issue-avatars"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Done Column -->
+                <div class="kanban-column">
+                    <div class="column-header">DONE 1</div>
+                    <div class="column-content">
+                        <div class="issue-card">
+                            <div class="issue-title">Try leaving a comment on this issue.</div>
+                            <div class="issue-meta">
+                                <div class="issue-icons">
+                                    <svg class="issue-icon blue-check" viewBox="0 0 24 24"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-9 14l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/></svg>
+                                    <svg class="issue-icon red-up" viewBox="0 0 24 24"><path d="M7 14l5-5 5 5H7z"/></svg>
+                                </div>
+                                <div class="issue-avatars">
+                                    <div class="issue-avatar avatar-1"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Project Settings Page -->
+        <div id="settings-page">
+            <div class="settings-breadcrumb">
+                <a href="#">Projects</a>
+                <span>/</span>
+                <a href="#">singularity 1.0</a>
+                <span>/</span>
+                <span>Project Details</span>
+            </div>
+            <h1 class="settings-title">Project Details</h1>
+
+            <div class="form-group">
+                <label class="form-label">Name</label>
+                <input type="text" class="form-input" value="singularity 1.0">
+            </div>
+
+            <div class="form-group">
+                <label class="form-label">URL</label>
+                <input type="text" class="form-input" value="https://www.atlassian.com/software/jira">
+            </div>
+
+            <div class="form-group">
+                <label class="form-label">Description</label>
+                <div class="rich-editor">
+                    <div class="editor-toolbar">
+                        <button class="toolbar-btn" title="Bold"><strong>B</strong></button>
+                        <button class="toolbar-btn" title="Italic"><em>I</em></button>
+                        <button class="toolbar-btn" title="Underline"><span style="text-decoration: underline;">U</span></button>
+                        <button class="toolbar-btn" title="Strikethrough"><span style="text-decoration: line-through;">S</span></button>
+                        <div class="toolbar-divider"></div>
+                        <button class="toolbar-btn" title="Quote">❝</button>
+                        <button class="toolbar-btn" title="Code">&lt;/&gt;</button>
+                        <div class="toolbar-divider"></div>
+                        <button class="toolbar-btn" title="Ordered list">≡</button>
+                        <button class="toolbar-btn" title="Unordered list">☰</button>
+                        <div class="toolbar-divider"></div>
+                        <select class="toolbar-select">
+                            <option>Normal</option>
+                            <option>Heading 1</option>
+                            <option>Heading 2</option>
+                            <option>Heading 3</option>
+                        </select>
+                        <div class="toolbar-divider"></div>
+                        <button class="toolbar-btn" title="Text color">A</button>
+                        <button class="toolbar-btn" title="Background color">🎨</button>
+                        <button class="toolbar-btn" title="Clear formatting">Tx</button>
+                    </div>
+                    <div class="editor-content" contenteditable="true">
+                        Plan, track, and manage your agile and software development projects in Jira. Customize your workflow, collaborate, and release great software.
+                    </div>
+                </div>
+                <p class="form-hint">Describe the project in as much detail as you'd like.</p>
+            </div>
+
+            <div class="form-group">
+                <label class="form-label">Project Category</label>
+                <select class="form-select">
+                    <option value="software" selected>Software</option>
+                    <option value="marketing">Marketing</option>
+                    <option value="business">Business</option>
+                </select>
+            </div>
+
+            <button class="save-btn">Save changes</button>
+        </div>
+    </div>
+
+    <script>
+        function showPage(page) {
+            const kanbanPage = document.getElementById('kanban-page');
+            const settingsPage = document.getElementById('settings-page');
+            const navKanban = document.getElementById('nav-kanban');
+            const navSettings = document.getElementById('nav-settings');
+
+            if (page === 'kanban') {
+                kanbanPage.style.display = 'block';
+                settingsPage.style.display = 'none';
+                navKanban.classList.add('active');
+                navSettings.classList.remove('active');
+            } else {
+                kanbanPage.style.display = 'none';
+                settingsPage.style.display = 'block';
+                navKanban.classList.remove('active');
+                navSettings.classList.add('active');
+            }
+        }
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', function() {
+            // Add click handlers to nav items
+            document.querySelectorAll('.nav-item').forEach(item => {
+                item.addEventListener('click', function(e) {
+                    e.preventDefault();
+                });
+            });
+        });
+    </script>
+</body>
+</html>
+```

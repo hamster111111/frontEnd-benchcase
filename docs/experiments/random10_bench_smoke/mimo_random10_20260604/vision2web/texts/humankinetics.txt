@@ -1,0 +1,1106 @@
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Human Kinetics</title>
+    <style>
+        :root {
+            --blue-dark: #004b8d;
+            --blue-medium: #1a6bc4;
+            --blue-light: #4da3ff;
+            --yellow: #ffc107;
+            --white: #ffffff;
+            --black: #000000;
+            --gray-light: #f5f5f5;
+            --gray-medium: #e0e0e0;
+            --gray-dark: #333333;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            line-height: 1.6;
+            color: var(--gray-dark);
+            background-color: var(--white);
+        }
+
+        /* Responsive Typography */
+        @media (max-width: 768px) {
+            body {
+                font-size: 14px;
+            }
+        }
+
+        /* Top Banner */
+        .top-banner {
+            background-color: var(--black);
+            color: var(--white);
+            text-align: center;
+            padding: 8px;
+            font-size: 0.9rem;
+        }
+
+        /* Info Bar */
+        .info-bar {
+            background-color: var(--blue-dark);
+            color: var(--white);
+            padding: 10px 20px;
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 20px;
+            font-size: 0.85rem;
+        }
+
+        .info-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .info-item strong {
+            display: block;
+            font-size: 0.9rem;
+        }
+
+        @media (max-width: 768px) {
+            .info-bar {
+                display: none; /* Hide on mobile, use only Call Us */
+            }
+            .info-bar-mobile {
+                display: flex;
+                justify-content: space-between;
+                padding: 8px 16px;
+                background: var(--blue-dark);
+                color: white;
+            }
+        }
+
+        /* Header */
+        header {
+            padding: 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-weight: bold;
+            font-size: 1.5rem;
+            color: var(--blue-dark);
+            text-decoration: none;
+        }
+
+        .logo-icon {
+            width: 40px;
+            height: 40px;
+            background-color: var(--blue-medium);
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            font-size: 1.2rem;
+        }
+
+        .search-bar {
+            flex: 1;
+            max-width: 500px;
+            position: relative;
+        }
+
+        .search-bar input {
+            width: 100%;
+            padding: 12px 15px;
+            border: 2px solid var(--blue-medium);
+            border-radius: 4px;
+            font-size: 1rem;
+        }
+
+        .search-bar button {
+            position: absolute;
+            right: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: none;
+            border: none;
+            font-size: 1.2rem;
+            color: var(--blue-dark);
+            cursor: pointer;
+        }
+
+        .user-icons {
+            display: flex;
+            gap: 15px;
+            font-size: 1.5rem;
+        }
+
+        .user-icons a {
+            color: var(--blue-dark);
+            text-decoration: none;
+        }
+
+        @media (max-width: 768px) {
+            header {
+                padding: 15px;
+            }
+            .search-bar {
+                order: 3;
+                width: 100%;
+                max-width: none;
+            }
+            .user-icons .cart-icon {
+                display: none; /* Hide cart on mobile */
+            }
+        }
+
+        /* Navigation */
+        nav {
+            border-bottom: 1px solid var(--gray-medium);
+            padding: 0 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            justify-content: flex-start;
+            gap: 20px;
+            overflow-x: auto;
+            padding: 10px 0;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--gray-dark);
+            font-weight: 500;
+            white-space: nowrap;
+            font-size: 0.9rem;
+        }
+
+        .nav-links a:hover {
+            color: var(--blue-medium);
+        }
+
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            font-size: 1.8rem;
+            cursor: pointer;
+            color: var(--blue-dark);
+        }
+
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+                flex-direction: column;
+                position: absolute;
+                top: 100px;
+                left: 0;
+                width: 100%;
+                background: white;
+                padding: 20px;
+                box-shadow: 0 5px 10px rgba(0,0,0,0.1);
+                z-index: 1000;
+            }
+            .nav-links.active {
+                display: flex;
+            }
+            .mobile-menu-btn {
+                display: block;
+                position: absolute;
+                right: 20px;
+                top: 100px;
+                z-index: 1001;
+            }
+        }
+
+        /* Hero Banner */
+        .hero-banner {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .banner-slideshow {
+            position: relative;
+            height: 300px;
+            background: linear-gradient(135deg, #1a6bc4 0%, #4da3ff 100%);
+            border-radius: 8px;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .banner-content {
+            color: white;
+            text-align: center;
+            z-index: 2;
+        }
+
+        .banner-content h2 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+        }
+
+        .banner-controls {
+            position: absolute;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 10px;
+            z-index: 3;
+        }
+
+        .banner-controls button {
+            background: rgba(255,255,255,0.7);
+            border: none;
+            border-radius: 50%;
+            width: 30px;
+            height: 30px;
+            font-size: 1.2rem;
+            cursor: pointer;
+        }
+
+        .banner-indicators {
+            display: flex;
+            gap: 8px;
+            margin: 10px 0;
+            justify-content: center;
+        }
+
+        .indicator {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: var(--gray-medium);
+            cursor: pointer;
+        }
+
+        .indicator.active {
+            background: var(--blue-medium);
+        }
+
+        @media (max-width: 768px) {
+            .banner-slideshow {
+                height: 200px;
+            }
+            .banner-content h2 {
+                font-size: 1.8rem;
+            }
+        }
+
+        /* Section Titles */
+        .section-title {
+            text-align: center;
+            font-size: 1.8rem;
+            color: var(--gray-dark);
+            margin: 40px 0 30px;
+            font-weight: 600;
+        }
+
+        /* New Releases */
+        .new-releases {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px 40px;
+        }
+
+        .releases-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+            gap: 25px;
+        }
+
+        .book-card {
+            text-align: center;
+        }
+
+        .book-cover {
+            width: 150px;
+            height: 200px;
+            margin: 0 auto 15px;
+            background: var(--gray-light);
+            border: 1px solid var(--gray-medium);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.8rem;
+            color: var(--gray-dark);
+            padding: 10px;
+        }
+
+        .book-info h3 {
+            font-size: 1rem;
+            margin-bottom: 5px;
+            font-weight: 600;
+        }
+
+        .book-info .price {
+            font-weight: bold;
+            color: var(--blue-dark);
+        }
+
+        .stars {
+            color: var(--yellow);
+            font-size: 1.1rem;
+        }
+
+        @media (max-width: 768px) {
+            .releases-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 15px;
+            }
+            .book-cover {
+                width: 120px;
+                height: 160px;
+            }
+        }
+
+        /* Categories */
+        .categories {
+            background: var(--gray-light);
+            padding: 40px 20px;
+            margin: 20px 0;
+        }
+
+        .categories-grid {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            overflow-x: auto;
+            gap: 20px;
+            padding: 10px 0;
+        }
+
+        .category-item {
+            text-align: center;
+            min-width: 100px;
+        }
+
+        .category-icon {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background: var(--blue-medium);
+            margin: 0 auto 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.8rem;
+        }
+
+        .category-item p {
+            font-size: 0.9rem;
+            font-weight: 500;
+            color: var(--blue-dark);
+        }
+
+        /* Promo Cards */
+        .promo-cards {
+            max-width: 1200px;
+            margin: 40px auto;
+            padding: 0 20px;
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 20px;
+        }
+
+        .promo-card {
+            background: var(--gray-light);
+            padding: 20px;
+            border-radius: 8px;
+            text-align: center;
+        }
+
+        .promo-card .card-icon {
+            font-size: 3rem;
+            color: var(--blue-medium);
+            margin-bottom: 15px;
+        }
+
+        .promo-card h3 {
+            font-size: 1.2rem;
+            margin-bottom: 15px;
+        }
+
+        .promo-card p {
+            margin-bottom: 15px;
+            font-size: 0.95rem;
+        }
+
+        .promo-card a {
+            display: inline-block;
+            padding: 8px 16px;
+            background: var(--blue-medium);
+            color: white;
+            text-decoration: none;
+            border-radius: 4px;
+            font-weight: 500;
+        }
+
+        .promo-card a:hover {
+            background: var(--blue-dark);
+        }
+
+        /* Save Banner */
+        .save-banner {
+            background: var(--blue-dark);
+            color: white;
+            text-align: center;
+            padding: 15px;
+            margin: 30px 0;
+            font-weight: bold;
+        }
+
+        /* Trainer Talk */
+        .trainer-talk {
+            max-width: 1200px;
+            margin: 40px auto;
+            padding: 0 20px;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+
+        .talk-card {
+            background: var(--gray-light);
+            border-radius: 8px;
+            overflow: hidden;
+            text-align: center;
+        }
+
+        .talk-image {
+            height: 200px;
+            background: linear-gradient(135deg, var(--blue-medium), var(--blue-light));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.5rem;
+            padding: 20px;
+        }
+
+        .talk-content {
+            padding: 20px;
+        }
+
+        @media (max-width: 768px) {
+            .trainer-talk {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Social Links */
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            padding: 30px 0;
+        }
+
+        .social-link {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: var(--blue-medium);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.2rem;
+            text-decoration: none;
+        }
+
+        .social-link:hover {
+            background: var(--blue-dark);
+        }
+
+        /* Excerpts */
+        .excerpts {
+            max-width: 1200px;
+            margin: 40px auto;
+            padding: 0 20px;
+        }
+
+        .excerpts-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .excerpt-card {
+            background: var(--gray-light);
+            padding: 20px;
+            border-radius: 8px;
+        }
+
+        .excerpt-card h3 {
+            font-size: 1.1rem;
+            margin-bottom: 10px;
+            color: var(--blue-dark);
+        }
+
+        /* Footer */
+        footer {
+            background: var(--gray-light);
+            padding: 40px 20px 20px;
+            margin-top: 60px;
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 30px;
+        }
+
+        .footer-section h4 {
+            font-size: 1.1rem;
+            margin-bottom: 15px;
+            color: var(--gray-dark);
+        }
+
+        .footer-section ul {
+            list-style: none;
+        }
+
+        .footer-section ul li {
+            margin-bottom: 8px;
+        }
+
+        .footer-section ul li a {
+            color: var(--blue-medium);
+            text-decoration: none;
+            font-size: 0.9rem;
+        }
+
+        .footer-section ul li a:hover {
+            text-decoration: underline;
+        }
+
+        .footer-bottom {
+            max-width: 1200px;
+            margin: 30px auto 0;
+            padding-top: 20px;
+            border-top: 1px solid var(--gray-medium);
+            text-align: center;
+            font-size: 0.8rem;
+            color: var(--gray-dark);
+        }
+
+        /* Chat Button */
+        .chat-btn {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: var(--blue-medium);
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 60px;
+            height: 60px;
+            font-size: 1.5rem;
+            cursor: pointer;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* Back to Top */
+        .back-to-top {
+            position: fixed;
+            bottom: 100px;
+            right: 20px;
+            background: var(--blue-medium);
+            color: white;
+            border: none;
+            border-radius: 4px;
+            padding: 10px 15px;
+            font-size: 0.9rem;
+            cursor: pointer;
+            opacity: 0;
+            transition: opacity 0.3s;
+            z-index: 999;
+        }
+
+        .back-to-top.visible {
+            opacity: 1;
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 1024px) {
+            .footer-content {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .footer-content {
+                grid-template-columns: 1fr;
+            }
+            .promo-cards {
+                grid-template-columns: 1fr;
+            }
+            .excerpts-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Top Banner -->
+    <div class="top-banner">
+        30% off books, ebooks and continuing education
+        <button style="background: #004b8d; color: white; border: none; padding: 2px 8px; margin-left: 10px; border-radius: 4px;">ELEVATE30</button>
+        <button style="background: #1a6bc4; color: white; border: none; padding: 2px 8px; margin-left: 5px; border-radius: 4px;">Copy code</button>
+        Some exclusions apply
+    </div>
+
+    <!-- Info Bar - Desktop -->
+    <div class="info-bar">
+        <div class="info-item">
+            <div>
+                <strong>Call Us</strong>
+                <span>800.747.4457</span>
+            </div>
+        </div>
+        <div class="info-item">
+            <div>
+                <strong>Hours</strong>
+                <span>Mon-Fri 7am - 5pm CST</span>
+            </div>
+        </div>
+        <div class="info-item">
+            <div>
+                <strong>Contact Us</strong>
+                <span>Get in touch with our team</span>
+            </div>
+        </div>
+        <div class="info-item">
+            <div>
+                <strong>FAQs</strong>
+                <span>Frequently asked questions</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Info Bar - Mobile (hidden by default) -->
+    <div class="info-bar-mobile" style="display: none;">
+        <span>&lt;</span>
+        <div style="display: flex; align-items: center; gap: 8px;">
+            <div>👤</div>
+            <div>
+                <strong>Call Us</strong><br>
+                <span>800.747.4457</span>
+            </div>
+        </div>
+        <span>&gt;</span>
+    </div>
+
+    <!-- Header -->
+    <header>
+        <a href="#" class="logo">
+            <div class="logo-icon">HK</div>
+            <div>
+                HUMAN KINETICS
+                <small style="display: block; font-size: 0.7rem; font-weight: normal;">An Employee-Owned Company</small>
+            </div>
+        </a>
+
+        <div class="search-bar">
+            <input type="text" placeholder="Find a book, continuing education, and more">
+            <button>🔍</button>
+        </div>
+
+        <div class="user-icons">
+            <a href="#" title="Account">👤</a>
+            <a href="#" title="Cart" class="cart-icon">🛒</a>
+        </div>
+
+        <button class="mobile-menu-btn">☰</button>
+    </header>
+
+    <!-- Navigation -->
+    <nav>
+        <ul class="nav-links">
+            <li><a href="#">BROWSE BY SUBJECT ▾</a></li>
+            <li><a href="#">K-12 / HIGHER EDUCATION ▾</a></li>
+            <li><a href="#">PROFESSIONAL EDUCATION ▾</a></li>
+            <li><a href="#">STUDENT RESOURCES ▾</a></li>
+            <li><a href="#">DISCOVER MORE ▾</a></li>
+        </ul>
+    </nav>
+
+    <!-- Hero Banner -->
+    <div class="hero-banner">
+        <div class="banner-slideshow">
+            <div class="banner-content">
+                <h2>FITNESS, AND EXERCISE</h2>
+                <p>A Guide to Kinesiology Professions</p>
+            </div>
+            <div class="banner-controls">
+                <button>❮</button>
+                <span>3 / 4</span>
+                <button>❯</button>
+            </div>
+        </div>
+        <div class="banner-indicators">
+            <div class="indicator active"></div>
+            <div class="indicator"></div>
+            <div class="indicator"></div>
+            <div class="indicator"></div>
+        </div>
+    </div>
+
+    <!-- New Releases -->
+    <section class="new-releases">
+        <h2 class="section-title">New Releases</h2>
+        <div class="releases-grid">
+            <div class="book-card">
+                <div class="book-cover">
+                    BUILDING STRENGTH AND MUSCLE AFTER 50
+                </div>
+                <div class="book-info">
+                    <p>Paperback</p>
+                    <h3>Building Strength and Muscle After 50</h3>
+                    <div class="stars">★★★★★ (4)</div>
+                    <p class="price">$27.95 USD</p>
+                </div>
+            </div>
+
+            <div class="book-card">
+                <div class="book-cover">
+                    Research in Dance
+                </div>
+                <div class="book-info">
+                    <p>Paperback</p>
+                    <h3>Research in Dance</h3>
+                    <p class="price">$54.00 USD</p>
+                </div>
+            </div>
+
+            <div class="book-card">
+                <div class="book-cover">
+                    Complete Guide to Foam Rolling-2nd Edition
+                </div>
+                <div class="book-info">
+                    <p>Paperback</p>
+                    <h3>Complete Guide to Foam Rolling-2nd Edition</h3>
+                    <p class="price">$29.95 USD</p>
+                </div>
+            </div>
+
+            <div class="book-card">
+                <div class="book-cover">
+                    The Pocket Atlas of Acupuncture Points
+                </div>
+                <div class="book-info">
+                    <p>Paperback</p>
+                    <h3>The Pocket Atlas of Acupuncture Points</h3>
+                    <p class="price">$19.95 USD</p>
+                </div>
+            </div>
+
+            <div class="book-card">
+                <div class="book-cover">
+                    Introduction to Kinesiology 7th Edition With HKPropel Access
+                </div>
+                <div class="book-info">
+                    <p>Paperback With Online Resource</p>
+                    <h3>Introduction to Kinesiology 7th Edition With HKPropel Access</h3>
+                    <p class="price">$154.00 USD</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Categories -->
+    <section class="categories">
+        <div class="categories-grid">
+            <div class="category-item">
+                <div class="category-icon">📚</div>
+                <p>Coach Education</p>
+            </div>
+            <div class="category-item">
+                <div class="category-icon">🎓</div>
+                <p>Continuing Education</p>
+            </div>
+            <div class="category-item">
+                <div class="category-icon">📝</div>
+                <p>Scholarly Journals</p>
+            </div>
+            <div class="category-item">
+                <div class="category-icon">📖</div>
+                <p>Lotus Books</p>
+            </div>
+            <div class="category-item">
+                <div class="category-icon">🔮</div>
+                <p>Coming Soon</p>
+            </div>
+            <div class="category-item">
+                <div class="category-icon">🏆</div>
+                <p>Best Sellers</p>
+            </div>
+            <div class="category-item">
+                <div class="category-icon">💪</div>
+                <p>Strength Training</p>
+            </div>
+            <div class="category-item">
+                <div class="category-icon">❤️</div>
+                <p>Fitness and Health</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Promo Cards -->
+    <div class="promo-cards">
+        <div class="promo-card">
+            <div class="card-icon">📚</div>
+            <h3>2025-2026 BOC exam references</h3>
+            <a href="#">Shop now</a>
+        </div>
+
+        <div class="promo-card">
+            <div class="card-icon">📘</div>
+            <h3>Learn exercise techniques and more</h3>
+            <p>Follow us on Facebook</p>
+        </div>
+
+        <div class="promo-card">
+            <div class="card-icon">📷</div>
+            <h3>Watch author interviews and more</h3>
+            <p>Follow us on Instagram</p>
+        </div>
+
+        <div class="promo-card">
+            <div class="card-icon">✉️</div>
+            <h3>Subscribe to our newsletters</h3>
+            <p>Get exclusive subscriber offers</p>
+        </div>
+    </div>
+
+    <!-- Save Banner -->
+    <div class="save-banner">
+        Save $15 - First-time newsletter subscribers receive $15 off your next order of $30 or more
+        <a href="#" style="background: var(--blue-medium); color: white; padding: 8px 16px; text-decoration: none; border-radius: 4px; margin-left: 10px;">Subscribe</a>
+    </div>
+
+    <!-- Trainer Talk -->
+    <section class="trainer-talk">
+        <div class="talk-card">
+            <div class="talk-image">
+                TRAINER TALK WITH HUMAN KINETICS
+            </div>
+            <div class="talk-content">
+                <p>Certified trainers Aaron Patterson and Frank Eyreson discuss periodization</p>
+            </div>
+        </div>
+
+        <div class="talk-card">
+            <div class="talk-image">
+                LEARNING WITH HUMAN KINETICS<br>Eccentric Training
+            </div>
+        </div>
+    </section>
+
+    <!-- Social Links -->
+    <div class="social-links">
+        <a href="#" class="social-link">f</a>
+        <a href="#" class="social-link">📷</a>
+        <a href="#" class="social-link">▶️</a>
+        <a href="#" class="social-link">🎵</a>
+        <a href="#" class="social-link">𝕏</a>
+        <a href="#" class="social-link">📌</a>
+        <a href="#" class="social-link">in</a>
+    </div>
+
+    <!-- Excerpts -->
+    <section class="excerpts">
+        <h2 class="section-title">Excerpts</h2>
+        <div class="excerpts-grid">
+            <div class="excerpt-card">
+                <h3>Identifying the cause of fatigue in sport and exercise</h3>
+                <p>This is an excerpt from Exercise Physiology-6th Edition by George A. Brooks,Thomas D. Fahey,Kenneth M. Baldwin. Before the cause and site of fatigue can be identified, we must define it. Usually,...</p>
+            </div>
+
+            <div class="excerpt-card">
+                <h3>The oxyhemoglobin dissociation curve in pulmonary ventilation</h3>
+                <p>This is an excerpt from Exercise Physiology-6th Edition by George A. Brooks,Thomas D. Fahey,Kenneth M. Baldwin. At sea level altitude we ventilate to keep the partial pressure of O2 in the...</p>
+            </div>
+
+            <div class="excerpt-card">
+                <h3>The crossover concept in exercise metabolism</h3>
+                <p>This is an excerpt from Exercise Physiology-6th Edition by George A. Brooks,Thomas D. Fahey,Kenneth M. Baldwin. A major problem in the field of exercise biochemistry has been lack of appreciation for...</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Back to Top Button -->
+    <button class="back-to-top">Back to top</button>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-section">
+                <h4>About Our Products</h4>
+                <ul>
+                    <li><a href="#">Catalogs</a></li>
+                    <li><a href="#">Special Offers</a></li>
+                    <li><a href="#">Newsletters</a></li>
+                    <li><a href="#">Report Piracy</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-section">
+                <h4>Services</h4>
+                <ul>
+                    <li><a href="#">Review/Desk Copies</a></li>
+                    <li><a href="#">Customer Service</a></li>
+                    <li><a href="#">Accessibility</a></li>
+                    <li><a href="#">Business to Business</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-section">
+                <h4>About Us</h4>
+                <ul>
+                    <li><a href="#">About Human Kinetics</a></li>
+                    <li><a href="#">About Lotus Books</a></li>
+                    <li><a href="#">Career Opportunities</a></li>
+                    <li><a href="#">Become an Author</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-section">
+                <h4>Contact Us</h4>
+                <p>1607 N. Market Street<br>Champaign, IL 61820</p>
+                <p>p: 800-747-4457 / f: 217-351-1549</p>
+                <p><a href="mailto:CustomerSupport@hkusa.com">CustomerSupport@hkusa.com</a></p>
+                <div class="social-links" style="justify-content: flex-start; padding: 10px 0;">
+                    <a href="#" class="social-link" style="width: 30px; height: 30px; font-size: 1rem;">f</a>
+                    <a href="#" class="social-link" style="width: 30px; height: 30px; font-size: 1rem;">📷</a>
+                    <a href="#" class="social-link" style="width: 30px; height: 30px; font-size: 1rem;">▶️</a>
+                    <a href="#" class="social-link" style="width: 30px; height: 30px; font-size: 1rem;">🎵</a>
+                    <a href="#" class="social-link" style="width: 30px; height: 30px; font-size: 1rem;">📌</a>
+                    <a href="#" class="social-link" style="width: 30px; height: 30px; font-size: 1rem;">𝕏</a>
+                    <a href="#" class="social-link" style="width: 30px; height: 30px; font-size: 1rem;">in</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="footer-bottom">
+            <p>© 2026 Human Kinetics.</p>
+            <div style="margin-top: 10px;">
+                <a href="#" style="margin: 0 10px; color: var(--blue-medium);">Terms & Conditions</a>
+                <a href="#" style="margin: 0 10px; color: var(--blue-medium);">Privacy Policy</a>
+                <a href="#" style="margin: 0 10px; color: var(--blue-medium);">Product Safety</a>
+                <a href="#" style="margin: 0 10px; color: var(--blue-medium);">Safe Harbor Policy</a>
+                <a href="#" style="margin: 0 10px; color: var(--blue-medium);">Returns Policy</a>
+                <a href="#" style="margin: 0 10px; color: var(--blue-medium);">Shipping Policy</a>
+                <a href="#" style="margin: 0 10px; color: var(--blue-medium);">Continuing Education</a>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Chat Button -->
+    <button class="chat-btn">💬</button>
+
+    <script>
+        // Mobile Menu Toggle
+        const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
+        const navLinks = document.querySelector('.nav-links');
+
+        mobileMenuBtn.addEventListener('click', () => {
+            navLinks.classList.toggle('active');
+        });
+
+        // Back to Top Button
+        const backToTopBtn = document.querySelector('.back-to-top');
+
+        window.addEventListener('scroll', () => {
+            if (window.pageYOffset > 300) {
+                backToTopBtn.classList.add('visible');
+            } else {
+                backToTopBtn.classList.remove('visible');
+            }
+        });
+
+        backToTopBtn.addEventListener('click', () => {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        });
+
+        // Banner Slideshow (simplified)
+        const indicators = document.querySelectorAll('.indicator');
+        const bannerText = document.querySelector('.banner-content h2');
+        const banners = [
+            'FITNESS, AND EXERCISE',
+            'NEW RELEASES',
+            'CONTINUING EDUCATION',
+            'STUDENT RESOURCES'
+        ];
+        let currentBanner = 0;
+
+        function changeBanner() {
+            indicators.forEach((ind, index) => {
+                ind.classList.remove('active');
+                if (index === currentBanner) {
+                    ind.classList.add('active');
+                    bannerText.textContent = banners[index];
+                }
+            });
+            currentBanner = (currentBanner + 1) % banners.length;
+        }
+
+        indicators.forEach((indicator, index) => {
+            indicator.addEventListener('click', () => {
+                currentBanner = index;
+                changeBanner();
+            });
+        });
+
+        setInterval(changeBanner, 5000);
+
+        // Smooth scroll for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+    </script>
+</body>
+</html>
+```

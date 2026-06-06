@@ -1,0 +1,795 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>宿舍生活记</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+            background-color: #fff5f8;
+            color: #333;
+            min-height: 100vh;
+        }
+
+        /* Header */
+        .header {
+            background: linear-gradient(135deg, #ffb6c1 0%, #ffc0cb 50%, #ffd1dc 100%);
+            height: 56px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 24px;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 100;
+        }
+
+        .header-left {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .header-logo {
+            font-size: 18px;
+            color: #e91e63;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-weight: 600;
+        }
+
+        .header-nav {
+            display: flex;
+            gap: 40px;
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        .header-nav a {
+            text-decoration: none;
+            color: #555;
+            font-size: 15px;
+            transition: color 0.2s;
+        }
+
+        .header-nav a:hover {
+            color: #e91e63;
+        }
+
+        .header-right {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .bell-icon {
+            font-size: 18px;
+            color: #666;
+            cursor: pointer;
+        }
+
+        .avatar {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #ffd1dc 0%, #ffb6c1 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+        }
+
+        .avatar::after {
+            content: "👤";
+            font-size: 16px;
+        }
+
+        .dropdown-arrow {
+            font-size: 12px;
+            color: #666;
+            cursor: pointer;
+        }
+
+        /* Main Layout */
+        .main-container {
+            display: flex;
+            padding-top: 56px;
+            min-height: calc(100vh - 40px);
+        }
+
+        /* Left Sidebar */
+        .sidebar-left {
+            width: 190px;
+            background: #fff;
+            padding: 16px 12px;
+            flex-shrink: 0;
+            border-right: 1px solid #ffe4ec;
+            min-height: calc(100vh - 56px - 40px);
+        }
+
+        .new-record-card {
+            background: linear-gradient(135deg, #fff0f3 0%, #ffe8ef 100%);
+            border-radius: 8px;
+            padding: 16px;
+            margin-bottom: 20px;
+            cursor: pointer;
+            border: 1px solid #ffe0ea;
+        }
+
+        .new-record-card:hover {
+            background: linear-gradient(135deg, #ffe8ef 0%, #ffe0e8 100%);
+        }
+
+        .new-record-card .icon-row {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 6px;
+        }
+
+        .new-record-card .icon-row .plus-icon {
+            width: 20px;
+            height: 20px;
+            background: #e91e63;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #fff;
+            font-size: 14px;
+            font-weight: bold;
+        }
+
+        .new-record-card .icon-row span {
+            font-weight: 600;
+            color: #333;
+            font-size: 14px;
+        }
+
+        .new-record-card .subtitle {
+            color: #999;
+            font-size: 12px;
+            padding-left: 28px;
+        }
+
+        .sidebar-menu {
+            margin-top: 8px;
+        }
+
+        .sidebar-menu-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+            padding: 14px 8px;
+            cursor: pointer;
+            border-radius: 6px;
+            transition: background 0.2s;
+        }
+
+        .sidebar-menu-item:hover {
+            background: #fff5f8;
+        }
+
+        .sidebar-menu-item .menu-icon {
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            flex-shrink: 0;
+            margin-top: 2px;
+        }
+
+        .sidebar-menu-item:nth-child(1) .menu-icon {
+            background: #fff3e0;
+            color: #ff9800;
+        }
+
+        .sidebar-menu-item:nth-child(2) .menu-icon {
+            background: #e8f5e9;
+            color: #4caf50;
+        }
+
+        .sidebar-menu-item:nth-child(3) .menu-icon {
+            background: #e3f2fd;
+            color: #2196f3;
+        }
+
+        .sidebar-menu-item .menu-content {
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
+        }
+
+        .sidebar-menu-item .menu-title {
+            font-size: 14px;
+            font-weight: 500;
+            color: #333;
+        }
+
+        .sidebar-menu-item .menu-subtitle {
+            font-size: 12px;
+            color: #999;
+        }
+
+        .sidebar-tips {
+            margin-top: 24px;
+            padding-top: 16px;
+            border-top: 1px solid #f0f0f0;
+        }
+
+        .sidebar-tips p {
+            font-size: 11px;
+            color: #999;
+            line-height: 1.8;
+        }
+
+        /* Center Content */
+        .content-center {
+            flex: 1;
+            padding: 24px 40px;
+            max-width: 780px;
+            margin: 0 auto;
+        }
+
+        .page-subtitle {
+            text-align: center;
+            color: #888;
+            font-size: 14px;
+            margin-bottom: 24px;
+        }
+
+        .add-record-btn {
+            width: 100%;
+            background: linear-gradient(135deg, #ffc0cb 0%, #ffb6c1 100%);
+            border: none;
+            border-radius: 8px;
+            padding: 16px;
+            font-size: 16px;
+            color: #fff;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            margin-bottom: 24px;
+            font-weight: 500;
+            transition: opacity 0.2s;
+        }
+
+        .add-record-btn:hover {
+            opacity: 0.9;
+        }
+
+        .add-record-btn .plus {
+            font-size: 20px;
+            font-weight: bold;
+        }
+
+        /* Record Cards */
+        .record-card {
+            background: #fff;
+            border-radius: 12px;
+            padding: 24px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+            border: 1px solid #fff0f3;
+        }
+
+        .record-header {
+            display: flex;
+            align-items: flex-start;
+            justify-content: space-between;
+            margin-bottom: 16px;
+        }
+
+        .record-date-info {
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+        }
+
+        .record-date-icon {
+            width: 32px;
+            height: 32px;
+            background: linear-gradient(135deg, #ffd1dc 0%, #ffb6c1 100%);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 14px;
+            flex-shrink: 0;
+        }
+
+        .record-date-icon::after {
+            content: "📝";
+            font-size: 14px;
+        }
+
+        .record-date-text {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .record-date {
+            font-size: 16px;
+            font-weight: 600;
+            color: #333;
+        }
+
+        .record-time {
+            font-size: 13px;
+            color: #999;
+        }
+
+        .record-actions {
+            display: flex;
+            gap: 12px;
+        }
+
+        .record-actions button {
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-size: 16px;
+            color: #ccc;
+            transition: color 0.2s;
+        }
+
+        .record-actions button:hover {
+            color: #999;
+        }
+
+        .record-content {
+            margin-bottom: 16px;
+        }
+
+        .record-content p {
+            font-size: 14px;
+            color: #444;
+            line-height: 1.6;
+            margin-bottom: 12px;
+        }
+
+        .record-images {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+
+        .record-image {
+            width: 120px;
+            height: 90px;
+            border-radius: 8px;
+            object-fit: cover;
+        }
+
+        .record-image-placeholder {
+            width: 120px;
+            height: 90px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            color: #fff;
+        }
+
+        .record-tag {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 13px;
+            color: #888;
+        }
+
+        .record-tag .dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: #ffc0cb;
+        }
+
+        /* Right Sidebar */
+        .sidebar-right {
+            width: 240px;
+            padding: 24px 20px;
+            flex-shrink: 0;
+        }
+
+        .sidebar-right-title {
+            font-size: 18px;
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 16px;
+        }
+
+        .stat-card {
+            background: linear-gradient(135deg, #fff5f8 0%, #ffe8ef 100%);
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 24px;
+            text-align: center;
+            border: 1px solid #ffe0ea;
+        }
+
+        .stat-card .stat-label {
+            font-size: 13px;
+            color: #999;
+            margin-bottom: 8px;
+        }
+
+        .stat-card .stat-value {
+            font-size: 36px;
+            font-weight: 700;
+            color: #e91e63;
+        }
+
+        .mood-section {
+            margin-bottom: 24px;
+        }
+
+        .mood-section-title {
+            font-size: 15px;
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 12px;
+        }
+
+        .mood-bars {
+            display: flex;
+            gap: 6px;
+            align-items: flex-end;
+            height: 36px;
+        }
+
+        .mood-bar {
+            width: 20px;
+            background: #ffc0cb;
+            border-radius: 4px 4px 0 0;
+            transition: height 0.3s;
+        }
+
+        .tags-section {
+            margin-bottom: 20px;
+        }
+
+        .tags-section-title {
+            font-size: 15px;
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 12px;
+        }
+
+        .tag-list {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            align-items: flex-start;
+        }
+
+        .tag {
+            padding: 6px 14px;
+            border-radius: 20px;
+            font-size: 13px;
+            border: 1px solid;
+        }
+
+        .tag-开心 {
+            background: #e8f5e9;
+            color: #4caf50;
+            border-color: #c8e6c9;
+        }
+
+        .tag-搞笑 {
+            background: #fff3e0;
+            color: #ff9800;
+            border-color: #ffe0b2;
+        }
+
+        .tag-平淡 {
+            background: #e3f2fd;
+            color: #2196f3;
+            border-color: #bbdefb;
+        }
+
+        .motivational-text {
+            text-align: center;
+            color: #999;
+            font-size: 12px;
+            margin-top: 20px;
+            padding-top: 16px;
+            border-top: 1px solid #f0f0f0;
+        }
+
+        /* Footer */
+        .footer {
+            height: 40px;
+            background: #fff;
+            border-top: 1px solid #ffe4ec;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 24px;
+            font-size: 12px;
+            color: #999;
+        }
+
+        .footer-right {
+            display: flex;
+            gap: 20px;
+        }
+
+        .footer-right a {
+            color: #999;
+            text-decoration: none;
+        }
+
+        .footer-right a:hover {
+            color: #e91e63;
+        }
+
+        /* SVG Icons */
+        .icon-svg {
+            display: inline-block;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="header-left">
+            <span class="header-logo">
+                <span>🏠</span>
+                <span>宿舍生活记</span>
+            </span>
+        </div>
+        <nav class="header-nav">
+            <a href="#">首页</a>
+            <a href="#">记录板块</a>
+            <a href="#">统计中心</a>
+            <a href="#">帮助说明</a>
+        </nav>
+        <div class="header-right">
+            <span class="bell-icon">🔔</span>
+            <div class="avatar"></div>
+            <span class="dropdown-arrow">▼</span>
+        </div>
+    </header>
+
+    <!-- Main Container -->
+    <div class="main-container">
+        <!-- Left Sidebar -->
+        <aside class="sidebar-left">
+            <div class="new-record-card">
+                <div class="icon-row">
+                    <span class="plus-icon">+</span>
+                    <span>新增记录</span>
+                </div>
+                <div class="subtitle">记录你的每一天</div>
+            </div>
+
+            <div class="sidebar-menu">
+                <div class="sidebar-menu-item">
+                    <div class="menu-icon">👍</div>
+                    <div class="menu-content">
+                        <span class="menu-title">新手指引</span>
+                        <span class="menu-subtitle">快速上手</span>
+                    </div>
+                </div>
+                <div class="sidebar-menu-item">
+                    <div class="menu-icon">🎨</div>
+                    <div class="menu-content">
+                        <span class="menu-title">主题特色</span>
+                        <span class="menu-subtitle">发现更多有趣玩法</span>
+                    </div>
+                </div>
+                <div class="sidebar-menu-item">
+                    <div class="menu-icon">📖</div>
+                    <div class="menu-content">
+                        <span class="menu-title">操作说明</span>
+                        <span class="menu-subtitle">详细使用指南</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="sidebar-tips">
+                <p>新增记录: 记录你的每一天</p>
+                <p>新手指引: 快速上手</p>
+                <p>主题特色: 发现更多有趣玩法</p>
+                <p>操作说明: 详细使用指南</p>
+            </div>
+        </aside>
+
+        <!-- Center Content -->
+        <main class="content-center">
+            <p class="page-subtitle">在这里，留住与你爱室友美好的瞬间~</p>
+
+            <button class="add-record-btn">
+                <span class="plus">+</span>
+                <span>添加新记录</span>
+            </button>
+
+            <!-- Record 1 -->
+            <div class="record-card">
+                <div class="record-header">
+                    <div class="record-date-info">
+                        <div class="record-date-icon"></div>
+                        <div class="record-date-text">
+                            <span class="record-date">2023-09-01</span>
+                            <span class="record-time">20:00</span>
+                        </div>
+                    </div>
+                    <div class="record-actions">
+                        <button title="编辑">✏️</button>
+                        <button title="删除">🗑️</button>
+                    </div>
+                </div>
+                <div class="record-content">
+                    <p>我们一起打王者，非常不错，爆笑不断！</p>
+                    <div class="record-images">
+                        <div class="record-image-placeholder" style="background: linear-gradient(135deg, #2d2d2d 0%, #4a4a4a 50%, #1a1a1a 100%);">
+                            <span style="font-size: 40px;">🐕</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="record-tag">
+                    <span class="dot" style="background: #ffc0cb;"></span>
+                    <span>搞笑</span>
+                </div>
+            </div>
+
+            <!-- Record 2 -->
+            <div class="record-card">
+                <div class="record-header">
+                    <div class="record-date-info">
+                        <div class="record-date-icon"></div>
+                        <div class="record-date-text">
+                            <span class="record-date">2023-09-05</span>
+                            <span class="record-time">14:30</span>
+                        </div>
+                    </div>
+                    <div class="record-actions">
+                        <button title="编辑">✏️</button>
+                        <button title="删除">🗑️</button>
+                    </div>
+                </div>
+                <div class="record-content">
+                    <p>室友自制下午茶，蛋糕和奶茶超级好吃啊。</p>
+                    <div class="record-images">
+                        <div class="record-image-placeholder" style="background: linear-gradient(135deg, #8d6e63 0%, #5d4037 50%, #3e2723 100%);">
+                            <span style="font-size: 40px;">🍰</span>
+                        </div>
+                        <div class="record-image-placeholder" style="background: linear-gradient(135deg, #795548 0%, #6d4c41 50%, #4e342e 100%);">
+                            <span style="font-size: 40px;">☕</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="record-tag">
+                    <span class="dot" style="background: #c8e6c9;"></span>
+                    <span>开心</span>
+                </div>
+            </div>
+
+            <!-- Record 3 -->
+            <div class="record-card">
+                <div class="record-header">
+                    <div class="record-date-info">
+                        <div class="record-date-icon"></div>
+                        <div class="record-date-text">
+                            <span class="record-date">2023-09-07</span>
+                            <span class="record-time">23:15</span>
+                        </div>
+                    </div>
+                    <div class="record-actions">
+                        <button title="编辑">✏️</button>
+                        <button title="删除">🗑️</button>
+                    </div>
+                </div>
+                <div class="record-content">
+                    <p>夜深计划明天一起去游乐园。</p>
+                </div>
+                <div class="record-tag">
+                    <span class="dot" style="background: #bbdefb;"></span>
+                    <span>平淡</span>
+                </div>
+            </div>
+        </main>
+
+        <!-- Right Sidebar -->
+        <aside class="sidebar-right">
+            <h2 class="sidebar-right-title">统计中心</h2>
+
+            <div class="stat-card">
+                <div class="stat-label">总记录数</div>
+                <div class="stat-value">3</div>
+            </div>
+
+            <div class="mood-section">
+                <h3 class="mood-section-title">最近7天心情</h3>
+                <div class="mood-bars">
+                    <div class="mood-bar" style="height: 28px;"></div>
+                    <div class="mood-bar" style="height: 18px;"></div>
+                    <div class="mood-bar" style="height: 22px;"></div>
+                    <div class="mood-bar" style="height: 30px;"></div>
+                    <div class="mood-bar" style="height: 15px;"></div>
+                    <div class="mood-bar" style="height: 25px;"></div>
+                    <div class="mood-bar" style="height: 20px;"></div>
+                </div>
+            </div>
+
+            <div class="tags-section">
+                <h3 class="tags-section-title">热门心情标签</h3>
+                <div class="tag-list">
+                    <span class="tag tag-开心">开心</span>
+                    <span class="tag tag-搞笑">搞笑</span>
+                    <span class="tag tag-搞笑">搞笑</span>
+                    <span class="tag tag-平淡">平淡</span>
+                </div>
+            </div>
+
+            <p class="motivational-text">保持记录，让回忆更鲜活。</p>
+        </aside>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <span>© 2023 宿舍生活记</span>
+        <div class="footer-right">
+            <a href="#">帮助中心</a>
+            <a href="#">反馈建议</a>
+        </div>
+    </footer>
+
+    <script>
+        // Add record button interaction
+        document.querySelector('.add-record-btn').addEventListener('click', function() {
+            alert('添加新记录功能');
+        });
+
+        // Edit and delete buttons
+        document.querySelectorAll('.record-actions button').forEach(function(btn) {
+            btn.addEventListener('click', function(e) {
+                const action = e.target.closest('button').title;
+                const card = e.target.closest('.record-card');
+                const date = card.querySelector('.record-date').textContent;
+                if (action === '编辑') {
+                    alert('编辑记录: ' + date);
+                } else if (action === '删除') {
+                    if (confirm('确定删除 ' + date + ' 的记录吗？')) {
+                        card.style.opacity = '0';
+                        card.style.transform = 'translateY(-10px)';
+                        setTimeout(() => card.remove(), 300);
+                    }
+                }
+            });
+        });
+
+        // Sidebar menu items
+        document.querySelectorAll('.sidebar-menu-item').forEach(function(item) {
+            item.addEventListener('click', function() {
+                const title = this.querySelector('.menu-title').textContent;
+                alert('打开: ' + title);
+            });
+        });
+
+        // New record card
+        document.querySelector('.new-record-card').addEventListener('click', function() {
+            alert('添加新记录');
+        });
+    </script>
+</body>
+</html>

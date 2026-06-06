@@ -1,0 +1,676 @@
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Perseus Digital Library - Euripides, Ion</title>
+<style>
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+  body {
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 13px;
+    color: #000;
+    background: #fff;
+  }
+  a {
+    color: #0000EE;
+    text-decoration: underline;
+  }
+  a:visited {
+    color: #551A8B;
+  }
+  
+  /* Header */
+  .header {
+    display: flex;
+    padding: 8px 10px;
+    border-bottom: 1px solid #ccc;
+  }
+  .header-left {
+    display: flex;
+    align-items: flex-start;
+  }
+  .header-icon {
+    width: 55px;
+    height: 60px;
+    background: linear-gradient(135deg, #8B4513 0%, #A0522D 40%, #CD853F 60%, #8B4513 100%);
+    border-radius: 4px;
+    margin-right: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .header-icon::after {
+    content: '';
+    position: absolute;
+    width: 30px;
+    height: 40px;
+    background: linear-gradient(180deg, #D2691E 0%, #8B4513 100%);
+    border-radius: 50% 50% 0 0;
+    top: 8px;
+  }
+  .header-title {
+    font-size: 18px;
+    line-height: 1.3;
+  }
+  .header-title em {
+    font-style: italic;
+  }
+  .header-right {
+    margin-left: auto;
+    text-align: right;
+  }
+  .search-row {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    margin-bottom: 4px;
+  }
+  .search-input {
+    width: 150px;
+    padding: 2px 4px;
+    border: 1px solid #999;
+    font-size: 12px;
+  }
+  .search-btn {
+    padding: 2px 10px;
+    margin-left: 4px;
+    border: 1px solid #999;
+    background: #f0f0f0;
+    cursor: pointer;
+    font-size: 12px;
+  }
+  .search-examples {
+    font-size: 11px;
+    color: #666;
+    margin-bottom: 2px;
+  }
+  .search-links {
+    font-size: 11px;
+  }
+  .search-links a {
+    font-size: 11px;
+  }
+  
+  /* Navigation */
+  .nav-bar {
+    background: linear-gradient(180deg, #f8f8f8 0%, #e8e8e8 100%);
+    border-bottom: 1px solid #ccc;
+    padding: 0 10px;
+    display: flex;
+    gap: 0;
+  }
+  .nav-bar a {
+    display: inline-block;
+    padding: 6px 14px;
+    color: #000;
+    text-decoration: none;
+    font-size: 12px;
+    border-right: 1px solid #ccc;
+  }
+  .nav-bar a:hover {
+    background: #ddd;
+  }
+  .nav-bar a:first-child {
+    border-left: 1px solid #ccc;
+  }
+  
+  /* Browse Bar */
+  .browse-bar {
+    background: #f5f5f0;
+    border-bottom: 1px solid #ccc;
+    padding: 4px 10px;
+  }
+  .browse-info {
+    font-size: 11px;
+    color: #333;
+    margin-bottom: 4px;
+  }
+  .browse-info b {
+    color: #006600;
+  }
+  .browse-bar-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .hide-browse {
+    font-size: 11px;
+    float: right;
+  }
+  .progress-bar {
+    display: flex;
+    height: 12px;
+    margin: 4px 0;
+    border: 1px solid #ccc;
+  }
+  .progress-segment {
+    flex: 1;
+    background: #e0e0d8;
+    border-right: 1px solid #ccc;
+  }
+  .progress-segment.active {
+    background: #0000CC;
+  }
+  .card-row {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 4px 0;
+    font-size: 12px;
+  }
+  .card-row span {
+    color: #333;
+  }
+  .card-arrows a {
+    color: #0066CC;
+    text-decoration: none;
+    font-size: 14px;
+    margin: 0 2px;
+  }
+  .card-select {
+    padding: 2px 6px;
+    border: 1px solid #999;
+    font-size: 12px;
+    width: 120px;
+  }
+  
+  /* Main Layout */
+  .main-container {
+    display: flex;
+    min-height: calc(100vh - 180px);
+  }
+  
+  /* Left Sidebar */
+  .left-sidebar {
+    width: 180px;
+    min-width: 180px;
+    border-right: 1px solid #ccc;
+    font-size: 12px;
+  }
+  .sidebar-header {
+    background: #d8d8d0;
+    padding: 4px 8px;
+    font-weight: bold;
+    font-size: 11px;
+    border-bottom: 1px solid #bbb;
+    color: #333;
+  }
+  .sidebar-content {
+    padding: 6px 8px;
+  }
+  .sidebar-content a {
+    display: block;
+    font-size: 12px;
+    margin-bottom: 2px;
+  }
+  .toc-header {
+    background: #d8d8d0;
+    padding: 4px 8px;
+    font-weight: bold;
+    font-size: 11px;
+    border-bottom: 1px solid #bbb;
+    border-top: 1px solid #bbb;
+    color: #333;
+  }
+  .toc-list {
+    padding: 4px 8px;
+    max-height: 500px;
+    overflow-y: auto;
+  }
+  .toc-list a {
+    display: block;
+    font-size: 11px;
+    padding: 1px 0;
+    color: #0000EE;
+  }
+  
+  /* Center Content */
+  .center-content {
+    flex: 1;
+    padding: 10px 20px;
+    min-width: 0;
+  }
+  .speaker {
+    font-weight: bold;
+    margin-top: 14px;
+    margin-bottom: 2px;
+    font-size: 13px;
+  }
+  .speaker:first-child {
+    margin-top: 0;
+  }
+  .line-text {
+    margin-bottom: 4px;
+    line-height: 1.5;
+    font-size: 13px;
+  }
+  .line-number {
+    color: #666;
+  }
+  
+  /* Right Sidebar */
+  .right-sidebar {
+    width: 300px;
+    min-width: 300px;
+    border-left: 1px solid #ccc;
+    font-size: 12px;
+  }
+  .right-section {
+    border-bottom: 1px solid #ccc;
+  }
+  .right-header {
+    background: #d8d8d0;
+    padding: 4px 8px;
+    font-weight: bold;
+    font-size: 11px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .right-header a {
+    font-weight: normal;
+    font-size: 11px;
+  }
+  .right-content {
+    padding: 6px 8px;
+    font-size: 11px;
+    line-height: 1.5;
+  }
+  .right-content a {
+    font-size: 11px;
+  }
+  .right-content p {
+    margin-bottom: 6px;
+  }
+  .search-section .search-form {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    margin-bottom: 6px;
+  }
+  .search-section input[type="text"] {
+    width: 180px;
+    padding: 2px 4px;
+    border: 1px solid #999;
+    font-size: 12px;
+  }
+  .search-section .btn {
+    padding: 2px 10px;
+    border: 1px solid #999;
+    background: #f0f0f0;
+    cursor: pointer;
+    font-size: 12px;
+  }
+  .checkbox-row {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    margin-top: 4px;
+    font-size: 11px;
+  }
+  .checkbox-row input[type="checkbox"] {
+    margin: 0;
+  }
+  .uri-text {
+    font-size: 10px;
+    word-break: break-all;
+    color: #333;
+    margin-bottom: 4px;
+  }
+  .uri-label {
+    font-weight: bold;
+    font-size: 11px;
+  }
+  .pref-row {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 6px;
+    font-size: 11px;
+  }
+  .pref-row label {
+    min-width: 100px;
+  }
+  .pref-row select {
+    font-size: 11px;
+    padding: 1px;
+  }
+  .update-btn {
+    padding: 2px 10px;
+    border: 1px solid #999;
+    background: #f0f0f0;
+    cursor: pointer;
+    font-size: 11px;
+    margin-top: 4px;
+  }
+  
+  .greek-text {
+    margin-bottom: 4px;
+  }
+</style>
+</head>
+<body>
+
+<!-- Header -->
+<div class="header">
+  <div class="header-left">
+    <div class="header-icon"></div>
+    <div class="header-title">
+      <strong>Euripides, <em>Ion</em></strong><br>
+      <strong>Robert Potter, Ed.</strong>
+    </div>
+  </div>
+  <div class="header-right">
+    <div class="search-row">
+      <input type="text" class="search-input" value="">
+      <button class="search-btn">Search</button>
+    </div>
+    <div class="search-examples">("Agamemnon", "Hom. Od. 9.1", "denarius")</div>
+    <div class="search-links">
+      <a href="#">All Search Options</a> [<a href="#">view abbreviations</a>]
+    </div>
+  </div>
+</div>
+
+<!-- Navigation Bar -->
+<div class="nav-bar">
+  <a href="#">Home</a>
+  <a href="#">Collections/Texts</a>
+  <a href="#">Perseus Catalog</a>
+  <a href="#">Research</a>
+  <a href="#">Grants</a>
+  <a href="#">Open Source</a>
+  <a href="#">About</a>
+  <a href="#">Help</a>
+</div>
+
+<!-- Browse Bar -->
+<div class="browse-bar">
+  <div class="browse-bar-header">
+    <div class="browse-info">
+      Your current position in the text is marked in blue. Click anywhere in the line to jump to another position.
+    </div>
+    <a href="#" class="hide-browse" style="font-size:11px;">Hide browse bar</a>
+  </div>
+  <div class="progress-bar">
+    <div class="progress-segment"></div>
+    <div class="progress-segment"></div>
+    <div class="progress-segment"></div>
+    <div class="progress-segment"></div>
+    <div class="progress-segment"></div>
+    <div class="progress-segment"></div>
+    <div class="progress-segment"></div>
+    <div class="progress-segment"></div>
+    <div class="progress-segment"></div>
+    <div class="progress-segment"></div>
+    <div class="progress-segment"></div>
+    <div class="progress-segment"></div>
+    <div class="progress-segment"></div>
+    <div class="progress-segment"></div>
+    <div class="progress-segment"></div>
+    <div class="progress-segment active"></div>
+    <div class="progress-segment"></div>
+    <div class="progress-segment"></div>
+    <div class="progress-segment"></div>
+    <div class="progress-segment"></div>
+    <div class="progress-segment"></div>
+    <div class="progress-segment"></div>
+    <div class="progress-segment"></div>
+    <div class="progress-segment"></div>
+    <div class="progress-segment"></div>
+    <div class="progress-segment"></div>
+    <div class="progress-segment"></div>
+    <div class="progress-segment"></div>
+    <div class="progress-segment"></div>
+    <div class="progress-segment"></div>
+    <div class="progress-segment"></div>
+    <div class="progress-segment"></div>
+    <div class="progress-segment"></div>
+    <div class="progress-segment"></div>
+    <div class="progress-segment"></div>
+    <div class="progress-segment"></div>
+    <div class="progress-segment"></div>
+    <div class="progress-segment"></div>
+    <div class="progress-segment"></div>
+    <div class="progress-segment"></div>
+  </div>
+  <div class="card-row">
+    <span>card:</span>
+    <div class="card-arrows">
+      <a href="#">&larr;</a>
+      <a href="#">&rarr;</a>
+    </div>
+    <select class="card-select">
+      <option>Eur. Ion 355</option>
+    </select>
+  </div>
+</div>
+
+<!-- Main Container -->
+<div class="main-container">
+  
+  <!-- Left Sidebar -->
+  <div class="left-sidebar">
+    <div class="sidebar-header">This text is part of:</div>
+    <div class="sidebar-content">
+      <a href="#">Greek and Roman Materials</a>
+    </div>
+    
+    <div class="sidebar-header">Search the Perseus Catalog for:</div>
+    <div class="sidebar-content">
+      <a href="#">Editions/Translations</a>
+      <a href="#">Author Group</a>
+    </div>
+    
+    <div class="toc-header">Table of Contents:</div>
+    <div class="toc-list">
+      <a href="#">lines 1-40</a>
+      <a href="#">lines 41-81</a>
+      <a href="#">lines 82-111</a>
+      <a href="#">lines 112-127</a>
+      <a href="#">lines 128-143</a>
+      <a href="#">lines 144-183</a>
+      <a href="#">lines 184-193</a>
+      <a href="#">lines 194-204</a>
+      <a href="#">lines 205-218</a>
+      <a href="#">lines 219-236</a>
+      <a href="#">lines 237-274</a>
+      <a href="#">lines 275-307</a>
+      <a href="#">lines 308-354</a>
+      <a href="#" style="font-weight:bold;background:#ffffcc;">lines 355-400</a>
+      <a href="#">lines 401-451</a>
+      <a href="#">lines 452-471</a>
+      <a href="#">lines 472-491</a>
+      <a href="#">lines 492-509</a>
+      <a href="#">lines 510-543</a>
+      <a href="#">lines 544-565</a>
+      <a href="#">lines 566-606</a>
+      <a href="#">lines 607-649</a>
+      <a href="#">lines 650-675</a>
+      <a href="#">lines 676-694</a>
+      <a href="#">lines 695-713</a>
+      <a href="#">lines 714-724</a>
+      <a href="#">lines 725-773</a>
+      <a href="#">lines 774-807</a>
+      <a href="#">lines 808-835</a>
+      <a href="#">lines 836-858</a>
+      <a href="#">lines 859-880</a>
+      <a href="#">lines 881-906</a>
+      <a href="#">lines 907-922</a>
+      <a href="#">lines 923-965</a>
+      <a href="#">lines 966-997</a>
+      <a href="#">lines 998-1047</a>
+      <a href="#">lines 1048-1060</a>
+      <a href="#">lines 1061-1073</a>
+      <a href="#">lines 1074-1089</a>
+      <a href="#">lines 1090-1105</a>
+      <a href="#">lines 1106-1131</a>
+      <a href="#">lines 1132-1176</a>
+      <a href="#">lines 1177-1200</a>
+      <a href="#">lines 1201-1228</a>
+    </div>
+  </div>
+  
+  <!-- Center Content -->
+  <div class="center-content">
+    <div class="speaker">Ion</div>
+    <div class="line-text"><span class="line-number">[355]</span> The god has wronged him; the mother is unhappy.</div>
+    
+    <div class="speaker">Creusa</div>
+    <div class="line-text">She did not bear any other child afterwards.</div>
+    
+    <div class="speaker">Ion</div>
+    <div class="line-text">What if Phoebus took him and brought him up in secret?</div>
+    
+    <div class="speaker">Creusa</div>
+    <div class="line-text">He does wrong to enjoy a common pleasure alone.</div>
+    
+    <div class="speaker">Ion</div>
+    <div class="line-text">Alas! This misfortune is in accord with my sorrow.</div>
+    
+    <div class="speaker">Creusa</div>
+    <div class="line-text"><span class="line-number">[360]</span> Stranger, I think an unhappy mother longs for you also.</div>
+    
+    <div class="speaker">Ion</div>
+    <div class="line-text">Do not draw me to griefs that I have forgotten!</div>
+    
+    <div class="speaker">Creusa</div>
+    <div class="line-text">I am silent; can you fulfil what I am asking you about?</div>
+    
+    <div class="speaker">Ion</div>
+    <div class="line-text">Do you know what part of your enquiry is especially ailing?</div>
+    
+    <div class="speaker">Creusa</div>
+    <div class="line-text">What is not diseased for that wretched woman?</div>
+    
+    <div class="speaker">Ion</div>
+    <div class="line-text"><span class="line-number">[365]</span> How shall the god prophesy what he wants to hide?</div>
+    
+    <div class="speaker">Creusa</div>
+    <div class="line-text">He will, if he is indeed seated on the public tripod of <a href="#">Hellas</a>.</div>
+    
+    <div class="speaker">Ion</div>
+    <div class="line-text">He is ashamed of the deed; do not convict him.</div>
+    
+    <div class="speaker">Creusa</div>
+    <div class="line-text">But the one who suffered this misfortune is in pain.</div>
+    
+    <div class="speaker">Ion</div>
+    <div class="line-text"><span class="line-number">[370]</span> There is no one who will be your interpreter. <span class="line-number">[375]</span> If Phoebus appeared evil in his own home, he would rightly do some harm to the one who gave you the oracle. Cease this, lady. There must be no consultation contrary to the god. For we would come to such folly as that, <span class="line-number">[375]</span> if we shall work on the gods to say what they are not willing to say, either by sacrifice of sheep at the altar or through the flight of birds. For what we violently strive after, when the gods are unwilling, we possess as unwilling goods, lady; <span class="line-number">[380]</span> whatever they give willingly is a benefit to us.</div>
+    
+    <div class="speaker">Chorus Leader</div>
+    <div class="line-text">There are many misfortunes for many mortals, and their shapes are various. One could scarcely ever find one piece of good fortune ...</div>
+  </div>
+  
+  <!-- Right Sidebar -->
+  <div class="right-sidebar">
+    
+    <!-- Greek Section -->
+    <div class="right-section">
+      <div class="right-header">
+        <span>Greek (Gilbert Murray, 1913)</span>
+        <div>
+          <a href="#">focus</a>
+          <a href="#">load</a>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Places Section -->
+    <div class="right-section">
+      <div class="right-header">
+        <span>Places (automatically extracted)</span>
+        <a href="#">hide</a>
+      </div>
+      <div class="right-content">
+        <p><a href="#">View a map</a> of the most frequently mentioned places in this document.</p>
+        <p>Sort places <a href="#">alphabetically</a>, <a href="#">as they appear on the page</a>, <a href="#">by frequency</a><br>
+        Click on a place to search for it in this document.<br>
+        <a href="#">Greece</a> (Greece) (1)</p>
+        <p>Download <a href="#">Pleiades ancient places geospatial dataset for this text</a>.</p>
+      </div>
+    </div>
+    
+    <!-- Search Section -->
+    <div class="right-section search-section">
+      <div class="right-header">
+        <span>Search</span>
+        <a href="#">hide</a>
+      </div>
+      <div class="right-content">
+        <div class="search-form">
+          <input type="text" placeholder="">
+          <button class="btn">Search</button>
+        </div>
+        <div>Searching in English. <a href="#">More search options</a></div>
+        <div style="margin-top:4px;">Limit Search to:</div>
+        <div class="checkbox-row">
+          <input type="checkbox" checked>
+          <label>Ion (this document)</label>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Stable Identifiers Section -->
+    <div class="right-section">
+      <div class="right-header">
+        <span>Stable Identifiers</span>
+        <a href="#">hide</a>
+      </div>
+      <div class="right-content">
+        <p><span class="uri-label">Citation URI:</span> <span class="uri-text">http://data.perseus.org/citations/urn:cts:greekLit:tlg0006.tlg010.perseus-eng1:355-400</span></p>
+        <p><span class="uri-label">Text URI:</span> <span class="uri-text">http://data.perseus.org/texts/urn:cts:greekLit:tlg0006.tlg010.perseus-eng1</span></p>
+        <p><span class="uri-label">Work URI:</span> <span class="uri-text">http://data.perseus.org/texts/urn:cts:greekLit:tlg0006.tlg010</span></p>
+        <p><span class="uri-label">Catalog Record URI:</span> <span class="uri-text">http://data.perseus.org/catalog/urn:cts:greekLit:tlg0006.tlg010.perseus-eng1</span></p>
+      </div>
+    </div>
+    
+    <!-- Display Preferences Section -->
+    <div class="right-section">
+      <div class="right-header">
+        <span>Display Preferences</span>
+        <a href="#">hide</a>
+      </div>
+      <div class="right-content">
+        <div class="pref-row">
+          <label>Greek Display:</label>
+          <select>
+            <option>Unicode (precombined)</option>
+          </select>
+        </div>
+        <div class="pref-row">
+          <label>Arabic Display:</label>
+          <select>
+            <option>Unicode</option>
+          </select>
+        </div>
+        <div class="pref-row">
+          <label>View by Default:</label>
+          <select>
+            <option>Translation</option>
+          </select>
+        </div>
+        <div class="pref-row">
+          <label>Browse Bar:</label>
+          <select>
+            <option>Show by default</option>
+          </select>
+        </div>
+        <button class="update-btn">Update Preferences</button>
+      </div>
+    </div>
+    
+  </div>
+</div>
+
+</body>
+</html>
+```

@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Webinar Kit Digital</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f0f0f0;
+            color: #333;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 960px;
+            margin: 20px auto;
+            background-color: #fff;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+
+        /* 顶部大图区域 */
+        .hero-image {
+            width: 100%;
+            height: 600px;
+            background-color: #b0bec5;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            font-size: 24px;
+            font-weight: bold;
+        }
+
+        /* 活动信息头部 */
+        .event-header {
+            display: flex;
+            padding: 20px 30px;
+            background-color: #f9f9f9;
+            border-bottom: 1px solid #eee;
+        }
+
+        .event-date {
+            background-color: #f7941e;
+            color: white;
+            padding: 15px 20px;
+            text-align: center;
+            min-width: 80px;
+            margin-right: 25px;
+            border-radius: 4px;
+            font-weight: bold;
+        }
+
+        .event-date .day {
+            font-size: 36px;
+            line-height: 1;
+        }
+
+        .event-date .month {
+            font-size: 18px;
+            margin-top: 5px;
+        }
+
+        .event-info {
+            flex-grow: 1;
+        }
+
+        .event-title {
+            font-size: 20px;
+            font-weight: bold;
+            color: #1a3c5e;
+            margin-bottom: 5px;
+            line-height: 1.3;
+        }
+
+        .event-category {
+            color: #f7941e;
+            font-size: 14px;
+            font-weight: bold;
+            margin-bottom: 15px;
+        }
+
+        .event-details {
+            font-size: 14px;
+            color: #555;
+        }
+
+        .event-details p {
+            margin-bottom: 3px;
+        }
+
+        /* 注册按钮 */
+        .register-button {
+            display: inline-block;
+            background-color: #1a3c5e;
+            color: white;
+            padding: 10px 25px;
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: bold;
+            border-radius: 4px;
+            align-self: center;
+            margin-left: 20px;
+        }
+
+        .register-button:hover {
+            background-color: #14314a;
+        }
+
+        /* 内容区域 */
+        .content-area {
+            padding: 30px;
+        }
+
+        .content-image {
+            width: 100%;
+            max-width: 800px;
+            height: 450px;
+            background-color: #b0bec5;
+            margin: 0 auto 30px auto;
+            display: block;
+        }
+
+        .content-text {
+            font-size: 15px;
+            color: #444;
+            margin-bottom: 20px;
+            text-align: justify;
+        }
+
+        .section-title {
+            font-size: 16px;
+            font-weight: bold;
+            color: #1a3c5e;
+            margin: 25px 0 15px 0;
+        }
+
+        .speaker-list {
+            list-style-type: disc;
+            padding-left: 40px;
+            margin-bottom: 25px;
+        }
+
+        .speaker-list li {
+            font-size: 14px;
+            margin-bottom: 8px;
+            color: #444;
+        }
+
+        .speaker-list em {
+            font-style: italic;
+            color: #666;
+        }
+
+        /* 底部链接区域 */
+        .footer-links {
+            background-color: #f7941e;
+            padding: 15px 30px;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .footer-link {
+            display: flex;
+            align-items: center;
+            color: white;
+            font-size: 14px;
+            font-weight: bold;
+            text-decoration: none;
+            text-transform: uppercase;
+        }
+
+        .footer-link:hover {
+            text-decoration: underline;
+        }
+
+        .link-icon {
+            width: 30px;
+            height: 30px;
+            background-color: #b0bec5;
+            margin-right: 10px;
+            border-radius: 4px;
+        }
+
+        /* 合作伙伴区域 */
+        .partners {
+            padding: 30px;
+            border-top: 3px solid #f7941e;
+        }
+
+        .partner-section {
+            margin-bottom: 30px;
+        }
+
+        .partner-title {
+            font-size: 16px;
+            font-weight: bold;
+            color: #1a3c5e;
+            margin-bottom: 15px;
+        }
+
+        .partner-logos {
+            display: flex;
+            gap: 30px;
+            flex-wrap: wrap;
+        }
+
+        .partner-logo {
+            width: 150px;
+            height: 80px;
+            background-color: #b0bec5;
+            border-radius: 4px;
+        }
+
+        /* 右下角滚动按钮 */
+        .scroll-button {
+            position: fixed;
+            bottom: 40px;
+            right: 40px;
+            background-color: #1a3c5e;
+            color: white;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 24px;
+            text-decoration: none;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+            border: none;
+            cursor: pointer;
+        }
+
+        .scroll-button:hover {
+            background-color: #14314a;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <!-- 顶部大图 -->
+    <div class="hero-image">
+        [ Imagen del webinar ]
+    </div>
+
+    <!-- 活动信息头部 -->
+    <div class="event-header">
+        <div class="event-date">
+            <div class="day">03</div>
+            <div class="month">NOV</div>
+        </div>
+
+        <div class="event-info">
+            <h1 class="event-title">WEBINAR KIT DIGITAL: SEGMENTO III, CONVOCATORIA PARA AUTÓNOMOS Y EMPRESAS DE HASTA 2 TRABAJADORES</h1>
+            <div class="event-category">WEBINAR</div>
+            <div class="event-details">
+                <p>• Fecha: Jueves, 03 de noviembre</p>
+                <p>• Horario: 09:30 - 10:30</p>
+                <p>• Lugar: Online, Plataforma Zoom de CEN</p>
+            </div>
+        </div>
+
+        <a href="#" class="register-button">APÚNTATE AHORA</a>
+    </div>
+
+    <!-- 内容区域 -->
+    <div class="content-area">
+        <div class="content-image"></div>
+
+        <p class="content-text">
+            Desde CEN, y con la colaboración de la Oficina Acelera Pyme Iris coordinada por AIN, organizamos este Webinar con el objetivo de informar a todos los autónomos y empresas de hasta 2 trabajadores sobre las ayudas del programa Kit Digital financiado por los fondos europeos de recuperación, Next Generation EU.
+        </p>
+
+        <p class="content-text">
+            Las ayudas de esta segunda convocatoria del Kit Digital subvencionarán con hasta 2.000 euros la implantación de soluciones para avanzar en la digitalización. Los autónomos y las pymes de hasta 2 empleados podrán presentar la solicitud desde el 20 de octubre de 2022 a las 11:00, hasta el 20 de octubre de 2023. Una partida de 500 millones de euros que se irá distribuyendo a este grupo de empresas por orden de llegada de las solicitudes presentadas. Según las cifras del Instituto de Estadística de Navarra, en la Comunidad Foral existen un total de 21.952 autónomos y 9.230 micropymes de hasta 2 trabajadores.
+        </p>
+
+        <h3 class="section-title">Bienvenida</h3>
+        <ul class="speaker-list">
+            <li>Carlos Fernández Valdivielso, <em>Secretario General de CEN</em></li>
+            <li>Susana Otazu, <em>Responsable del Área de Formación, Selección y Consultoria de RRHH de AIN</em></li>
+        </ul>
+
+        <h3 class="section-title">Explicación detalles de la convocatoria</h3>
+        <ul class="speaker-list">
+            <li>Miguel Luquin, Consultor de Transformación Digital y estrategia en AIN</li>
+        </ul>
+
+        <h3 class="section-title">Turno de preguntas, modera CEN</h3>
+        <ul class="speaker-list">
+            <li>Javier Enciso, <em>Responsable de la Oficina cexeuropa de CEN</em></li>
+        </ul>
+    </div>
+
+    <!-- 底部链接区域 -->
+    <div class="footer-links">
+        <a href="#" class="footer-link">
+            <div class="link-icon"></div>
+            VER AGENDA COMPLETA
+        </a>
+        <a href="#" class="footer-link">
+            <div class="link-icon"></div>
+            SUSCRIPCIÓN BOLETÍN ACTIVIDADES
+        </a>
+    </div>
+
+    <!-- 合作伙伴区域 -->
+    <div class="partners">
+        <div class="partner-section">
+            <h4 class="partner-title">ORGANIZA:</h4>
+            <div class="partner-logos">
+                <div class="partner-logo"></div>
+            </div>
+        </div>
+        
+        <div class="partner-section">
+            <h4 class="partner-title">COLABORA:</h4>
+            <div class="partner-logos">
+                <div class="partner-logo"></div>
+                <div class="partner-logo"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- 回到顶部按钮 -->
+<button class="scroll-button" id="scrollTopBtn">↑</button>
+
+<script>
+    // 滚动到顶部按钮功能
+    const scrollTopBtn = document.getElementById('scrollTopBtn');
+    
+    scrollTopBtn.addEventListener('click', function() {
+        window.scrollTo({
+            top: 0,
+            behavior: 'smooth'
+        });
+    });
+
+    // 显示/隐藏滚动按钮
+    window.addEventListener('scroll', function() {
+        if (window.pageYOffset > 300) {
+            scrollTopBtn.style.display = 'flex';
+        } else {
+            scrollTopBtn.style.display = 'none';
+        }
+    });
+
+    // 初始状态
+    scrollTopBtn.style.display = 'none';
+</script>
+
+</body>
+</html>

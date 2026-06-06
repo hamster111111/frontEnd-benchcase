@@ -1,0 +1,1125 @@
+```html
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Face Shop - Visit Seoul</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Malgun Gothic', 'Apple SD Gothic Neo', sans-serif;
+            color: #333;
+            line-height: 1.6;
+            background: #fff;
+        }
+        
+        /* Header */
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 40px;
+            border-bottom: 1px solid #e5e5e5;
+            background: #fff;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            text-decoration: none;
+        }
+        
+        .logo-text {
+            font-size: 18px;
+            font-weight: 700;
+            color: #005BAC;
+        }
+        
+        .logo-text span {
+            color: #333;
+        }
+        
+        .logo-subtitle {
+            font-size: 9px;
+            color: #666;
+            display: block;
+        }
+        
+        .nav {
+            display: flex;
+            gap: 30px;
+        }
+        
+        .nav a {
+            text-decoration: none;
+            color: #333;
+            font-size: 15px;
+            font-weight: 500;
+        }
+        
+        .nav a:hover {
+            color: #005BAC;
+        }
+        
+        .header-right {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+        
+        .header-icon {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            font-size: 13px;
+            color: #666;
+        }
+        
+        .icon-btn {
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 5px;
+            color: #333;
+            font-size: 20px;
+        }
+        
+        .hamburger {
+            display: none;
+            flex-direction: column;
+            gap: 4px;
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 5px;
+        }
+        
+        .hamburger span {
+            width: 20px;
+            height: 2px;
+            background: #333;
+        }
+        
+        /* Breadcrumb */
+        .breadcrumb {
+            padding: 15px 40px;
+            font-size: 13px;
+            color: #666;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .breadcrumb a {
+            color: #666;
+            text-decoration: none;
+        }
+        
+        .breadcrumb .home-icon {
+            font-size: 14px;
+        }
+        
+        .breadcrumb .separator {
+            color: #ccc;
+        }
+        
+        /* Main Content */
+        .main-content {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 0 40px 60px;
+        }
+        
+        /* Title Section */
+        .title-section {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        
+        .category {
+            color: #005BAC;
+            font-size: 14px;
+            margin-bottom: 10px;
+        }
+        
+        .shop-title {
+            font-size: 32px;
+            font-weight: 600;
+            margin-bottom: 15px;
+            color: #222;
+        }
+        
+        .action-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+        }
+        
+        .action-btn {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            border: 1px solid #ddd;
+            background: #fff;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 16px;
+            color: #666;
+        }
+        
+        .action-btn:hover {
+            background: #f5f5f5;
+        }
+        
+        .published-date {
+            text-align: center;
+            font-size: 12px;
+            color: #999;
+            margin-top: 15px;
+            padding-top: 15px;
+            border-top: 1px solid #eee;
+        }
+        
+        /* Shop Image */
+        .shop-image {
+            width: 100%;
+            height: 400px;
+            background: linear-gradient(135deg, #f8f8f8 0%, #e8e8e8 100%);
+            border-radius: 4px;
+            margin: 25px 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .shop-image-placeholder {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 15px;
+        }
+        
+        .shop-logo-text {
+            font-size: 48px;
+            font-weight: 700;
+            color: #2d5a3d;
+            letter-spacing: 2px;
+        }
+        
+        .shop-interior {
+            display: flex;
+            gap: 20px;
+        }
+        
+        .interior-block {
+            width: 150px;
+            height: 100px;
+            background: linear-gradient(135deg, #d4c4a8 0%, #b8a88c 100%);
+            border-radius: 4px;
+        }
+        
+        /* Description */
+        .description {
+            font-size: 14px;
+            line-height: 1.8;
+            color: #555;
+            margin-bottom: 30px;
+        }
+        
+        /* Info Table */
+        .info-table {
+            width: 100%;
+            margin-bottom: 30px;
+        }
+        
+        .info-row {
+            display: flex;
+            padding: 12px 0;
+            border-bottom: 1px solid #eee;
+            font-size: 14px;
+        }
+        
+        .info-label {
+            width: 180px;
+            font-weight: 600;
+            color: #333;
+        }
+        
+        .info-value {
+            flex: 1;
+            color: #666;
+        }
+        
+        .info-value a {
+            color: #005BAC;
+            text-decoration: none;
+        }
+        
+        /* Map */
+        .map-container {
+            width: 100%;
+            height: 350px;
+            background: linear-gradient(180deg, #e8f0e8 0%, #d0e0d0 100%);
+            border-radius: 4px;
+            margin: 30px 0;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .map-placeholder {
+            width: 100%;
+            height: 100%;
+            background: 
+                linear-gradient(90deg, transparent 48%, #8fb88f 48%, #8fb88f 52%, transparent 52%),
+                linear-gradient(0deg, transparent 48%, #8fb88f 48%, #8fb88f 52%, transparent 52%),
+                linear-gradient(45deg, transparent 45%, #a8c8a8 45%, #a8c8a8 55%, transparent 55%),
+                #e0efe0;
+            background-size: 40px 40px, 40px 40px, 100% 100%, 100% 100%;
+        }
+        
+        .map-pin {
+            position: absolute;
+            top: 45%;
+            left: 55%;
+            width: 24px;
+            height: 34px;
+            background: #e53935;
+            border-radius: 50% 50% 50% 0;
+            transform: rotate(-45deg);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .map-pin::after {
+            content: '';
+            width: 10px;
+            height: 10px;
+            background: #fff;
+            border-radius: 50%;
+        }
+        
+        /* Tags */
+        .tags-section {
+            padding: 25px 0;
+            border-top: 1px solid #eee;
+            border-bottom: 1px solid #eee;
+            margin: 30px 0;
+        }
+        
+        .tags-header {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 15px;
+            color: #005BAC;
+            font-size: 15px;
+            font-weight: 600;
+        }
+        
+        .tags-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+        }
+        
+        .tag {
+            font-size: 13px;
+            color: #666;
+        }
+        
+        /* Association Recommendations */
+        .recommendations {
+            margin-top: 40px;
+        }
+        
+        .recommendations-title {
+            font-size: 22px;
+            font-weight: 600;
+            margin-bottom: 25px;
+            color: #222;
+        }
+        
+        .recommendations-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 20px;
+        }
+        
+        .recommendation-card {
+            border: 1px solid #eee;
+            border-radius: 8px;
+            overflow: hidden;
+            background: #fff;
+        }
+        
+        .card-image {
+            width: 100%;
+            height: 140px;
+            background: linear-gradient(135deg, #f5e6d3 0%, #e8d4c0 100%);
+        }
+        
+        .card-image.food {
+            background: linear-gradient(135deg, #e8d4c0 0%, #d4c0a8 100%);
+        }
+        
+        .card-content {
+            padding: 15px;
+        }
+        
+        .card-title {
+            font-size: 14px;
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: #222;
+        }
+        
+        .card-desc {
+            font-size: 12px;
+            color: #666;
+            line-height: 1.5;
+            margin-bottom: 10px;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+        
+        .card-rating {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 11px;
+            color: #999;
+        }
+        
+        .rating-icon {
+            width: 20px;
+            height: 14px;
+            background: #005BAC;
+            border-radius: 3px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .rating-dots {
+            display: flex;
+            gap: 3px;
+        }
+        
+        .rating-dot {
+            width: 8px;
+            height: 8px;
+            background: #005BAC;
+            border-radius: 50%;
+        }
+        
+        /* Footer */
+        .footer {
+            background: #f8f8f8;
+            padding: 50px 40px 30px;
+            margin-top: 60px;
+            border-top: 1px solid #eee;
+        }
+        
+        .footer-logos {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 30px;
+            margin-bottom: 25px;
+        }
+        
+        .footer-logo {
+            height: 40px;
+            display: flex;
+            align-items: center;
+        }
+        
+        .footer-logo-text {
+            font-size: 24px;
+            font-weight: 700;
+            color: #333;
+            letter-spacing: 1px;
+        }
+        
+        .footer-logo-text span {
+            color: #005BAC;
+        }
+        
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            margin-bottom: 30px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid #ddd;
+        }
+        
+        .footer-links a {
+            font-size: 13px;
+            color: #666;
+            text-decoration: none;
+        }
+        
+        .footer-info {
+            text-align: center;
+            font-size: 12px;
+            color: #888;
+            line-height: 2;
+        }
+        
+        .footer-info a {
+            color: #005BAC;
+            text-decoration: underline;
+        }
+        
+        .footer-sns {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin: 20px 0;
+        }
+        
+        .sns-icon {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            background: #666;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #fff;
+            font-size: 14px;
+            text-decoration: none;
+        }
+        
+        .footer-badges {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-top: 25px;
+        }
+        
+        .badge {
+            width: 60px;
+            height: 40px;
+            background: #fff;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 8px;
+            color: #666;
+            text-align: center;
+        }
+        
+        /* Cookie Banner */
+        .cookie-banner {
+            position: fixed;
+            bottom: 20px;
+            left: 20px;
+            width: 320px;
+            background: rgba(30, 30, 30, 0.95);
+            color: #fff;
+            padding: 25px;
+            border-radius: 8px;
+            z-index: 1000;
+        }
+        
+        .cookie-text {
+            font-size: 13px;
+            line-height: 1.6;
+            margin-bottom: 20px;
+        }
+        
+        .cookie-buttons {
+            display: flex;
+            gap: 10px;
+        }
+        
+        .cookie-btn {
+            padding: 10px 16px;
+            border: 1px solid #fff;
+            background: transparent;
+            color: #fff;
+            font-size: 12px;
+            cursor: pointer;
+            border-radius: 4px;
+        }
+        
+        .cookie-btn:hover {
+            background: rgba(255, 255, 255, 0.1);
+        }
+        
+        /* Quick Menu */
+        .quick-menu {
+            position: fixed;
+            right: 0;
+            top: 50%;
+            transform: translateY(-50%);
+            background: #005BAC;
+            color: #fff;
+            padding: 20px 8px;
+            border-radius: 8px 0 0 8px;
+            writing-mode: vertical-rl;
+            text-orientation: mixed;
+            font-size: 13px;
+            font-weight: 600;
+            cursor: pointer;
+            z-index: 100;
+        }
+        
+        /* Scroll to Top */
+        .scroll-top {
+            position: fixed;
+            right: 60px;
+            bottom: 180px;
+            width: 44px;
+            height: 44px;
+            background: #fff;
+            border: 1px solid #ddd;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            z-index: 100;
+            font-size: 18px;
+            color: #333;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+        
+        /* Chat Button */
+        .chat-btn {
+            position: fixed;
+            right: 60px;
+            bottom: 120px;
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, #FFB800 0%, #FF8C00 100%);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            z-index: 100;
+            box-shadow: 0 4px 12px rgba(255, 140, 0, 0.4);
+        }
+        
+        .chat-icon {
+            width: 40px;
+            height: 40px;
+            background: #fff;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+        }
+        
+        /* Responsive Styles */
+        @media (max-width: 1024px) {
+            .header {
+                padding: 15px 20px;
+            }
+            
+            .nav {
+                gap: 20px;
+            }
+            
+            .nav a {
+                font-size: 14px;
+            }
+            
+            .main-content {
+                padding: 0 20px 40px;
+            }
+            
+            .recommendations-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .info-label {
+                width: 150px;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .nav {
+                display: none;
+            }
+            
+            .hamburger {
+                display: flex;
+            }
+            
+            .header-right {
+                gap: 10px;
+            }
+            
+            .breadcrumb {
+                padding: 12px 20px;
+                font-size: 12px;
+            }
+            
+            .main-content {
+                padding: 0 15px 30px;
+            }
+            
+            .title-section {
+                margin-bottom: 20px;
+            }
+            
+            .shop-title {
+                font-size: 24px;
+            }
+            
+            .shop-image {
+                height: 250px;
+            }
+            
+            .shop-logo-text {
+                font-size: 32px;
+            }
+            
+            .info-row {
+                flex-direction: column;
+                gap: 5px;
+            }
+            
+            .info-label {
+                width: 100%;
+                font-size: 13px;
+            }
+            
+            .info-value {
+                font-size: 13px;
+            }
+            
+            .map-container {
+                height: 250px;
+            }
+            
+            .recommendations-grid {
+                grid-template-columns: 1fr;
+                gap: 15px;
+            }
+            
+            .card-image {
+                height: 180px;
+            }
+            
+            .footer {
+                padding: 30px 20px 20px;
+            }
+            
+            .footer-logos {
+                flex-direction: column;
+                gap: 20px;
+            }
+            
+            .footer-links {
+                flex-direction: column;
+                align-items: center;
+                gap: 15px;
+            }
+            
+            .cookie-banner {
+                left: 10px;
+                right: 10px;
+                width: auto;
+                bottom: 10px;
+            }
+            
+            .quick-menu {
+                padding: 15px 6px;
+                font-size: 11px;
+            }
+            
+            .scroll-top {
+                right: 15px;
+                bottom: 150px;
+            }
+            
+            .chat-btn {
+                right: 15px;
+                bottom: 90px;
+                width: 50px;
+                height: 50px;
+            }
+            
+            .chat-icon {
+                width: 32px;
+                height: 32px;
+                font-size: 16px;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .header {
+                padding: 12px 15px;
+            }
+            
+            .logo-text {
+                font-size: 15px;
+            }
+            
+            .shop-title {
+                font-size: 20px;
+            }
+            
+            .action-btn {
+                width: 32px;
+                height: 32px;
+            }
+            
+            .tags-list {
+                gap: 8px;
+            }
+            
+            .tag {
+                font-size: 12px;
+            }
+            
+            .footer-badges {
+                flex-wrap: wrap;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <a href="#" class="logo">
+            <span class="logo-text">VISIT <span>SEOUL</span>.NET</span>
+            <span class="logo-subtitle">official visitor guide</span>
+        </a>
+        
+        <nav class="nav">
+            <a href="#">Seoul Now</a>
+            <a href="#">Travel Themes</a>
+            <a href="#">Things to Do</a>
+            <a href="#">Travel Information</a>
+        </nav>
+        
+        <div class="header-right">
+            <div class="header-icon">
+                <span>📍</span>
+                <span>0.0°C</span>
+            </div>
+            <button class="icon-btn">🔍</button>
+            <button class="icon-btn">♡</button>
+            <button class="icon-btn">⚙️</button>
+            <span style="font-size: 13px; color: #666;">Affiliations</span>
+            <button class="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+        </div>
+    </header>
+    
+    <!-- Breadcrumb -->
+    <div class="breadcrumb">
+        <span class="home-icon">🏠</span>
+        <span class="separator">&gt;</span>
+        <a href="#">Things to Do</a>
+        <span class="separator">&gt;</span>
+        <span>Shopping</span>
+    </div>
+    
+    <!-- Main Content -->
+    <main class="main-content">
+        <!-- Title Section -->
+        <div class="title-section">
+            <div class="category">Beauty</div>
+            <h1 class="shop-title">The Face Shop</h1>
+            <div class="action-buttons">
+                <button class="action-btn">♡</button>
+                <button class="action-btn">↗</button>
+            </div>
+            <div class="published-date">
+                Published Date : Nov 13, 2015 / Edited Date : Nov 09, 2025
+            </div>
+        </div>
+        
+        <!-- Shop Image -->
+        <div class="shop-image">
+            <div class="shop-image-placeholder">
+                <div class="shop-logo-text">THEFACESHOP</div>
+                <div class="shop-interior">
+                    <div class="interior-block"></div>
+                    <div class="interior-block"></div>
+                    <div class="interior-block"></div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Description -->
+        <p class="description">
+            Most of the items from the Face Shop are inspired by nature and environmentally friendly for a reasonable price. You will clearly be able to feel the benefits that come from using these natural products and will see them reflected in your skin.
+        </p>
+        
+        <!-- Info Table -->
+        <div class="info-table">
+            <div class="info-row">
+                <div class="info-label">Phone</div>
+                <div class="info-value">+82-2-759-6666</div>
+            </div>
+            <div class="info-row">
+                <div class="info-label">Website</div>
+                <div class="info-value"><a href="#">View Website→</a></div>
+            </div>
+            <div class="info-row">
+                <div class="info-label">Website Language</div>
+                <div class="info-value">KOR</div>
+            </div>
+            <div class="info-row">
+                <div class="info-label">Hours of Operation</div>
+                <div class="info-value">9:30 ~ 20:00</div>
+            </div>
+            <div class="info-row">
+                <div class="info-label">Address</div>
+                <div class="info-value">04533 30 Euljiro, Jung-gu, Seoul Lotte Duty Free, 11th floor</div>
+            </div>
+            <div class="info-row">
+                <div class="info-label">Transportation</div>
+                <div class="info-value">Subway Line 2 Euljiro 1(il)-ga Station Exit 7, 56m</div>
+            </div>
+        </div>
+        
+        <!-- Map -->
+        <div class="map-container">
+            <div class="map-placeholder"></div>
+            <div class="map-pin"></div>
+        </div>
+        
+        <!-- Tags -->
+        <div class="tags-section">
+            <div class="tags-header">
+                <span>🏷️</span>
+                <span>Tags</span>
+            </div>
+            <div class="tags-list">
+                <span class="tag">#SeoulTourism</span>
+                <span class="tag">#Myeongdong</span>
+                <span class="tag">#SeoulHotSpot</span>
+                <span class="tag">#EcologicalCosmetics</span>
+                <span class="tag">#Franchise</span>
+                <span class="tag">#ShoppingStreet</span>
+                <span class="tag">#SeoulShopping</span>
+                <span class="tag">#TheFaceShop</span>
+                <span class="tag">#Beauty</span>
+            </div>
+        </div>
+        
+        <!-- Recommendations -->
+        <div class="recommendations">
+            <h2 class="recommendations-title">Association recommendation information</h2>
+            <div class="recommendations-grid">
+                <!-- Card 1 -->
+                <div class="recommendation-card">
+                    <div class="card-image food"></div>
+                    <div class="card-content">
+                        <h3 class="card-title">Myeongdong Budae Jjigae</h3>
+                        <p class="card-desc">The specialty of Yennal Myeongdong Budaejjigae is a dish called budae jjigae, which is made with...</p>
+                        <div class="card-rating">
+                            <div class="rating-icon">📷</div>
+                            <div class="rating-dots">
+                                <span class="rating-dot"></span>
+                                <span class="rating-dot"></span>
+                                <span class="rating-dot"></span>
+                                <span class="rating-dot"></span>
+                                <span class="rating-dot" style="background: #ccc;"></span>
+                            </div>
+                            <span>7 reviews</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Card 2 -->
+                <div class="recommendation-card">
+                    <div class="card-image" style="background: linear-gradient(135deg, #c8b898 0%, #a89878 100%);"></div>
+                    <div class="card-content">
+                        <h3 class="card-title">Myeongdong Theater</h3>
+                        <p class="card-desc">Situated on the former site of the National Theater of Korea, Myeongdong Theater is a...</p>
+                        <div class="card-rating">
+                            <div class="rating-icon">📷</div>
+                            <div class="rating-dots">
+                                <span class="rating-dot"></span>
+                                <span class="rating-dot"></span>
+                                <span class="rating-dot"></span>
+                                <span class="rating-dot"></span>
+                                <span class="rating-dot"></span>
+                            </div>
+                            <span>21 reviews</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Card 3 -->
+                <div class="recommendation-card">
+                    <div class="card-image" style="background: linear-gradient(135deg, #d4a878 0%, #b89060 100%);"></div>
+                    <div class="card-content">
+                        <h3 class="card-title">Myeongdong Tonkatsu</h3>
+                        <p class="card-desc">This was the first restaurant to introduce the famous thick Japanese-style pork cutlet to...</p>
+                        <div class="card-rating">
+                            <div class="rating-icon">📷</div>
+                            <div class="rating-dots">
+                                <span class="rating-dot"></span>
+                                <span class="rating-dot"></span>
+                                <span class="rating-dot"></span>
+                                <span class="rating-dot"></span>
+                                <span class="rating-dot" style="background: #ccc;"></span>
+                            </div>
+                            <span>40 reviews</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Card 4 -->
+                <div class="recommendation-card">
+                    <div class="card-image food"></div>
+                    <div class="card-content">
+                        <h3 class="card-title">Jinsadaek</h3>
+                        <p class="card-desc">Jinsadaek is located inside a hanok, surrounded by the hustle and bustle of...</p>
+                        <div class="card-rating">
+                            <div class="rating-icon">📷</div>
+                            <div class="rating-dots">
+                                <span class="rating-dot"></span>
+                                <span class="rating-dot"></span>
+                                <span class="rating-dot"></span>
+                                <span class="rating-dot"></span>
+                                <span class="rating-dot" style="background: #ccc;"></span>
+                            </div>
+                            <span>40 reviews</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+    
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-logos">
+            <div class="footer-logo">
+                <div class="footer-logo-text" style="font-size: 16px; color: #666;">SEOUL TOURISM<br>ORGANIZATION</div>
+            </div>
+            <div class="footer-logo">
+                <div class="footer-logo-text">SEOUL <span>MY</span> SOUL</div>
+            </div>
+        </div>
+        
+        <div class="footer-links">
+            <a href="#">Privacy Statement</a>
+            <a href="#">Announcement</a>
+        </div>
+        
+        <div class="footer-info">
+            <p><strong>Operating Hours/Time</strong><br>
+            Mon–Fri, 9 am – 6 pm (KST) · <a href="#">staff@visitseoul.net</a></p>
+            
+            <p style="margin-top: 15px;"><strong>Inquiry</strong><br>
+            Tourist Information Center 📋 · General Tourism Inquiries 1330 📋</p>
+            
+            <p style="margin-top: 15px;"><strong>The new official Seoul travel app</strong><br>
+            App Store 📋 · Google Play 📋</p>
+            
+            <p style="margin-top: 15px;"><strong>Visit Seoul SNS</strong></p>
+        </div>
+        
+        <div class="footer-sns">
+            <a href="#" class="sns-icon">f</a>
+            <a href="#" class="sns-icon">📷</a>
+            <a href="#" class="sns-icon">▶</a>
+        </div>
+        
+        <div class="footer-info">
+            <p>6F, 85, Cheonggyecheon-ro, Jongno-gu, Seoul, Republic of Korea<br>
+            © 2024 Seoul Tourism Organization. All rights reserved.</p>
+        </div>
+        
+        <div class="footer-badges">
+            <div class="badge">Personal Information<br>Security Management<br>System</div>
+            <div class="badge">Web Accessibility<br>Quality Mark</div>
+            <div class="badge">Smart App Award<br>2024</div>
+            <div class="badge">Web Award<br>2024</div>
+        </div>
+    </footer>
+    
+    <!-- Cookie Banner -->
+    <div class="cookie-banner" id="cookieBanner">
+        <p class="cookie-text">
+            The Visit Seoul website uses cookies to enhance the user experience, improve the website, and more.<br><br>
+            Continuing use of this website means that you agree to the use of cookies.
+        </p>
+        <div class="cookie-buttons">
+            <button class="cookie-btn" onclick="closeCookieBanner()">Accept All</button>
+            <button class="cookie-btn" onclick="closeCookieBanner()">Reject All</button>
+            <button class="cookie-btn" onclick="closeCookieBanner()">Cookies Information</button>
+        </div>
+    </div>
+    
+    <!-- Quick Menu -->
+    <div class="quick-menu">Quick Menu ▾</div>
+    
+    <!-- Scroll to Top -->
+    <div class="scroll-top" onclick="scrollToTop()">↑</div>
+    
+    <!-- Chat Button -->
+    <div class="chat-btn">
+        <div class="chat-icon">💬</div>
+    </div>
+    
+    <script>
+        function closeCookieBanner() {
+            document.getElementById('cookieBanner').style.display = 'none';
+        }
+        
+        function scrollToTop() {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        }
+        
+        // Mobile menu toggle
+        document.querySelector('.hamburger')?.addEventListener('click', function() {
+            const nav = document.querySelector('.nav');
+            if (nav.style.display === 'flex') {
+                nav.style.display = 'none';
+            } else {
+                nav.style.display = 'flex';
+                nav.style.position = 'absolute';
+                nav.style.top = '60px';
+                nav.style.left = '0';
+                nav.style.right = '0';
+                nav.style.background = '#fff';
+                nav.style.flexDirection = 'column';
+                nav.style.padding = '20px';
+                nav.style.boxShadow = '0 2px 10px rgba(0,0,0,0.1)';
+                nav.style.gap = '15px';
+            }
+        });
+    </script>
+</body>
+</html>
+```

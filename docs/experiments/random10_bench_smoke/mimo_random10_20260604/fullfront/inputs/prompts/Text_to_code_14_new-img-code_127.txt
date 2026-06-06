@@ -1,0 +1,102 @@
+你是一个严谨的前端工程师。请根据输入材料生成一个完整、可直接运行的单文件 HTML。
+
+要求：
+1. 输出必须包含 <!DOCTYPE html>、<html>、<head>、<style>、<body>。
+2. CSS 写在 <style> 中，不要依赖外部 CSS、JS、图片、字体或网络资源。
+3. 尽可能还原截图或描述中的布局、颜色、字号、间距、组件层级和视觉密度。
+4. 如果截图中有真实图片、头像、图标或复杂素材，无法复用原图时用 CSS 色块/渐变/简化图形占位，但尺寸和位置要对齐。
+5. 如果任务涉及交互，请在单文件内写必要的 JavaScript。
+6. 只输出一个 fenced code block，格式为 ```html ... ```，不要输出额外解释。
+
+Benchmark：fullfront
+任务类型：Text_to_code
+原始任务提示：
+
+The user will provide you with a comprehensive textual description of a webpage, covering its layout, elements, and other relevant details. Based on this description, please generate the corresponding front-end code (including HTML, CSS, and JavaScript) to closely replicate the webpage as described.
+If any images are required in the page code, you must classify each image into one of the following categories: People, Animal, Food, Plant, Landscape, Icon, Logo, Architecture, Technology, Transportation, Map, Texture, Art, Movie, Other. The URL for each image is in the format: https://raw.githubusercontent.com/Mikivishy/imgs/main/folder1/{category}.jpg. For example, if you want to use an image from the Animal category, the image URL would be: https://raw.githubusercontent.com/Mikivishy/imgs/main/folder1/Animal.jpg. Since the width and height of each image in the URLs are unknown, you need to set the image sizes manually in the HTML code to ensure that the rendered result matches the layout requirements of the webpage image.
+Please place the HTML, CSS, and JavaScript code in a single file, and your response must be a code that starts with `<!DOCTYPE html>` and ends with `</html>`, without any other content.
+
+
+Description:
+# Detailed Analysis of AviationCV.com Webpage
+
+## Overall Page Layout
+The webpage uses a responsive design with a full-width layout. It's primarily organized in a single-column structure with several distinct sections stacked vertically. The page has a clean, professional appearance appropriate for a recruitment website in the aviation industry. The main content area features a white background container that stands out against what appears to be a darker background image.
+
+## Element Types and Attributes
+
+### Header Section
+- **Logo/Brand Name**: "aviationcv.com" displayed in a dark blue/navy color with a professional font at the top center of the page. This is a text element functioning as the site's main logo.
+- **Navigation Menu**: Horizontal navigation bar below the logo with menu items including "FIND JOBS", "FIND COMPANIES", "FOR RECRUITERS", "POST A JOB", and "F.A.Q." These items use a clean sans-serif font in dark blue/navy color, evenly spaced across the top of the page.
+- **Call-to-Action Button**: A teal/blue "Sign in" button with white text and a user icon, positioned centrally below the navigation menu. The button has rounded corners and a distinct color to make it stand out.
+
+### Hero Section
+- **Background Image**: A large background image covering the full width of the hero section, showing what appears to be an aerial view of transportation infrastructure, categorized as a **Landscape** image.
+- **Main Heading**: "Connecting Aviation Professionals Worldwide" displayed in large, bold, white text centered against the background image.
+- **Subheading**: "Discover opportunities with top aviation companies and advance your career" in smaller white text, also centered beneath the main heading.
+
+### Company Profile Card
+- **Company Logo**: A circular orange/red logo with "BSCTA" displayed next to it, categorized as a **Logo** image.
+- **Company Name**: "BSCTA" displayed in bold, dark blue text.
+- **Website URL**: "aviationcv.com" displayed in a smaller, lighter font beneath the company name.
+- **Stats Display**: Three statistics displayed horizontally:
+  - "157 JOBS" - aligned to the right
+  - "4.8 RATING" - aligned to the right, center of the three stats
+  - "12+ YEARS" - aligned to the right
+  Each with the number in larger, colored (likely blue) font and the descriptor in smaller gray text underneath.
+
+### About Us Section
+- **Section Heading**: "ABOUT US" with a blue information icon, in bold, dark text.
+- **Company Description**: Multiple paragraphs of text describing BSCTA, its mission, and services. The text is left-aligned, dark gray or black, in a readable sans-serif font.
+- **List of Positions**: A bulleted list of aviation positions they specialize in, including:
+  - Pilots and flight crew
+  - Aircraft maintenance technicians
+  - Air traffic controllers
+  - Aviation management professionals
+  - Ground operations specialists
+  Each list item has a bullet point and is left-aligned.
+- **Final Paragraph**: A concluding paragraph about their technology and service quality, in the same style as the earlier paragraphs.
+
+### Key Facts Section
+- **Section Heading**: "Key Facts" in bold, dark text.
+- **Location Information**: 
+  - Icon (likely a location pin), categorized as an **Icon** image
+  - "Headquarters in New York, USA" with "Location" in smaller text beneath it
+- **Establishment Information**: 
+  - Calendar or building icon, categorized as an **Icon** image
+  - "Founded in 2011" with "Established" in smaller text beneath it
+- **Team Size Information**: 
+  - People/team icon, categorized as an **Icon** image
+  - "500+ Employees" with "Team Size" in smaller text beneath it
+- **Global Presence Information**: 
+  - Globe icon, categorized as an **Icon** image
+  - "Operating in 35+ Countries" with "Global Presence" in smaller text beneath it
+
+### Contact Button
+- **Button**: A large navy blue button with white text "Contact Us" and an envelope icon, spanning almost the full width of the right column section.
+
+### Footer Section
+- **Navigation Links**: Horizontal list of links including "About Us", "Terms of Service", "Privacy Policy", "Contact", "Careers", and "Blog", centered at the bottom of the page in a light-colored font.
+- **Social Media Icons**: Row of social media icons (Facebook, Twitter, LinkedIn, Instagram, YouTube) centered below the navigation links, categorized as **Icon** images.
+- **Copyright Text**: "© 2023 aviationcv.com. All rights reserved." in small, light gray text, centered at the very bottom of the page.
+
+## Layout Details
+
+### Spacing
+- The layout uses generous whitespace between sections to create clear separation.
+- There is consistent padding within the content container, approximately 20-30px on all sides.
+- The list items in the About Us section have appropriate spacing between them (approximately 10-15px).
+- The navigation menu items in the header have even spacing between them.
+
+### Alignment
+- The header elements are centered horizontally.
+- The main content text is left-aligned for better readability.
+- The Key Facts section appears to be right-aligned or placed in a right column.
+- The footer elements are centered horizontally.
+
+### Layering
+- The hero section has the background image on the bottom layer with text overlay on top.
+- The company profile card appears to be a white card with a subtle shadow, giving it a raised appearance over the background.
+- The main content container (white background) is layered on top of what appears to be a light gray or off-white page background.
+
+The layout follows standard web design principles with a clear visual hierarchy, making the information easily scannable and accessible. The use of icons, colored elements, and varying text weights helps guide the user's attention throughout the page.

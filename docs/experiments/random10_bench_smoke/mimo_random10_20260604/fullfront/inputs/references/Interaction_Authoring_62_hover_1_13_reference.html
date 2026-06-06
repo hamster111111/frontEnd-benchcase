@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Flair Flowers</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Helvetica Neue', sans-serif;
+      color: #333;
+    }
+
+    .product-grid {
+      display: flex;
+      justify-content: space-around;
+      flex-wrap: wrap;
+      padding: 40px 20px;
+    }
+
+    .product-card {
+      max-width: 220px;
+      margin: 20px;
+      text-align: left;
+      position: relative;
+    }
+
+    .product-card img {
+      width: 220px;
+      height: 180px;
+      object-fit: cover;
+      border-radius: 4px;
+    }
+
+    .product-card h4 {
+      font-size: 16px;
+      margin: 10px 0 5px 0;
+      line-height: 1.4;
+    }
+
+    .product-card p {
+      font-weight: bold;
+      color: #4a4a4a;
+    }
+
+    footer {
+      background-color: #f8f8f8;
+      padding: 40px 20px;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      border-top: 1px solid #e0e0e0;
+    }
+
+    .footer-column {
+      min-width: 200px;
+      margin-bottom: 20px;
+    }
+
+    .footer-column h5 {
+      margin-bottom: 10px;
+      font-size: 16px;
+    }
+
+    .footer-column ul {
+      list-style: none;
+      padding-left: 0;
+    }
+
+    .footer-column ul li {
+      margin: 8px 0;
+      color: #666;
+      cursor: pointer;
+    }
+
+    .newsletter-form {
+      display: flex;
+    }
+
+    .newsletter-form input[type="email"] {
+      padding: 10px;
+      width: 250px;
+      border: 1px solid #ccc;
+      border-right: none;
+      border-radius: 3px 0 0 3px;
+      font-size: 14px;
+    }
+
+    .newsletter-form button {
+      padding: 10px 20px;
+      background-color: #555;
+      color: #fff;
+      border: none;
+      border-radius: 0 3px 3px 0;
+      font-size: 14px;
+      cursor: pointer;
+    }
+
+    .footer-bottom {
+      width: 100%;
+      border-top: 1px solid #e0e0e0;
+      padding-top: 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      font-size: 14px;
+      color: #888;
+    }
+
+    .social-icons {
+      display: flex;
+      gap: 16px;
+    }
+
+    .social-icons img {
+      width: 24px;
+      height: 24px;
+      cursor: pointer;
+    }
+
+    #InteractionPart {
+      position: relative;
+      cursor: pointer;
+    }
+
+    .dropdown-menu {
+      position: absolute;
+      top: 100%;
+      left: 0;
+      width: 220px;
+      background-color: white;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+      border-radius: 4px;
+      padding: 10px;
+      z-index: 100;
+      display: none;
+      text-align: left;
+    }
+
+    .dropdown-menu .dropdown-item {
+      padding: 8px 12px;
+      cursor: pointer;
+      transition: background-color 0.2s;
+    }
+
+    .dropdown-menu .dropdown-item:hover {
+      background-color: #f8f8f8;
+    }
+
+    .dropdown-menu .dropdown-btn {
+      display: block;
+      width: 100%;
+      padding: 8px 12px;
+      margin-top: 8px;
+      background-color: #555;
+      color: white;
+      border: none;
+      border-radius: 3px;
+      cursor: pointer;
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="product-grid">
+
+    <div id="InteractionPart" class="product-card">
+      <img src="https://raw.githubusercontent.com/Mikivishy/imgs/main/folder1/Plant.jpg" alt="Christmas Lily Vase Arrangement" />
+      <h4>Christmas Lily Vase Arrangement</h4>
+      <p>$120.00</p>
+      <div class="dropdown-menu">
+        <div class="dropdown-item">Add to Cart</div>
+        <div class="dropdown-item">Add to Wishlist</div>
+        <div class="dropdown-item">View Details</div>
+        <button class="dropdown-btn">Quick Buy</button>
+      </div>
+    </div>
+
+    <div class="product-card">
+      <img src="https://raw.githubusercontent.com/Mikivishy/imgs/main/folder1/Plant.jpg" alt="Lux Christmas Side Board Flowers" />
+      <h4>Lux Christmas Side Board Flowers</h4>
+      <p>$450.00</p>
+    </div>
+
+    <div class="product-card">
+      <img src="https://raw.githubusercontent.com/Mikivishy/imgs/main/folder1/Plant.jpg" alt="Christmas Table Floral" />
+      <h4>Christmas Table Floral</h4>
+      <p>$130.00</p>
+    </div>
+
+    <div class="product-card">
+      <img src="https://raw.githubusercontent.com/Mikivishy/imgs/main/folder1/Plant.jpg" alt="Christmas table Posy" />
+      <h4>Christmas table Posy</h4>
+      <p>$70.00</p>
+    </div>
+
+  </div>
+
+  <footer>
+    <div class="footer-column">
+      <ul>
+        <li>Search</li>
+        <li>Gallery</li>
+        <li>About Us</li>
+        <li>Contact Us</li>
+        <li>Terms and conditions</li>
+      </ul>
+    </div>
+
+    <div class="footer-column">
+      <h5>Newsletter</h5>
+      <form class="newsletter-form" onsubmit="handleSubscribe(event)">
+        <input type="email" placeholder="Email address" required />
+        <button type="submit">SUBSCRIBE</button>
+      </form>
+    </div>
+
+    <div class="footer-bottom">
+      <div class="social-icons">
+        <img src="https://raw.githubusercontent.com/Mikivishy/imgs/main/folder1/Icon.jpg" alt="Facebook" />
+        <img src="https://raw.githubusercontent.com/Mikivishy/imgs/main/folder1/Icon.jpg" alt="Pinterest" />
+        <img src="https://raw.githubusercontent.com/Mikivishy/imgs/main/folder1/Icon.jpg" alt="Instagram" />
+      </div>
+      <div>© 2024, Flair flowers & design</div>
+    </div>
+  </footer>
+
+  <script>
+    function handleSubscribe(event) {
+      event.preventDefault();
+      const email = event.target.querySelector('input[type="email"]').value;
+      alert(`Subscribed with email: ${email}`);
+      event.target.reset();
+    }
+
+    document.addEventListener('DOMContentLoaded', function() {
+      const interactionElement = document.getElementById('InteractionPart');
+      const dropdown = interactionElement.querySelector('.dropdown-menu');
+      
+      interactionElement.addEventListener('mouseenter', function() {
+        dropdown.style.display = 'block';
+      });
+      
+      interactionElement.addEventListener('mouseleave', function() {
+        dropdown.style.display = 'none';
+      });
+      
+      // Handle dropdown item clicks
+      const dropdownItems = dropdown.querySelectorAll('.dropdown-item, .dropdown-btn');
+      dropdownItems.forEach(item => {
+        item.addEventListener('click', function(e) {
+          e.stopPropagation();
+          const productName = interactionElement.querySelector('h4').textContent;
+          const productPrice = interactionElement.querySelector('p').textContent;
+          const action = this.textContent;
+          
+          console.log(`Action: ${action} - Product: ${productName} (${productPrice})`);
+          if (this.textContent === 'Quick Buy') {
+            alert(`Quick buy: ${productName} for ${productPrice}`);
+          }
+        });
+      });
+    });
+  </script>
+
+</body>
+</html>

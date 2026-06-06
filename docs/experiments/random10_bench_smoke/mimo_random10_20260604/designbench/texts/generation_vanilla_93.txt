@@ -1,0 +1,220 @@
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DMCA Policy - Trending News Co</title>
+    <style>
+        /* 全局重置与基础样式 */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background-color: #fff;
+        }
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+        /* 头部区域 */
+        .header {
+            background: linear-gradient(135deg, #a3d9a5 0%, #6cc4b8 100%);
+            padding: 15px 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+        }
+        .header-logo {
+            width: 180px;
+            height: 180px;
+            background-color: #9e9e9e;
+            position: absolute;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #fff;
+            font-weight: bold;
+        }
+        .header-nav {
+            display: flex;
+            gap: 40px;
+            margin-left: 200px;
+        }
+        .header-nav a {
+            color: #fff;
+            font-weight: bold;
+            font-size: 14px;
+            text-transform: uppercase;
+        }
+        .header-nav a.dmca {
+            background-color: #4a90e2;
+            padding: 8px 20px;
+            border-radius: 3px;
+        }
+        /* 主内容区域 */
+        .main-container {
+            display: flex;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 30px 20px;
+            gap: 40px;
+        }
+        .content {
+            flex: 1;
+        }
+        .content h1 {
+            font-size: 28px;
+            margin-bottom: 5px;
+            color: #000;
+        }
+        .content h2 {
+            font-size: 24px;
+            margin-bottom: 15px;
+            color: #000;
+        }
+        .content p {
+            margin-bottom: 15px;
+            font-size: 14px;
+            line-height: 1.7;
+        }
+        .content a {
+            color: #c0392b;
+            font-weight: bold;
+        }
+        .sidebar {
+            width: 280px;
+        }
+        .sidebar-search {
+            display: flex;
+            margin-bottom: 30px;
+        }
+        .sidebar-search input {
+            flex: 1;
+            padding: 8px 12px;
+            border: 1px solid #ccc;
+            border-right: none;
+        }
+        .sidebar-search button {
+            padding: 8px 20px;
+            background-color: #4a90e2;
+            color: #fff;
+            border: 1px solid #4a90e2;
+            cursor: pointer;
+        }
+        .sidebar h3 {
+            font-size: 18px;
+            margin-bottom: 15px;
+            color: #000;
+        }
+        .sidebar ul {
+            list-style: disc;
+            padding-left: 20px;
+        }
+        .sidebar li {
+            margin-bottom: 10px;
+            font-size: 14px;
+            line-height: 1.4;
+        }
+        /* 页脚区域 */
+        .footer {
+            border-top: 1px solid #eee;
+            padding: 20px;
+            font-size: 14px;
+        }
+        .footer-links {
+            list-style: disc;
+            padding-left: 20px;
+            margin-bottom: 10px;
+        }
+        .footer-links li {
+            margin-bottom: 5px;
+        }
+        .footer-copyright {
+            color: #666;
+        }
+    </style>
+</head>
+<body>
+    <!-- 头部区域 -->
+    <header class="header">
+        <div class="header-logo">LOGO</div>
+        <nav class="header-nav">
+            <a href="#">Featured</a>
+            <a href="#">Celebrities</a>
+            <a href="#">Trailers</a>
+            <a href="#">Contact</a>
+            <a href="#" class="dmca">DMCA Policy</a>
+        </nav>
+    </header>
+
+    <!-- 主内容区域 -->
+    <div class="main-container">
+        <main class="content">
+            <h1>DMCA POLICY</h1>
+            <h2>DMCA POLICY</h2>
+            <p><strong>https://trendingnewsco.com/– DMCA Policy</strong></p>
+            <p>
+                <a href="#">https://trendingnewsco.com/</a> is in compliance with 17 U.S.C. § 512 and the Digital Millennium Copyright Act (“DMCA”). It is our policy to respond to any infringement notices and take appropriate actions under the Digital Millennium Copyright Act (“DMCA”) and other applicable intellectual property laws.
+            </p>
+            <p>
+                If your copyrighted material has been posted on <a href="#">https://trendingnewsco.com/</a> or if links to your copyrighted material are returned through our search engine and you want this material removed, you must provide a written communication that details the information listed in the following section. Please be aware that you will be liable for damages (including costs and attorneys’ fees) if you misrepresent information listed on our site that is infringing on your copyrights. We suggest that you first contact an attorney for legal assistance on this matter.
+            </p>
+            <p>
+                The following elements must be included in your copyright infringement claim:<br>
+                Provide evidence of the authorized person to act on behalf of the owner of an exclusive right that is allegedly infringed.<br>
+                Provide sufficient contact information so that we may contact you. You must also include a valid email address.<br>
+                You must identify in sufficient detail the copyrighted work claimed to have been infringed and including at least one search term under which the material appears in https://trendingnewsco.com/ search results.<br>
+                A statement that the complaining party has a good faith belief that use of the material in the manner complained of is not authorized by the copyright owner, its agent, or the law.
+            </p>
+            <p>
+                A statement that the information in the notification is accurate, and under penalty of perjury, that the complaining party is authorized to act on behalf of the owner of an exclusive right that is allegedly infringed.<br>
+                Must be signed by the authorized person to act on behalf of the owner of an exclusive right that is allegedly being infringed.
+            </p>
+            <p>
+                Send the infringement notice at trendingnewsco1@gmail.com
+            </p>
+            <p>
+                Please allow 1-3 business days for an email response. Note that emailing your complaint to other parties such as our Internet Service Provider will not expedite your request and may result in a delayed response due to the complaint not properly being filed.
+            </p>
+        </main>
+
+        <aside class="sidebar">
+            <div class="sidebar-search">
+                <input type="text" placeholder="Search...">
+                <button>Search</button>
+            </div>
+            <h3>Latest Post</h3>
+            <ul>
+                <li>10 Celebrities You Didn't Know are Libra Rising Celebrities</li>
+                <li>Ray Comfort Living Waters: Spreading Truth</li>
+                <li>In A Small Light: Miep Gies, WWII Heroine, Gets the Spotlight Again</li>
+                <li>The Life and Career of Jamie Foxx: From a Struggling Comedian to an Academy Award Winner</li>
+                <li>The K One Festa Qatar 2023: Experience the Ultimate K-Pop Sensation in Qatar's First-Ever Festival</li>
+            </ul>
+        </aside>
+    </div>
+
+    <!-- 页脚区域 -->
+    <footer class="footer">
+        <ul class="footer-links">
+            <li>About Us</li>
+            <li>Contact</li>
+            <li>Disclaimer</li>
+            <li>DMCA Policy</li>
+            <li>Terms & Conditions</li>
+        </ul>
+        <p class="footer-copyright">Copyright © 2023 Trending News Co - All Rights Reserved</p>
+    </footer>
+</body>
+</html>
+```

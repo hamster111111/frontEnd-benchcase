@@ -1,0 +1,1288 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Who's Cooking</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Merriweather:wght@400;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --primary-color: #7e941d;
+      --secondary-color: #4b5f0f;
+      --accent-color: #e27d60;
+      --light-bg: #f8f9fa;
+      --dark-bg: #2b2a29;
+      --light-text: #ffffff;
+      --dark-text: #333333;
+      --border-radius: 8px;
+      --box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+      --transition: all 0.3s ease;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Poppins', Arial, sans-serif;
+      margin: 0;
+      background-color: var(--light-bg);
+      color: var(--dark-text);
+      line-height: 1.6;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 20px;
+    }
+
+    /* Header */
+    header {
+      background-color: var(--dark-bg);
+      color: var(--light-text);
+      padding: 15px 30px;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+    }
+
+    .header-container {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      transition: var(--transition);
+    }
+
+    .logo:hover {
+      transform: scale(1.05);
+    }
+
+    .logo img {
+      width: 60px;
+      height: 70px;
+      border-radius: 50%;
+      border: 2px solid var(--primary-color);
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+    }
+
+    .logo-text {
+      margin-left: 10px;
+    }
+
+    .logo-text h1 {
+      font-family: 'Merriweather', serif;
+      font-size: 1.5rem;
+      margin: 0;
+      letter-spacing: 0.5px;
+    }
+
+    .logo-text p {
+      font-size: 0.8rem;
+      opacity: 0.8;
+      margin: 0;
+    }
+
+    nav {
+      display: flex;
+      gap: 25px;
+      align-items: center;
+    }
+
+    nav a {
+      color: var(--light-text);
+      text-decoration: none;
+      font-size: 14px;
+      padding: 6px 0;
+      position: relative;
+      font-weight: 500;
+      transition: var(--transition);
+    }
+
+    nav a:not(.order-button):after {
+      content: '';
+      position: absolute;
+      width: 0;
+      height: 2px;
+      bottom: 0;
+      left: 0;
+      background-color: var(--primary-color);
+      transition: var(--transition);
+    }
+
+    nav a:not(.order-button):hover:after {
+      width: 100%;
+    }
+
+    .order-button {
+      background-color: var(--primary-color);
+      color: white;
+      padding: 10px 16px;
+      text-decoration: none;
+      font-weight: bold;
+      border-radius: var(--border-radius);
+      transition: var(--transition);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .order-button:hover {
+      background-color: var(--secondary-color);
+      transform: translateY(-2px);
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    }
+
+    .cart {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      font-size: 16px;
+      font-weight: 500;
+      cursor: pointer;
+      transition: var(--transition);
+      padding: 8px 12px;
+      border-radius: var(--border-radius);
+    }
+
+    .cart:hover {
+      background-color: rgba(255, 255, 255, 0.1);
+    }
+
+    /* Hero Section */
+    .hero {
+      background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('https://raw.githubusercontent.com/Mikivishy/imgs/main/folder1/Food.jpg');
+      background-size: cover;
+      background-position: center;
+      height: 300px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      text-align: center;
+      position: relative;
+    }
+
+    .hero-content {
+      z-index: 1;
+      max-width: 800px;
+      padding: 0 20px;
+    }
+
+    .hero h2 {
+      font-size: 2.5rem;
+      margin-bottom: 15px;
+      font-family: 'Merriweather', serif;
+      text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+    }
+
+    .hero p {
+      font-size: 1.1rem;
+      margin-bottom: 25px;
+      text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5);
+    }
+
+    /* Location Info */
+    .info-section {
+      display: flex;
+      flex-direction: column;
+      padding: 25px 30px;
+      background: white;
+      border-radius: var(--border-radius);
+      box-shadow: var(--box-shadow);
+      margin: -50px auto 30px;
+      position: relative;
+      max-width: 90%;
+      border-top: 4px solid var(--primary-color);
+    }
+
+    .info-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 15px;
+      border-bottom: 1px solid #eee;
+      padding-bottom: 15px;
+    }
+
+    .info-title h3 {
+      font-size: 1.5rem;
+      color: var(--dark-text);
+      margin-bottom: 5px;
+      font-family: 'Merriweather', serif;
+    }
+
+    .info-title p {
+      color: #777;
+      font-size: 0.9rem;
+    }
+
+    .info-rating {
+      background-color: var(--primary-color);
+      color: white;
+      padding: 5px 10px;
+      border-radius: var(--border-radius);
+      display: flex;
+      align-items: center;
+      gap: 5px;
+    }
+
+    .info-details {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 30px;
+    }
+
+    .info-detail {
+      display: flex;
+      align-items: center;
+      margin: 5px 0;
+      font-size: 0.95rem;
+    }
+
+    .info-detail i {
+      color: var(--primary-color);
+      margin-right: 10px;
+      font-size: 1.1rem;
+      width: 20px;
+      text-align: center;
+    }
+
+    .info-section .social-icons {
+      display: flex;
+      gap: 15px;
+      margin-top: 15px;
+    }
+
+    .info-section .social-icon {
+      background-color: #f0f0f0;
+      width: 35px;
+      height: 35px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: var(--transition);
+    }
+
+    .info-section .social-icon:hover {
+      background-color: var(--primary-color);
+      color: white;
+    }
+
+    /* Callout */
+    .order-callout {
+      text-align: center;
+      margin: 40px 0;
+      padding: 30px;
+      background-color: white;
+      border-radius: var(--border-radius);
+      box-shadow: var(--box-shadow);
+      max-width: 600px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .order-callout h3 {
+      font-size: 1.8rem;
+      margin-bottom: 15px;
+      color: var(--dark-text);
+      font-family: 'Merriweather', serif;
+    }
+
+    .order-callout p {
+      margin-bottom: 20px;
+      color: #666;
+      font-size: 1rem;
+    }
+
+    .availability-button {
+      background-color: var(--primary-color);
+      color: white;
+      padding: 12px 24px;
+      border: none;
+      border-radius: var(--border-radius);
+      font-weight: bold;
+      cursor: pointer;
+      font-size: 1rem;
+      transition: var(--transition);
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .availability-button:hover {
+      background-color: var(--secondary-color);
+      transform: translateY(-2px);
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    }
+
+    /* Sidebar / Cart */
+    .cart-section {
+      position: fixed;
+      top: 120px;
+      right: 30px;
+      width: 280px;
+      text-align: left;
+      background-color: white;
+      padding: 20px;
+      border-radius: var(--border-radius);
+      box-shadow: var(--box-shadow);
+      z-index: 100;
+      border-top: 3px solid var(--primary-color);
+    }
+
+    .cart-section h4 {
+      margin-bottom: 15px;
+      font-size: 1.1rem;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      color: var(--dark-text);
+    }
+
+    .cart-empty {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      margin-top: 20px;
+      margin-bottom: 20px;
+    }
+
+    .cart-empty i {
+      font-size: 3rem;
+      color: #ddd;
+      margin-bottom: 15px;
+    }
+
+    .cart-empty p {
+      color: #888;
+      text-align: center;
+    }
+
+    .cart-icons {
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+      margin-top: 20px;
+      padding-top: 15px;
+      border-top: 1px solid #eee;
+    }
+
+    .cart-icons img {
+      width: 40px;
+      height: 25px;
+      border-radius: 4px;
+      transition: var(--transition);
+    }
+
+    .cart-icons img:hover {
+      transform: translateY(-2px);
+    }
+
+    /* Featured Items */
+    .featured-items {
+      padding: 30px 20px;
+      background-color: white;
+      margin: 30px auto;
+      border-radius: var(--border-radius);
+      box-shadow: var(--box-shadow);
+      max-width: 1100px;
+    }
+
+    .featured-items h3 {
+      text-align: center;
+      margin-bottom: 30px;
+      font-size: 1.8rem;
+      color: var(--dark-text);
+      font-family: 'Merriweather', serif;
+      position: relative;
+      padding-bottom: 15px;
+    }
+
+    .featured-items h3:after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 70px;
+      height: 3px;
+      background-color: var(--primary-color);
+    }
+
+    .items-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+      gap: 25px;
+    }
+
+    .item-card {
+      border-radius: var(--border-radius);
+      overflow: hidden;
+      box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+      transition: var(--transition);
+      background-color: white;
+      position: relative;
+    }
+
+    .item-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.15);
+    }
+
+    .item-image {
+      height: 180px;
+      overflow: hidden;
+    }
+
+    .item-image img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: var(--transition);
+    }
+
+    .item-card:hover .item-image img {
+      transform: scale(1.05);
+    }
+
+    .item-tag {
+      position: absolute;
+      top: 15px;
+      right: 15px;
+      background-color: var(--accent-color);
+      color: white;
+      padding: 5px 10px;
+      border-radius: 20px;
+      font-size: 0.7rem;
+      font-weight: 600;
+      text-transform: uppercase;
+    }
+
+    .item-details {
+      padding: 15px;
+    }
+
+    .item-title {
+      font-weight: 600;
+      margin-bottom: 8px;
+      font-size: 1.1rem;
+      color: var(--dark-text);
+    }
+
+    .item-description {
+      color: #666;
+      font-size: 0.9rem;
+      margin-bottom: 15px;
+      line-height: 1.4;
+    }
+
+    .item-price-add {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .item-price {
+      font-weight: 600;
+      color: var(--primary-color);
+      font-size: 1.1rem;
+    }
+
+    .add-to-cart {
+      background-color: var(--primary-color);
+      color: white;
+      border: none;
+      width: 35px;
+      height: 35px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: var(--transition);
+    }
+
+    .add-to-cart:hover {
+      background-color: var(--secondary-color);
+      transform: scale(1.1);
+    }
+
+    /* Accordion Menu */
+    .accordion-section {
+      background-color: white;
+      padding: 30px;
+      border-radius: var(--border-radius);
+      box-shadow: var(--box-shadow);
+      margin: 30px auto;
+      max-width: 1100px;
+    }
+
+    .menu-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 25px;
+    }
+
+    .menu-header h3 {
+      font-size: 1.8rem;
+      color: var(--dark-text);
+      font-family: 'Merriweather', serif;
+    }
+
+    .expand-menu {
+      font-size: 14px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 15px;
+      background-color: #f0f0f0;
+      border-radius: var(--border-radius);
+      transition: var(--transition);
+    }
+
+    .expand-menu:hover {
+      background-color: #e0e0e0;
+    }
+
+    .accordion-toggle {
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      font-weight: 600;
+      font-size: 1rem;
+      margin: 15px 0;
+      justify-content: space-between;
+      border-bottom: 1px solid #eee;
+      padding: 15px;
+      border-radius: var(--border-radius);
+      transition: var(--transition);
+    }
+
+    .accordion-toggle:hover {
+      background-color: #f7f7f7;
+    }
+
+    .accordion-toggle i {
+      color: var(--primary-color);
+      margin-right: 10px;
+    }
+
+    .accordion-toggle .toggle-icon {
+      transition: var(--transition);
+      color: var(--primary-color);
+    }
+
+    /* Testimonials */
+    .testimonials {
+      padding: 50px 20px;
+      background-color: #f9f9f9;
+      text-align: center;
+    }
+
+    .testimonials h3 {
+      font-size: 1.8rem;
+      margin-bottom: 40px;
+      color: var(--dark-text);
+      font-family: 'Merriweather', serif;
+      position: relative;
+      display: inline-block;
+      padding-bottom: 15px;
+    }
+
+    .testimonials h3:after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 70px;
+      height: 3px;
+      background-color: var(--primary-color);
+    }
+
+    .testimonial-cards {
+      display: flex;
+      justify-content: center;
+      gap: 30px;
+      flex-wrap: wrap;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .testimonial-card {
+      background-color: white;
+      padding: 25px;
+      border-radius: var(--border-radius);
+      box-shadow: var(--box-shadow);
+      max-width: 350px;
+      text-align: left;
+      position: relative;
+    }
+
+    .testimonial-card:before {
+      content: '\201C';
+      font-size: 4rem;
+      position: absolute;
+      top: 10px;
+      left: 15px;
+      color: rgba(126, 148, 29, 0.1);
+      font-family: Georgia, serif;
+    }
+
+    .testimonial-content {
+      margin-bottom: 20px;
+      color: #555;
+      line-height: 1.6;
+      font-style: italic;
+    }
+
+    .testimonial-author {
+      display: flex;
+      align-items: center;
+    }
+
+    .testimonial-author img {
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      margin-right: 15px;
+      object-fit: cover;
+    }
+
+    .author-info h4 {
+      margin: 0;
+      color: var(--dark-text);
+    }
+
+    .author-info p {
+      margin: 5px 0 0;
+      color: #888;
+      font-size: 0.9rem;
+    }
+
+    .testimonial-rating {
+      color: #ffc107;
+      margin-top: 5px;
+    }
+
+    /* Newsletter */
+    .newsletter {
+      background-color: var(--primary-color);
+      padding: 50px 20px;
+      text-align: center;
+      color: white;
+    }
+
+    .newsletter-container {
+      max-width: 600px;
+      margin: 0 auto;
+    }
+
+    .newsletter h3 {
+      font-size: 1.8rem;
+      margin-bottom: 15px;
+      font-family: 'Merriweather', serif;
+    }
+
+    .newsletter p {
+      margin-bottom: 25px;
+      opacity: 0.9;
+    }
+
+    .newsletter-form {
+      display: flex;
+      max-width: 500px;
+      margin: 0 auto;
+    }
+
+    .newsletter-input {
+      flex: 1;
+      padding: 12px 15px;
+      border: none;
+      border-radius: var(--border-radius) 0 0 var(--border-radius);
+      font-size: 1rem;
+    }
+
+    .newsletter-button {
+      background-color: var(--dark-bg);
+      color: white;
+      border: none;
+      padding: 0 20px;
+      border-radius: 0 var(--border-radius) var(--border-radius) 0;
+      cursor: pointer;
+      font-weight: 600;
+      transition: var(--transition);
+    }
+
+    .newsletter-button:hover {
+      background-color: #1a1a1a;
+    }
+
+    /* Footer */
+    footer {
+      background-color: var(--secondary-color);
+      color: var(--light-text);
+      padding: 50px 20px 100px;
+    }
+
+    .footer-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 40px;
+    }
+
+    .footer-logo {
+      display: flex;
+      align-items: center;
+      margin-bottom: 20px;
+    }
+
+    .footer-logo img {
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+    }
+
+    .footer-logo h3 {
+      margin-left: 10px;
+      font-size: 1.3rem;
+    }
+
+    .footer-about p {
+      margin-bottom: 20px;
+      opacity: 0.9;
+      line-height: 1.6;
+    }
+
+    .footer-links h4, .footer-contact h4 {
+      margin-bottom: 20px;
+      font-size: 1.2rem;
+      position: relative;
+      display: inline-block;
+      padding-bottom: 10px;
+    }
+
+    .footer-links h4:after, .footer-contact h4:after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 40px;
+      height: 2px;
+      background-color: var(--accent-color);
+    }
+
+    .footer-links ul {
+      list-style: none;
+    }
+
+    .footer-links li {
+      margin-bottom: 10px;
+    }
+
+    .footer-links a {
+      color: white;
+      text-decoration: none;
+      opacity: 0.8;
+      transition: var(--transition);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .footer-links a:hover {
+      opacity: 1;
+      padding-left: 5px;
+    }
+
+    .footer-contact p {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      margin-bottom: 15px;
+    }
+
+    .footer-contact i {
+      color: var(--accent-color);
+      font-size: 1.1rem;
+      margin-top: 4px;
+    }
+
+    .footer-social {
+      display: flex;
+      gap: 15px;
+      margin-top: 20px;
+    }
+
+    .footer-social a {
+      background-color: rgba(255, 255, 255, 0.1);
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: var(--transition);
+    }
+
+    .footer-social a:hover {
+      background-color: var(--accent-color);
+      transform: translateY(-3px);
+    }
+
+    .footer-bottom {
+      text-align: center;
+      padding-top: 40px;
+      margin-top: 40px;
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
+      font-size: 0.9rem;
+      opacity: 0.7;
+    }
+
+    .footer-bottom-links {
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+      margin-top: 15px;
+      flex-wrap: wrap;
+    }
+
+    .footer-bottom-links a {
+      color: white;
+      text-decoration: none;
+      opacity: 0.8;
+      transition: var(--transition);
+    }
+
+    .footer-bottom-links a:hover {
+      opacity: 1;
+    }
+
+    .checkout-bar {
+      position: fixed;
+      bottom: 0;
+      right: 0;
+      width: 250px;
+      background-color: white;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 15px 20px;
+      box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.1);
+      font-weight: bold;
+      border-top-left-radius: var(--border-radius);
+      z-index: 1000;
+    }
+
+    .checkout {
+      background-color: var(--primary-color);
+      color: white;
+      padding: 10px 15px;
+      border: none;
+      border-radius: var(--border-radius);
+      cursor: pointer;
+      transition: var(--transition);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .checkout:hover {
+      background-color: var(--secondary-color);
+    }
+
+    .checkout-total {
+      font-size: 1.1rem;
+      color: var(--dark-text);
+    }
+
+    @media (max-width: 768px) {
+      .header-container {
+        flex-direction: column;
+        gap: 15px;
+      }
+      
+      nav {
+        flex-wrap: wrap;
+        justify-content: center;
+      }
+      
+      .hero {
+        height: 250px;
+      }
+      
+      .cart-section {
+        position: static;
+        width: 90%;
+        margin: 20px auto;
+      }
+      
+      .info-section {
+        margin-top: 20px;
+      }
+      
+      .testimonial-cards {
+        flex-direction: column;
+        align-items: center;
+      }
+      
+      .footer-container {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <div class="header-container">
+      <div class="logo">
+        <img src="https://raw.githubusercontent.com/Mikivishy/imgs/main/folder1/Logo.jpg" alt="Logo">
+        <div class="logo-text">
+          <h1>Who's Cooking</h1>
+          <p>Fresh, Local, Delicious</p>
+        </div>
+      </div>
+      <nav>
+        <a href="#"><i class="fas fa-home"></i> HOME</a>
+        <a href="#"><i class="fas fa-envelope"></i> CONTACT US</a>
+        <a href="#"><i class="fas fa-utensils"></i> CATERING</a>
+        <a class="order-button" href="#"><i class="fas fa-shopping-bag"></i> ORDER ONLINE</a>
+        <div class="cart">
+          <i class="fas fa-shopping-cart"></i> <span>0</span>
+        </div>
+      </nav>
+    </div>
+  </header>
+
+  <div class="hero">
+    <div class="hero-content">
+      <h2>Delicious Food Made Fresh Daily</h2>
+      <p>Experience the finest homemade dishes prepared with locally sourced ingredients</p>
+      <a href="#" class="order-button"><i class="fas fa-utensils"></i> View Our Menu</a>
+    </div>
+  </div>
+
+  <div class="info-section">
+    <div class="info-header">
+      <div class="info-title">
+        <h3>Who's Cooking?</h3>
+        <p>Family owned since 2003</p>
+      </div>
+      <div class="info-rating">
+        <i class="fas fa-star"></i>
+        <span>4.8 (124 reviews)</span>
+      </div>
+    </div>
+    <div class="info-details">
+      <div>
+        <div class="info-detail">
+          <i class="fas fa-map-marker-alt"></i>
+          <span>CROTON FALLS, NY 10519</span>
+        </div>
+        <div class="info-detail">
+          <i class="fas fa-phone"></i>
+          <span>(914) 277-3210</span>
+        </div>
+      </div>
+      <div>
+        <div class="info-detail">
+          <i class="fas fa-clock"></i>
+          <span>7:00 AM - 5:00 PM (Mon-Fri)</span>
+        </div>
+        <div class="info-detail">
+          <i class="fas fa-clock"></i>
+          <span>8:00 AM - 3:00 PM (Sat-Sun)</span>
+        </div>
+      </div>
+      <div class="social-icons">
+        <a href="#" class="social-icon"><i class="fab fa-facebook-f"></i></a>
+        <a href="#" class="social-icon"><i class="fab fa-instagram"></i></a>
+        <a href="#" class="social-icon"><i class="fab fa-twitter"></i></a>
+      </div>
+    </div>
+  </div>
+
+  <div class="order-callout">
+    <h3>Ready to Order?</h3>
+    <p>Start your carryout order now and enjoy our delicious meals at home.</p>
+    <button class="availability-button"><i class="fas fa-check-circle"></i> Check Availability</button>
+  </div>
+
+  <div class="featured-items">
+    <h3>Today's Specials</h3>
+    <div class="items-grid">
+      <div class="item-card">
+        <div class="item-image">
+          <img src="https://raw.githubusercontent.com/Mikivishy/imgs/main/folder1/Food.jpg" alt="Signature Sandwich">
+        </div>
+        <span class="item-tag">Popular</span>
+        <div class="item-details">
+          <h4 class="item-title">Signature Sandwich</h4>
+          <p class="item-description">Roasted turkey, avocado, bacon, lettuce, tomato, and our house aioli on artisan bread.</p>
+          <div class="item-price-add">
+            <span class="item-price">$12.95</span>
+            <button class="add-to-cart"><i class="fas fa-plus"></i></button>
+          </div>
+        </div>
+      </div>
+      <div class="item-card">
+        <div class="item-image">
+          <img src="https://raw.githubusercontent.com/Mikivishy/imgs/main/folder1/Food.jpg" alt="Garden Salad">
+        </div>
+        <span class="item-tag">Healthy</span>
+        <div class="item-details">
+          <h4 class="item-title">Garden Salad</h4>
+          <p class="item-description">Mixed greens, cherry tomatoes, cucumber, carrots, red onion with balsamic vinaigrette.</p>
+          <div class="item-price-add">
+            <span class="item-price">$9.95</span>
+            <button class="add-to-cart"><i class="fas fa-plus"></i></button>
+          </div>
+        </div>
+      </div>
+      <div class="item-card">
+        <div class="item-image">
+          <img src="https://raw.githubusercontent.com/Mikivishy/imgs/main/folder1/Food.jpg" alt="Hot Lunch Special">
+        </div>
+        <span class="item-tag">New</span>
+        <div class="item-details">
+          <h4 class="item-title">Hot Lunch Special</h4>
+          <p class="item-description">Chef's selection of proteins and sides that changes daily. Perfect for a hearty lunch.</p>
+          <div class="item-price-add">
+            <span class="item-price">$14.95</span>
+            <button class="add-to-cart"><i class="fas fa-plus"></i></button>
+          </div>
+        </div>
+      </div>
+      <div class="item-card">
+        <div class="item-image">
+          <img src="https://raw.githubusercontent.com/Mikivishy/imgs/main/folder1/Food.jpg" alt="Breakfast Sandwich">
+        </div>
+        <div class="item-details">
+          <h4 class="item-title">Breakfast Sandwich</h4>
+          <p class="item-description">Farm fresh eggs, cheddar cheese, and your choice of bacon or sausage on a toasted bagel.</p>
+          <div class="item-price-add">
+            <span class="item-price">$7.95</span>
+            <button class="add-to-cart"><i class="fas fa-plus"></i></button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="cart-section">
+    <h4><i class="fas fa-shopping-cart"></i> Your Cart</h4>
+    <div class="cart-empty">
+      <i class="fas fa-shopping-basket"></i>
+      <p>Your cart is empty. Add some delicious items!</p>
+    </div>
+    <div class="cart-icons">
+      <img src="https://raw.githubusercontent.com/Mikivishy/imgs/main/folder1/Icon.jpg" alt="Visa">
+      <img src="https://raw.githubusercontent.com/Mikivishy/imgs/main/folder1/Icon.jpg" alt="MasterCard">
+      <img src="https://raw.githubusercontent.com/Mikivishy/imgs/main/folder1/Icon.jpg" alt="Discover">
+      <img src="https://raw.githubusercontent.com/Mikivishy/imgs/main/folder1/Icon.jpg" alt="Amex">
+    </div>
+  </div>
+
+  <div class="accordion-section">
+    <div class="menu-header">
+      <h3>Our Menu</h3>
+      <div class="expand-menu">
+        <i class="fas fa-plus-circle"></i> Expand Full Menu
+      </div>
+    </div>
+
+    <div class="accordion-toggle">
+      <div><i class="fas fa-sandwich"></i> SANDWICHES</div>
+      <span class="toggle-icon"><i class="fas fa-chevron-up"></i></span>
+    </div>
+    <div class="accordion-toggle">
+      <div><i class="fas fa-leaf"></i> SALADS</div>
+      <span class="toggle-icon"><i class="fas fa-chevron-up"></i></span>
+    </div>
+    <div class="accordion-toggle">
+      <div><i class="fas fa-utensils"></i> HOT LUNCH BUFFET</div>
+      <span class="toggle-icon"><i class="fas fa-chevron-up"></i></span>
+    </div>
+    <div class="accordion-toggle">
+      <div><i class="fas fa-glass"></i> BEVERAGES</div>
+      <span class="toggle-icon"><i class="fas fa-chevron-up"></i></span>
+    </div>
+    <div class="accordion-toggle">
+      <div><i class="fas fa-coffee"></i> BREAKFAST</div>
+      <span class="toggle-icon"><i class="fas fa-chevron-up"></i></span>
+    </div>
+  </div>
+
+  <section class="testimonials">
+    <h3>What Our Customers Say</h3>
+    <div class="testimonial-cards">
+      <div class="testimonial-card">
+        <p class="testimonial-content">The sandwiches here are simply amazing! Fresh ingredients and great flavors. I especially love their signature turkey avocado sandwich.</p>
+        <div class="testimonial-author">
+          <img src="https://raw.githubusercontent.com/Mikivishy/imgs/main/folder1/People.jpg" alt="Customer">
+          <div class="author-info">
+            <h4>Sarah Johnson</h4>
+            <p>Local Customer</p>
+            <div class="testimonial-rating">
+              <i class="fas fa-star"></i>
+              <i class="fas fa-star"></i>
+              <i class="fas fa-star"></i>
+              <i class="fas fa-star"></i>
+              <i class="fas fa-star"></i>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="testimonial-card">
+        <p class="testimonial-content">Who's Cooking catered our office party and everyone was impressed! The food was delicious and the service was professional and on time.</p>
+        <div class="testimonial-author">
+          <img src="https://raw.githubusercontent.com/Mikivishy/imgs/main/folder1/People.jpg" alt="Customer">
+          <div class="author-info">
+            <h4>Michael Roberts</h4>
+            <p>Catering Client</p>
+            <div class="testimonial-rating">
+              <i class="fas fa-star"></i>
+              <i class="fas fa-star"></i>
+              <i class="fas fa-star"></i>
+              <i class="fas fa-star"></i>
+              <i class="fas fa-star"></i>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="testimonial-card">
+        <p class="testimonial-content">The hot lunch buffet is my go-to for a satisfying meal. Great variety and always fresh. Their online ordering system makes it so convenient!</p>
+        <div class="testimonial-author">
+          <img src="https://raw.githubusercontent.com/Mikivishy/imgs/main/folder1/People.jpg" alt="Customer">
+          <div class="author-info">
+            <h4>Emily Chen</h4>
+            <p>Regular Customer</p>
+            <div class="testimonial-rating">
+              <i class="fas fa-star"></i>
+              <i class="fas fa-star"></i>
+              <i class="fas fa-star"></i>
+              <i class="fas fa-star"></i>
+              <i class="fas fa-star-half-alt"></i>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="newsletter">
+    <div class="newsletter-container">
+      <h3>Join Our Newsletter</h3>
+      <p>Subscribe to receive special offers, event announcements, and weekly menu updates.</p>
+      <form class="newsletter-form">
+        <input type="email" class="newsletter-input" placeholder="Your email address">
+        <button type="submit" class="newsletter-button">SUBSCRIBE</button>
+      </form>
+    </div>
+  </section>
+
+  <footer>
+    <div class="footer-container">
+      <div class="footer-about">
+        <div class="footer-logo">
+          <img src="https://raw.githubusercontent.com/Mikivishy/imgs/main/folder1/Logo.jpg" alt="Logo">
+          <h3>Who's Cooking</h3>
+        </div>
+        <p>We are a family-owned business dedicated to providing fresh, delicious meals using locally sourced ingredients. From breakfast to lunch, we've got you covered.</p>
+        <div class="footer-social">
+          <a href="#"><i class="fab fa-facebook-f"></i></a>
+          <a href="#"><i class="fab fa-instagram"></i></a>
+          <a href="#"><i class="fab fa-twitter"></i></a>
+          <a href="#"><i class="fab fa-yelp"></i></a>
+        </div>
+      </div>
+      <div class="footer-links">
+        <h4>Quick Links</h4>
+        <ul>
+          <li><a href="#"><i class="fas fa-angle-right"></i> Home</a></li>
+          <li><a href="#"><i class="fas fa-angle-right"></i> Our Menu</a></li>
+          <li><a href="#"><i class="fas fa-angle-right"></i> Catering Services</a></li>
+          <li><a href="#"><i class="fas fa-angle-right"></i> About Us</a></li>
+          <li><a href="#"><i class="fas fa-angle-right"></i> Contact Us</a></li>
+        </ul>
+      </div>
+      <div class="footer-contact">
+        <h4>Contact Information</h4>
+        <p><i class="fas fa-map-marker-alt"></i> <span>123 Main Street<br>CROTON FALLS, NY 10519</span></p>
+        <p><i class="fas fa-phone"></i> <span>(914) 277-3210</span></p>
+        <p><i class="fas fa-envelope"></i> <span>info@whoscooking.com</span></p>
+        <p><i class="fas fa-clock"></i> <span>7:00 AM - 5:00 PM (Mon-Fri)<br>8:00 AM - 3:00 PM (Sat-Sun)</span></p>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>Powered by Menufy © 2024 | All Rights Reserved</p>
+      <div class="footer-bottom-links">
+        <a href="#">Accessibility</a>
+        <a href="#">Terms of Service</a>
+        <a href="#">Help Center</a>
+        <a href="#">Privacy Policy</a>
+      </div>
+    </div>
+  </footer>
+
+  <div class="checkout-bar">
+    <button class="checkout"><i class="fas fa-shopping-cart"></i> Checkout</button>
+    <span class="checkout-total">$0.00</span>
+  </div>
+
+  <script>
+    // Simple accordion functionality
+    document.addEventListener('DOMContentLoaded', function() {
+      const accordionToggles = document.querySelectorAll('.accordion-toggle');
+      
+      accordionToggles.forEach(toggle => {
+        toggle.addEventListener('click', function() {
+          this.classList.toggle('active');
+          const icon = this.querySelector('.toggle-icon i');
+          
+          if (this.classList.contains('active')) {
+            icon.classList.remove('fa-chevron-up');
+            icon.classList.add('fa-chevron-down');
+          } else {
+            icon.classList.remove('fa-chevron-down');
+            icon.classList.add('fa-chevron-up');
+          }
+        });
+      });
+      
+      // Expand menu button
+      const expandMenu = document.querySelector('.expand-menu');
+      expandMenu.addEventListener('click', function() {
+        const icon = this.querySelector('i');
+        if (icon.classList.contains('fa-plus-circle')) {
+          icon.classList.remove('fa-plus-circle');
+          icon.classList.add('fa-minus-circle');
+          this.innerHTML = '<i class="fas fa-minus-circle"></i> Collapse Menu';
+        } else {
+          icon.classList.remove('fa-minus-circle');
+          icon.classList.add('fa-plus-circle');
+          this.innerHTML = '<i class="fas fa-plus-circle"></i> Expand Full Menu';
+        }
+      });
+    });
+  </script>
+</body>
+</html>

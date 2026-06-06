@@ -1,0 +1,30 @@
+你会看到一张编码题相关的图。请结合图像和函数签名，补全 Python 解法。
+
+要求：
+1. 只输出一个 fenced code block，格式为 ```python ... ```。
+2. 必须实现给定的 `solution` 函数签名。
+3. 不要输出解释。
+
+函数签名：
+```python
+from typing import Dict, List, Tuple
+
+def solution(rectangles: Dict[int, List[Tuple[int, int]]], rectangle_id: int) -> int:    
+    """
+    Calculate the trimmed area of a specified rectangle within a grid.
+
+    Args:
+        rectangles: A dictionary mapping rectangle IDs (int) to their corner coordinates.
+                   Each value is a list containing two (column, row) tuples representing 
+                   the bottom-left and top-right corners respectively.
+                   Example: {1: [(0, 0), (2, 2)], 2: [(2, 0), (4, 2)]}
+        rectangle_id: The ID of the target rectangle to calculate the trimmed area for.  
+
+    Returns:
+        The trimmed area of the specified rectangle.
+    """
+
+```
+
+任务类型：Aggregation
+能力标签：{"Common Sense": null, "Data Structures": ["Matrix"], "Dynamic Patterns": null, "Geometric Objects": ["Rectangle", "Grid"], "Mathematical Operations": ["Value Comparison"], "Spatial Transformations": ["Truncation", "Filtering"], "Topological Relations": ["Overlap", "Boundary"]}

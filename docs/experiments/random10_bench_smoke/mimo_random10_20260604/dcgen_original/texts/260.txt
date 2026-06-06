@@ -1,0 +1,627 @@
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Swrve - Customer Engagement Platform</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
+            color: #333;
+            line-height: 1.6;
+        }
+
+        /* Top Banner */
+        .top-banner {
+            background-color: #1e3a4e;
+            color: white;
+            text-align: center;
+            padding: 10px 20px;
+            font-size: 13px;
+        }
+
+        .top-banner a {
+            color: white;
+            text-decoration: underline;
+        }
+
+        /* Navigation */
+        .nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 40px;
+            background: white;
+            border-bottom: 1px solid #e0e0e0;
+        }
+
+        .nav-logo {
+            width: 150px;
+            height: 35px;
+            background: linear-gradient(135deg, #2c3e50 0%, #34495e 100%);
+            border-radius: 4px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 12px;
+            letter-spacing: 1px;
+        }
+
+        .nav-right {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .btn-login {
+            padding: 10px 25px;
+            border: 2px solid #333;
+            background: transparent;
+            color: #333;
+            font-size: 12px;
+            font-weight: 600;
+            letter-spacing: 1px;
+            cursor: pointer;
+            border-radius: 4px;
+        }
+
+        .btn-demo {
+            padding: 10px 25px;
+            background: #f7365e;
+            color: white;
+            border: none;
+            font-size: 12px;
+            font-weight: 600;
+            letter-spacing: 1px;
+            cursor: pointer;
+            border-radius: 4px;
+        }
+
+        .menu-icon {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+            cursor: pointer;
+            padding: 5px;
+        }
+
+        .menu-icon span {
+            width: 20px;
+            height: 2px;
+            background: #333;
+        }
+
+        /* Hero Section */
+        .hero {
+            text-align: center;
+            padding: 60px 20px 40px;
+            background: white;
+        }
+
+        .hero h1 {
+            font-size: 42px;
+            font-weight: 400;
+            color: #1e3a4e;
+            margin-bottom: 20px;
+        }
+
+        .hero p {
+            font-size: 16px;
+            color: #555;
+            max-width: 500px;
+            margin: 0 auto 30px;
+        }
+
+        .btn-learn-more {
+            padding: 14px 35px;
+            background: #f7365e;
+            color: white;
+            border: none;
+            font-size: 13px;
+            font-weight: 600;
+            letter-spacing: 1.5px;
+            cursor: pointer;
+            border-radius: 25px;
+        }
+
+        /* Hero Image Section */
+        .hero-image {
+            background: linear-gradient(180deg, #e8e4df 0%, #d9d4cf 100%);
+            height: 450px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+        }
+
+        .play-button {
+            width: 80px;
+            height: 80px;
+            background: white;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+        }
+
+        .play-button::after {
+            content: '';
+            width: 0;
+            height: 0;
+            border-style: solid;
+            border-width: 12px 0 12px 20px;
+            border-color: transparent transparent transparent #f7365e;
+            margin-left: 5px;
+        }
+
+        /* Features Section */
+        .features {
+            text-align: center;
+            padding: 80px 20px;
+            background: #f5f3f1;
+        }
+
+        .features h2 {
+            font-size: 32px;
+            font-weight: 500;
+            color: #1e3a4e;
+            max-width: 600px;
+            margin: 0 auto 25px;
+            line-height: 1.3;
+        }
+
+        .features p {
+            font-size: 14px;
+            color: #666;
+            max-width: 550px;
+            margin: 0 auto;
+        }
+
+        /* Trusted Brands */
+        .trusted {
+            text-align: center;
+            padding: 70px 20px;
+            background: white;
+        }
+
+        .trusted h3 {
+            font-size: 20px;
+            font-weight: 500;
+            color: #555;
+            margin-bottom: 40px;
+        }
+
+        .brands {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 50px;
+            flex-wrap: wrap;
+        }
+
+        .brand-logo {
+            width: 100px;
+            height: 50px;
+            background: #e8e8e8;
+            border-radius: 4px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .brand-logo::after {
+            content: '';
+            width: 40px;
+            height: 25px;
+            background: #d0d0d0;
+            border-radius: 3px;
+        }
+
+        /* CTA Section */
+        .cta-section {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 60px;
+            padding: 80px 40px;
+            background: #e8e4df;
+        }
+
+        .cta-content {
+            max-width: 450px;
+        }
+
+        .cta-content h2 {
+            font-size: 32px;
+            font-weight: 500;
+            color: #1e3a4e;
+            margin-bottom: 25px;
+            line-height: 1.3;
+        }
+
+        .cta-image {
+            width: 200px;
+            height: 150px;
+            background: #d9d4cf;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .cta-image::after {
+            content: '';
+            width: 60px;
+            height: 50px;
+            background: #c8c3be;
+            border-radius: 4px;
+        }
+
+        /* Footer CTA Banner */
+        .footer-cta {
+            background: linear-gradient(90deg, #f7365e 0%, #ff6b8a 100%);
+            padding: 20px 40px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 40px;
+        }
+
+        .footer-cta-text {
+            color: white;
+            font-size: 14px;
+        }
+
+        .footer-cta-text img,
+        .footer-cta-logo {
+            width: 120px;
+            height: 40px;
+            background: rgba(255,255,255,0.9);
+            border-radius: 4px;
+            display: inline-block;
+            vertical-align: middle;
+            margin-right: 15px;
+        }
+
+        .btn-footer-cta {
+            padding: 14px 35px;
+            background: white;
+            color: #333;
+            border: none;
+            font-size: 13px;
+            font-weight: 600;
+            letter-spacing: 1.5px;
+            cursor: pointer;
+            border-radius: 25px;
+        }
+
+        /* Footer */
+        .footer {
+            background: #1e3a4e;
+            color: white;
+            padding: 60px 40px 40px;
+        }
+
+        .footer-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .footer-logo-section {
+            max-width: 200px;
+        }
+
+        .footer-logo {
+            width: 140px;
+            height: 50px;
+            background: rgba(255,255,255,0.15);
+            border-radius: 4px;
+            margin-bottom: 20px;
+        }
+
+        .footer-copyright {
+            font-size: 12px;
+            color: rgba(255,255,255,0.7);
+            line-height: 1.6;
+        }
+
+        .footer-links {
+            display: flex;
+            gap: 80px;
+        }
+
+        .footer-column h4 {
+            font-size: 12px;
+            font-weight: 600;
+            letter-spacing: 2px;
+            margin-bottom: 20px;
+            color: white;
+        }
+
+        .footer-column ul {
+            list-style: none;
+        }
+
+        .footer-column li {
+            margin-bottom: 12px;
+        }
+
+        .footer-column a {
+            color: rgba(255,255,255,0.7);
+            text-decoration: none;
+            font-size: 14px;
+            transition: color 0.3s;
+        }
+
+        .footer-column a:hover {
+            color: white;
+        }
+
+        .social-section {
+            text-align: left;
+        }
+
+        .social-section h4 {
+            font-size: 12px;
+            font-weight: 600;
+            letter-spacing: 2px;
+            margin-bottom: 20px;
+            color: white;
+        }
+
+        .social-icons {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+
+        .social-icon {
+            width: 32px;
+            height: 32px;
+            background: rgba(255,255,255,0.15);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 14px;
+            cursor: pointer;
+        }
+
+        .social-icon:hover {
+            background: rgba(255,255,255,0.25);
+        }
+
+        .btn-contact {
+            padding: 12px 30px;
+            background: transparent;
+            color: white;
+            border: 2px solid white;
+            font-size: 12px;
+            font-weight: 600;
+            letter-spacing: 1.5px;
+            cursor: pointer;
+            border-radius: 25px;
+        }
+
+        /* Cookie Banner */
+        .cookie-banner {
+            position: fixed;
+            bottom: 20px;
+            left: 20px;
+            right: 20px;
+            max-width: 700px;
+            background: #1e3a4e;
+            border-radius: 8px;
+            padding: 20px 25px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            z-index: 1000;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+        }
+
+        .cookie-icon {
+            width: 40px;
+            height: 40px;
+            background: rgba(255,255,255,0.1);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 15px;
+            flex-shrink: 0;
+        }
+
+        .cookie-text {
+            flex: 1;
+            font-size: 12px;
+            color: rgba(255,255,255,0.85);
+            line-height: 1.5;
+        }
+
+        .cookie-text a {
+            color: rgba(255,255,255,0.85);
+            text-decoration: underline;
+        }
+
+        .cookie-buttons {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            margin-left: 20px;
+        }
+
+        .btn-accept {
+            padding: 8px 18px;
+            background: #f7365e;
+            color: white;
+            border: none;
+            font-size: 11px;
+            font-weight: 600;
+            cursor: pointer;
+            border-radius: 4px;
+        }
+
+        .btn-reject {
+            padding: 8px 18px;
+            background: transparent;
+            color: white;
+            border: 1px solid white;
+            font-size: 11px;
+            font-weight: 600;
+            cursor: pointer;
+            border-radius: 4px;
+        }
+
+        .cookie-close {
+            color: rgba(255,255,255,0.6);
+            cursor: pointer;
+            font-size: 18px;
+            margin-left: 15px;
+            align-self: flex-start;
+        }
+
+        .hidden {
+            display: none !important;
+        }
+    </style>
+</head>
+<body>
+    <!-- Top Banner -->
+    <div class="top-banner">
+        🔵 <a href="#">MessageGears acquires mobile app marketing leader Swrve</a>
+    </div>
+
+    <!-- Navigation -->
+    <nav class="nav">
+        <div class="nav-logo">SWRVE</div>
+        <div class="nav-right">
+            <button class="btn-login">LOGIN</button>
+            <button class="btn-demo">GET A DEMO</button>
+            <div class="menu-icon">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <h1>Customer Engagement Platform</h1>
+        <p>Optimize your customer insights to deliver 1:1 personalized experiences across push, in-app, email, and SMS.</p>
+        <button class="btn-learn-more">LEARN MORE</button>
+    </section>
+
+    <!-- Hero Image -->
+    <section class="hero-image">
+        <div class="play-button"></div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="features">
+        <h2>Launch sophisticated, highly dynamic cross-channel campaigns</h2>
+        <p>Swrve, a MessageGears company, has delivered success to marketers across industries for over 10 years with a versatile, powerful customer engagement platform.</p>
+    </section>
+
+    <!-- Trusted Brands -->
+    <section class="trusted">
+        <h3>Trusted by the brands you know and love</h3>
+        <div class="brands">
+            <div class="brand-logo"></div>
+            <div class="brand-logo"></div>
+            <div class="brand-logo"></div>
+            <div class="brand-logo"></div>
+            <div class="brand-logo"></div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="cta-section">
+        <div class="cta-content">
+            <h2>Start building smarter cross-channel campaigns today.</h2>
+            <button class="btn-learn-more">LEARN MORE</button>
+        </div>
+        <div class="cta-image"></div>
+    </section>
+
+    <!-- Footer CTA Banner -->
+    <div class="footer-cta">
+        <div class="footer-cta-text">
+            <div class="footer-cta-logo"></div>
+        </div>
+        <button class="btn-footer-cta">LEARN MORE</button>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-logo-section">
+                <div class="footer-logo"></div>
+                <p class="footer-copyright">© 2024 Swrve Inc.<br>All rights reserved.</p>
+            </div>
+            <div class="footer-links">
+                <div class="footer-column">
+                    <h4>RESOURCES</h4>
+                    <ul>
+                        <li><a href="#">Login</a></li>
+                        <li><a href="#">Support</a></li>
+                        <li><a href="#">Documentation</a></li>
+                        <li><a href="#">Contact</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h4>LEGAL</h4>
+                    <ul>
+                        <li><a href="#">Cookies</a></li>
+                        <li><a href="#">Privacy Policy</a></li>
+                        <li><a href="#">Security</a></li>
+                        <li><a href="#">Terms of Service</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column social-section">
+                    <h4>SOCIAL</h4>
+                    <div class="social-icons">
+                        <div class="social-icon">in</div>
+                        <div class="social-icon">𝕏</div>
+                        <div class="social-icon">◎</div>
+                    </div>
+                    <button class="btn-contact">CONTACT</button>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Cookie Banner -->
+    <div class="cookie-banner" id="cookieBanner">
+        <div class="cookie-icon">🍪</div>
+        <div class="cookie-text">
+            This website uses cookies to ensure you get the best experience on our website. By clicking "Accept All Cookies", you agree to the storing of cookies on your device to enhance site navigation, analyze site usage, and assist in our marketing efforts. <a href="#">Learn more</a>.
+        </div>
+        <div class="cookie-buttons">
+            <button class="btn-accept" onclick="closeCookieBanner()">Accept All Cookies</button>
+            <button class="btn-reject" onclick="closeCookieBanner()">Reject All Cookies</button>
+        </div>
+        <span class="cookie-close" onclick="closeCookieBanner()">×</span>
+    </div>
+
+    <script>
+        function closeCookieBanner() {
+            document.getElementById('cookieBanner').classList.add('hidden');
+        }
+    </script>
+</body>
+</html>
+```

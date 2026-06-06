@@ -1,0 +1,222 @@
+[
+  {
+    "bench": "visualwebbench",
+    "sample_id": "element_ground_284",
+    "task_type": "element_ground",
+    "source_kind": "text",
+    "output_path": "experiments\\random10_bench_smoke\\mimo_random10_20260604\\visualwebbench\\rendered_fixed\\element_ground_284.png",
+    "preview_html_path": "experiments\\random10_bench_smoke\\mimo_random10_20260604\\visualwebbench\\preview_html\\element_ground_284.html",
+    "rendered_width": 1280,
+    "rendered_height": 1418,
+    "status": "rendered"
+  },
+  {
+    "bench": "visualwebbench",
+    "sample_id": "action_prediction_36",
+    "task_type": "action_prediction",
+    "source_kind": "text",
+    "output_path": "experiments\\random10_bench_smoke\\mimo_random10_20260604\\visualwebbench\\rendered_fixed\\action_prediction_36.png",
+    "preview_html_path": "experiments\\random10_bench_smoke\\mimo_random10_20260604\\visualwebbench\\preview_html\\action_prediction_36.html",
+    "rendered_width": 1280,
+    "rendered_height": 967,
+    "status": "rendered"
+  },
+  {
+    "bench": "visualwebbench",
+    "sample_id": "webqa_10",
+    "task_type": "webqa",
+    "source_kind": "text",
+    "output_path": "experiments\\random10_bench_smoke\\mimo_random10_20260604\\visualwebbench\\rendered_fixed\\webqa_10.png",
+    "preview_html_path": "experiments\\random10_bench_smoke\\mimo_random10_20260604\\visualwebbench\\preview_html\\webqa_10.html",
+    "rendered_width": 1280,
+    "rendered_height": 900,
+    "status": "rendered"
+  },
+  {
+    "bench": "visualwebbench",
+    "sample_id": "element_ocr_145",
+    "task_type": "element_ocr",
+    "source_kind": "text",
+    "output_path": "experiments\\random10_bench_smoke\\mimo_random10_20260604\\visualwebbench\\rendered_fixed\\element_ocr_145.png",
+    "preview_html_path": "experiments\\random10_bench_smoke\\mimo_random10_20260604\\visualwebbench\\preview_html\\element_ocr_145.html",
+    "rendered_width": 1280,
+    "rendered_height": 900,
+    "status": "rendered"
+  },
+  {
+    "bench": "visualwebbench",
+    "sample_id": "webqa_86",
+    "task_type": "webqa",
+    "source_kind": "text",
+    "output_path": "experiments\\random10_bench_smoke\\mimo_random10_20260604\\visualwebbench\\rendered_fixed\\webqa_86.png",
+    "preview_html_path": "experiments\\random10_bench_smoke\\mimo_random10_20260604\\visualwebbench\\preview_html\\webqa_86.html",
+    "rendered_width": 1280,
+    "rendered_height": 900,
+    "status": "rendered"
+  },
+  {
+    "bench": "visualwebbench",
+    "sample_id": "element_ground_405",
+    "task_type": "element_ground",
+    "source_kind": "text",
+    "output_path": "experiments\\random10_bench_smoke\\mimo_random10_20260604\\visualwebbench\\rendered_fixed\\element_ground_405.png",
+    "preview_html_path": "experiments\\random10_bench_smoke\\mimo_random10_20260604\\visualwebbench\\preview_html\\element_ground_405.html",
+    "rendered_width": 1280,
+    "rendered_height": 1381,
+    "status": "rendered"
+  },
+  {
+    "bench": "visualwebbench",
+    "sample_id": "element_ocr_242",
+    "task_type": "element_ocr",
+    "source_kind": "text",
+    "output_path": "experiments\\random10_bench_smoke\\mimo_random10_20260604\\visualwebbench\\rendered_fixed\\element_ocr_242.png",
+    "preview_html_path": "experiments\\random10_bench_smoke\\mimo_random10_20260604\\visualwebbench\\preview_html\\element_ocr_242.html",
+    "rendered_width": 1280,
+    "rendered_height": 900,
+    "status": "rendered"
+  },
+  {
+    "bench": "visualwebbench",
+    "sample_id": "action_prediction_48",
+    "task_type": "action_prediction",
+    "source_kind": "text",
+    "output_path": "experiments\\random10_bench_smoke\\mimo_random10_20260604\\visualwebbench\\rendered_fixed\\action_prediction_48.png",
+    "preview_html_path": "experiments\\random10_bench_smoke\\mimo_random10_20260604\\visualwebbench\\preview_html\\action_prediction_48.html",
+    "rendered_width": 1280,
+    "rendered_height": 986,
+    "status": "rendered"
+  },
+  {
+    "bench": "visualwebbench",
+    "sample_id": "webqa_208",
+    "task_type": "webqa",
+    "source_kind": "text",
+    "output_path": "experiments\\random10_bench_smoke\\mimo_random10_20260604\\visualwebbench\\rendered_fixed\\webqa_208.png",
+    "preview_html_path": "experiments\\random10_bench_smoke\\mimo_random10_20260604\\visualwebbench\\preview_html\\webqa_208.html",
+    "rendered_width": 1280,
+    "rendered_height": 900,
+    "status": "rendered"
+  },
+  {
+    "bench": "visualwebbench",
+    "sample_id": "webqa_84",
+    "task_type": "webqa",
+    "source_kind": "text",
+    "output_path": "experiments\\random10_bench_smoke\\mimo_random10_20260604\\visualwebbench\\rendered_fixed\\webqa_84.png",
+    "preview_html_path": "experiments\\random10_bench_smoke\\mimo_random10_20260604\\visualwebbench\\preview_html\\webqa_84.html",
+    "rendered_width": 1280,
+    "rendered_height": 900,
+    "status": "rendered"
+  },
+  {
+    "bench": "humaneval_v",
+    "sample_id": "q57-2",
+    "task_type": "diagram_to_python_code",
+    "source_kind": "code",
+    "output_path": "experiments\\random10_bench_smoke\\mimo_random10_20260604\\humaneval_v\\rendered_fixed\\q57-2.png",
+    "preview_html_path": "experiments\\random10_bench_smoke\\mimo_random10_20260604\\humaneval_v\\preview_html\\q57-2.html",
+    "rendered_width": 1280,
+    "rendered_height": 1217,
+    "status": "rendered"
+  },
+  {
+    "bench": "humaneval_v",
+    "sample_id": "q38",
+    "task_type": "diagram_to_python_code",
+    "source_kind": "code",
+    "output_path": "experiments\\random10_bench_smoke\\mimo_random10_20260604\\humaneval_v\\rendered_fixed\\q38.png",
+    "preview_html_path": "experiments\\random10_bench_smoke\\mimo_random10_20260604\\humaneval_v\\preview_html\\q38.html",
+    "rendered_width": 1280,
+    "rendered_height": 1604,
+    "status": "rendered"
+  },
+  {
+    "bench": "humaneval_v",
+    "sample_id": "q56-3",
+    "task_type": "diagram_to_python_code",
+    "source_kind": "code",
+    "output_path": "experiments\\random10_bench_smoke\\mimo_random10_20260604\\humaneval_v\\rendered_fixed\\q56-3.png",
+    "preview_html_path": "experiments\\random10_bench_smoke\\mimo_random10_20260604\\humaneval_v\\preview_html\\q56-3.html",
+    "rendered_width": 1280,
+    "rendered_height": 1288,
+    "status": "rendered"
+  },
+  {
+    "bench": "humaneval_v",
+    "sample_id": "q100",
+    "task_type": "diagram_to_python_code",
+    "source_kind": "code",
+    "output_path": "experiments\\random10_bench_smoke\\mimo_random10_20260604\\humaneval_v\\rendered_fixed\\q100.png",
+    "preview_html_path": "experiments\\random10_bench_smoke\\mimo_random10_20260604\\humaneval_v\\preview_html\\q100.html",
+    "rendered_width": 1280,
+    "rendered_height": 1456,
+    "status": "rendered"
+  },
+  {
+    "bench": "humaneval_v",
+    "sample_id": "q61-2",
+    "task_type": "diagram_to_python_code",
+    "source_kind": "code",
+    "output_path": "experiments\\random10_bench_smoke\\mimo_random10_20260604\\humaneval_v\\rendered_fixed\\q61-2.png",
+    "preview_html_path": "experiments\\random10_bench_smoke\\mimo_random10_20260604\\humaneval_v\\preview_html\\q61-2.html",
+    "rendered_width": 1280,
+    "rendered_height": 1279,
+    "status": "rendered"
+  },
+  {
+    "bench": "humaneval_v",
+    "sample_id": "q46",
+    "task_type": "diagram_to_python_code",
+    "source_kind": "code",
+    "output_path": "experiments\\random10_bench_smoke\\mimo_random10_20260604\\humaneval_v\\rendered_fixed\\q46.png",
+    "preview_html_path": "experiments\\random10_bench_smoke\\mimo_random10_20260604\\humaneval_v\\preview_html\\q46.html",
+    "rendered_width": 1280,
+    "rendered_height": 1083,
+    "status": "rendered"
+  },
+  {
+    "bench": "humaneval_v",
+    "sample_id": "q55",
+    "task_type": "diagram_to_python_code",
+    "source_kind": "code",
+    "output_path": "experiments\\random10_bench_smoke\\mimo_random10_20260604\\humaneval_v\\rendered_fixed\\q55.png",
+    "preview_html_path": "experiments\\random10_bench_smoke\\mimo_random10_20260604\\humaneval_v\\preview_html\\q55.html",
+    "rendered_width": 1280,
+    "rendered_height": 1169,
+    "status": "rendered"
+  },
+  {
+    "bench": "humaneval_v",
+    "sample_id": "q62-2",
+    "task_type": "diagram_to_python_code",
+    "source_kind": "code",
+    "output_path": "experiments\\random10_bench_smoke\\mimo_random10_20260604\\humaneval_v\\rendered_fixed\\q62-2.png",
+    "preview_html_path": "experiments\\random10_bench_smoke\\mimo_random10_20260604\\humaneval_v\\preview_html\\q62-2.html",
+    "rendered_width": 1280,
+    "rendered_height": 1482,
+    "status": "rendered"
+  },
+  {
+    "bench": "humaneval_v",
+    "sample_id": "q25",
+    "task_type": "diagram_to_python_code",
+    "source_kind": "code",
+    "output_path": "experiments\\random10_bench_smoke\\mimo_random10_20260604\\humaneval_v\\rendered_fixed\\q25.png",
+    "preview_html_path": "experiments\\random10_bench_smoke\\mimo_random10_20260604\\humaneval_v\\preview_html\\q25.html",
+    "rendered_width": 1280,
+    "rendered_height": 2460,
+    "status": "rendered"
+  },
+  {
+    "bench": "humaneval_v",
+    "sample_id": "q9-3",
+    "task_type": "diagram_to_python_code",
+    "source_kind": "code",
+    "output_path": "experiments\\random10_bench_smoke\\mimo_random10_20260604\\humaneval_v\\rendered_fixed\\q9-3.png",
+    "preview_html_path": "experiments\\random10_bench_smoke\\mimo_random10_20260604\\humaneval_v\\preview_html\\q9-3.html",
+    "rendered_width": 1280,
+    "rendered_height": 1376,
+    "status": "rendered"
+  }
+]

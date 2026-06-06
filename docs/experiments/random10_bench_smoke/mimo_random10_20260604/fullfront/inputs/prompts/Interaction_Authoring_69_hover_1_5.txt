@@ -1,0 +1,363 @@
+你是一个严谨的前端工程师。请根据输入材料生成一个完整、可直接运行的单文件 HTML。
+
+要求：
+1. 输出必须包含 <!DOCTYPE html>、<html>、<head>、<style>、<body>。
+2. CSS 写在 <style> 中，不要依赖外部 CSS、JS、图片、字体或网络资源。
+3. 尽可能还原截图或描述中的布局、颜色、字号、间距、组件层级和视觉密度。
+4. 如果截图中有真实图片、头像、图标或复杂素材，无法复用原图时用 CSS 色块/渐变/简化图形占位，但尺寸和位置要对齐。
+5. 如果任务涉及交互，请在单文件内写必要的 JavaScript。
+6. 只输出一个 fenced code block，格式为 ```html ... ```，不要输出额外解释。
+
+Benchmark：fullfront
+任务类型：Interaction_Authoring
+原始任务提示：
+
+You are a web developer proficient in HTML, CSS, and JavaScript. The user will provide you with two web page screenshots. The first screenshot shows the original state of the web page, while the second screenshot shows the result after the user has performed a specific operation on a particular element on the page. Please carefully analyze the differences between the two images and determine the type of interaction. You must set the ID of the interactive element to "#InteractionPart", so please ensure that this ID is unique and that the element is interactive. The possible types of interactions and the requirements for each type are as follows:
+
+**Interaction_hover_1**
+- Function Description: Implement an interactive element (id="InteractionPart") that displays a dropdown box when the mouse hovers over it. The content of the dropdown should be generated based on the understanding of the page content, and its position and display effect should adapt to the page layout.
+- When hovering, an element that matches one of the following selectors must be displayed: .dropdown-menu, .dropdown-content, [role='menu'], or the element with the ID placementDropdown.
+- The dropdown element must be hidden before hovering.
+**Interaction_hover_2**
+- Function Description: Implement an interactive element (id="InteractionPart") containing text that becomes bold when the mouse hovers over it. Ensure that the bold effect is clearly displayed.
+- When hovering, the text must become bold, with a fontWeight value of ≥600 or set to bold/bolder.
+**Interaction_hover_3**
+- Function Description: Implement an interactive element (id="InteractionPart") containing text that adds an underline when the mouse hovers over it. The underline effect should be consistent with the page style.
+- When hovering, the computed style of the element's textDecoration must include "underline".
+**Interaction_hover_4**
+- Function Description: Implement an interactive element (id="InteractionPart") that displays a tooltip when the mouse hovers over it, providing additional information or explanation. The content and style of the tooltip should be adapted according to the page context.
+- When hovering, at least one of the following elements must be displayed: an element with the class .tooltip or .tip; a direct child element of the interactive element (#InteractionPart) with the class .tooltip-text; an element with the attribute [role='tooltip']; an element with the attribute [data-tooltip].
+- The tooltip element must be invisible before hovering.
+
+You need to decide for yourself what kind of interaction to use, and you must meet the requirements for the implementation of each type of interaction.
+If any images are required in the page code, you must classify each image into one of the following categories: People, Animal, Food, Plant, Landscape, Icon, Logo, Architecture, Technology, Transportation, Map, Texture, Art, Movie, Other. The URL for each image is in the format: https://raw.githubusercontent.com/Mikivishy/imgs/main/folder1/{category}.jpg. For example, if you want to use an image from the Animal category, the image URL would be: https://raw.githubusercontent.com/Mikivishy/imgs/main/folder1/Animal.jpg. Since the width and height of each image in the URLs are unknown, you need to set the image sizes manually in the HTML code to ensure that the rendered result matches the layout requirements of the webpage image.
+Your code should accurately reflect the interaction and restore the overall static appearance of the page, ensuring the changes in the screenshots are faithfully reproduced. Please place the HTML, CSS, and JavaScript code in a single file, and your response must be a code that starts with `<!DOCTYPE html>` and ends with `</html>`, without any other content.
+
+
+Interaction type: hover_1
+
+Current HTML:
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Accounting Placement Services</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      margin: 0;
+      padding: 0;
+      background: #f5f5f5;
+    }
+
+    header {
+      background-color: #fff;
+      padding: 10px 40px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+    }
+
+    .logo img {
+      width: 60px;
+      margin-right: 10px;
+    }
+
+    nav {
+      display: flex;
+      align-items: center;
+      gap: 30px;
+    }
+
+    nav a {
+      text-decoration: none;
+      color: #222;
+      font-weight: 500;
+      position: relative;
+    }
+
+    nav a:hover {
+      color: #007bff;
+    }
+
+    .dropdown::after {
+      content: " ▼";
+      font-size: 0.6em;
+    }
+
+    .btn-job {
+      padding: 8px 16px;
+      background-color: #007bff;
+      color: white;
+      border-radius: 20px;
+      text-decoration: none;
+      font-weight: bold;
+    }
+
+    .container {
+      max-width: 1100px;
+      margin: 40px auto;
+      padding: 0 20px;
+      background-color: #fff;
+      padding: 40px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+    }
+
+    h1 {
+      font-size: 32px;
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    .divider {
+      border-top: 1px solid #ddd;
+      margin: 20px 0;
+    }
+
+    .section-text {
+      font-size: 16px;
+      line-height: 1.6;
+      margin-bottom: 30px;
+    }
+
+    .content-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 40px;
+    }
+
+    .text-col {
+      flex: 1;
+      min-width: 300px;
+    }
+
+    .image-col {
+      flex: 1;
+      min-width: 300px;
+      position: relative;
+    }
+
+    .image-col img {
+      width: 100%;
+      height: auto;
+      border-radius: 5px;
+    }
+
+    .overlay-text {
+      position: absolute;
+      bottom: 20px;
+      left: 20px;
+      color: #fff;
+      font-size: 20px;
+      font-weight: bold;
+      text-shadow: 1px 1px 3px rgba(0,0,0,0.7);
+    }
+
+    h2 {
+      font-size: 22px;
+      margin-top: 20px;
+      margin-bottom: 12px;
+    }
+
+    ul {
+      list-style: disc;
+      padding-left: 20px;
+    }
+
+    /* Dropdown styles */
+    .dropdown-container {
+      position: relative;
+      display: inline-block;
+    }
+
+    .dropdown-menu {
+      display: none;
+      position: absolute;
+      background-color: white;
+      min-width: 250px;
+      box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+      z-index: 1;
+      border-radius: 4px;
+      padding: 12px;
+      top: calc(100% + 5px);
+      left: 0;
+    }
+
+    .dropdown-menu a {
+      color: #333;
+      padding: 8px 10px;
+      text-decoration: none;
+      display: block;
+      font-size: 14px;
+      border-bottom: 1px solid #eee;
+    }
+
+    .dropdown-menu a:last-child {
+      border-bottom: none;
+    }
+
+    .dropdown-menu a:hover {
+      background-color: #f8f9fa;
+      color: #007bff;
+    }
+
+    .dropdown-title {
+      font-weight: bold;
+      font-size: 16px;
+      margin-bottom: 8px;
+      color: #007bff;
+    }
+
+    @media(max-width: 768px) {
+      .content-row {
+        flex-direction: column;
+      }
+      
+      .dropdown-menu {
+        width: 100%;
+        left: 0;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="logo">
+      <img src="https://raw.githubusercontent.com/Mikivishy/imgs/main/folder1/Logo.jpg" alt="Logo"/>
+      <div>
+        <strong>SEARCHLOGIC</strong><br/>
+        <span style="font-size: 12px;">RECRUITING, LLC</span>
+      </div>
+    </div>
+    <nav>
+      <a href="#">Home</a>
+      <a href="#">About Us</a>
+      <a href="#" class="dropdown" id="InteractionPart">Placement Specialties</a>
+      <div class="dropdown-menu" id="placementDropdown">
+        <div class="dropdown-title">Our Placement Specialties</div>
+        <a href="#">Controller & Assistant Controller</a>
+        <a href="#">General Ledger Staff & Senior Accountants</a>
+        <a href="#">Financial Analysis</a>
+        <a href="#">Financial Planning & Budgeting</a>
+        <a href="#">Permanent Placement Services</a>
+        <a href="#">Temporary Staffing Solutions</a>
+      </div>
+      <a href="#" class="dropdown">For Employers</a>
+      <a href="#" class="dropdown">For Candidates</a>
+      <a href="#">Contact Us</a>
+      <a href="#" class="btn-job">Find a Job</a>
+    </nav>
+  </header>
+
+  <div class="container">
+    <h1>Accounting Placement Services</h1>
+    <div class="divider"></div>
+
+    <div class="content-row">
+      <div class="text-col">
+        <p class="section-text">
+          Recognition. Personalization. Flexibility. These are the qualities that SearchLogic Recruiting utilizes to meet the ever-changing requirements of your complex business environment. We take the time to recognize your goals, personalize each solution, and remain flexible in providing diverse staffing options to keep you on the leading edge of your market. Plus, our services are contingency-based, meaning there's no investment until you identify the right candidate.
+        </p>
+        <h2>Permanent Placement: Networking for Blue Chip Prospects</h2>
+        <p class="section-text">
+          Hiring the right employee is one of the most critical elements in building a successful company. Despite the fact that competing for top talent is both complicated and time consuming, we combine our extensive professional network with a thorough prescreening process to identify those hard-to-find candidates.
+        </p>
+      </div>
+
+      <div class="image-col">
+        <img src="https://raw.githubusercontent.com/Mikivishy/imgs/main/folder1/People.jpg" alt="Success Stories">
+        <div class="overlay-text">Success Stories</div>
+      </div>
+    </div>
+
+    <div class="content-row">
+      <div class="text-col">
+        <h2>Temporary Placement: The 'Quick Fix' Done Right</h2>
+        <p class="section-text">
+          We understand that your staffing needs can shift due to seasonal trends, special projects, or unanticipated absences—and temporary employment can be the ideal solution. Whether you need help for a day, a month, or longer, we'll provide skilled professionals ready to jump in and produce results.
+        </p>
+      </div>
+
+      <div class="text-col">
+        <h2>Placement Specialties:</h2>
+        <ul>
+          <li>Controller, Asst. Controller</li>
+          <li>General Ledger (Staff & Sr. Accnt)</li>
+          <li>Financial Analysis</li>
+          <li>Financial Planning & Budgeting</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Handle dropdown interactions
+    document.addEventListener('DOMContentLoaded', function() {
+      const interactionElement = document.getElementById('InteractionPart');
+      const dropdownMenu = document.getElementById('placementDropdown');
+      
+      // Function to position the dropdown
+      function positionDropdown() {
+        const rect = interactionElement.getBoundingClientRect();
+        dropdownMenu.style.top = rect.bottom + 'px';
+        
+        // If the dropdown would go off the right edge of the screen, align it differently
+        if (rect.left + dropdownMenu.offsetWidth > window.innerWidth) {
+          dropdownMenu.style.left = 'auto';
+          dropdownMenu.style.right = '0';
+        } else {
+          dropdownMenu.style.left = rect.left + 'px';
+          dropdownMenu.style.right = 'auto';
+        }
+      }
+      
+      // Show dropdown on hover
+      interactionElement.addEventListener('mouseenter', function() {
+        positionDropdown();
+        dropdownMenu.style.display = 'block';
+      });
+      
+      // Keep dropdown visible when hovering over it
+      dropdownMenu.addEventListener('mouseenter', function() {
+        dropdownMenu.style.display = 'block';
+      });
+      
+      // Hide dropdown when mouse leaves
+      interactionElement.addEventListener('mouseleave', function(e) {
+        // Check if the mouse is moving toward the dropdown
+        if (e.relatedTarget !== dropdownMenu && !dropdownMenu.contains(e.relatedTarget)) {
+          dropdownMenu.style.display = 'none';
+        }
+      });
+      
+      dropdownMenu.addEventListener('mouseleave', function() {
+        dropdownMenu.style.display = 'none';
+      });
+      
+      // Reposition dropdown on window resize
+      window.addEventListener('resize', function() {
+        if (dropdownMenu.style.display === 'block') {
+          positionDropdown();
+        }
+      });
+      
+      // Handle clicks on other dropdowns
+      document.querySelectorAll('.dropdown:not(#InteractionPart)').forEach(item => {
+        item.addEventListener('click', (e) => {
+          e.preventDefault();
+          alert('Dropdown functionality not implemented.');
+        });
+      });
+    });
+  </script>
+</body>
+</html>
+```

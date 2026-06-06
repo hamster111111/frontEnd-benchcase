@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>8mm Tiger Eye - 15" Strand</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      line-height: 1.6;
+      background-color: #fff;
+      color: #333;
+    }
+
+    header {
+      text-align: center;
+      padding: 20px 0 10px;
+      border-bottom: 1px solid #eee;
+    }
+
+    header h1 {
+      font-size: 20px;
+      font-weight: normal;
+    }
+
+    nav.navbar {
+      text-align: center;
+      margin-top: 10px;
+    }
+
+    nav.navbar a {
+      margin: 0 10px;
+      text-decoration: none;
+      color: #333;
+      font-size: 14px;
+    }
+
+    .breadcrumb {
+      margin: 20px 40px;
+      font-size: 14px;
+      color: #888;
+    }
+
+    .breadcrumb a {
+      color: #333;
+      text-decoration: none;
+    }
+
+    .breadcrumb span {
+      color: #bbb;
+    }
+
+    .container {
+      display: flex;
+      justify-content: center;
+      max-width: 1200px;
+      margin: auto;
+      padding: 40px;
+      gap: 40px;
+    }
+
+    .product-image img {
+      width: 500px;
+      height: auto;
+      border: 1px solid #eee;
+    }
+
+    .product-details {
+      max-width: 400px;
+    }
+
+    .product-details h2 {
+      font-size: 24px;
+      margin-bottom: 10px;
+      font-weight: 400;
+    }
+
+    .product-details p.price {
+      font-size: 18px;
+      font-weight: bold;
+      margin-bottom: 10px;
+    }
+
+    .afterpay-info {
+      font-size: 13px;
+      color: #777;
+      margin-bottom: 10px;
+    }
+
+    .afterpay-logo {
+      background: #e6f8f3;
+      display: inline-block;
+      padding: 4px 8px;
+      border-radius: 4px;
+      margin-bottom: 20px;
+    }
+
+    .quantity-controls {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 10px;
+    }
+
+    .quantity-controls button {
+      width: 30px;
+      height: 30px;
+      font-size: 18px;
+      cursor: pointer;
+    }
+
+    .quantity-controls span {
+      width: 20px;
+      text-align: center;
+    }
+
+    .stock {
+      color: #d44b3e;
+      font-style: italic;
+      margin-bottom: 20px;
+    }
+
+    .get-it {
+      margin-bottom: 10px;
+      font-weight: bold;
+    }
+
+    .required {
+      color: #d44b3e;
+      float: right;
+      font-size: 12px;
+    }
+
+    .options {
+      margin-bottom: 10px;
+    }
+
+    .option {
+      display: flex;
+      align-items: center;
+      margin-bottom: 10px;
+      font-size: 14px;
+    }
+
+    .option input {
+      margin-right: 10px;
+    }
+
+    .address {
+      font-size: 13px;
+      color: #555;
+      margin-left: 25px;
+    }
+
+    .unavailable {
+      color: #d44b3e;
+      font-size: 13px;
+      margin-left: 25px;
+    }
+
+    .out-of-stock-btn {
+      background-color: #b0e5d4;
+      color: #333;
+      padding: 14px;
+      text-align: center;
+      font-size: 14px;
+      font-weight: bold;
+      width: 230px;
+      border: none;
+      cursor: pointer;
+    }
+
+    footer {
+      text-align: center;
+      padding: 30px 0;
+      font-size: 14px;
+      color: #777;
+    }
+
+    .icons {
+      position: absolute;
+      top: 20px;
+      right: 30px;
+    }
+
+    .icons span {
+      margin-left: 15px;
+      font-size: 18px;
+      cursor: pointer;
+    }
+
+    #InteractionPart {
+      font-weight: 400;
+      transition: font-weight 0.3s ease;
+      cursor: pointer;
+    }
+
+    #InteractionPart:hover {
+      font-weight: 800;
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <h1>A Bead Just So</h1>
+    <nav class="navbar">
+      <a href="#">Home</a>
+      <a href="#">Shop All</a>
+      <a href="#">Events</a>
+    </nav>
+    <div class="icons">
+      <span>🔍</span>
+      <span>👤</span>
+      <span>🛒</span>
+    </div>
+  </header>
+
+  <div class="breadcrumb">
+    <a href="#">Beads</a> &gt; 
+    <a href="#">Semi-Precious Stone</a> &gt; 
+    <a href="#">Tiger Eye</a> &gt; 
+    <span style="color:#aaa">8mm Tiger Eye - 15" Strand</span>
+  </div>
+
+  <div class="container">
+    <div class="product-image">
+      <img src="https://raw.githubusercontent.com/Mikivishy/imgs/main/folder1/Other.jpg" alt="Tiger Eye Beads">
+    </div>
+    <div class="product-details">
+      <h2 id="InteractionPart">8mm Tiger Eye - 15" Strand</h2>
+      <p class="price">$14.00</p>
+      <div class="afterpay-info">or 4 interest-free payments of $3.50 with</div>
+      <div class="afterpay-logo">afterpay⟲</div>
+
+      <div class="quantity-controls">
+        <button onclick="changeQty(-1)">-</button>
+        <span id="qty">0</span>
+        <button onclick="changeQty(1)">+</button>
+      </div>
+
+      <div class="stock">Out of stock</div>
+
+      <div>
+        <div class="get-it">
+          How to get it <span class="required">Required</span>
+        </div>
+        <div class="options">
+          <div class="option">
+            <input type="radio" name="delivery">
+            <label>Shipping</label>
+          </div>
+          <div class="option">
+            <input type="radio" name="delivery" checked>
+            <label>Store pickup</label>
+          </div>
+          <div class="address">
+            A Bead Just So<br>
+            114 Milton Avenue BALLSTON SPA, NY
+          </div>
+          <div class="unavailable">Item unavailable</div>
+        </div>
+      </div>
+
+      <div class="out-of-stock-btn">Out of stock $14.00</div>
+    </div>
+  </div>
+
+  <footer>
+    © 2024 A Bead Just So
+  </footer>
+
+  <script>
+    let qty = 0;
+    function changeQty(amount) {
+      qty += amount;
+      if (qty < 0) qty = 0;
+      document.getElementById('qty').innerText = qty;
+    }
+  </script>
+</body>
+</html>
