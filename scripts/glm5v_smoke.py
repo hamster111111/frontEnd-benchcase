@@ -46,6 +46,13 @@ PROVIDERS = {
         "default_model": "mimo-v2.5",
         "supports_image": True,
     },
+    "openrouter": {
+        "api_key_vars": ["OPENROUTER_API_KEY"],
+        "base_url_vars": ["OPENROUTER_BASE_URL"],
+        "model_vars": ["OPENROUTER_VISION_MODEL", "OPENROUTER_MODEL"],
+        "default_model": "qwen/qwen3.5-9b",
+        "supports_image": True,
+    },
 }
 
 

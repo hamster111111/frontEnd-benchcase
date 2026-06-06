@@ -761,7 +761,7 @@ def write_skipped_status(run_dir: Path, skipped: list[dict]) -> None:
 def main() -> int:
     parser = argparse.ArgumentParser(description="Run remaining benchmark smoke samples into the existing random10 run directory.")
     parser.add_argument("--run-dir", type=Path, default=OUT_RUN_DIR)
-    parser.add_argument("--provider", choices=["zhipu", "qwen", "mimo"], default="mimo")
+    parser.add_argument("--provider", choices=sorted(["zhipu", "qwen", "mimo", "openrouter"]), default="mimo")
     parser.add_argument("--benches", nargs="*", default=list(BUILDERS))
     parser.add_argument("--limit", type=int, default=10)
     parser.add_argument("--seed", type=int, default=20260604)
