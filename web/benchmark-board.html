@@ -1,0 +1,113 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>已跑 Benchmark 看板</title>
+    <link rel="stylesheet" href="./benchmark-board.css" />
+  </head>
+  <body>
+    <div class="board-shell">
+      <header class="board-topbar">
+        <div class="title-block">
+          <p class="eyebrow">实验看板</p>
+          <h1>已跑 Benchmark 看板</h1>
+          <p id="runSubtitle">读取实验数据中。</p>
+        </div>
+        <div class="top-actions">
+          <label class="search-box">
+            <span>检索</span>
+            <input id="searchInput" type="search" placeholder="benchmark / 任务 / 评分方式" autocomplete="off" />
+          </label>
+          <label class="sort-box">
+            <span>排序</span>
+            <select id="sortSelect">
+              <option value="status">按阶段</option>
+              <option value="priority">按优先级</option>
+              <option value="judge">按 VLM 分数</option>
+              <option value="name">按名称</option>
+            </select>
+          </label>
+          <a class="nav-link" href="./index.html">资料库</a>
+        </div>
+      </header>
+
+      <main class="board-layout">
+        <aside class="board-rail">
+          <section class="run-card">
+            <p class="eyebrow">当前 Run</p>
+            <strong id="runName">mimo_random10</strong>
+            <span id="runMeta">加载中</span>
+          </section>
+
+          <nav class="filter-list" id="filterList" aria-label="看板筛选"></nav>
+
+          <section class="bench-nav-section">
+            <div class="section-head">
+              <span>Benchmark</span>
+              <b id="visibleCount">0</b>
+            </div>
+            <div class="bench-nav" id="benchNav"></div>
+          </section>
+        </aside>
+
+        <section class="board-main">
+          <section class="kpi-grid" id="kpiGrid" aria-label="实验概览指标"></section>
+
+          <section class="matrix-section">
+            <div class="section-title">
+              <div>
+                <p class="eyebrow">阶段矩阵</p>
+                <h2>从数据拉取到评分的进度</h2>
+              </div>
+              <div class="stage-legend" id="stageLegend"></div>
+            </div>
+            <div class="matrix-wrap">
+              <table class="bench-table">
+                <thead>
+                  <tr>
+                    <th>Benchmark</th>
+                    <th>任务</th>
+                    <th>输出</th>
+                    <th>样本</th>
+                    <th>阶段</th>
+                    <th>VLM Judge</th>
+                    <th>下一步</th>
+                  </tr>
+                </thead>
+                <tbody id="benchTable"></tbody>
+              </table>
+            </div>
+          </section>
+
+          <section class="detail-layout">
+            <article class="detail-panel" id="detailPanel"></article>
+            <article class="queue-panel">
+              <div class="section-title compact">
+                <div>
+                  <p class="eyebrow">评分队列</p>
+                  <h2>下一批该补什么</h2>
+                </div>
+              </div>
+              <div class="queue-list" id="queueList"></div>
+            </article>
+          </section>
+
+          <section class="judge-section">
+            <div class="section-title">
+              <div>
+                <p class="eyebrow">VLM Judge</p>
+                <h2>已评三组的分数和低分原因</h2>
+              </div>
+              <span id="judgeMeta" class="muted"></span>
+            </div>
+            <div class="judge-bars" id="judgeBars"></div>
+            <div class="low-case-gallery" id="lowCaseGallery"></div>
+          </section>
+        </section>
+      </main>
+    </div>
+
+    <script src="./benchmark-board.js"></script>
+  </body>
+</html>

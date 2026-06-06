@@ -1,0 +1,11 @@
+project,desktop,tablet,mobile,avg,success
+ebay,46.88,40.62,50.00,45.83,True
+klamath,62.50,50.00,33.33,48.61,True
+humankinetics,59.09,60.42,28.12,49.21,True
+rottentomatoes,62.50,65.38,57.50,61.79,True
+eventgroove,68.18,63.64,58.33,63.38,True
+eventbrite,66.67,67.86,56.25,63.59,True
+pagerduty,60.71,68.75,62.50,63.99,True
+splunk,65.91,70.45,58.33,64.90,True
+visitseoul,61.36,68.75,67.50,65.87,True
+nxp,66.67,76.56,65.62,69.62,True

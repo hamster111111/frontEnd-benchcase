@@ -1,0 +1,460 @@
+{
+  "last_updated": "2026-06-02",
+  "scope_note": "整理 Zhipu / THUDM 相关 framework 实际跑过或引用过的 benchmark。重点区分 design-to-code / visual design 主线与 Web/GUI agent 背景线。",
+  "frameworks": [
+    {
+      "name": "UI2Code^N",
+      "zhipu_relation": "Z.AI / Zhipu；基于 GLM-4.1V-9B-Base 的 closed-loop UI-to-code / UI polishing framework",
+      "benchmark_scope": "主线 design / UI-to-code",
+      "benchmarks": [
+        "Design2Code",
+        "Flame-React-Eval",
+        "Web2Code",
+        "UI2Code-Real",
+        "UIPolish-Real",
+        "UIPolish-Synthetic",
+        "Design2Code-HARD",
+        "WebCode2M-Long"
+      ],
+      "key_takeaway": "它不是简单 direct prompting，而是生成代码、渲染、视觉反馈、迭代 polish，并用 RVPO 做相对视觉偏好优化。"
+    },
+    {
+      "name": "VisualAgentBench / VAB-CSS",
+      "zhipu_relation": "THUDM / Tsinghua GLM 生态；ICLR 2025 visual foundation agent benchmark",
+      "benchmark_scope": "agentic visual design + GUI/embodied agent",
+      "benchmarks": [
+        "VAB-CSS",
+        "VAB-WebArena-Lite",
+        "VAB-Mobile / AndroidLab",
+        "VAB-OmniGibson",
+        "VAB-Minecraft"
+      ],
+      "key_takeaway": "VAB-CSS 是最直接的前端视觉修复 benchmark；其余 VAB 子集主要是 GUI/embodied agent 背景。"
+    },
+    {
+      "name": "AutoWebGLM",
+      "zhipu_relation": "THUDM / Zhipu 生态；KDD 2024 Web navigation agent",
+      "benchmark_scope": "Web navigation agent 背景",
+      "benchmarks": [
+        "AutoWebBench",
+        "Mind2Web",
+        "MiniWoB++",
+        "WebArena"
+      ],
+      "key_takeaway": "它证明 Zhipu/THUDM 有 Web agent framework 积累，但不跑 design-to-code。"
+    },
+    {
+      "name": "AutoGLM / Open-AutoGLM",
+      "zhipu_relation": "Zhipu AI + Tsinghua；GUI foundation agent",
+      "benchmark_scope": "GUI/Web/Phone agent 背景",
+      "benchmarks": [
+        "VAB-WebArena-Lite",
+        "OpenTable",
+        "AndroidLab / VAB-Mobile",
+        "Chinese Android app human eval"
+      ],
+      "key_takeaway": "它跑的是可交互 GUI/Web 操作任务，不是 CSS repair 或 screenshot-to-code 主线。"
+    }
+  ],
+  "benchmarks": [
+    {
+      "id": "design2code",
+      "name": "Design2Code",
+      "used_by": [
+        "UI2Code^N"
+      ],
+      "family": "UI-to-code / screenshot-to-HTML",
+      "zhipu_usage": "UI2Code^N 主表 UI drafting benchmark；同时报告 VLM Judge 分数和 Design2Code 原论文传统指标交叉验证。",
+      "input": "网页参考截图；部分原始 setting 可附加 text augmentation，但 UI2Code^N / GLM 报告通常按 direct setting 处理。",
+      "output": "可渲染 HTML/CSS，评测端重新渲染为网页截图。",
+      "metrics": [
+        "UI2Code^N: VLM Score / VLM Judge",
+        "Design2Code 原论文: Block-Match、Text、Position、Color、CLIP",
+        "human preference 用于补充验证"
+      ],
+      "scale": "原始 benchmark 484 个真实网页。",
+      "reported_zhipu_result": "UI2Code^N-9B-RL: VLM Judge 88.6；传统指标 Block 88.7、Text 93.1、Position 83.8、Color 72.6、CLIP 80.5。",
+      "paper_value": "最适合做第一主实验；但要明确 VLM Judge 和 CLIP/Block 等传统指标不是同一口径。",
+      "sources": [
+        "https://salt-nlp.github.io/Design2Code/",
+        "https://arxiv.org/abs/2403.03163",
+        "https://github.com/NoviScl/Design2Code",
+        "https://arxiv.org/html/2511.08195v3"
+      ],
+      "confidence": "high"
+    },
+    {
+      "id": "flame_react_eval",
+      "name": "Flame-React-Eval / Flame-Eval-React",
+      "used_by": [
+        "UI2Code^N"
+      ],
+      "family": "React UI generation / front-end code generation",
+      "zhipu_usage": "UI2Code^N 主表 UI drafting benchmark，简称 Flame。",
+      "input": "设计规格，包括渲染截图、结构化 layout 描述；原 benchmark 每个 case 有 React gold implementation。",
+      "output": "React 代码和样式，要求能编译并无错误渲染。",
+      "metrics": [
+        "compile success",
+        "non-error render",
+        "DINOv2-base embedding cosine similarity > 0.9",
+        "pass@k, k=1/3/5 in Flame paper",
+        "UI2Code^N 主表用 VLM-based scoring 汇总展示"
+      ],
+      "scale": "80 个手工 curated React test cases。",
+      "reported_zhipu_result": "UI2Code^N-9B-RL: 95.0；UI2Code^N-9B-SFT: 85.0。",
+      "paper_value": "比纯 HTML/CSS 更贴近现代 React 前端；适合做第二主实验或扩展实验。",
+      "sources": [
+        "https://arxiv.org/pdf/2503.01619",
+        "https://github.com/Flame-Code-VLM/Flame-Code-VLM",
+        "https://huggingface.co/datasets/Flame-Code-VLM/Flame-Eval-React",
+        "https://arxiv.org/html/2511.08195v3"
+      ],
+      "confidence": "high"
+    },
+    {
+      "id": "web2code",
+      "name": "Web2Code",
+      "used_by": [
+        "UI2Code^N"
+      ],
+      "family": "webpage-to-code + webpage understanding",
+      "zhipu_usage": "UI2Code^N 主表 UI drafting benchmark。",
+      "input": "网页截图和 instruction；Web2Code 同时构造网页理解 QA。",
+      "output": "HTML code；网页理解任务输出 yes/no QA。",
+      "metrics": [
+        "WCGB: GPT-4V / VLM judging over rendered webpage quality",
+        "WUB: yes/no QA accuracy",
+        "Design2Code-style low-level metrics and CLIP in supplementary analysis"
+      ],
+      "scale": "Web2Code 数据约 1.18M instruction-response pairs；WUB 5,990 QA pairs；WCGB 使用 1,198 webpage screenshots。",
+      "reported_zhipu_result": "UI2Code^N-9B-RL: 92.5；UI2Code^N-9B-SFT: 80.8。",
+      "paper_value": "适合支撑跨 benchmark 泛化和网页理解辅助 UI generation。",
+      "sources": [
+        "https://arxiv.org/html/2406.20098",
+        "https://github.com/MBZUAI-LLM/web2code",
+        "https://huggingface.co/datasets/MBZUAI/Web2Code",
+        "https://arxiv.org/html/2511.08195v3"
+      ],
+      "confidence": "high"
+    },
+    {
+      "id": "ui2code_real",
+      "name": "UI2Code-Real",
+      "used_by": [
+        "UI2Code^N"
+      ],
+      "family": "real-world UI-to-code",
+      "zhipu_usage": "UI2Code^N 自建 real-world UI drafting benchmark，用于补足 public benchmarks 过于简单的问题。",
+      "input": "真实网页截图。",
+      "output": "可渲染前端代码。",
+      "metrics": [
+        "VLM-based scoring / human-aligned visual judgment",
+        "test-time scaling curve by refinement rounds N"
+      ],
+      "scale": "115 个真实网页，来自 in-the-wild sources。",
+      "reported_zhipu_result": "UI2Code^N-9B-RL: 76.5；N=1 到 N=5 的 test-time scaling 从约 66.0 提升到 74.0。",
+      "paper_value": "很适合做我们自己的真实网页压力测试；但需要确认数据是否随 repo/evaluation 完整公开。",
+      "sources": [
+        "https://arxiv.org/html/2511.08195v3",
+        "https://github.com/zai-org/UI2Code_N"
+      ],
+      "confidence": "high"
+    },
+    {
+      "id": "uipolish_real",
+      "name": "UIPolish-Real",
+      "used_by": [
+        "UI2Code^N"
+      ],
+      "family": "UI polishing / visual repair",
+      "zhipu_usage": "UI2Code^N 自建 UI polishing benchmark，衡量闭环修复能力。",
+      "input": "目标截图 A、当前渲染 B，以及生成 B 的 HTML/CSS code。",
+      "output": "修改后的 HTML/CSS，使新渲染更接近目标 A。",
+      "metrics": [
+        "accuracy / verifier judgment",
+        "comparator function",
+        "round-robin visual preference strategy"
+      ],
+      "scale": "100 个真实网页 polishing samples。",
+      "reported_zhipu_result": "UI2Code^N-9B-RL: 80.0；UI2Code^N-9B-SFT: 76.0。",
+      "paper_value": "和我们想做的 render-feedback repair 最直接相关，适合作为论文方法的核心任务。",
+      "sources": [
+        "https://arxiv.org/html/2511.08195v3",
+        "https://github.com/zai-org/UI2Code_N"
+      ],
+      "confidence": "high"
+    },
+    {
+      "id": "uipolish_synthetic",
+      "name": "UIPolish-Synthetic",
+      "used_by": [
+        "UI2Code^N"
+      ],
+      "family": "UI polishing / controlled synthetic repair",
+      "zhipu_usage": "UI2Code^N 自建 synthetic polishing benchmark，用于可控 UI 修复评估。",
+      "input": "目标截图、初始渲染和对应 HTML/CSS code。",
+      "output": "修复后的 HTML/CSS。",
+      "metrics": [
+        "accuracy / verifier judgment",
+        "test-time scaling over N refinement rounds"
+      ],
+      "scale": "100 个 synthetic webpages。",
+      "reported_zhipu_result": "UI2Code^N-9B-RL: 94.0；UI2Code^N-9B-SFT: 89.0。",
+      "paper_value": "适合做可控 ablation；真实意义弱于 UIPolish-Real。",
+      "sources": [
+        "https://arxiv.org/html/2511.08195v3",
+        "https://github.com/zai-org/UI2Code_N"
+      ],
+      "confidence": "high"
+    },
+    {
+      "id": "design2code_hard",
+      "name": "Design2Code-HARD",
+      "used_by": [
+        "UI2Code^N"
+      ],
+      "family": "hard UI-to-code subset",
+      "zhipu_usage": "UI2Code^N 用它和 DCGen、ScreenCoder 等 agent-based pipeline 做对比，并做 human agreement / evaluator stability 验证。",
+      "input": "更困难的网页截图。",
+      "output": "可渲染 HTML/CSS。",
+      "metrics": [
+        "DINO accuracy",
+        "VLM Judge accuracy",
+        "latency",
+        "token cost",
+        "human preference / win+tie"
+      ],
+      "scale": "80 个 hard examples。",
+      "reported_zhipu_result": "UI2Code^N-9B-RL: DINO Acc 86.1、VLM Judge Acc 88.6、约 40s latency、约 2600 token cost；对 GPT-5 的 Win+Tie 约 72.5%。",
+      "paper_value": "最适合证明 closed-loop 方法比重型 agent pipeline 更省 token/更稳定。",
+      "sources": [
+        "https://huggingface.co/datasets/SALT-NLP/Design2Code-HARD",
+        "https://arxiv.org/html/2511.08195v3"
+      ],
+      "confidence": "high"
+    },
+    {
+      "id": "webcode2m_long",
+      "name": "WebCode2M-Long",
+      "used_by": [
+        "UI2Code^N"
+      ],
+      "family": "long webpage code generation",
+      "zhipu_usage": "UI2Code^N 附录/补充对比，用于长代码网页生成压力测试。",
+      "input": "真实网页 design image；WebCode2M 数据还包含 layout bbox、HTML/CSS code、语言、token 统计等字段。",
+      "output": "HTML/CSS code。",
+      "metrics": [
+        "CLIP similarity",
+        "Visual Score",
+        "TreeBLEU structural hierarchy recall"
+      ],
+      "scale": "WebCode2M 训练集 2,563,905 条；WebCode2M-Long 测试子集 256 条，代码长度约 4098-10990 tokens。",
+      "reported_zhipu_result": "UI2Code^N-9B-RL: CLIP Similarity 0.79 ± 0.09。",
+      "paper_value": "可用来强调长网页代码生成难度，但数据/训练成本很高，不适合第一轮跑通。",
+      "sources": [
+        "https://webcode2m.github.io/",
+        "https://arxiv.org/html/2404.06369",
+        "https://huggingface.co/datasets/xcodemind/webcode2m",
+        "https://arxiv.org/html/2511.08195v3"
+      ],
+      "confidence": "high"
+    },
+    {
+      "id": "vab_css",
+      "name": "VAB-CSS",
+      "used_by": [
+        "VisualAgentBench",
+        "GLM-4V / CogAgent in VAB results"
+      ],
+      "family": "agentic visual design / CSS repair",
+      "zhipu_usage": "VisualAgentBench 的 visual design 子任务；GLM-4V 和 CogAgent 有公开结果。",
+      "input": "目标设计截图、当前错误页面截图、HTML、自然语言差异描述、可编辑 CSS rule 工具。",
+      "output": "多轮 CSS rule edits，最终页面渲染应接近目标设计。",
+      "metrics": [
+        "Success Rate: final SSIM > 0.9",
+        "Improve Rate: final rendering better than initial corrupted rendering"
+      ],
+      "scale": "总 1,210 instances；测试 165；训练轨迹 829；训练步 5,250；action space 4；max round 10。",
+      "reported_zhipu_result": "GLM-4V fine-tuning: VAB-CSS SR 23.6；CogAgent fine-tuning: 13.9；GPT-4o prompting: 34.5。",
+      "paper_value": "最适合借鉴为 CSS patch / visual repair agent，但和 Design2Code 的从零生成不同。",
+      "sources": [
+        "https://arxiv.org/html/2408.06327",
+        "https://github.com/THUDM/VisualAgentBench",
+        "https://proceedings.iclr.cc/paper_files/paper/2025/hash/eea71dc576381b88f2a0ca4dedc2140d-Abstract-Conference.html"
+      ],
+      "confidence": "high"
+    },
+    {
+      "id": "vab_webarena_lite",
+      "name": "VAB-WebArena-Lite",
+      "used_by": [
+        "VisualAgentBench",
+        "AutoGLM"
+      ],
+      "family": "multimodal web GUI agent",
+      "zhipu_usage": "VisualAgentBench GUI 子集；AutoGLM Web browsing 主 benchmark。",
+      "input": "用户网页任务指令、网页 visual observation / SoM 标注、可操作 HTML elements。",
+      "output": "Playwright/browser actions，完成网页任务。",
+      "metrics": [
+        "task success rate / pass rate",
+        "AutoGLM reports SR and pass@2"
+      ],
+      "scale": "从 WebArena 812 tasks 清洗出的 165-task subset；训练任务 1,186；action space 12；max round 20。",
+      "reported_zhipu_result": "AutoGLM: 55.2% SR；第二次尝试 pass@2 59.1%。",
+      "paper_value": "适合做 Web/GUI agent 背景，不适合作 design-to-code 主实验。",
+      "sources": [
+        "https://github.com/THUDM/VisualAgentBench/tree/main/VAB-WebArena-Lite",
+        "https://arxiv.org/html/2408.06327",
+        "https://arxiv.org/html/2411.00820v1"
+      ],
+      "confidence": "high"
+    },
+    {
+      "id": "vab_embodied",
+      "name": "VAB-Embodied: VAB-OmniGibson / VAB-Minecraft",
+      "used_by": [
+        "VisualAgentBench"
+      ],
+      "family": "embodied visual agent",
+      "zhipu_usage": "VisualAgentBench embodied 子任务，用于训练/评估视觉 foundation agent 的跨环境能力。",
+      "input": "环境视觉观察和任务指令。",
+      "output": "环境动作序列。",
+      "metrics": [
+        "task success rate"
+      ],
+      "scale": "OmniGibson: action space 20、test 181、train trajectories 872、max round 100；Minecraft: action space 6、test 116、train trajectories 382、max round 100。",
+      "reported_zhipu_result": "VAB 主表报告多模型 SR；这部分不是前端 design benchmark。",
+      "paper_value": "只作为 VisualAgentBench 全局背景，不进入我们的前端主实验。",
+      "sources": [
+        "https://arxiv.org/html/2408.06327",
+        "https://github.com/THUDM/VisualAgentBench"
+      ],
+      "confidence": "high"
+    },
+    {
+      "id": "vab_mobile_androidlab",
+      "name": "VAB-Mobile / AndroidLab",
+      "used_by": [
+        "VisualAgentBench",
+        "AutoGLM"
+      ],
+      "family": "mobile GUI agent",
+      "zhipu_usage": "AutoGLM Android device control benchmark；VisualAgentBench 中对应 VAB-Mobile。",
+      "input": "Android GUI visual state and task instruction。",
+      "output": "Android device control actions。",
+      "metrics": [
+        "task success rate"
+      ],
+      "scale": "VAB-Mobile 统计：action space 7、test 119、train trajectories 1,213、train steps 10,175、max round 25。",
+      "reported_zhipu_result": "AutoGLM: AndroidLab / VAB-Mobile SR 36.2%；Chinese Android app human eval 89.7%。",
+      "paper_value": "GUI agent 背景；对前端 design bench 只有间接参考。",
+      "sources": [
+        "https://arxiv.org/html/2408.06327",
+        "https://arxiv.org/html/2411.00820v1"
+      ],
+      "confidence": "high"
+    },
+    {
+      "id": "autowebbench",
+      "name": "AutoWebBench",
+      "used_by": [
+        "AutoWebGLM"
+      ],
+      "family": "bilingual web navigation agent",
+      "zhipu_usage": "AutoWebGLM 自建真实网页浏览 benchmark。",
+      "input": "中文/英文网页浏览任务和网页环境观察。",
+      "output": "网页操作步骤。",
+      "metrics": [
+        "Step Success Rate (SSR)",
+        "in-domain / out-of-domain and Chinese / English splits"
+      ],
+      "scale": "每个 split 50 browsing traces；论文按 English/Chinese 与 cross-task/cross-domain 展示。",
+      "reported_zhipu_result": "AutoWebGLM 6B: English cross-task 64.8、English cross-domain 58.6、Chinese cross-task 65.4、Chinese cross-domain 61.8。",
+      "paper_value": "Zhipu web agent 证据；不是前端 design benchmark。",
+      "sources": [
+        "https://arxiv.org/html/2404.03648v2",
+        "https://github.com/THUDM/AutoWebGLM"
+      ],
+      "confidence": "high"
+    },
+    {
+      "id": "mind2web",
+      "name": "Mind2Web",
+      "used_by": [
+        "AutoWebGLM"
+      ],
+      "family": "offline web action prediction",
+      "zhipu_usage": "AutoWebGLM 用 MindAct setting 评测网页动作预测能力。",
+      "input": "真实网站任务指令、候选 HTML elements / DOM context。",
+      "output": "下一步 action / element selection。",
+      "metrics": [
+        "element accuracy",
+        "operation F1",
+        "step success rate",
+        "task success rate"
+      ],
+      "scale": "2,350 open-ended tasks，137 websites，31 domains，平均 7.3 actions。",
+      "reported_zhipu_result": "AutoWebGLM 6B: cross-task 66.4、cross-website 56.4、cross-domain 55.8、average 59.5。",
+      "paper_value": "Web agent 背景；可用于 related work，不作为 design bench。",
+      "sources": [
+        "https://osu-nlp-group.github.io/Mind2Web/",
+        "https://github.com/OSU-NLP-Group/Mind2Web",
+        "https://arxiv.org/html/2404.03648v2"
+      ],
+      "confidence": "high"
+    },
+    {
+      "id": "miniwob_plus",
+      "name": "MiniWoB++",
+      "used_by": [
+        "AutoWebGLM"
+      ],
+      "family": "simulated web interaction tasks",
+      "zhipu_usage": "AutoWebGLM 按 WebAgent setup 跑 56 tasks，每个任务 100 episodes。",
+      "input": "低层网页交互任务和浏览器环境。",
+      "output": "浏览器动作序列。",
+      "metrics": [
+        "success rate"
+      ],
+      "scale": "AutoWebGLM evaluation: 56 tasks × 100 episodes。",
+      "reported_zhipu_result": "AutoWebGLM 6B: 89.3 success rate。",
+      "paper_value": "传统 web agent sanity benchmark；和前端 design 关系弱。",
+      "sources": [
+        "https://arxiv.org/html/2404.03648v2",
+        "https://github.com/THUDM/AutoWebGLM"
+      ],
+      "confidence": "high"
+    },
+    {
+      "id": "webarena",
+      "name": "WebArena",
+      "used_by": [
+        "AutoWebGLM",
+        "VAB-WebArena-Lite source benchmark"
+      ],
+      "family": "realistic reproducible web agent environment",
+      "zhipu_usage": "AutoWebGLM 在改造 WebArena 环境上评测；VAB-WebArena-Lite 是从 WebArena 清洗的 165-task subset。",
+      "input": "高层自然语言网页任务，真实可托管网站环境。",
+      "output": "网页动作序列，完成任务。",
+      "metrics": [
+        "end-to-end task success rate / functional correctness"
+      ],
+      "scale": "原始 WebArena 812 long-horizon tasks across 5 websites；VAB-WebArena-Lite subset 165 tasks。",
+      "reported_zhipu_result": "AutoWebGLM 6B: WebArena 18.2；VAB-WebArena-Lite 上 AutoGLM 55.2。",
+      "paper_value": "Web agent 背景；可作为 browser agent + design repair 的远期扩展。",
+      "sources": [
+        "https://webarena.dev/",
+        "https://openreview.net/forum?id=oKn9c6ytLx",
+        "https://arxiv.org/html/2404.03648v2",
+        "https://github.com/THUDM/VisualAgentBench/tree/main/VAB-WebArena-Lite"
+      ],
+      "confidence": "high"
+    }
+  ],
+  "research_decisions": [
+    "主实验优先级：Design2Code / Design2Code-HARD、UIPolish-Real/Synthetic、Flame-React-Eval、Web2Code。",
+    "VAB-CSS 是可借鉴的 CSS repair agent，但应单独归类为 visual repair，不和 screenshot-to-code 分数混排。",
+    "VAB-WebArena-Lite、AutoWebBench、Mind2Web、MiniWoB++、WebArena、AndroidLab 是 Web/GUI agent 背景线，不作为 design-to-code 主 benchmark。",
+    "展示时必须标注指标口径：UI2Code^N 的 VLM Judge、Flame 的 DINOv2 pass@k、Design2Code 原始 CLIP/Block 指标、VAB 的 SR 都不能直接合成一个总榜。"
+  ]
+}

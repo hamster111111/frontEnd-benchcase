@@ -1,0 +1,415 @@
+{
+  "last_updated": "2026-06-02",
+  "scope_note": "记录 Zhipu / THUDM 做过的 agent 或 agent-like 系统，以及它们和前端 design benchmark 的关系。",
+  "answer_summary": "有。最直接的是 VisualAgentBench 的 VAB-CSS，它是 agentic visual design / CSS repair benchmark；UI2Code^N 是闭环渲染反馈的 UI-to-code 系统；AutoWebGLM、AutoGLM、CogAgent 主要是 Web/GUI 操作 agent。",
+  "direct_vs_framework_summary": {
+    "short_answer": "两种都有，但用途不同：GLM-4.1V/4.5V/4.6V/5V-Turbo 的公开 design bench 多数是模型级直接评测；真正面向 UI-to-code 刷分/优化的 framework 主要是 UI2Code^N；面向 agentic visual design/CSS repair 的 framework 是 VisualAgentBench/VAB-CSS。",
+    "direct_model_benchmarking": [
+      "GLM-4.1V-Thinking、GLM-4.5V、GLM-4.6V 技术报告把 Design2Code、Flame-React-Eval、WebVoyager、OSWorld、AndroidWorld 等放在模型能力评测中，公开证据更像 direct model evaluation。",
+      "GLM-5V-Turbo 官方文档和技术报告强调原生 multimodal coding foundation model、Claude Code/OpenClaw 等 agent workflow 集成；Design2Code、Flame-VLM-Code、Vision2Web、CC-Frontend 等分数仍应先按模型级公开跑分理解。"
+    ],
+    "framework_based_benchmarking": [
+      "UI2Code^N 明确是 interactive visual optimization / test-time scaling framework：生成代码、渲染、视觉反馈、迭代 polish，并用 RVPO 做训练优化。",
+      "VisualAgentBench / VAB-CSS 是 agentic visual design benchmark/framework：通过工具多轮编辑 CSS，让错误页面逼近目标截图。",
+      "AutoWebGLM、AutoGLM、CogAgent 是 Web/GUI agent 框架或模型，公开 benchmark 主要是 AutoWebBench、Mind2Web、WebArena、MiniWoB++、VAB-WebArena-Lite、AndroidLab 等，不是 design-to-code 主 bench。"
+    ],
+    "publication_status": "UI2Code^N repo citation 标注 ICML 2026（2026-07）；VisualAgentBench 已在 ICLR 2025（2025-04）发表；AutoWebGLM 已在 KDD 2024（2024-08）发表；GLM-4.5V/5V-Turbo 是 arXiv 技术报告，未看到顶会正式发表证据；AutoGLM 是 arXiv/project，未看到顶会正式发表证据。"
+  },
+  "framework_publication_table": [
+    {
+      "name": "UI2Code^N",
+      "is_framework_for_design_bench": true,
+      "framework_type": "closed-loop UI-to-code / UI polishing / test-time scaling",
+      "zhipu_relation": "Z.AI / Zhipu; built on GLM-4.1V-9B-Base",
+      "benchmarks_run": [
+        "Design2Code",
+        "Flame-React-Eval",
+        "Web2Code",
+        "UI2Code-Real",
+        "UIPolish-Real",
+        "UIPolish-Synthetic",
+        "Design2Code-HARD",
+        "WebCode2M-Long"
+      ],
+      "publication": "ICML 2026 according to repo citation; OpenReview/PDF still shows ICLR 2026 submitted wording",
+      "publication_month": "2026-07",
+      "compute_requirement": {
+        "mode": "不只 API（本地 9B）",
+        "gpu": "只跑 judge 可用 API；本地跑 GLM-4.1V-9B 建议 24-48GB 显存。"
+      },
+      "top_venue": true,
+      "sources": [
+        "https://github.com/zai-org/UI2Code_N",
+        "https://arxiv.org/abs/2511.08195",
+        "https://openreview.net/forum?id=i5Y3OD7NQB"
+      ]
+    },
+    {
+      "name": "VisualAgentBench / VAB-CSS",
+      "is_framework_for_design_bench": true,
+      "framework_type": "agentic visual design / CSS repair benchmark",
+      "zhipu_relation": "THUDM / GLM ecosystem; not a pure Z.AI product",
+      "benchmarks_run": [
+        "VAB-CSS",
+        "VAB-WebArena-Lite",
+        "VAB-Embodied",
+        "VAB-Visual Design"
+      ],
+      "publication": "ICLR 2025",
+      "publication_month": "2025-04",
+      "compute_requirement": {
+        "mode": "可只用 API",
+        "gpu": "API agent 路线不需要 GPU；训练 open LMM 建议 24GB+ 显存。"
+      },
+      "top_venue": true,
+      "sources": [
+        "https://proceedings.iclr.cc/paper_files/paper/2025/hash/eea71dc576381b88f2a0ca4dedc2140d-Abstract-Conference.html",
+        "https://github.com/THUDM/VisualAgentBench",
+        "https://arxiv.org/abs/2408.06327"
+      ]
+    },
+    {
+      "name": "AutoWebGLM",
+      "is_framework_for_design_bench": false,
+      "framework_type": "web navigation agent",
+      "zhipu_relation": "THUDM / Zhipu ecosystem; based on ChatGLM3-6B",
+      "benchmarks_run": [
+        "AutoWebBench",
+        "Mind2Web",
+        "WebArena",
+        "MiniWoB++"
+      ],
+      "publication": "KDD 2024",
+      "publication_month": "2024-08",
+      "compute_requirement": {
+        "mode": "可只用 API（Web agent）",
+        "gpu": "API/托管推理可无 GPU；本地 ChatGLM3-6B 推理约 16-24GB，训练/RL 需多卡。"
+      },
+      "top_venue": true,
+      "sources": [
+        "https://dblp.org/rec/conf/kdd/LaiLIYCSYZZD024",
+        "https://github.com/THUDM/AutoWebGLM",
+        "https://arxiv.org/abs/2404.03648"
+      ]
+    },
+    {
+      "name": "AutoGLM / Open-AutoGLM",
+      "is_framework_for_design_bench": false,
+      "framework_type": "GUI foundation agent / web and phone agent",
+      "zhipu_relation": "Z.AI + Tsinghua",
+      "benchmarks_run": [
+        "VAB-WebArena-Lite",
+        "OpenTable real website eval",
+        "AndroidLab / VAB-Mobile",
+        "Chinese Android app human eval"
+      ],
+      "publication": "arXiv/project page; no top-conference publication found",
+      "publication_month": "2024-11",
+      "compute_requirement": {
+        "mode": "不只 API（GUI agent）",
+        "gpu": "只用现成服务可无 GPU；复现 Web/Android RL 需交互环境，本地训练通常 80GB 级或多卡。"
+      },
+      "top_venue": false,
+      "sources": [
+        "https://xiao9905.github.io/AutoGLM/",
+        "https://arxiv.org/abs/2411.00820"
+      ]
+    },
+    {
+      "name": "GLM-5V-Turbo",
+      "is_framework_for_design_bench": false,
+      "framework_type": "model-level multimodal coding foundation model; integrates with coding/agent frameworks",
+      "zhipu_relation": "Z.AI official model",
+      "benchmarks_run": [
+        "Design2Code",
+        "Flame-VLM-Code",
+        "Vision2Web",
+        "CC-Frontend",
+        "WebVoyager"
+      ],
+      "publication": "arXiv technical report; no top-conference publication found as of 2026-06-02",
+      "publication_month": "2026-04",
+      "compute_requirement": {
+        "mode": "可只用 API",
+        "gpu": "官方 API 跑公开 design bench 不需本地 GPU；自部署同级 VLM 通常需 80GB 级或多卡。"
+      },
+      "top_venue": false,
+      "sources": [
+        "https://docs.z.ai/guides/vlm/glm-5v-turbo",
+        "https://arxiv.org/abs/2604.26752"
+      ]
+    }
+  ],
+  "systems": [
+    {
+      "name": "VisualAgentBench / VAB-CSS",
+      "year": "2024/2025",
+      "system_type": "agent_benchmark",
+      "zhipu_relation": "THUDM / Tsinghua GLM ecosystem; not a pure Z.AI official product",
+      "publication": {
+        "venue": "ICLR 2025",
+        "venue_rating": "机器学习顶会 / 国际 A 类口径",
+        "status": "published"
+      },
+      "design_bench_relevance": "direct",
+      "task_summary": "CSS repair agent：根据目标设计截图、当前错误页面截图、HTML 和自然语言差异描述，通过工具修改 CSS，使页面渲染接近目标设计。",
+      "action_tools": [
+        "get_selectors_by_html_element",
+        "select_rule",
+        "edit_rule",
+        "revert_last_edit"
+      ],
+      "dataset": {
+        "action_space": 4,
+        "test_instances": 165,
+        "train_trajectories": 829,
+        "train_steps": 5250,
+        "max_round_limit": 10
+      },
+      "metrics": [
+        {
+          "name": "Success Rate",
+          "definition": "最终渲染与目标设计的 SSIM 大于 0.9 视为成功。"
+        },
+        {
+          "name": "Improve Rate",
+          "definition": "最终渲染比初始错误渲染更接近目标设计。"
+        }
+      ],
+      "reported_results": [
+        {
+          "model": "GPT-4o-2024-05-13",
+          "setting": "prompting",
+          "VAB_CSS_SR": 34.5
+        },
+        {
+          "model": "GPT-4-Vision-Preview",
+          "setting": "prompting",
+          "VAB_CSS_SR": 29.1
+        },
+        {
+          "model": "GPT-4-Turbo-0409",
+          "setting": "prompting",
+          "VAB_CSS_SR": 27.9
+        },
+        {
+          "model": "InternVL-2",
+          "setting": "fine_tuning",
+          "VAB_CSS_SR": 24.2
+        },
+        {
+          "model": "GLM-4V",
+          "setting": "fine_tuning",
+          "VAB_CSS_SR": 23.6
+        },
+        {
+          "model": "CogAgent",
+          "setting": "fine_tuning",
+          "VAB_CSS_SR": 13.9
+        }
+      ],
+      "sources": [
+        "https://arxiv.org/abs/2408.06327",
+        "https://github.com/THUDM/VisualAgentBench"
+      ]
+    },
+    {
+      "name": "UI2Code^N",
+      "year": "2025/2026",
+      "system_type": "closed_loop_ui_to_code",
+      "zhipu_relation": "Zhipu / Tsinghua; based on GLM-4.1V-9B-Base",
+      "publication": {
+        "venue": "ICML 2026 according to repo citation",
+        "venue_rating": "机器学习顶会 / 国际 A 类口径",
+        "status": "repo claims accepted; OpenReview/PDF still shows ICLR submitted wording"
+      },
+      "design_bench_relevance": "direct",
+      "task_summary": "把 UI-to-code 建模为交互式视觉优化：生成代码、渲染、比较视觉差异、迭代 polish，并用 RVPO 训练。",
+      "reported_results": [
+        {
+          "benchmark": "Design2Code",
+          "UI2CodeN_9B_RL": 88.6
+        },
+        {
+          "benchmark": "Flame",
+          "UI2CodeN_9B_RL": 95.0
+        },
+        {
+          "benchmark": "Web2Code",
+          "UI2CodeN_9B_RL": 92.5
+        },
+        {
+          "benchmark": "UI2Code-Real",
+          "UI2CodeN_9B_RL": 76.5
+        },
+        {
+          "benchmark": "UIPolish-Real",
+          "UI2CodeN_9B_RL": 80.0
+        },
+        {
+          "benchmark": "UIPolish-Synthetic",
+          "UI2CodeN_9B_RL": 94.0
+        }
+      ],
+      "agent_comparison_on_design2code_hard": [
+        {
+          "system": "DCGen",
+          "type": "agent_based",
+          "DINO_Acc": 69.6,
+          "VLM_Judge_Acc": 45.0,
+          "latency_seconds": 137,
+          "token_cost": 7600
+        },
+        {
+          "system": "ScreenCoder",
+          "type": "agent_based",
+          "DINO_Acc": 85.7,
+          "VLM_Judge_Acc": 80.0,
+          "latency_seconds": 66,
+          "token_cost": 4600
+        },
+        {
+          "system": "UI2Code^N-9B-RL",
+          "type": "end_to_end_closed_loop",
+          "DINO_Acc": 86.1,
+          "VLM_Judge_Acc": 88.6,
+          "latency_seconds": 40,
+          "token_cost": 2600
+        }
+      ],
+      "sources": [
+        "https://arxiv.org/abs/2511.08195",
+        "https://github.com/zai-org/UI2Code_N"
+      ]
+    },
+    {
+      "name": "AutoWebGLM",
+      "year": "2024",
+      "system_type": "web_navigation_agent",
+      "zhipu_relation": "Tsinghua & Zhipu AI; based on ChatGLM3-6B",
+      "publication": {
+        "venue": "KDD 2024",
+        "venue_rating": "数据挖掘顶会 / CCF A",
+        "status": "published"
+      },
+      "design_bench_relevance": "indirect",
+      "task_summary": "网页浏览和操作 agent，不是设计生成或 CSS repair。",
+      "reported_results": [
+        {
+          "benchmark": "AutoWebBench English Cross-Task",
+          "score": 64.8
+        },
+        {
+          "benchmark": "AutoWebBench English Cross-Domain",
+          "score": 58.6
+        },
+        {
+          "benchmark": "AutoWebBench Chinese Cross-Task",
+          "score": 65.4
+        },
+        {
+          "benchmark": "AutoWebBench Chinese Cross-Domain",
+          "score": 61.8
+        },
+        {
+          "benchmark": "Mind2Web Average",
+          "score": 59.5
+        },
+        {
+          "benchmark": "MiniWoB++",
+          "score": 89.3
+        },
+        {
+          "benchmark": "WebArena",
+          "score": 18.2
+        }
+      ],
+      "sources": [
+        "https://arxiv.org/abs/2404.03648",
+        "https://github.com/THUDM/AutoWebGLM",
+        "https://dblp.org/rec/conf/kdd/LaiLIYCSYZZD024"
+      ]
+    },
+    {
+      "name": "AutoGLM",
+      "year": "2024",
+      "system_type": "foundation_gui_agent",
+      "zhipu_relation": "Zhipu AI & Tsinghua; built on ChatGLM family",
+      "publication": {
+        "venue": "arXiv / project page",
+        "venue_rating": "未找到顶会正式发表证据",
+        "status": "preprint/project"
+      },
+      "design_bench_relevance": "indirect",
+      "task_summary": "面向 Web browser 和 Android 的 foundation GUI agent；有 planner/grounder intermediate interface 和 online curriculum RL。",
+      "reported_results": [
+        {
+          "benchmark": "VAB-WebArena-Lite",
+          "score": 55.2
+        },
+        {
+          "benchmark": "VAB-WebArena-Lite pass@2",
+          "score": 59.1
+        },
+        {
+          "benchmark": "OpenTable real website eval",
+          "score": 96.2
+        },
+        {
+          "benchmark": "AndroidLab / VAB-Mobile",
+          "score": 36.2
+        },
+        {
+          "benchmark": "Chinese Android app human eval",
+          "score": 89.7
+        }
+      ],
+      "sources": [
+        "https://arxiv.org/abs/2411.00820",
+        "https://xiao9905.github.io/AutoGLM"
+      ]
+    },
+    {
+      "name": "CogAgent",
+      "year": "2023/2024",
+      "system_type": "visual_gui_agent",
+      "zhipu_relation": "THUDM / CogVLM line",
+      "design_bench_relevance": "indirect",
+      "task_summary": "视觉 GUI agent，跑 Mind2Web 和 AITW；在 VAB-CSS 中也有 fine-tuning 后的 CSS SR。",
+      "reported_results": [
+        {
+          "benchmark": "Mind2Web overall",
+          "score": 58.2
+        },
+        {
+          "benchmark": "AITW overall",
+          "score": 76.88
+        },
+        {
+          "benchmark": "VAB-CSS",
+          "score": 13.9
+        }
+      ],
+      "sources": [
+        "https://arxiv.org/abs/2312.08914",
+        "https://arxiv.org/abs/2408.06327"
+      ]
+    }
+  ],
+  "interpretation": [
+    "VAB-CSS 是目前最直接的 Zhipu/THUDM agentic design benchmark 证据。",
+    "UI2Code^N 更直接对应 UI-to-code，但它是闭环视觉优化系统，不是传统多模块 agent pipeline。",
+    "AutoWebGLM、AutoGLM、CogAgent 说明 Zhipu 在 Web/GUI agent 方向有系统积累，但不能直接当作 design generation 成绩。",
+    "没有找到 Zhipu 公开一个专门用多模块 agent pipeline 去刷 Design2Code 的主线；UI2Code^N 反而显示 end-to-end closed-loop 在 Design2Code-HARD 上优于 DCGen/ScreenCoder 这类 agent-based baseline。"
+  ],
+  "sources": [
+    "https://arxiv.org/abs/2408.06327",
+    "https://github.com/THUDM/VisualAgentBench",
+    "https://arxiv.org/abs/2511.08195",
+    "https://arxiv.org/abs/2404.03648",
+    "https://github.com/THUDM/AutoWebGLM",
+    "https://arxiv.org/abs/2411.00820",
+    "https://xiao9905.github.io/AutoGLM",
+    "https://arxiv.org/abs/2312.08914"
+  ]
+}

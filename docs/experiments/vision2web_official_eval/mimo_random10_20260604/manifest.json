@@ -1,0 +1,21 @@
+{
+  "source_smoke_dir": "D:\\Code\\frontEnd-direction\\experiments\\random10_bench_smoke\\mimo_random10_20260604\\vision2web",
+  "archive_path": "C:\\Users\\86158\\.cache\\huggingface\\hub\\datasets--zai-org--Vision2Web\\snapshots\\8f03299d92b9bd852e93852d0c21e8a4848ab661\\archives\\webpage.tar.gz",
+  "out_dir": "D:\\Code\\frontEnd-direction\\experiments\\vision2web_official_eval\\mimo_random10_20260604",
+  "framework": "smoke_html",
+  "model": "mimo-v2.5",
+  "task": "webpage",
+  "count": 10,
+  "projects": [
+    "splunk",
+    "humankinetics",
+    "eventgroove",
+    "ebay",
+    "klamath",
+    "eventbrite",
+    "pagerduty",
+    "nxp",
+    "rottentomatoes",
+    "visitseoul"
+  ]
+}

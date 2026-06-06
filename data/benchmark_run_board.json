@@ -1,0 +1,997 @@
+{
+  "schemaVersion": "1.0",
+  "updatedAt": "2026-06-04",
+  "title": "已跑 Benchmark 看板",
+  "run": {
+    "dir": "experiments\\random10_bench_smoke\\mimo_random10_20260604",
+    "provider": "mimo",
+    "model": "mimo-v2.5",
+    "sampleSizePerBench": 10,
+    "seed": 20260604,
+    "maxTokens": null,
+    "bypassProxy": true,
+    "startedAt": "2026-06-04T16:08:32"
+  },
+  "judge": {
+    "dir": "experiments\\random10_bench_smoke\\mimo_random10_20260604\\vlm_judge\\qwen3-vl-plus_visual_judge_20260604",
+    "provider": "qwen",
+    "model": "qwen3-vl-plus",
+    "overallMean": 84.43,
+    "totalScored": 120,
+    "note": "VLM judge visual score; for FullFront interaction samples, generated screenshot is initial static render and reference_2 is interaction context only."
+  },
+  "totals": {
+    "benchmarks": 16,
+    "smokeBenches": 14,
+    "skipped": 2,
+    "selectedSamples": 140,
+    "okSamples": 140,
+    "renderedImages": 140,
+    "vlmJudgedSamples": 120
+  },
+  "benchmarks": [
+    {
+      "id": "design2code",
+      "name": "Design2Code",
+      "family": "视觉还原",
+      "task": "UI 截图/设计图生成前端页面",
+      "input": "参考网页截图 + 可选文本提示",
+      "output": "HTML/CSS/渲染网页",
+      "officialScoring": "渲染后用 VLM judge 或视觉相似度比较目标图和生成图。",
+      "nextScoring": "已跑 VLM judge；后续可补 CLIP/SSIM 或官方 UI2Code_N evaluator。",
+      "lossFocus": "主题色、导航/边栏背景、CTA/tag/分享组件等局部样式。",
+      "priority": "高",
+      "available": 484,
+      "counts": {
+        "selected": 10,
+        "ok": 10,
+        "html": 10,
+        "complete": 10,
+        "code": 0,
+        "text": 0,
+        "failed": 0
+      },
+      "rendered": 10,
+      "skipped": false,
+      "judge": {
+        "model": "qwen / qwen3-vl-plus",
+        "count": 10,
+        "mean": 92.9,
+        "min": 88.0,
+        "max": 96.0,
+        "lowCases": [
+          {
+            "sampleId": "378",
+            "score": 88.0,
+            "reason": "整体布局与内容高度还原，但左侧导航栏背景色和顶部 header 背景缺失导致视觉风格偏差，属明显样式失真。",
+            "target": "experiments\\random10_bench_smoke\\mimo_random10_20260604\\design2code\\inputs\\images\\378_0.png",
+            "generated": "experiments\\random10_bench_smoke\\mimo_random10_20260604\\design2code\\rendered_fixed\\378.png"
+          },
+          {
+            "sampleId": "278",
+            "score": 88.0,
+            "reason": "整体布局、内容与结构高度还原，但关键标签的颜色、边框样式及部分UI细节存在可感知的视觉偏差。",
+            "target": "experiments\\random10_bench_smoke\\mimo_random10_20260604\\design2code\\inputs\\images\\278_0.png",
+            "generated": "experiments\\random10_bench_smoke\\mimo_random10_20260604\\design2code\\rendered_fixed\\278.png"
+          },
+          {
+            "sampleId": "229",
+            "score": 88.0,
+            "reason": "整体布局与内容高度还原，但关键CTA按钮颜色、分享组件样式及部分文本颜色存在明显风格偏差。",
+            "target": "experiments\\random10_bench_smoke\\mimo_random10_20260604\\design2code\\inputs\\images\\229_0.png",
+            "generated": "experiments\\random10_bench_smoke\\mimo_random10_20260604\\design2code\\rendered_fixed\\229.png"
+          }
+        ],
+        "issueTerms": [
+          "标题 'Day Trippers' 字体加粗程度略弱于参考图，疑似缺少 font-weight: bold",
+          "副标题 '2010. Silkscreen on cardboard' 颜色偏灰（#777）而非参考图中的浅灰（#aaa）",
+          "左侧垂直导航栏背景色错误（应为浅灰底+蓝色标签，实际为深灰底+蓝标）",
+          "顶部 logo 区域背景色不一致（参考图有浅灰背景，生成图无）",
+          "导航栏文字颜色偏暗，与参考图的亮蓝对比度不足"
+        ]
+      },
+      "status": "已跑 smoke",
+      "phases": {
+        "data": true,
+        "smoke": true,
+        "render": true,
+        "vlmJudge": true,
+        "officialScore": false
+      }
+    },
+    {
+      "id": "flame",
+      "name": "Flame",
+      "family": "React/UI 生成",
+      "task": "根据 UI 目标生成 React/前端界面",
+      "input": "UI 截图或多模态提示",
+      "output": "前端代码/渲染 UI",
+      "officialScoring": "通常看 VLM-Code 分、可运行性和视觉还原。",
+      "nextScoring": "已跑 VLM judge；后续可补组件可运行检查和细粒度样式指标。",
+      "lossFocus": "表单控件、状态文本、按钮对齐、spacing、图表比例。",
+      "priority": "高",
+      "available": 80,
+      "counts": {
+        "selected": 10,
+        "ok": 10,
+        "html": 10,
+        "complete": 10,
+        "code": 0,
+        "text": 0,
+        "failed": 0
+      },
+      "rendered": 10,
+      "skipped": false,
+      "judge": {
+        "model": "qwen / qwen3-vl-plus",
+        "count": 10,
+        "mean": 91.5,
+        "min": 85.0,
+        "max": 98.0,
+        "lowCases": [
+          {
+            "sampleId": "38",
+            "score": 85.0,
+            "reason": "核心布局与组件结构高度还原，但关键动态内容（更新时间）缺失导致语义不完整。",
+            "target": "experiments\\random10_bench_smoke\\mimo_random10_20260604\\flame\\inputs\\images\\38_0.png",
+            "generated": "experiments\\random10_bench_smoke\\mimo_random10_20260604\\flame\\rendered_fixed\\38.png"
+          },
+          {
+            "sampleId": "17",
+            "score": 88.0,
+            "reason": "表单容器背景色和输入框边框颜色与参考图存在明显偏差，影响整体视觉一致性，但布局、内容与结构高度还原。",
+            "target": "experiments\\random10_bench_smoke\\mimo_random10_20260604\\flame\\inputs\\images\\17_0.png",
+            "generated": "experiments\\random10_bench_smoke\\mimo_random10_20260604\\flame\\rendered_fixed\\17.png"
+          },
+          {
+            "sampleId": "51",
+            "score": 88.0,
+            "reason": "布局结构与内容完全正确，但右侧按钮垂直对齐方式错误导致视觉节奏断裂，且分隔线与背景色存在轻微色差。",
+            "target": "experiments\\random10_bench_smoke\\mimo_random10_20260604\\flame\\inputs\\images\\51_0.png",
+            "generated": "experiments\\random10_bench_smoke\\mimo_random10_20260604\\flame\\rendered_fixed\\51.png"
+          }
+        ],
+        "issueTerms": [
+          "'Rate Updated:' 后缺少具体时间戳，仅显示文字无动态值",
+          "输入框 placeholder 字体略细，与参考图轻微不一致",
+          "按钮边框圆角略小",
+          "整体垂直间距稍紧凑",
+          "输入框边框颜色偏浅（参考为粉红实线，生成为浅粉细线）"
+        ]
+      },
+      "status": "已跑 smoke",
+      "phases": {
+        "data": true,
+        "smoke": true,
+        "render": true,
+        "vlmJudge": true,
+        "officialScore": false
+      }
+    },
+    {
+      "id": "ui2code_real",
+      "name": "UI2Code-Real",
+      "family": "真实网页 UI 转代码",
+      "task": "真实网页截图生成前端页面",
+      "input": "真实网页截图",
+      "output": "HTML/CSS/渲染网页",
+      "officialScoring": "渲染截图与目标截图做 VLM/视觉相似度评审。",
+      "nextScoring": "补 VLM judge，优先看真实网页细节还原。",
+      "lossFocus": "真实网页复杂布局、图片/图标资产、响应式比例。",
+      "priority": "高",
+      "available": 115,
+      "counts": {
+        "selected": 10,
+        "ok": 10,
+        "html": 10,
+        "complete": 10,
+        "code": 0,
+        "text": 0,
+        "failed": 0
+      },
+      "rendered": 10,
+      "skipped": false,
+      "judge": {
+        "model": "qwen / qwen3-vl-plus",
+        "count": 10,
+        "mean": 75.9,
+        "min": 42.0,
+        "max": 94.0,
+        "lowCases": [
+          {
+            "sampleId": "25",
+            "score": 42.0,
+            "reason": "核心图片资产全部被抽象色块替代，导致页面视觉密度和真实感严重缺失，仅文本结构基本保留。",
+            "target": "experiments\\random10_bench_smoke\\mimo_random10_20260604\\ui2code_real\\inputs\\images\\25_0.png",
+            "generated": "experiments\\random10_bench_smoke\\mimo_random10_20260604\\ui2code_real\\rendered_fixed\\25.png"
+          },
+          {
+            "sampleId": "103",
+            "score": 62.0,
+            "reason": "核心问题在于所有产品图片被替换成无意义的彩色图标，严重破坏商品展示功能，且关键文本与价格排版存在多处错位和截断。",
+            "target": "experiments\\random10_bench_smoke\\mimo_random10_20260604\\ui2code_real\\inputs\\images\\103_0.png",
+            "generated": "experiments\\random10_bench_smoke\\mimo_random10_20260604\\ui2code_real\\rendered_fixed\\103.png"
+          },
+          {
+            "sampleId": "19",
+            "score": 68.0,
+            "reason": "关键视觉资产（所有游戏截图和横幅图）被纯色占位符替代，导致整体视觉密度与真实页面严重偏离，虽布局结构基本正确但失真度高。",
+            "target": "experiments\\random10_bench_smoke\\mimo_random10_20260604\\ui2code_real\\inputs\\images\\19_0.png",
+            "generated": "experiments\\random10_bench_smoke\\mimo_random10_20260604\\ui2code_real\\rendered_fixed\\19.png"
+          }
+        ],
+        "issueTerms": [
+          "书籍封面图缺失或错误（右侧详情区封面为纯色块而非真实封面，相似书籍封面未正确渲染）",
+          "左侧导航栏‘All books’高亮状态与参考图不一致（参考图中未高亮，生成图中高亮）",
+          "‘More options’链接颜色偏浅，对比度略低",
+          "搜索框内占位符文字颜色稍浅",
+          "‘Find in a library’下方‘Search in WorldCat’字号略小"
+        ]
+      },
+      "status": "已跑 smoke",
+      "phases": {
+        "data": true,
+        "smoke": true,
+        "render": true,
+        "vlmJudge": true,
+        "officialScore": false
+      }
+    },
+    {
+      "id": "uipolish_real",
+      "name": "UIPolish-Real",
+      "family": "UI 润色",
+      "task": "根据目标 UI 改进页面视觉质量",
+      "input": "目标 UI；正式协议还应包含当前代码/当前渲染",
+      "output": "改进后的前端页面",
+      "officialScoring": "比较改进前后是否更接近目标，常用准确率或 VLM preference。",
+      "nextScoring": "本轮只有 direct smoke；需补当前渲染/代码后再做闭环评估。",
+      "lossFocus": "反馈闭环缺失时容易变成一次性生成，不是真正 polish。",
+      "priority": "中",
+      "available": 100,
+      "counts": {
+        "selected": 10,
+        "ok": 10,
+        "html": 10,
+        "complete": 10,
+        "code": 0,
+        "text": 0,
+        "failed": 0
+      },
+      "rendered": 10,
+      "skipped": false,
+      "judge": {
+        "model": "qwen / qwen3-vl-plus",
+        "count": 10,
+        "mean": 80.8,
+        "min": 68.0,
+        "max": 94.0,
+        "lowCases": [
+          {
+            "sampleId": "87",
+            "score": 68.0,
+            "reason": "产品图片被替换成无意义的色块占位符，导致核心视觉信息严重缺失，虽布局与文本基本正确但整体还原度大幅下降。",
+            "target": "experiments\\random10_bench_smoke\\mimo_random10_20260604\\uipolish_real\\inputs\\images\\87_0.png",
+            "generated": "experiments\\random10_bench_smoke\\mimo_random10_20260604\\uipolish_real\\rendered_fixed\\87.png"
+          },
+          {
+            "sampleId": "23",
+            "score": 68.0,
+            "reason": "关键视觉资产（主图、节目缩略图、品牌logo）严重缺失或替换为纯色块，导致整体视觉密度与真实感大幅下降。",
+            "target": "experiments\\random10_bench_smoke\\mimo_random10_20260604\\uipolish_real\\inputs\\images\\23_0.png",
+            "generated": "experiments\\random10_bench_smoke\\mimo_random10_20260604\\uipolish_real\\rendered_fixed\\23.png"
+          },
+          {
+            "sampleId": "1",
+            "score": 78.0,
+            "reason": "核心内容与布局还原良好，但关键图片缺失、Logo 错误及资产样式偏差导致视觉一致性显著下降。",
+            "target": "experiments\\random10_bench_smoke\\mimo_random10_20260604\\uipolish_real\\inputs\\images\\1_0.png",
+            "generated": "experiments\\random10_bench_smoke\\mimo_random10_20260604\\uipolish_real\\rendered_fixed\\1.png"
+          }
+        ],
+        "issueTerms": [
+          "卡片背景色缺失（应为浅黄/蓝/米色块，实际为纯白）",
+          "App Store/Google Play 图标样式不一致（生成图中图标为黑白扁平，参考图中为彩色标准徽标）",
+          "'View More' 文字颜色偏灰（参考为深灰/黑色）",
+          "底部社交图标间距略窄",
+          "右下角返回顶部按钮颜色偏橙（参考为深橙）"
+        ]
+      },
+      "status": "已跑 smoke",
+      "phases": {
+        "data": true,
+        "smoke": true,
+        "render": true,
+        "vlmJudge": true,
+        "officialScore": false
+      }
+    },
+    {
+      "id": "uipolish_synthetic",
+      "name": "UIPolish-Synthetic",
+      "family": "UI 润色",
+      "task": "合成 UI 润色/修复",
+      "input": "目标 UI；正式协议还应包含当前代码/当前渲染",
+      "output": "改进后的前端页面",
+      "officialScoring": "比较改进结果是否更接近高质量目标。",
+      "nextScoring": "需要按官方 repair 输入重跑，否则只能作为 direct 生成参考。",
+      "lossFocus": "缺少错误页面上下文，难以定位局部修复点。",
+      "priority": "中",
+      "available": 100,
+      "counts": {
+        "selected": 10,
+        "ok": 10,
+        "html": 10,
+        "complete": 10,
+        "code": 0,
+        "text": 0,
+        "failed": 0
+      },
+      "rendered": 10,
+      "skipped": false,
+      "judge": {
+        "model": "qwen / qwen3-vl-plus",
+        "count": 10,
+        "mean": 78.2,
+        "min": 58.0,
+        "max": 94.0,
+        "lowCases": [
+          {
+            "sampleId": "12802",
+            "score": 58.0,
+            "reason": "生成页面仅保留了布局骨架和部分结构元素，但所有主题卡片的图片、标题、描述及难度标签等核心内容均未还原，视觉上严重空洞。",
+            "target": "experiments\\random10_bench_smoke\\mimo_random10_20260604\\uipolish_synthetic\\inputs\\images\\12802_0.png",
+            "generated": "experiments\\random10_bench_smoke\\mimo_random10_20260604\\uipolish_synthetic\\rendered_fixed\\12802.png"
+          },
+          {
+            "sampleId": "16973",
+            "score": 68.0,
+            "reason": "核心内容与布局基本还原，但关键图片资产全部缺失并用错误占位图替代，且侧边栏‘贴士’区块位置严重错位，导致整体视觉失真。",
+            "target": "experiments\\random10_bench_smoke\\mimo_random10_20260604\\uipolish_synthetic\\inputs\\images\\16973_0.png",
+            "generated": "experiments\\random10_bench_smoke\\mimo_random10_20260604\\uipolish_synthetic\\rendered_fixed\\16973.png"
+          },
+          {
+            "sampleId": "14110",
+            "score": 78.0,
+            "reason": "核心问题在于所有商品图片被单色占位块替代，严重削弱视觉真实性与信息传达，但布局、文本和结构还原良好。",
+            "target": "experiments\\random10_bench_smoke\\mimo_random10_20260604\\uipolish_synthetic\\inputs\\images\\14110_0.png",
+            "generated": "experiments\\random10_bench_smoke\\mimo_random10_20260604\\uipolish_synthetic\\rendered_fixed\\14110.png"
+          }
+        ],
+        "issueTerms": [
+          "图片被纯色块替代，完全缺失真实商品图",
+          "左侧功能菜单图标与文字间距异常",
+          "‘使用小贴士’背景色略浅于参考图",
+          "部分标签颜色（如‘儿童礼物’）饱和度偏低",
+          "右上角统计卡片边框圆角略大"
+        ]
+      },
+      "status": "已跑 smoke",
+      "phases": {
+        "data": true,
+        "smoke": true,
+        "render": true,
+        "vlmJudge": true,
+        "officialScore": false
+      }
+    },
+    {
+      "id": "web2code",
+      "name": "Web2Code",
+      "family": "网页截图转代码",
+      "task": "网页截图生成前端代码",
+      "input": "网页截图",
+      "output": "HTML/CSS/渲染网页",
+      "officialScoring": "视觉还原为主，可用 VLM judge、CLIP、SSIM 或结构指标。",
+      "nextScoring": "补 VLM judge 和 CLIP/SSIM；适合观察长尾网页组件。",
+      "lossFocus": "网页细节、图片替代、布局比例、长页面截断。",
+      "priority": "高",
+      "available": 1198,
+      "counts": {
+        "selected": 10,
+        "ok": 10,
+        "html": 10,
+        "complete": 10,
+        "code": 0,
+        "text": 0,
+        "failed": 0
+      },
+      "rendered": 10,
+      "skipped": false,
+      "judge": {
+        "model": "qwen / qwen3-vl-plus",
+        "count": 10,
+        "mean": 92.0,
+        "min": 78.0,
+        "max": 98.0,
+        "lowCases": [
+          {
+            "sampleId": "521",
+            "score": 78.0,
+            "reason": "生成页面缺失顶部紫色渐变背景区域，且搜索框垂直位置偏高、未水平居中，导致整体视觉结构与参考图存在明显偏差。",
+            "target": "experiments\\random10_bench_smoke\\mimo_random10_20260604\\web2code\\inputs\\images\\521_0.png",
+            "generated": "experiments\\random10_bench_smoke\\mimo_random10_20260604\\web2code\\rendered_fixed\\521.png"
+          },
+          {
+            "sampleId": "914",
+            "score": 85.0,
+            "reason": "内容与布局高度还原，但图片缺失且被灰色块替代，影响整体视觉真实性。",
+            "target": "experiments\\random10_bench_smoke\\mimo_random10_20260604\\web2code\\inputs\\images\\914_0.png",
+            "generated": "experiments\\random10_bench_smoke\\mimo_random10_20260604\\web2code\\rendered_fixed\\914.png"
+          },
+          {
+            "sampleId": "794",
+            "score": 88.0,
+            "reason": "搜索输入框背景色错误且按钮圆角、文字粗细等细节偏差导致视觉一致性未达完美",
+            "target": "experiments\\random10_bench_smoke\\mimo_random10_20260604\\web2code\\inputs\\images\\794_0.png",
+            "generated": "experiments\\random10_bench_smoke\\mimo_random10_20260604\\web2code\\rendered_fixed\\794.png"
+          }
+        ],
+        "issueTerms": [
+          "搜索框与按钮之间缺少标准间距（应为0或1px边框合并，但当前有明显间隙）",
+          "灰色占位图尺寸略小于参考图，且垂直居中偏上",
+          "右上角两个灰色方块间距略窄",
+          "搜索框边框略细于参考图，可能为默认浏览器样式差异",
+          "灰色占位块高度与参考图存在1-2px像素级偏差"
+        ]
+      },
+      "status": "已跑 smoke",
+      "phases": {
+        "data": true,
+        "smoke": true,
+        "render": true,
+        "vlmJudge": true,
+        "officialScore": false
+      }
+    },
+    {
+      "id": "dcgen_original",
+      "name": "DCGen Original",
+      "family": "视觉相似度",
+      "task": "网页截图生成 HTML",
+      "input": "目标网页截图",
+      "output": "HTML/CSS/渲染网页",
+      "officialScoring": "渲染图与目标图做 SSIM/视觉相似度和细粒度指标。",
+      "nextScoring": "优先补 SSIM；VLM judge 可作为辅助。",
+      "lossFocus": "像素级位置、图像/颜色匹配、细粒度区域相似度。",
+      "priority": "中",
+      "available": 110,
+      "counts": {
+        "selected": 10,
+        "ok": 10,
+        "html": 10,
+        "complete": 10,
+        "code": 0,
+        "text": 0,
+        "failed": 0
+      },
+      "rendered": 10,
+      "skipped": false,
+      "judge": {
+        "model": "qwen / qwen3-vl-plus",
+        "count": 10,
+        "mean": 86.2,
+        "min": 78.0,
+        "max": 94.0,
+        "lowCases": [
+          {
+            "sampleId": "43",
+            "score": 78.0,
+            "reason": "核心布局与文本内容还原良好，但关键视觉资产（图片占位符、图标）缺失且语言切换样式错误，导致整体视觉一致性下降。",
+            "target": "experiments\\random10_bench_smoke\\mimo_random10_20260604\\dcgen_original\\inputs\\images\\43_0.png",
+            "generated": "experiments\\random10_bench_smoke\\mimo_random10_20260604\\dcgen_original\\rendered_fixed\\43.png"
+          },
+          {
+            "sampleId": "260",
+            "score": 78.0,
+            "reason": "核心布局与内容基本还原，但顶部导航、中部媒体组件及页脚结构存在明显样式与定位偏差，且Cookie横幅位置错误导致视觉干扰。",
+            "target": "experiments\\random10_bench_smoke\\mimo_random10_20260604\\dcgen_original\\inputs\\images\\260_0.png",
+            "generated": "experiments\\random10_bench_smoke\\mimo_random10_20260604\\dcgen_original\\rendered_fixed\\260.png"
+          },
+          {
+            "sampleId": "26",
+            "score": 82.0,
+            "reason": "主标题颜色、导航背景色及关键图片占位符位置存在明显视觉偏差，影响品牌一致性与布局准确性。",
+            "target": "experiments\\random10_bench_smoke\\mimo_random10_20260604\\dcgen_original\\inputs\\images\\26_0.png",
+            "generated": "experiments\\random10_bench_smoke\\mimo_random10_20260604\\dcgen_original\\rendered_fixed\\26.png"
+          }
+        ],
+        "issueTerms": [
+          "主标题颜色错误（应为白色，生成为金色）",
+          "顶部导航栏背景色偏深灰而非深蓝",
+          "图片占位符位置与参考图不符（右侧大图应为右上角，生成在中部偏右）",
+          "页脚社交图标缺失",
+          "按钮圆角略大"
+        ]
+      },
+      "status": "已跑 smoke",
+      "phases": {
+        "data": true,
+        "smoke": true,
+        "render": true,
+        "vlmJudge": true,
+        "officialScore": false
+      }
+    },
+    {
+      "id": "interaction2code",
+      "name": "Interaction2Code",
+      "family": "交互生成",
+      "task": "根据交互前/后截图生成可交互页面",
+      "input": "交互前截图 + 交互后截图 + 动作描述",
+      "output": "可交互 HTML",
+      "officialScoring": "CLIP、SSIM、Text、Position、Implement Rate，分静态态和交互态。",
+      "nextScoring": "需要执行交互后截图，再评初始态/交互态。",
+      "lossFocus": "交互触发元素、状态切换、交互后布局是否达到目标。",
+      "priority": "高",
+      "available": 155,
+      "counts": {
+        "selected": 10,
+        "ok": 10,
+        "html": 10,
+        "complete": 10,
+        "code": 0,
+        "text": 0,
+        "failed": 0
+      },
+      "rendered": 10,
+      "skipped": false,
+      "judge": {
+        "model": "qwen / qwen3-vl-plus",
+        "count": 10,
+        "mean": 78.8,
+        "min": 68.0,
+        "max": 88.0,
+        "lowCases": [
+          {
+            "sampleId": "109_1",
+            "score": 68.0,
+            "reason": "关键主图缺失并被占位图替代，整体布局结构虽大致保留但组件尺寸、对齐与视觉层级严重偏离参考设计。",
+            "target": "experiments\\random10_bench_smoke\\mimo_random10_20260604\\interaction2code\\inputs\\images\\109_1_0.png",
+            "generated": "experiments\\random10_bench_smoke\\mimo_random10_20260604\\interaction2code\\rendered_fixed\\109_1.png"
+          },
+          {
+            "sampleId": "109_2",
+            "score": 78.0,
+            "reason": "布局与内容基本还原，但关键视觉资产（主题缩略图、图标）严重失真且样式细节（颜色、间距、字体）偏差明显。",
+            "target": "experiments\\random10_bench_smoke\\mimo_random10_20260604\\interaction2code\\inputs\\images\\109_2_0.png",
+            "generated": "experiments\\random10_bench_smoke\\mimo_random10_20260604\\interaction2code\\rendered_fixed\\109_2.png"
+          },
+          {
+            "sampleId": "105_3",
+            "score": 78.0,
+            "reason": "整体布局和内容结构还原良好，但关键视觉元素（图标颜色、头像、按钮样式）存在明显偏差，影响专业感与一致性。",
+            "target": "experiments\\random10_bench_smoke\\mimo_random10_20260604\\interaction2code\\inputs\\images\\105_3_0.png",
+            "generated": "experiments\\random10_bench_smoke\\mimo_random10_20260604\\interaction2code\\rendered_fixed\\105_3.png"
+          }
+        ],
+        "issueTerms": [
+          "主题预览图被简化为纯色块，丢失原始视觉细节",
+          "推荐扩展项图标与文字排版错位（如 TinEye 图标位置偏移）",
+          "用户数显示格式不一致（部分带‘users’，部分仅数字）",
+          "‘See all extensions’链接颜色应为蓝色但渲染为深灰",
+          "顶部黄色提示条关闭按钮位置偏右"
+        ]
+      },
+      "status": "已跑 smoke",
+      "phases": {
+        "data": true,
+        "smoke": true,
+        "render": true,
+        "vlmJudge": true,
+        "officialScore": false
+      }
+    },
+    {
+      "id": "designbench",
+      "name": "DesignBench",
+      "family": "多框架前端",
+      "task": "生成/编辑/修复 React、Vue、Angular、Vanilla 页面",
+      "input": "截图、设计描述、编辑/修复指令",
+      "output": "多框架前端代码",
+      "officialScoring": "编译成功、AST/code-level、视觉相似度和 LLM/VLM judge。",
+      "nextScoring": "先跑 vanilla visual judge；再评编译/AST 指标。",
+      "lossFocus": "跨框架可运行性、编译错误、视觉细节和代码结构。",
+      "priority": "高",
+      "available": 120,
+      "counts": {
+        "selected": 10,
+        "ok": 10,
+        "html": 10,
+        "complete": 10,
+        "code": 0,
+        "text": 0,
+        "failed": 0
+      },
+      "rendered": 10,
+      "skipped": false,
+      "judge": {
+        "model": "qwen / qwen3-vl-plus",
+        "count": 10,
+        "mean": 88.1,
+        "min": 82.0,
+        "max": 95.0,
+        "lowCases": [
+          {
+            "sampleId": "generation_vanilla_46",
+            "score": 82.0,
+            "reason": "顶部导航栏和侧边栏背景色严重偏离参考设计，属关键视觉风格错误，但布局、文本与结构高度还原。",
+            "target": "experiments\\random10_bench_smoke\\mimo_random10_20260604\\designbench\\inputs\\images\\generation_vanilla_46_0.png",
+            "generated": "experiments\\random10_bench_smoke\\mimo_random10_20260604\\designbench\\rendered_fixed\\generation_vanilla_46.png"
+          },
+          {
+            "sampleId": "generation_vanilla_74",
+            "score": 82.0,
+            "reason": "整体结构与内容高度还原，但关键视觉元素如顶部日期块背景色、右上角按钮及底部导航栏样式存在明显偏差，影响品牌一致性。",
+            "target": "experiments\\random10_bench_smoke\\mimo_random10_20260604\\designbench\\inputs\\images\\generation_vanilla_74_0.png",
+            "generated": "experiments\\random10_bench_smoke\\mimo_random10_20260604\\designbench\\rendered_fixed\\generation_vanilla_74.png"
+          },
+          {
+            "sampleId": "generation_vanilla_102",
+            "score": 86.0,
+            "reason": "整体结构和内容高度还原，但评论提交按钮文字错误、订阅表单布局错位构成主要视觉偏差。",
+            "target": "experiments\\random10_bench_smoke\\mimo_random10_20260604\\designbench\\inputs\\images\\generation_vanilla_102_0.png",
+            "generated": "experiments\\random10_bench_smoke\\mimo_random10_20260604\\designbench\\rendered_fixed\\generation_vanilla_102.png"
+          }
+        ],
+        "issueTerms": [
+          "顶部导航栏背景色错误：参考图为蓝色，生成图为黑色",
+          "左侧‘Board of Directors’容器背景色应为浅灰（#f5f5f5），生成图为浅蓝（#e6f3fb）",
+          "‘DONATE’按钮边框缺失（参考图有细黑边框）",
+          "语言切换按钮间距略大",
+          "底部选举日期容器圆角半径偏小"
+        ]
+      },
+      "status": "已跑 smoke",
+      "phases": {
+        "data": true,
+        "smoke": true,
+        "render": true,
+        "vlmJudge": true,
+        "officialScore": false
+      }
+    },
+    {
+      "id": "fullfront",
+      "name": "FullFront",
+      "family": "视觉到前端",
+      "task": "图像/文本/交互 authoring 生成完整前端",
+      "input": "截图、文本描述或交互前后截图",
+      "output": "HTML/CSS/JS",
+      "officialScoring": "CLIP 图像相似度、代码结构/内容相似度和 Gemini/VLM judge。",
+      "nextScoring": "已跑静态 VLM judge；交互样本需补 click/hover 后截图。",
+      "lossFocus": "真实图片、logo、产品图、hero 背景、品牌视觉一致性。",
+      "priority": "高",
+      "available": 60,
+      "counts": {
+        "selected": 10,
+        "ok": 10,
+        "html": 10,
+        "complete": 10,
+        "code": 0,
+        "text": 0,
+        "failed": 0
+      },
+      "rendered": 10,
+      "skipped": false,
+      "judge": {
+        "model": "qwen / qwen3-vl-plus",
+        "count": 10,
+        "mean": 88.6,
+        "min": 78.0,
+        "max": 96.0,
+        "lowCases": [
+          {
+            "sampleId": "Interaction_Authoring_59_click_6_6",
+            "score": 78.0,
+            "reason": "核心内容与布局还原良好，但主图资产严重失真且品牌 logo 颜色错误，导致视觉可信度显著下降。",
+            "target": "experiments\\random10_bench_smoke\\mimo_random10_20260604\\fullfront\\inputs\\images\\Interaction_Authoring_59_click_6_6_0.png",
+            "generated": "experiments\\random10_bench_smoke\\mimo_random10_20260604\\fullfront\\rendered_fixed\\Interaction_Authoring_59_click_6_6.png"
+          },
+          {
+            "sampleId": "Text_to_code_14_new-img-code_127",
+            "score": 82.0,
+            "reason": "核心布局与文本内容高度还原，但背景图像、品牌Logo及关键事实图标等视觉资产严重失真，导致整体风格偏离原设计。",
+            "target": "experiments\\random10_bench_smoke\\mimo_random10_20260604\\fullfront\\inputs\\images\\Text_to_code_14_new-img-code_127_0.png",
+            "generated": "experiments\\random10_bench_smoke\\mimo_random10_20260604\\fullfront\\rendered_fixed\\Text_to_code_14_new-img-code_127.png"
+          },
+          {
+            "sampleId": "Image_to_code_175_new-img-code_521",
+            "score": 82.0,
+            "reason": "核心布局与内容高度还原，但关键产品图片（Premiere Pro）、主标题配色及部分图标资产存在明显偏差，影响整体视觉一致性。",
+            "target": "experiments\\random10_bench_smoke\\mimo_random10_20260604\\fullfront\\inputs\\images\\Image_to_code_175_new-img-code_521_0.png",
+            "generated": "experiments\\random10_bench_smoke\\mimo_random10_20260604\\fullfront\\rendered_fixed\\Image_to_code_175_new-img-code_521.png"
+          }
+        ],
+        "issueTerms": [
+          "主图被替换成纯色渐变占位图，缺失原始纹理细节",
+          "顶部品牌 logo 颜色错误（应为橙色环形图标，生成图为红色实心圆）",
+          "‘4 Reviews’ 星级与文字间距略窄",
+          "相关产品缩略图高度不一致且缺少边框/阴影",
+          "‘RELATED PRODUCTS’ 标签未加下划线激活态（但静态页本不应激活）"
+        ]
+      },
+      "status": "已跑 smoke",
+      "phases": {
+        "data": true,
+        "smoke": true,
+        "render": true,
+        "vlmJudge": true,
+        "officialScore": false
+      }
+    },
+    {
+      "id": "screencoder_screenbench",
+      "name": "ScreenCoder / ScreenBench",
+      "family": "屏幕到代码",
+      "task": "根据网页/屏幕截图生成 HTML",
+      "input": "屏幕截图",
+      "output": "HTML/CSS/渲染网页",
+      "officialScoring": "官方 scorer 不如 FullFront 明确；通常可做渲染视觉/代码相似度。",
+      "nextScoring": "补 VLM judge + HTML 结构相似度。",
+      "lossFocus": "页面结构、细节资产、长尾布局。",
+      "priority": "中",
+      "available": 1000,
+      "counts": {
+        "selected": 10,
+        "ok": 10,
+        "html": 10,
+        "complete": 10,
+        "code": 0,
+        "text": 0,
+        "failed": 0
+      },
+      "rendered": 10,
+      "skipped": false,
+      "judge": {
+        "model": "qwen / qwen3-vl-plus",
+        "count": 10,
+        "mean": 80.0,
+        "min": 68.0,
+        "max": 96.0,
+        "lowCases": [
+          {
+            "sampleId": "2_Praful1100E",
+            "score": 68.0,
+            "reason": "页面结构和文本内容高度还原，但整体采用错误的深色主题，关键视觉资产（头像、横幅、技术图标）严重失真，导致视觉一致性大幅下降。",
+            "target": "experiments\\random10_bench_smoke\\mimo_random10_20260604\\screencoder_screenbench\\inputs\\images\\2_Praful1100E_0.png",
+            "generated": "experiments\\random10_bench_smoke\\mimo_random10_20260604\\screencoder_screenbench\\rendered_fixed\\2_Praful1100E.png"
+          },
+          {
+            "sampleId": "2_feross",
+            "score": 68.0,
+            "reason": "核心视觉风格严重偏离：错误采用深色主题而非参考图的浅色模式，且关键资产（头像、赞助商图标）被占位符替代。",
+            "target": "experiments\\random10_bench_smoke\\mimo_random10_20260604\\screencoder_screenbench\\inputs\\images\\2_feross_0.png",
+            "generated": "experiments\\random10_bench_smoke\\mimo_random10_20260604\\screencoder_screenbench\\rendered_fixed\\2_feross.png"
+          },
+          {
+            "sampleId": "3_backpacking",
+            "score": 68.0,
+            "reason": "核心问题在于所有视频缩略图被替换成纯色占位块，严重破坏视觉还原度，且导航栏图标与配色失真。",
+            "target": "experiments\\random10_bench_smoke\\mimo_random10_20260604\\screencoder_screenbench\\inputs\\images\\3_backpacking_0.png",
+            "generated": "experiments\\random10_bench_smoke\\mimo_random10_20260604\\screencoder_screenbench\\rendered_fixed\\3_backpacking.png"
+          }
+        ],
+        "issueTerms": [
+          "整体主题色错误：参考图为浅色模式，生成图为深色模式",
+          "头像与横幅图严重失真（卡通化/占位符）",
+          "技术栈图标完全错误且数量不符",
+          "按钮样式与颜色不一致（如'Follow'应为浅灰边框，生成为绿色实底）",
+          "‘About Me’小标题图标错用（应为用户图标，生成为其他）"
+        ]
+      },
+      "status": "已跑 smoke",
+      "phases": {
+        "data": true,
+        "smoke": true,
+        "render": true,
+        "vlmJudge": true,
+        "officialScore": false
+      }
+    },
+    {
+      "id": "vision2web",
+      "name": "Vision2Web",
+      "family": "网站开发",
+      "task": "从视觉原型到静态/交互/全栈网站",
+      "input": "原型/截图 + 任务规格 + 环境上下文",
+      "output": "静态网页、交互前端或全栈网站",
+      "officialScoring": "Level 1 用 Visual Score；Level 2/3 加 Functional Score。",
+      "nextScoring": "先对 Level 1 补 VLM visual judge；交互/全栈需 GUI agent 验证。",
+      "lossFocus": "从静态视觉还原扩展到功能流程和多页面工作流。",
+      "priority": "高",
+      "available": 100,
+      "counts": {
+        "selected": 10,
+        "ok": 10,
+        "html": 10,
+        "complete": 10,
+        "code": 0,
+        "text": 0,
+        "failed": 0
+      },
+      "rendered": 10,
+      "skipped": false,
+      "judge": {
+        "model": "qwen / qwen3-vl-plus",
+        "count": 10,
+        "mean": 80.2,
+        "min": 68.0,
+        "max": 88.0,
+        "lowCases": [
+          {
+            "sampleId": "ebay",
+            "score": 68.0,
+            "reason": "核心问题在于商品图片全部被简化为纯色方块，导致视觉信息严重丢失；同时顶部导航与关键组件样式偏离eBay设计规范。",
+            "target": "experiments\\random10_bench_smoke\\mimo_random10_20260604\\vision2web\\inputs\\images\\ebay_0.jpg",
+            "generated": "experiments\\random10_bench_smoke\\mimo_random10_20260604\\vision2web\\rendered_fixed\\ebay.png"
+          },
+          {
+            "sampleId": "visitseoul",
+            "score": 68.0,
+            "reason": "关键视觉资产（所有图片/地图）被占位符替代，且导航与Cookie弹窗布局偏差显著，导致整体还原度大幅下降。",
+            "target": "experiments\\random10_bench_smoke\\mimo_random10_20260604\\vision2web\\inputs\\images\\visitseoul_0.jpg",
+            "generated": "experiments\\random10_bench_smoke\\mimo_random10_20260604\\vision2web\\rendered_fixed\\visitseoul.png"
+          },
+          {
+            "sampleId": "humankinetics",
+            "score": 78.0,
+            "reason": "核心布局与内容基本还原，但顶部促销横幅、轮播图样式、图书卡片细节及品牌配色存在明显偏差，影响整体专业感。",
+            "target": "experiments\\random10_bench_smoke\\mimo_random10_20260604\\vision2web\\inputs\\images\\humankinetics_0.jpg",
+            "generated": "experiments\\random10_bench_smoke\\mimo_random10_20260604\\vision2web\\rendered_fixed\\humankinetics.png"
+          }
+        ],
+        "issueTerms": [
+          "右侧边栏‘Get Updates’标题与正文间距过小，与参考图不一致",
+          "‘Related Tags’标签排列为单列而非参考图中的多列网格布局",
+          "解决方案区域的代码块背景色偏浅（灰白 vs 参考图中更明显的浅灰）",
+          "导航栏下拉菜单箭头样式缺失",
+          "‘0 Karma’按钮圆角略大"
+        ]
+      },
+      "status": "已跑 smoke",
+      "phases": {
+        "data": true,
+        "smoke": true,
+        "render": true,
+        "vlmJudge": true,
+        "officialScore": false
+      }
+    },
+    {
+      "id": "visualwebbench",
+      "name": "VisualWebBench",
+      "family": "网页理解",
+      "task": "网页 caption、OCR、grounding、QA、action prediction",
+      "input": "网页截图/元素/问题",
+      "output": "文本答案、坐标或动作",
+      "officialScoring": "ROUGE/F1/accuracy，按任务类型切换。",
+      "nextScoring": "直接跑官方 eval_utils；不需要视觉生成 judge。",
+      "lossFocus": "网页理解和 grounding，不是前端视觉生成。",
+      "priority": "中",
+      "available": 1536,
+      "counts": {
+        "selected": 10,
+        "ok": 10,
+        "html": 0,
+        "complete": 0,
+        "code": 0,
+        "text": 10,
+        "failed": 0
+      },
+      "rendered": 10,
+      "skipped": false,
+      "status": "已跑 smoke",
+      "phases": {
+        "data": true,
+        "smoke": true,
+        "render": true,
+        "vlmJudge": false,
+        "officialScore": false
+      }
+    },
+    {
+      "id": "humaneval_v",
+      "name": "HumanEval-V",
+      "family": "视觉编程",
+      "task": "根据视觉题面生成可执行代码",
+      "input": "视觉题面/图像 + 编程任务",
+      "output": "Python 代码",
+      "officialScoring": "parse success 和 pass@k。",
+      "nextScoring": "补执行 harness，统计 pass@1。",
+      "lossFocus": "代码正确性，和视觉设计还原关系较弱。",
+      "priority": "中",
+      "available": 253,
+      "counts": {
+        "selected": 10,
+        "ok": 10,
+        "html": 0,
+        "complete": 0,
+        "code": 10,
+        "text": 10,
+        "failed": 0
+      },
+      "rendered": 10,
+      "skipped": false,
+      "status": "已跑 smoke",
+      "phases": {
+        "data": true,
+        "smoke": true,
+        "render": true,
+        "vlmJudge": false,
+        "officialScore": false
+      }
+    },
+    {
+      "id": "vab_css",
+      "name": "VAB-CSS",
+      "family": "CSS Agent 修复",
+      "task": "通过多轮 CSS edit 修复错误页面",
+      "input": "目标图、当前错误页面、HTML/CSS、差异描述",
+      "output": "CSS 修改动作和最终渲染",
+      "officialScoring": "成功率/EM，内部用 SSIM 距离改善判断。",
+      "nextScoring": "缺官方 data/css_dataset，需补数据后跑 agent 环境。",
+      "lossFocus": "闭环局部修复、动作选择、SSIM 改善。",
+      "priority": "高",
+      "available": null,
+      "counts": {
+        "selected": 0,
+        "ok": 0,
+        "html": 0,
+        "complete": 0,
+        "code": 0,
+        "text": 0,
+        "failed": 0
+      },
+      "rendered": 0,
+      "skipped": true,
+      "skipReason": "# vab_css status\n\n- status: skipped\n- reason: 本地缺少官方 `data/css_dataset`，README 只给 VAB-CSS 配置说明，没有可直接抽样的测试数据；该任务还依赖 CSS edit agent 环境，不适合用单轮截图到 HTML smoke 代替。\n- source: benchmarks/vab_css_visualagentbench/configs/tasks/css.yaml",
+      "status": "未跑通",
+      "phases": {
+        "data": true,
+        "smoke": false,
+        "render": false,
+        "vlmJudge": false,
+        "officialScore": false
+      }
+    },
+    {
+      "id": "frontendbench",
+      "name": "FrontendBench",
+      "family": "前端综合",
+      "task": "待确认",
+      "input": "官方数据暂未落地",
+      "output": "待确认",
+      "officialScoring": "官方代码/数据未获取，暂不硬填。",
+      "nextScoring": "等官方 data/code 可用后再纳入。",
+      "lossFocus": "待确认。",
+      "priority": "低",
+      "available": null,
+      "counts": {
+        "selected": 0,
+        "ok": 0,
+        "html": 0,
+        "complete": 0,
+        "code": 0,
+        "text": 0,
+        "failed": 0
+      },
+      "rendered": 0,
+      "skipped": true,
+      "skipReason": "# frontendbench status\n\n- status: skipped\n- reason: 论文页此前说明 data/code will be released soon；当前本地没有官方数据或仓库，暂不能补跑。",
+      "status": "未跑通",
+      "phases": {
+        "data": true,
+        "smoke": false,
+        "render": false,
+        "vlmJudge": false,
+        "officialScore": false
+      }
+    }
+  ],
+  "boardNotes": [
+    "本看板展示我们已跑的 smoke run，不等于官方 benchmark 分数。",
+    "VLM judge 目前只覆盖 design2code、flame、fullfront 三组。",
+    "FullFront interaction 样本当前只评初始静态渲染图，尚未执行 click/hover 后截图。"
+  ]
+}

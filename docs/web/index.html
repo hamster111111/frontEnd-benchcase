@@ -1,0 +1,215 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>前端设计评测资料库</title>
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <div class="app-shell">
+      <header class="topbar">
+        <div>
+          <p class="eyebrow">前端设计评测</p>
+          <h1>Zhipu / GLM 前端设计评测资料</h1>
+        </div>
+        <div class="top-actions">
+          <label class="search">
+            <span>检索</span>
+            <input id="searchInput" type="search" placeholder="评测集 / 模型 / 指标 / Framework" autocomplete="off" />
+          </label>
+          <a class="text-button board-link" href="./benchmark-board.html">已跑看板</a>
+          <button id="resetButton" class="text-button" type="button">重置</button>
+        </div>
+      </header>
+
+      <main class="workspace">
+        <aside class="rail">
+          <section class="summary">
+            <div>
+              <strong id="benchCount">0</strong>
+              <span>评测集</span>
+            </div>
+            <div>
+              <strong id="scoreCount">0</strong>
+              <span>分数</span>
+            </div>
+            <div>
+              <strong id="sourceCount">0</strong>
+              <span>来源</span>
+            </div>
+          </section>
+
+          <nav class="section-tabs" id="sectionTabs" aria-label="展示分组"></nav>
+
+          <section class="bench-list-wrap">
+            <div class="section-label">评测集</div>
+            <div class="bench-list" id="benchmarkList"></div>
+          </section>
+        </aside>
+
+        <section class="main-panel">
+          <nav class="view-tabs" id="viewTabs" aria-label="主视图"></nav>
+
+          <section class="view-panel" data-view="overview">
+            <section class="visual-plane">
+              <div class="visual-copy">
+                <p class="eyebrow" id="activeSectionName">展示分组</p>
+                <h2 id="activeSectionTitle">加载中</h2>
+                <p id="activeSectionDescription">读取数据中。</p>
+              </div>
+              <div class="score-canvas-panel">
+                <canvas id="scoreCanvas" width="920" height="300" aria-label="分数地形图"></canvas>
+                <div class="score-tooltip" id="scoreTooltip" hidden></div>
+                <div class="score-legend" id="scoreLegend" aria-label="分数地形颜色图例"></div>
+                <div class="score-runner-summary" id="scoreRunnerSummary" aria-label="当前分组跑分来源摘要"></div>
+              </div>
+            </section>
+
+            <section class="model-strip" id="modelStrip"></section>
+          </section>
+
+          <section class="detail-grid view-panel" data-view="benchmark">
+            <article class="benchmark-detail" id="benchmarkDetail"></article>
+            <article class="score-detail">
+              <div class="panel-heading">
+                <div>
+                  <p class="section-label">分数</p>
+                  <h3 id="scoreTitle">选中的评测集</h3>
+                </div>
+                <span id="scoreMeta" class="muted"></span>
+              </div>
+              <div class="score-bars" id="scoreBars"></div>
+            </article>
+          </section>
+
+          <section class="data-table-section view-panel" data-view="scores">
+            <div class="panel-heading">
+              <div>
+                <p class="section-label">分数索引</p>
+                <h3 id="scoreTableTitle">当前评测集的分数记录</h3>
+              </div>
+              <span id="tableCount" class="muted"></span>
+            </div>
+            <div class="table-wrap">
+              <table>
+                <thead>
+                  <tr>
+                    <th>评测集</th>
+                    <th>模型</th>
+                    <th>指标</th>
+                    <th>分数</th>
+                    <th>跑分方</th>
+                    <th>跑分时间</th>
+                    <th>来源</th>
+                    <th>可信度</th>
+                  </tr>
+                </thead>
+                <tbody id="scoreTable"></tbody>
+              </table>
+            </div>
+          </section>
+
+          <section class="comparison-section view-panel" data-view="comparison">
+            <div class="panel-heading">
+              <div>
+                <p class="section-label">横向对比</p>
+                <h3>其他模型在同类设计评测中的位置</h3>
+              </div>
+              <span id="comparisonMeta" class="muted"></span>
+            </div>
+            <div class="comparison-grid" id="comparisonGrid"></div>
+          </section>
+
+          <section class="framework-section view-panel" data-view="frameworks">
+            <div class="panel-heading">
+              <div>
+                <p class="section-label">可跑 Framework</p>
+                <h3>复现成本与刷分机会</h3>
+              </div>
+              <span id="frameworkMeta" class="muted"></span>
+            </div>
+            <p id="frameworkNote" class="framework-note"></p>
+            <div class="framework-summary-grid" id="frameworkSummary"></div>
+            <nav class="framework-subtabs" id="frameworkSubTabs" aria-label="Framework 子视图"></nav>
+
+            <section class="framework-subsection" data-framework-view="zhipu">
+              <div class="panel-heading compact">
+                <div>
+                  <p class="section-label">Zhipu 跑分方式</p>
+                  <h3>直接模型跑分 vs Framework 刷分</h3>
+                </div>
+                <span id="zhipuFrameworkMeta" class="muted"></span>
+              </div>
+              <p id="zhipuFrameworkNote" class="framework-note compact-note"></p>
+              <div class="zhipu-framework-table-wrap">
+                <table class="zhipu-framework-table">
+                  <thead>
+                    <tr>
+                      <th>系统</th>
+                      <th>跑法</th>
+                      <th>跑的 Benchmark</th>
+                      <th>发表 / 顶会</th>
+                      <th>API / GPU</th>
+                    </tr>
+                  </thead>
+                  <tbody id="zhipuFrameworkTable"></tbody>
+                </table>
+              </div>
+            </section>
+
+            <section class="framework-subsection" data-framework-view="venue">
+              <div class="panel-heading compact">
+                <div>
+                  <p class="section-label">近年顶会/强会线索</p>
+                  <h3>论文、Framework 与实际跑的 Benchmark</h3>
+                </div>
+                <span id="topVenueMeta" class="muted"></span>
+              </div>
+              <div class="top-venue-table-wrap">
+                <table class="top-venue-table">
+                  <thead>
+                    <tr>
+                      <th>工作</th>
+                      <th>Venue / 评级</th>
+                      <th>跑的 Benchmark</th>
+                      <th>API / GPU</th>
+                    </tr>
+                  </thead>
+                  <tbody id="topVenueTable"></tbody>
+                </table>
+              </div>
+            </section>
+
+            <section class="framework-subsection" data-framework-view="runnable">
+              <div class="panel-heading compact">
+                <div>
+                  <p class="section-label">复现候选</p>
+                  <h3>优先级、成本与算力需求</h3>
+                </div>
+                <span id="frameworkCandidateMeta" class="muted"></span>
+              </div>
+              <div class="framework-highlights" id="frameworkHighlights"></div>
+              <div class="framework-table-wrap">
+                <table class="framework-table">
+                  <thead>
+                    <tr>
+                      <th>Framework</th>
+                      <th>对应 Benchmark</th>
+                      <th>优先级</th>
+                      <th>工程成本</th>
+                      <th>API / GPU</th>
+                    </tr>
+                  </thead>
+                  <tbody id="frameworkTable"></tbody>
+                </table>
+              </div>
+            </section>
+          </section>
+        </section>
+      </main>
+    </div>
+
+    <script src="./app.js"></script>
+  </body>
+</html>

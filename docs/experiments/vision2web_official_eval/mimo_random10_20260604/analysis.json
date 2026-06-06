@@ -1,0 +1,181 @@
+{
+  "results": {
+    "webpage:smoke_html:mimo-v2.5:ebay": {
+      "success": true,
+      "prototypes": {
+        "desktop": 0.46875,
+        "mobile": 0.5,
+        "tablet": 0.40625
+      },
+      "function": {}
+    },
+    "webpage:smoke_html:mimo-v2.5:eventbrite": {
+      "success": true,
+      "prototypes": {
+        "desktop": 0.6666666666666666,
+        "mobile": 0.5625,
+        "tablet": 0.6785714285714286
+      },
+      "function": {}
+    },
+    "webpage:smoke_html:mimo-v2.5:eventgroove": {
+      "success": true,
+      "prototypes": {
+        "desktop": 0.6818181818181818,
+        "mobile": 0.5833333333333334,
+        "tablet": 0.6363636363636364
+      },
+      "function": {}
+    },
+    "webpage:smoke_html:mimo-v2.5:humankinetics": {
+      "success": true,
+      "prototypes": {
+        "desktop": 0.5909090909090909,
+        "mobile": 0.28125,
+        "tablet": 0.6041666666666666
+      },
+      "function": {}
+    },
+    "webpage:smoke_html:mimo-v2.5:klamath": {
+      "success": true,
+      "prototypes": {
+        "desktop": 0.625,
+        "mobile": 0.3333333333333333,
+        "tablet": 0.5
+      },
+      "function": {}
+    },
+    "webpage:smoke_html:mimo-v2.5:nxp": {
+      "success": true,
+      "prototypes": {
+        "desktop": 0.6666666666666666,
+        "mobile": 0.65625,
+        "tablet": 0.765625
+      },
+      "function": {}
+    },
+    "webpage:smoke_html:mimo-v2.5:pagerduty": {
+      "success": true,
+      "prototypes": {
+        "desktop": 0.6071428571428571,
+        "mobile": 0.625,
+        "tablet": 0.6875
+      },
+      "function": {}
+    },
+    "webpage:smoke_html:mimo-v2.5:rottentomatoes": {
+      "success": true,
+      "prototypes": {
+        "desktop": 0.625,
+        "mobile": 0.575,
+        "tablet": 0.6538461538461539
+      },
+      "function": {}
+    },
+    "webpage:smoke_html:mimo-v2.5:splunk": {
+      "success": true,
+      "prototypes": {
+        "desktop": 0.6590909090909091,
+        "mobile": 0.5833333333333334,
+        "tablet": 0.7045454545454546
+      },
+      "function": {}
+    },
+    "webpage:smoke_html:mimo-v2.5:visitseoul": {
+      "success": true,
+      "prototypes": {
+        "desktop": 0.6136363636363636,
+        "mobile": 0.675,
+        "tablet": 0.6875
+      },
+      "function": {}
+    }
+  },
+  "statistics": {
+    "webpage:smoke_html:mimo-v2.5": {
+      "projects": [
+        "ebay",
+        "eventbrite",
+        "eventgroove",
+        "humankinetics",
+        "klamath",
+        "nxp",
+        "pagerduty",
+        "rottentomatoes",
+        "splunk",
+        "visitseoul"
+      ],
+      "success_count": 10,
+      "total_count": 10,
+      "prototype_scores": [
+        0.46875,
+        0.5,
+        0.40625,
+        0.6666666666666666,
+        0.5625,
+        0.6785714285714286,
+        0.6818181818181818,
+        0.5833333333333334,
+        0.6363636363636364,
+        0.5909090909090909,
+        0.28125,
+        0.6041666666666666,
+        0.625,
+        0.3333333333333333,
+        0.5,
+        0.6666666666666666,
+        0.65625,
+        0.765625,
+        0.6071428571428571,
+        0.625,
+        0.6875,
+        0.625,
+        0.575,
+        0.6538461538461539,
+        0.6590909090909091,
+        0.5833333333333334,
+        0.7045454545454546,
+        0.6136363636363636,
+        0.675,
+        0.6875
+      ],
+      "desktop_scores": [
+        0.46875,
+        0.6666666666666666,
+        0.6818181818181818,
+        0.5909090909090909,
+        0.625,
+        0.6666666666666666,
+        0.6071428571428571,
+        0.625,
+        0.6590909090909091,
+        0.6136363636363636
+      ],
+      "tablet_scores": [
+        0.40625,
+        0.6785714285714286,
+        0.6363636363636364,
+        0.6041666666666666,
+        0.5,
+        0.765625,
+        0.6875,
+        0.6538461538461539,
+        0.7045454545454546,
+        0.6875
+      ],
+      "mobile_scores": [
+        0.5,
+        0.5625,
+        0.5833333333333334,
+        0.28125,
+        0.3333333333333333,
+        0.65625,
+        0.625,
+        0.575,
+        0.5833333333333334,
+        0.675
+      ],
+      "function_scores": []
+    }
+  }
+}

@@ -1,0 +1,862 @@
+{
+  "schema_version": "1.0",
+  "last_updated": "2026-06-02",
+  "title": "可跑 Framework 与刷分机会",
+  "scope_note": "基于项目 README、GitHub 目录结构和公开论文/项目页做的静态评估；未 clone 仓库、未安装依赖、未实际运行。",
+  "priority_legend": {
+    "P0": "第一轮 smoke test 优先候选",
+    "P1": "第二轮重点候选",
+    "P2": "高潜力但工程较重",
+    "P3": "先作为资料/方法线索"
+  },
+  "cost_legend": {
+    "low": "依赖少，少量样本可以快速验证",
+    "medium": "需要配置 API、浏览器或多语言环境",
+    "high": "涉及 Docker、agent framework、GUI/VLM judge 或较高 API/GPU 成本",
+    "very_high": "系统级工程，建议后置"
+  },
+  "recommended_first_round": [
+    "design2code",
+    "interaction2code",
+    "dcgen",
+    "designbench"
+  ],
+  "top_venue_frameworks": [
+    {
+      "id": "figma2code_iclr2026",
+      "name": "Figma2Code",
+      "year": 2026,
+      "publication_month": "2026-04",
+      "venue": "ICLR 2026",
+      "venue_rating": "机器学习顶会 / 国际 A 类口径",
+      "status": "已发表会议论文",
+      "related_framework_id": "figma2code",
+      "task_scope": "Figma metadata + screenshot + assets 到 UI code",
+      "benchmarks_run": [
+        "Figma2Code",
+        "213 个高质量 curated cases",
+        "HF 全量数据 2817 rows"
+      ],
+      "runnable_signal": "HF 数据已公开；官方代码仓库仍需继续确认，建议先加载 test split 并重建一个样本目录。",
+      "takeaway": "顶会强相关；适合作 metadata-aware design-to-code 方法线，不适合作第一轮最轻 smoke test。",
+      "sources": [
+        "https://openreview.net/forum?id=CaXZB6bI31",
+        "https://huggingface.co/datasets/xcodemind/Figma2Code",
+        "https://arxiv.org/abs/2604.13648"
+      ]
+    },
+    {
+      "id": "ui2code_n_icml2026",
+      "name": "UI2Code^N",
+      "year": 2026,
+      "publication_month": "2026-07",
+      "venue": "ICML 2026",
+      "venue_rating": "机器学习顶会 / 国际 A 类口径",
+      "status": "repo 标注已接收；OpenReview 页面仍保留 ICLR 2026 submitted 状态",
+      "related_framework_id": "ui2code_n",
+      "task_scope": "闭环 UI-to-code generation / editing / polishing",
+      "benchmarks_run": [
+        "Design2Code",
+        "Flame-React-Eval",
+        "Web2Code",
+        "UI2Code-Real",
+        "UIPolish-Real",
+        "UIPolish-Synthetic"
+      ],
+      "runnable_signal": "模型、demo、evaluation 目录公开；本地跑 9B VLM 需要 GPU，评测 judge 需要 OpenAI-compatible API。",
+      "takeaway": "Zhipu/GLM 相关度最高；应作为第二阶段重查和复现重点。",
+      "sources": [
+        "https://github.com/zai-org/UI2Code_N",
+        "https://openreview.net/forum?id=i5Y3OD7NQB",
+        "https://arxiv.org/abs/2511.08195"
+      ]
+    },
+    {
+      "id": "webcode2m_www2025",
+      "name": "WebCode2M / Vision2UI",
+      "year": 2025,
+      "publication_month": "2025-04/2025-05",
+      "venue": "WWW 2025 Oral",
+      "venue_rating": "Web 顶会 / CCF A",
+      "status": "已发表会议论文",
+      "related_framework_id": "webcode2m",
+      "task_scope": "大规模真实网页 design image 到 HTML/CSS code",
+      "benchmarks_run": [
+        "WebCode2M",
+        "Vision2UI",
+        "TreeBLEU"
+      ],
+      "runnable_signal": "OpenReview 标注数据集 2.56M instances；更偏训练/数据线，下载和训练成本高。",
+      "takeaway": "顶会 + 大数据，非常适合支撑训练/数据构造论证；不适合第一轮小跑。",
+      "sources": [
+        "https://openreview.net/forum?id=aeP5nmlw5B",
+        "https://arxiv.org/abs/2404.06369"
+      ]
+    },
+    {
+      "id": "dcgen_fse2025",
+      "name": "DCGen",
+      "year": 2025,
+      "publication_month": "2025-06",
+      "venue": "FSE 2025 Research Track",
+      "venue_rating": "软件工程顶会 / CCF A",
+      "status": "已发表会议论文",
+      "related_framework_id": "dcgen",
+      "task_scope": "截图分块后生成 UI code，再重组为完整网页",
+      "benchmarks_run": [
+        "DCGen real-world website set",
+        "visual similarity evaluation",
+        "多 MLLM 对比"
+      ],
+      "runnable_signal": "repo 有 demo、scripts/evaluate.py 和 HF 数据；API 路线不需要 GPU。",
+      "takeaway": "顶会方法线 + 工程较轻，适合 P0/P1 之间优先跑。",
+      "sources": [
+        "https://conf.researchr.org/details/fse-2025/fse-2025-research-papers/36/Divide-and-Conquer-Generating-UI-Code-from-Screenshots",
+        "https://github.com/WebPAI/DCGen",
+        "https://arxiv.org/abs/2406.16386"
+      ]
+    },
+    {
+      "id": "interaction2code_ase2025",
+      "name": "Interaction2Code",
+      "year": 2025,
+      "publication_month": "2025-11",
+      "venue": "ASE 2025",
+      "venue_rating": "软件工程顶会 / CCF A",
+      "status": "已发表会议论文",
+      "related_framework_id": "interaction2code",
+      "task_scope": "交互原型到可交互网页代码",
+      "benchmarks_run": [
+        "Interaction2Code",
+        "127 webpages",
+        "374 interactions",
+        "15 webpage types",
+        "31 interaction categories"
+      ],
+      "runnable_signal": "repo 和 HF 数据公开；数据小但需要浏览器交互执行和 metric pipeline。",
+      "takeaway": "比静态 UI-to-code 更接近真实前端；很适合作为第二个 smoke test。",
+      "sources": [
+        "https://ink.library.smu.edu.sg/sis_research/10733/",
+        "https://github.com/WebPAI/Interaction2Code",
+        "https://huggingface.co/datasets/whale99/Interaction2Code"
+      ]
+    },
+    {
+      "id": "webmmu_emnlp2025",
+      "name": "WebMMU",
+      "year": 2025,
+      "publication_month": "2025-11",
+      "venue": "EMNLP 2025 Main",
+      "venue_rating": "NLP 顶会 / ACL family 主会",
+      "status": "已发表会议论文",
+      "related_framework_id": "webmmu",
+      "task_scope": "多语言网站理解 + 代码编辑 + mockup-to-code",
+      "benchmarks_run": [
+        "WebQA",
+        "HTML/CSS/JavaScript code editing",
+        "Mockup2Code",
+        "English/French/German/Spanish"
+      ],
+      "runnable_signal": "项目页和 HF 数据公开；Mockup2Code split 可作为设计生成补充集。",
+      "takeaway": "顶会且覆盖 code editing/mockup2code，适合补前端多语言和编辑能力背景。",
+      "sources": [
+        "https://aclanthology.org/2025.emnlp-main.1276/",
+        "https://webmmu-paper.github.io/",
+        "https://huggingface.co/datasets/McGill-NLP/WebMMU"
+      ]
+    },
+    {
+      "id": "design2code_naacl2025",
+      "name": "Design2Code / Design2Code-HARD",
+      "year": 2025,
+      "publication_month": "2025-04/2025-05",
+      "venue": "NAACL 2025 Long",
+      "venue_rating": "ACL family 主会长文；NLP/MLLM 强相关",
+      "status": "已发表会议论文",
+      "related_framework_id": "design2code",
+      "task_scope": "网页截图到 HTML/CSS",
+      "benchmarks_run": [
+        "Design2Code 484 webpages",
+        "Design2Code-HARD 80 hard examples",
+        "Block/Text/Position/Color/CLIP metrics"
+      ],
+      "runnable_signal": "repo、HF 数据和自动评测公开；最适合第一轮 smoke test。",
+      "takeaway": "主线必跑；适合作为所有方法改进的起点。",
+      "sources": [
+        "https://aclanthology.org/2025.naacl-long.199/",
+        "https://github.com/NoviScl/Design2Code",
+        "https://huggingface.co/datasets/SALT-NLP/Design2Code-HARD"
+      ]
+    },
+    {
+      "id": "web2code_neurips2024",
+      "name": "Web2Code",
+      "year": 2024,
+      "publication_month": "2024-12",
+      "venue": "NeurIPS 2024 Datasets and Benchmarks Track",
+      "venue_rating": "机器学习顶会 / CCF A",
+      "status": "已发表 D&B 论文",
+      "related_framework_id": "web2code",
+      "task_scope": "webpage understanding + webpage image to HTML code translation",
+      "benchmarks_run": [
+        "Web2Code code generation",
+        "Web2Code webpage understanding",
+        "instruction-tuning evaluation"
+      ],
+      "runnable_signal": "GitHub、HF 数据和 evaluation framework 公开；更适合训练/泛化线。",
+      "takeaway": "顶会 D&B 强背书；适合做数据扩展和跨 benchmark 泛化。",
+      "sources": [
+        "https://proceedings.neurips.cc/paper_files/paper/2024/hash/cb66be286795d71f89367d596bf78ea7-Abstract-Datasets_and_Benchmarks_Track.html",
+        "https://github.com/MBZUAI-LLM/web2code",
+        "https://huggingface.co/datasets/MBZUAI/Web2Code"
+      ]
+    },
+    {
+      "id": "webarena_iclr2024",
+      "name": "WebArena",
+      "year": 2024,
+      "publication_month": "2024-05",
+      "venue": "ICLR 2024",
+      "venue_rating": "机器学习顶会 / 国际 A 类口径",
+      "status": "已发表会议论文",
+      "related_framework_id": "webarena",
+      "task_scope": "真实可复现网页环境中的 autonomous web agent",
+      "benchmarks_run": [
+        "WebArena",
+        "e-commerce/forum/gitlab/CMS tasks",
+        "functional correctness"
+      ],
+      "runnable_signal": "环境可自托管，工程成本高；适合 agent 背景，不是前端设计主实验。",
+      "takeaway": "如果研究走 browser agent + design repair，可作为重型背景 benchmark。",
+      "sources": [
+        "https://proceedings.iclr.cc/paper_files/paper/2024/hash/4410c0711e9154a7a2d26f9b3816d1ef-Abstract-Conference.html",
+        "https://openreview.net/forum?id=oKn9c6ytLx",
+        "https://github.com/web-arena-x/webarena"
+      ]
+    },
+    {
+      "id": "osworld_neurips2024",
+      "name": "OSWorld",
+      "year": 2024,
+      "publication_month": "2024-12",
+      "venue": "NeurIPS 2024 Datasets and Benchmarks Track",
+      "venue_rating": "机器学习顶会 / CCF A",
+      "status": "已发表 D&B 论文",
+      "related_framework_id": "osworld",
+      "task_scope": "真实桌面/网页 app 中的 multimodal computer-use agent",
+      "benchmarks_run": [
+        "OSWorld",
+        "369 computer tasks",
+        "web + desktop apps",
+        "execution-based evaluation"
+      ],
+      "runnable_signal": "代码、环境和 baseline 公开；比 WebArena 更重。",
+      "takeaway": "适合说明 GUI/Web agent 上限，不建议作为 UI-to-code 第一阶段。",
+      "sources": [
+        "https://papers.nips.cc/paper_files/paper/2024/hash/5d413e48f84dc61244b6be550f1cd8f5-Abstract-Datasets_and_Benchmarks_Track.html",
+        "https://os-world.github.io/"
+      ]
+    },
+    {
+      "id": "workarena_icml2024",
+      "name": "WorkArena / BrowserGym",
+      "year": 2024,
+      "publication_month": "2024-07",
+      "venue": "ICML 2024",
+      "venue_rating": "机器学习顶会 / CCF A",
+      "status": "已发表会议论文",
+      "related_framework_id": "workarena",
+      "task_scope": "企业软件平台中的 web agent",
+      "benchmarks_run": [
+        "WorkArena",
+        "29 ServiceNow tasks",
+        "BrowserGym environment"
+      ],
+      "runnable_signal": "WorkArena repo 公开；依赖企业软件环境，工程成本高。",
+      "takeaway": "更偏企业 UI agent，适合作为真实 web app 操作背景。",
+      "sources": [
+        "https://www.servicenow.com/research/publication/alexandre-drouin-work-icml2024.html",
+        "https://github.com/ServiceNow/WorkArena",
+        "https://arxiv.org/abs/2403.07718"
+      ]
+    },
+    {
+      "id": "workarena_plus_neurips2024",
+      "name": "WorkArena++",
+      "year": 2024,
+      "publication_month": "2024-12",
+      "venue": "NeurIPS 2024 Datasets and Benchmarks Track",
+      "venue_rating": "机器学习顶会 / CCF A",
+      "status": "已发表 D&B 论文",
+      "related_framework_id": "workarena",
+      "task_scope": "组合规划和推理型企业 web agent",
+      "benchmarks_run": [
+        "WorkArena++",
+        "682 realistic workflow tasks"
+      ],
+      "runnable_signal": "沿用 WorkArena repo；适合重型 agent 方向。",
+      "takeaway": "如果做多步 UI workflow agent，可作为后续横向对比。",
+      "sources": [
+        "https://proceedings.neurips.cc/paper_files/paper/2024/hash/0b82662b6c32e887bb252a74d8cb2d5e-Abstract-Datasets_and_Benchmarks_Track.html",
+        "https://github.com/ServiceNow/WorkArena"
+      ]
+    },
+    {
+      "id": "webagent_iclr2024",
+      "name": "WebAgent",
+      "year": 2024,
+      "publication_month": "2024-05",
+      "venue": "ICLR 2024 Oral",
+      "venue_rating": "机器学习顶会 Oral",
+      "status": "已发表会议论文",
+      "related_framework_id": "webagent",
+      "task_scope": "规划 + 长 HTML 理解 + 程序合成的 web agent",
+      "benchmarks_run": [
+        "MiniWoB",
+        "Mind2Web",
+        "HTML understanding tasks"
+      ],
+      "runnable_signal": "更像方法论文而非轻量 benchmark；可吸收 planner/summarizer/program synthesis 思路。",
+      "takeaway": "可作为 agent 方法设计参考，不作为前端设计主跑分。",
+      "sources": [
+        "https://iclr.cc/virtual/2024/oral/19785"
+      ]
+    },
+    {
+      "id": "mind2web_neurips2023",
+      "name": "Mind2Web",
+      "year": 2023,
+      "publication_month": "2023-12",
+      "venue": "NeurIPS 2023 Datasets and Benchmarks Track",
+      "venue_rating": "机器学习顶会 / CCF A",
+      "status": "已发表 D&B 论文",
+      "related_framework_id": "mind2web",
+      "task_scope": "真实网站上的 generalist web agent",
+      "benchmarks_run": [
+        "Mind2Web",
+        "2000+ open-ended tasks",
+        "137 websites",
+        "31 domains"
+      ],
+      "runnable_signal": "数据、模型实现和训练模型公开；偏 offline action prediction。",
+      "takeaway": "Web agent 背景必读；可用于 UI grounding / action prediction 补充。",
+      "sources": [
+        "https://papers.neurips.cc/paper_files/paper/2023/hash/5950bf290a1570ea401bf98882128160-Abstract-Datasets_and_Benchmarks.html",
+        "https://osu-nlp-group.github.io/Mind2Web/"
+      ]
+    },
+    {
+      "id": "designbench_arxiv2025",
+      "name": "DesignBench",
+      "year": 2025,
+      "publication_month": "2025-06",
+      "venue": "arXiv / project",
+      "venue_rating": "未确认顶会；但代码和数据公开度高",
+      "status": "预印本 + 开源项目",
+      "related_framework_id": "designbench",
+      "task_scope": "多框架前端 generation / edit / repair",
+      "benchmarks_run": [
+        "DesignBench",
+        "React/Vue/Angular/Vanilla",
+        "Generation",
+        "Edit",
+        "Repair",
+        "Compile Error Repair"
+      ],
+      "runnable_signal": "repo 公开设计了 conda + npm + browser evaluator；比 Design2Code 重但很贴近前端工程。",
+      "takeaway": "虽然未确认顶会，但和我们想发论文的刷分 frame 最接近。",
+      "sources": [
+        "https://github.com/WebPAI/DesignBench",
+        "https://arxiv.org/abs/2506.06251",
+        "https://webpai.github.io/DesignBench/"
+      ]
+    }
+  ],
+  "frameworks": [
+    {
+      "id": "design2code",
+      "name": "Design2Code / Design2Code-HARD",
+      "category": "UI-to-code / 视觉还原",
+      "priority": "P0",
+      "static_complexity": 2,
+      "engineering_cost": "low",
+      "paper_potential": "高",
+      "code_status": "公开",
+      "data_status": "HuggingFace + Google Drive；Design2Code 484 对截图/HTML，HARD 80 对截图/HTML",
+      "eval_status": "公开；metrics/multi_processing_eval.py，输出 Block、Text、Position、Color、CLIP",
+      "api_dependency": "只跑已有预测和自动评测不需要；跑 GPT/Gemini/Claude prompting 需要 API key",
+      "gpu_dependency": "评测不需要；跑或训练 Design2Code-18B 需要 GPU",
+      "compute_requirement": {
+        "mode": "可只用 API",
+        "gpu": "闭源模型生成与自动评测不需要 GPU；若本地跑/训 18B 模型，建议 40GB+ 显存。"
+      },
+      "directory_signal": "根目录有 requirements.txt、setup.py；核心目录分成 data_utils、metrics、prompting，结构集中。",
+      "runnable_judgment": "最适合第一个 smoke test，先跑 HARD 子集 3-5 个样本验证渲染和指标。",
+      "boost_entries": [
+        "self-revision",
+        "text-augmented prompting",
+        "多候选生成 + CLIP/VLM rerank",
+        "render-feedback 局部修复",
+        "layout/component planning"
+      ],
+      "smoke_test": [
+        "下载 Design2Code-HARD 少量样本",
+        "跑截图渲染与 metric",
+        "用一个 API 模型生成 3-5 个 HTML",
+        "确认 metric pipeline 可复现"
+      ],
+      "sources": [
+        "https://github.com/NoviScl/Design2Code",
+        "https://arxiv.org/abs/2403.03163",
+        "https://huggingface.co/datasets/SALT-NLP/Design2Code",
+        "https://huggingface.co/datasets/SALT-NLP/Design2Code-HARD"
+      ]
+    },
+    {
+      "id": "interaction2code",
+      "name": "Interaction2Code",
+      "category": "交互网页生成",
+      "priority": "P0",
+      "static_complexity": 3,
+      "engineering_cost": "medium",
+      "paper_potential": "高",
+      "code_status": "公开",
+      "data_status": "HuggingFace + Google Drive；127 个网页、374 个交互",
+      "eval_status": "公开；code/metric 可自动交互网页并计算 full page / interact 指标",
+      "api_dependency": "需要 Gemini/GPT/Claude/Qwen 等 API 才能跑主流模型",
+      "gpu_dependency": "API 路线不需要；自部署模型才需要",
+      "compute_requirement": {
+        "mode": "可只用 API",
+        "gpu": "交互评测走浏览器 + API key；自部署模型才需要本地 GPU，通常 24-80GB 视模型而定。"
+      },
+      "directory_signal": "根目录含 sample、example、human_evaluation；code 下分 annotation、metric、prompting。",
+      "runnable_judgment": "比静态 UI-to-code 稍复杂，但数据小、入口清楚，适合作第二个 smoke test。",
+      "boost_entries": [
+        "interactive element highlighting",
+        "failure-aware prompting",
+        "visual saliency enhancement",
+        "状态转移 planning",
+        "交互后截图对齐"
+      ],
+      "smoke_test": [
+        "跑 1 个 sample webpage",
+        "分别试 direct/cot/mark prompt",
+        "生成 HTML 后跑 code/metric",
+        "检查 interact flag 和视觉指标"
+      ],
+      "sources": [
+        "https://github.com/WebPAI/Interaction2Code",
+        "https://arxiv.org/abs/2411.03292",
+        "https://huggingface.co/datasets/whale99/Interaction2Code"
+      ]
+    },
+    {
+      "id": "dcgen",
+      "name": "DCGen",
+      "category": "分块 UI-to-code",
+      "priority": "P0",
+      "static_complexity": 2,
+      "engineering_cost": "medium",
+      "paper_potential": "中高",
+      "code_status": "公开",
+      "data_status": "repo sample + HuggingFace 全量数据",
+      "eval_status": "公开；scripts/evaluate.py，fine-grained metrics 在 Linux/macOS 更稳",
+      "api_dependency": "默认用 GPT-4/GPT-4o 类 API，也可接替代模型 API",
+      "gpu_dependency": "API 路线不需要",
+      "compute_requirement": {
+        "mode": "可只用 API",
+        "gpu": "默认 GPT-4/GPT-4o 类 API 路线不需要 GPU。"
+      },
+      "directory_signal": "根目录有 requirements.txt、utils.py、data、Tool；scripts 下有 evaluate.py、experiments.py。",
+      "runnable_judgment": "pipeline 较短，适合验证 segment-aware 方法是否值得沿用。",
+      "boost_entries": [
+        "更好的图像分割",
+        "segment-level verifier",
+        "局部重生成",
+        "全局 layout reassembly",
+        "segment-to-component mapping"
+      ],
+      "smoke_test": [
+        "跑 repo demo image",
+        "对比 direct baseline 和 dcgen pipeline",
+        "跑 scripts/evaluate.py",
+        "检查 Windows 与 Linux/macOS metric 差异"
+      ],
+      "sources": [
+        "https://github.com/WebPAI/DCGen",
+        "https://arxiv.org/abs/2406.16386",
+        "https://huggingface.co/datasets/iforgott/DCGen"
+      ]
+    },
+    {
+      "id": "designbench",
+      "name": "WebPAI DesignBench",
+      "category": "多框架前端生成/编辑/修复",
+      "priority": "P0/P1",
+      "static_complexity": 3.5,
+      "engineering_cost": "medium",
+      "paper_potential": "高",
+      "code_status": "公开",
+      "data_status": "Google Drive；900 个 webpage samples",
+      "eval_status": "公开；支持 generation、edit、repair、compile error repair",
+      "api_dependency": "需要 Gemini、OpenAI、DeepInfra、Qwen、Anthropic、Mistral 等 API key",
+      "gpu_dependency": "API 路线不需要",
+      "compute_requirement": {
+        "mode": "可只用 API",
+        "gpu": "多框架评测需要 Node/browser/API key；不需要本地训练 GPU。"
+      },
+      "directory_signal": "根目录有 designbench.yml、web；code 下分 evaluator、mllm、prompt、runner、utils。",
+      "runnable_judgment": "论文价值高但环境比 Design2Code 重，建议先跑 Vanilla/React 少量样本。",
+      "boost_entries": [
+        "framework-aware prompting",
+        "image/code/both mode 选择",
+        "repair 任务局部 patch",
+        "compile error repair 代码诊断",
+        "多候选 + MLLM judge"
+      ],
+      "smoke_test": [
+        "建 conda 环境",
+        "下载少量数据到 data/",
+        "只跑 Vanilla 或 React generation 1-2 个样本",
+        "确认 CLIP/SSIM/CSR/MLLM score 是否输出"
+      ],
+      "sources": [
+        "https://github.com/WebPAI/DesignBench",
+        "https://arxiv.org/abs/2506.06251",
+        "https://webpai.github.io/DesignBench/"
+      ]
+    },
+    {
+      "id": "web2code",
+      "name": "Web2Code",
+      "category": "大规模 webpage-to-code / webpage understanding",
+      "priority": "P1",
+      "static_complexity": 3,
+      "engineering_cost": "medium",
+      "paper_potential": "中高",
+      "code_status": "公开",
+      "data_status": "HuggingFace；MIT license",
+      "eval_status": "公开；code_generation 与 webpage_understanding 两套 benchmark suite",
+      "api_dependency": "视模型路线而定",
+      "gpu_dependency": "评测 API 路线不一定需要；训练/本地模型需要",
+      "compute_requirement": {
+        "mode": "不只 API（训练线）",
+        "gpu": "小样本 API 评测可无 GPU；本地模型/SFT 建议 40GB+，大规模训练更接近 80GB 级或多卡。"
+      },
+      "directory_signal": "根目录含 code_generation、webpage_understanding、web2code；code_generation 有 cli.py、evaluate.py、gpt4_vision_evaluation.py。",
+      "runnable_judgment": "更适合训练/泛化线，不一定是第一轮最轻 smoke test。",
+      "boost_entries": [
+        "SFT / data synthesis",
+        "大规模网页截图到代码训练",
+        "webpage understanding 辅助 UI-to-code",
+        "跨 benchmark 泛化"
+      ],
+      "smoke_test": [
+        "先读 code_generation/README.md",
+        "跑小样本 code_generation evaluate",
+        "确认 dataset 加载和截图生成流程",
+        "记录训练代码成本"
+      ],
+      "sources": [
+        "https://github.com/MBZUAI-LLM/web2code",
+        "https://arxiv.org/abs/2406.20098",
+        "https://huggingface.co/datasets/MBZUAI/Web2Code"
+      ]
+    },
+    {
+      "id": "ui2code_n",
+      "name": "UI2Code^N",
+      "category": "交互式 UI-to-code / UI polishing",
+      "priority": "P1",
+      "static_complexity": 3.5,
+      "engineering_cost": "high",
+      "paper_potential": "很高",
+      "code_status": "公开",
+      "data_status": "预处理数据需按 evaluation/readme 下载",
+      "eval_status": "公开；覆盖 Design2Code、Flame-React-Eva、Web2Code、UI2Code-Real、UIPolish",
+      "api_dependency": "评测 judge 示例使用 OpenAI-compatible API",
+      "gpu_dependency": "本地跑 9B VLM 需要 GPU；只跑已有输出评测主要是 judge API 成本",
+      "compute_requirement": {
+        "mode": "不只 API（本地 9B）",
+        "gpu": "只跑 judge 可用 API；本地跑 GLM-4.1V-9B 建议 24-48GB 显存。"
+      },
+      "directory_signal": "根目录有 demo、evaluation、assets；evaluation 下有 data、scripts、readme.md。",
+      "runnable_judgment": "和 Zhipu 生态最相关，但本地模型推理和 judge 成本高，建议第二阶段核对。",
+      "boost_entries": [
+        "test-time scaling",
+        "UI polishing reward/verifier",
+        "round-robin comparator",
+        "render-feedback 多轮优化",
+        "RVPO 风格训练/推理"
+      ],
+      "smoke_test": [
+        "先不跑模型，核对 evaluation scripts 输入输出",
+        "用少量已有输出验证 extract/render/judge/statistics 链路",
+        "评估本地 9B 推理显存需求",
+        "确认 judge API 成本"
+      ],
+      "sources": [
+        "https://github.com/zai-org/UI2Code_N",
+        "https://arxiv.org/abs/2511.08195",
+        "https://huggingface.co/zai-org/UI2Code_N"
+      ]
+    },
+    {
+      "id": "vab_css",
+      "name": "VisualAgentBench / VAB-CSS",
+      "category": "Agentic CSS repair",
+      "priority": "P1",
+      "static_complexity": 4,
+      "engineering_cost": "high",
+      "paper_potential": "高",
+      "code_status": "公开",
+      "data_status": "repo/ModelScope；含 test/train split 与 trajectory training set",
+      "eval_status": "公开；基于 AgentBench framework 和 VAB-CSS setup",
+      "api_dependency": "可接 GPT-4o 等 API agent",
+      "gpu_dependency": "API agent 路线不一定需要；训练 open LMM 需要",
+      "compute_requirement": {
+        "mode": "可只用 API",
+        "gpu": "API agent 路线不需要 GPU；训练 open LMM 建议 24GB+ 显存。"
+      },
+      "directory_signal": "根目录有 configs、src、scripts、docs/detailed_setups/VAB-CSS.md、VAB-WebArena-Lite。",
+      "runnable_judgment": "方法潜力高但环境重，适合第二阶段做 CSS repair agent。",
+      "boost_entries": [
+        "CSS patch agent",
+        "多轮 visual feedback",
+        "action planning",
+        "state memory",
+        "verifier-guided repair"
+      ],
+      "smoke_test": [
+        "先读 docs/detailed_setups/VAB-CSS.md",
+        "确认 Docker screenshot 环境",
+        "只启动 VAB-CSS task worker",
+        "跑 1-2 个 CSS repair task"
+      ],
+      "sources": [
+        "https://github.com/THUDM/VisualAgentBench",
+        "https://arxiv.org/abs/2408.06327"
+      ]
+    },
+    {
+      "id": "vision2web",
+      "name": "Vision2Web",
+      "category": "完整视觉网站开发",
+      "priority": "P1/P2",
+      "static_complexity": 4,
+      "engineering_cost": "high",
+      "paper_potential": "很高",
+      "code_status": "公开",
+      "data_status": "HuggingFace；193 tasks、918 prototype images、1256 functional test cases",
+      "eval_status": "公开；run_inference/run_evaluation/run_analysis；官方 leaderboard 由维护者评测",
+      "api_dependency": "LiteLLM / Claude Code / OpenHands / GUI agent / VLM judge",
+      "gpu_dependency": "API 路线不需要训练 GPU；本地自部署模型另算",
+      "compute_requirement": {
+        "mode": "可只用 API（agent 线）",
+        "gpu": "LiteLLM/Claude Code/OpenHands 可无本地 GPU；自部署 VLM/GUI agent 约 24-80GB。"
+      },
+      "directory_signal": "根目录有 docker、docs、scripts/run_inference.sh、scripts/run_evaluation.sh、vision2web。",
+      "runnable_judgment": "价值高但成本重，建议先只看 static webpage level。",
+      "boost_entries": [
+        "agent framework 改造",
+        "workflow-aware planning",
+        "visual/function 双 judge",
+        "static -> interactive -> full-stack 分层优化",
+        "GUI agent verifier"
+      ],
+      "smoke_test": [
+        "只跑 Level 1 static webpage",
+        "配置 LiteLLM proxy",
+        "用一个 agent framework 跑 1 个 task",
+        "检查 VLM judge 与 GUI agent 输出"
+      ],
+      "sources": [
+        "https://github.com/zai-org/Vision2Web",
+        "https://vision2web-bench.github.io/",
+        "https://arxiv.org/abs/2603.26648",
+        "https://huggingface.co/datasets/zai-org/Vision2Web"
+      ]
+    },
+    {
+      "id": "webgen_bench",
+      "name": "WebGen-Bench",
+      "category": "Prompt-to-web-app / agent benchmark",
+      "priority": "P2",
+      "static_complexity": 5,
+      "engineering_cost": "very_high",
+      "paper_potential": "高",
+      "code_status": "公开",
+      "data_status": "repo 内置 + HuggingFace/Kaggle；outputs.zip 含论文测试输出",
+      "eval_status": "公开；支持 Bolt.diy、OpenHands、Aider、WebGen-LM 评测路径",
+      "api_dependency": "OpenRouter/OpenAI-like API；Bolt.diy 等工具需要 provider 配置",
+      "gpu_dependency": "自部署 Qwen2.5-VL-32B UI agent 需要 4 GPU",
+      "compute_requirement": {
+        "mode": "不只 API（重型 agent）",
+        "gpu": "API runner 可跑一部分；自部署 32B UI agent 建议多卡高显存，约 4×40GB 起、80GB 更稳。"
+      },
+      "directory_signal": "根目录有 data、outputs.zip、webvoyager、src、src-remote；src 下有 Bolt/OpenHands/Aider/WebGen 多套测试目录。",
+      "runnable_judgment": "系统级工程，先作为第二阶段之后的 heavy benchmark。",
+      "boost_entries": [
+        "agent scaffold",
+        "UI agent evaluator",
+        "appearance scoring",
+        "functional test recovery",
+        "training data filtering"
+      ],
+      "smoke_test": [
+        "先不跑全链路",
+        "读 Bolt.diy 路线最小命令",
+        "确认 data/test.jsonl 和 outputs.zip 格式",
+        "评估是否可用已有 outputs 直接跑 grading"
+      ],
+      "sources": [
+        "https://github.com/mnluzimu/WebGen-Bench",
+        "https://arxiv.org/abs/2505.03733",
+        "https://huggingface.co/datasets/luzimu/WebGen-Bench"
+      ]
+    },
+    {
+      "id": "figma2code",
+      "name": "Figma2Code",
+      "category": "Figma metadata 到代码",
+      "priority": "P2",
+      "static_complexity": 3.5,
+      "engineering_cost": "high",
+      "paper_potential": "很高",
+      "code_status": "未确认官方代码仓库",
+      "data_status": "HuggingFace；2817 rows，约 17GB",
+      "eval_status": "未确认官方评测代码",
+      "api_dependency": "视实现而定",
+      "gpu_dependency": "视实现而定",
+      "compute_requirement": {
+        "mode": "数据线不只 API",
+        "gpu": "仅 API 生成可无 GPU；训练/微调 metadata-aware 模型约 24-80GB，取决于模型规模。"
+      },
+      "directory_signal": "HF 数据含 root screenshot、raw/processed metadata、bitmap assets、SVG assets。",
+      "runnable_judgment": "设计 metadata 方向价值高，但需先确认代码；暂作 P2 方法线索。",
+      "boost_entries": [
+        "design metadata grounding",
+        "asset-aware generation",
+        "responsive layout 评估",
+        "screenshot-only vs metadata-aware ablation"
+      ],
+      "smoke_test": [
+        "加载 HF test split",
+        "抽 1 个样本重建目录结构",
+        "核对 raw/processed metadata 字段",
+        "搜索官方代码仓库"
+      ],
+      "sources": [
+        "https://openreview.net/forum?id=CaXZB6bI31",
+        "https://huggingface.co/datasets/xcodemind/Figma2Code"
+      ]
+    },
+    {
+      "id": "screencoder",
+      "name": "ScreenCoder / ScreenBench",
+      "category": "模块化多模态 agent UI-to-code",
+      "priority": "P1/P2",
+      "static_complexity": 3.5,
+      "engineering_cost": "medium",
+      "paper_potential": "高",
+      "code_status": "公开；Apache-2.0",
+      "data_status": "ScreenBench，1000 个真实网页截图与 HTML source",
+      "eval_status": "部分公开；评测脚本需要继续核对",
+      "api_dependency": "支持 Doubao、Qwen、GPT、Gemini API",
+      "gpu_dependency": "单样本 API 推理不需要；post-training 需要",
+      "compute_requirement": {
+        "mode": "可只用 API",
+        "gpu": "Doubao/Qwen/GPT/Gemini API demo 不需要 GPU；post-training 建议 24GB+。"
+      },
+      "directory_signal": "根目录有 main.py、block_parsor.py、html_generator.py、image_replacer.py、UIED、post-training。",
+      "runnable_judgment": "单样本 demo 看起来可跑；标准 benchmark 复现还需确认。",
+      "boost_entries": [
+        "UIED component detection",
+        "modular multi-agent",
+        "placeholder/image replacement",
+        "SFT + RL post-training",
+        "segment/component planning"
+      ],
+      "smoke_test": [
+        "先跑 main.py 单图 demo",
+        "确认 API key 文件格式",
+        "核对 ScreenBench 数据结构",
+        "确认是否有独立 benchmark evaluator"
+      ],
+      "sources": [
+        "https://github.com/leigest519/ScreenCoder",
+        "https://huggingface.co/datasets/Leigest/ScreenCoder"
+      ]
+    },
+    {
+      "id": "visualwebbench",
+      "name": "VisualWebBench",
+      "category": "网页理解 / grounding 背景",
+      "priority": "背景",
+      "static_complexity": 2.5,
+      "engineering_cost": "low",
+      "paper_potential": "中",
+      "code_status": "公开",
+      "data_status": "HuggingFace；1.5K human-curated instances",
+      "eval_status": "公开；run.sh 与 model_adapters",
+      "api_dependency": "视模型而定",
+      "gpu_dependency": "视模型而定",
+      "compute_requirement": {
+        "mode": "视模型而定",
+        "gpu": "闭源 API 不需要 GPU；本地 VLM 通常 24GB+，大模型需要 40-80GB。"
+      },
+      "directory_signal": "repo 提供 evaluation framework、model_adapters、configs；任务偏 QA/grounding/action prediction。",
+      "runnable_judgment": "不作为 design generation 主实验，但适合作网页视觉理解背景指标。",
+      "boost_entries": [
+        "web UI understanding",
+        "element grounding",
+        "action prediction",
+        "网页 OCR"
+      ],
+      "smoke_test": [
+        "跑 1 个 existing model adapter",
+        "确认 HF dataset 加载",
+        "记录是否能补 Web/GUI 背景指标"
+      ],
+      "sources": [
+        "https://github.com/VisualWebBench/VisualWebBench",
+        "https://arxiv.org/abs/2404.05955",
+        "https://huggingface.co/datasets/visualwebbench/VisualWebBench"
+      ]
+    },
+    {
+      "id": "app_bench",
+      "name": "App-Bench",
+      "category": "AI web app builder 趋势参考",
+      "priority": "背景",
+      "static_complexity": 4,
+      "engineering_cost": "high",
+      "paper_potential": "中",
+      "code_status": "未确认",
+      "data_status": "网站公开 leaderboard；full analysis dataset 需继续确认",
+      "eval_status": "人工评分为主",
+      "api_dependency": "N/A",
+      "gpu_dependency": "N/A",
+      "compute_requirement": {
+        "mode": "无需 API/GPU",
+        "gpu": "人工/产品工具评测为主，不是本地模型推理主线。"
+      },
+      "directory_signal": "非 GitHub repo；官网描述 6 个 full-stack app tasks、151 rubric items、10 tools。",
+      "runnable_judgment": "适合观察产品化 agent 差距，不建议作为学术主实验。",
+      "boost_entries": [
+        "multi-role app tasks",
+        "real-time sync",
+        "AI assistant integration",
+        "manual rubric scoring"
+      ],
+      "smoke_test": [
+        "下载或定位 full analysis dataset",
+        "核对评分 rubric",
+        "判断是否可改造成小规模内部评测"
+      ],
+      "sources": [
+        "https://appbench.ai/"
+      ]
+    }
+  ]
+}

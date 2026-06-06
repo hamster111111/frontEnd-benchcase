@@ -1,0 +1,431 @@
+{
+  "last_updated": "2026-06-02",
+  "scope_note": "这里把 design bench 按泛概念处理，覆盖 UI-to-code、前端生成、网页开发、GUI/Web agent；不是特指 WebPAI DesignBench。",
+  "organizations": [
+    "Zhipu AI",
+    "Z.AI",
+    "THUDM",
+    "Tsinghua"
+  ],
+  "model_results": [
+    {
+      "model": "CogAgent",
+      "year": "2023/2024",
+      "model_type": "gui_agent_vlm",
+      "frontend_design_relevance": "low_medium",
+      "summary": "早期 GUI/Web agent 模型，跑 Mind2Web 和 AITW；不生成前端代码。",
+      "benchmarks": [
+        {
+          "name": "Mind2Web",
+          "category": "web_gui_agent",
+          "metric": "step success rate",
+          "scores": {
+            "cross_task": 62.3,
+            "cross_website": 54.0,
+            "cross_domain": 59.4,
+            "overall": 58.2
+          },
+          "source": "https://arxiv.org/abs/2312.08914"
+        },
+        {
+          "name": "AITW",
+          "category": "mobile_gui_agent",
+          "metric": "matching score",
+          "scores": {
+            "GoogleApp": 74.95,
+            "Install": 78.86,
+            "WebShop": 71.73,
+            "General": 65.38,
+            "Single": 93.49,
+            "overall": 76.88
+          },
+          "source": "https://arxiv.org/abs/2312.08914"
+        }
+      ]
+    },
+    {
+      "model": "GLM-4V-9B / GLM-4V",
+      "year": "2024",
+      "model_type": "general_vlm",
+      "frontend_design_relevance": "medium",
+      "summary": "没有找到公开 Design2Code、Flame、Web2Code、Vision2Web 等 design-to-code 结果；但 GLM-4V 在 VisualAgentBench / VAB-CSS 这种 agentic visual design / CSS repair benchmark 上有结果。",
+      "benchmarks": [
+        {
+          "name": "VAB-CSS",
+          "category": "agentic_visual_design_css_repair",
+          "score": 23.6,
+          "metric": "success rate",
+          "setting": "fine_tuning",
+          "source": "https://arxiv.org/abs/2408.06327"
+        }
+      ],
+      "status": "no_public_design_to_code_result_found_but_vab_css_found"
+    },
+    {
+      "model": "GLM-4.1V-9B-Thinking",
+      "year": "2025",
+      "model_type": "thinking_vlm",
+      "frontend_design_relevance": "high",
+      "benchmarks": [
+        {
+          "name": "Design2Code",
+          "category": "ui_to_code",
+          "score": 64.7,
+          "source": "https://arxiv.org/abs/2507.01006"
+        },
+        {
+          "name": "Flame-React-Eval",
+          "category": "frontend_react_generation",
+          "score": 72.5,
+          "source": "https://arxiv.org/abs/2507.01006"
+        },
+        {
+          "name": "Web2Code",
+          "category": "ui_to_code",
+          "score": 71.3,
+          "source": "https://arxiv.org/abs/2511.08195"
+        },
+        {
+          "name": "UI2Code-Real",
+          "category": "real_world_ui_to_code",
+          "score": 53.0,
+          "source": "https://arxiv.org/abs/2511.08195"
+        },
+        {
+          "name": "UIPolish-Real",
+          "category": "ui_polishing",
+          "score": 42.0,
+          "source": "https://arxiv.org/abs/2511.08195"
+        },
+        {
+          "name": "UIPolish-Synthetic",
+          "category": "ui_polishing",
+          "score": 46.0,
+          "source": "https://arxiv.org/abs/2511.08195"
+        },
+        {
+          "name": "WebVoyager",
+          "category": "web_gui_agent",
+          "score": 69.0,
+          "source": "https://arxiv.org/abs/2507.01006"
+        },
+        {
+          "name": "OSWorld",
+          "category": "desktop_gui_agent",
+          "score": 14.9,
+          "source": "https://arxiv.org/abs/2507.01006"
+        },
+        {
+          "name": "AndroidWorld",
+          "category": "mobile_gui_agent",
+          "score": 41.7,
+          "source": "https://arxiv.org/abs/2507.01006"
+        },
+        {
+          "name": "WebQuest-SingleQA",
+          "category": "web_qa_agent",
+          "score": 72.1,
+          "source": "https://arxiv.org/abs/2507.01006"
+        },
+        {
+          "name": "WebQuest-MultiQA",
+          "category": "web_qa_agent",
+          "score": 54.7,
+          "source": "https://arxiv.org/abs/2507.01006"
+        }
+      ]
+    },
+    {
+      "model": "GLM-4.5V",
+      "year": "2025",
+      "model_type": "thinking_vlm",
+      "frontend_design_relevance": "high",
+      "benchmarks": [
+        {
+          "name": "Design2Code",
+          "category": "ui_to_code",
+          "score": 82.2,
+          "source": "https://arxiv.org/abs/2507.01006"
+        },
+        {
+          "name": "Flame-React-Eval",
+          "category": "frontend_react_generation",
+          "score": 82.5,
+          "source": "https://arxiv.org/abs/2507.01006"
+        },
+        {
+          "name": "WebVoyager",
+          "category": "web_gui_agent",
+          "score": 84.4,
+          "source": "https://arxiv.org/abs/2507.01006"
+        },
+        {
+          "name": "OSWorld",
+          "category": "desktop_gui_agent",
+          "score": 35.8,
+          "source": "https://arxiv.org/abs/2507.01006"
+        },
+        {
+          "name": "AndroidWorld",
+          "category": "mobile_gui_agent",
+          "score": 57.0,
+          "source": "https://arxiv.org/abs/2507.01006"
+        },
+        {
+          "name": "WebQuest-SingleQA",
+          "category": "web_qa_agent",
+          "score": 76.9,
+          "source": "https://arxiv.org/abs/2507.01006"
+        },
+        {
+          "name": "WebQuest-MultiQA",
+          "category": "web_qa_agent",
+          "score": 60.6,
+          "source": "https://arxiv.org/abs/2507.01006"
+        }
+      ]
+    },
+    {
+      "model": "GLM-4.6V",
+      "year": "2025",
+      "model_type": "thinking_vlm",
+      "frontend_design_relevance": "high",
+      "benchmarks": [
+        {
+          "name": "Design2Code",
+          "category": "ui_to_code",
+          "score": 88.6,
+          "source": "https://arxiv.org/abs/2507.01006"
+        },
+        {
+          "name": "Flame-React-Eval",
+          "category": "frontend_react_generation",
+          "score": 86.3,
+          "source": "https://arxiv.org/abs/2507.01006"
+        },
+        {
+          "name": "WebVoyager",
+          "category": "web_gui_agent",
+          "score": 81.0,
+          "source": "https://arxiv.org/abs/2507.01006"
+        },
+        {
+          "name": "OSWorld",
+          "category": "desktop_gui_agent",
+          "score": 37.2,
+          "source": "https://arxiv.org/abs/2507.01006"
+        },
+        {
+          "name": "AndroidWorld",
+          "category": "mobile_gui_agent",
+          "score": 57.0,
+          "source": "https://arxiv.org/abs/2507.01006"
+        },
+        {
+          "name": "WebQuest-SingleQA",
+          "category": "web_qa_agent",
+          "score": 79.5,
+          "source": "https://arxiv.org/abs/2507.01006"
+        },
+        {
+          "name": "WebQuest-MultiQA",
+          "category": "web_qa_agent",
+          "score": 59.0,
+          "source": "https://arxiv.org/abs/2507.01006"
+        }
+      ]
+    },
+    {
+      "model": "UI2Code^N-9B-SFT",
+      "year": "2025/2026",
+      "model_type": "specialized_ui_to_code_model",
+      "base_model": "GLM-4.1V-9B-Base",
+      "frontend_design_relevance": "very_high",
+      "benchmarks": [
+        {
+          "name": "Design2Code",
+          "category": "ui_to_code",
+          "score": 79.3,
+          "source": "https://arxiv.org/abs/2511.08195"
+        },
+        {
+          "name": "Flame",
+          "category": "frontend_react_generation",
+          "score": 85.0,
+          "source": "https://arxiv.org/abs/2511.08195"
+        },
+        {
+          "name": "Web2Code",
+          "category": "ui_to_code",
+          "score": 80.8,
+          "source": "https://arxiv.org/abs/2511.08195"
+        },
+        {
+          "name": "UI2Code-Real",
+          "category": "real_world_ui_to_code",
+          "score": 67.0,
+          "source": "https://arxiv.org/abs/2511.08195"
+        },
+        {
+          "name": "UIPolish-Real",
+          "category": "ui_polishing",
+          "score": 76.0,
+          "source": "https://arxiv.org/abs/2511.08195"
+        },
+        {
+          "name": "UIPolish-Synthetic",
+          "category": "ui_polishing",
+          "score": 89.0,
+          "source": "https://arxiv.org/abs/2511.08195"
+        }
+      ]
+    },
+    {
+      "model": "UI2Code^N-9B-RL",
+      "year": "2025/2026",
+      "model_type": "specialized_ui_to_code_model",
+      "base_model": "GLM-4.1V-9B-Base",
+      "frontend_design_relevance": "very_high",
+      "benchmarks": [
+        {
+          "name": "Design2Code",
+          "category": "ui_to_code",
+          "score": 88.6,
+          "source": "https://arxiv.org/abs/2511.08195"
+        },
+        {
+          "name": "Flame",
+          "category": "frontend_react_generation",
+          "score": 95.0,
+          "source": "https://arxiv.org/abs/2511.08195"
+        },
+        {
+          "name": "Web2Code",
+          "category": "ui_to_code",
+          "score": 92.5,
+          "source": "https://arxiv.org/abs/2511.08195"
+        },
+        {
+          "name": "UI2Code-Real",
+          "category": "real_world_ui_to_code",
+          "score": 76.5,
+          "source": "https://arxiv.org/abs/2511.08195"
+        },
+        {
+          "name": "UIPolish-Real",
+          "category": "ui_polishing",
+          "score": 80.0,
+          "source": "https://arxiv.org/abs/2511.08195"
+        },
+        {
+          "name": "UIPolish-Synthetic",
+          "category": "ui_polishing",
+          "score": 94.0,
+          "source": "https://arxiv.org/abs/2511.08195"
+        },
+        {
+          "name": "Design2Code-HARD",
+          "category": "hard_ui_to_code",
+          "scores": {
+            "DINO_Acc": 86.1,
+            "VLM_Judge_Acc": 88.6,
+            "latency_seconds": 40,
+            "token_cost": 2600
+          },
+          "source": "https://arxiv.org/abs/2511.08195"
+        },
+        {
+          "name": "WebCode2M-Long",
+          "category": "long_ui_to_code",
+          "scores": {
+            "CLIP_similarity_mean": 0.79,
+            "CLIP_similarity_std": 0.09
+          },
+          "source": "https://arxiv.org/abs/2511.08195"
+        }
+      ]
+    },
+    {
+      "model": "GLM-5V-Turbo",
+      "year": "2026",
+      "model_type": "general_vlm",
+      "frontend_design_relevance": "very_high",
+      "benchmarks": [
+        {
+          "name": "Design2Code",
+          "category": "ui_to_code",
+          "score": 94.8,
+          "source": "https://arxiv.org/abs/2604.26752"
+        },
+        {
+          "name": "Flame-VLM-Code",
+          "category": "frontend_vlm_coding",
+          "score": 93.8,
+          "source": "https://arxiv.org/abs/2604.26752"
+        },
+        {
+          "name": "Vision2Web",
+          "category": "visual_website_development",
+          "score": 31.0,
+          "source": "https://arxiv.org/abs/2604.26752"
+        },
+        {
+          "name": "CC-Frontend",
+          "category": "text_frontend_coding",
+          "score": 68.4,
+          "source": "https://arxiv.org/abs/2604.26752"
+        },
+        {
+          "name": "WebVoyager",
+          "category": "web_gui_agent",
+          "score": 88.5,
+          "source": "https://arxiv.org/abs/2604.26752"
+        }
+      ]
+    }
+  ],
+  "benchmark_groups": [
+    {
+      "group": "ui_to_code_and_frontend_generation",
+      "benchmarks": [
+        "Design2Code",
+        "Flame / Flame-React-Eval / Flame-VLM-Code",
+        "Web2Code",
+        "UI2Code-Real",
+        "UIPolish",
+        "Vision2Web",
+        "CC-Frontend"
+      ]
+    },
+    {
+      "group": "gui_web_agent",
+      "benchmarks": [
+        "Mind2Web",
+        "AITW",
+        "OSWorld",
+        "AndroidWorld",
+        "WebVoyager",
+        "WebQuest"
+      ]
+    }
+  ],
+  "caveats": [
+    "GLM-4.1V/4.5V/4.6V 的 Design2Code 结果使用 direct setting，并用 GPT-o4-mini 视觉 judge；不要和原始 Design2Code CLIP 分数直接混排。",
+    "GLM-5V-Turbo 的 Flame-VLM-Code 与 FLAME 原论文 Flame-React-Eval 的口径仍需继续核对。",
+    "CogAgent、WebVoyager、OSWorld、AndroidWorld、Mind2Web、AITW 是 GUI/Web agent 指标，不是设计转代码指标。",
+    "没有找到 GLM-4V-9B / GLM-4V-Plus 在 Design2Code、Flame、Web2Code、Vision2Web 等 design-to-code benchmark 上的公开结果；但 GLM-4V 有 VAB-CSS 这种 agentic visual design / CSS repair 结果。"
+  ],
+  "sources": [
+    "https://arxiv.org/abs/2312.08914",
+    "https://github.com/THUDM/CogAgent",
+    "https://arxiv.org/abs/2408.06327",
+    "https://github.com/THUDM/VisualAgentBench",
+    "https://arxiv.org/abs/2507.01006",
+    "https://docs.z.ai/guides/vlm/glm-4.5v",
+    "https://docs.z.ai/guides/vlm/glm-4.6v",
+    "https://arxiv.org/abs/2511.08195",
+    "https://huggingface.co/zai-org/UI2Code_N",
+    "https://arxiv.org/abs/2604.26752",
+    "https://docs.z.ai/guides/vlm/glm-5v-turbo"
+  ]
+}

@@ -1,0 +1,13 @@
+.env
+.env.*
+!.env.example
+
+.browser_profiles/
+benchmarks/
+experiments/
+!docs/experiments/
+!docs/experiments/**
+
+__pycache__/
+*.pyc
+node_modules/

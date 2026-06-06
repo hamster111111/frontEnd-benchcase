@@ -1,0 +1,115 @@
+{
+  "last_updated": "2026-06-02",
+  "model": "GLM-5V-Turbo",
+  "scope_note": "这里把 frontend/design-related benchmarks 当作泛概念处理，不特指 WebPAI DesignBench 这个具体 benchmark。",
+  "benchmarks": [
+    {
+      "name": "Design2Code",
+      "category": "multimodal_coding",
+      "frontend_design_relevance": "high",
+      "task_summary": "视觉设计图或网页截图转前端代码。",
+      "glm_5v_turbo_score": "94.8",
+      "comparison": {
+        "Kimi K2.5": "91.3",
+        "Claude Opus 4.6": "77.3"
+      },
+      "interpretation": "目前最能支持 GLM-5V-Turbo 视觉转前端代码能力的证据。",
+      "source_type": "official_report",
+      "sources": [
+        "https://arxiv.org/abs/2604.26752",
+        "https://docs.z.ai/guides/vlm/glm-5v-turbo",
+        "https://arxiv.org/abs/2403.03163"
+      ],
+      "confidence": "high"
+    },
+    {
+      "name": "Flame-VLM-Code",
+      "category": "multimodal_coding",
+      "frontend_design_relevance": "high",
+      "task_summary": "面向 vision-language model 的前端开发或 UI coding 评测。",
+      "glm_5v_turbo_score": "93.8",
+      "comparison": {
+        "Kimi K2.5": "88.8",
+        "Claude Opus 4.6": "98.8"
+      },
+      "interpretation": "前端 VLM coding 表现很强，但在官方表中低于 Claude Opus 4.6。",
+      "source_type": "official_report",
+      "sources": [
+        "https://arxiv.org/abs/2604.26752",
+        "https://docs.z.ai/guides/vlm/glm-5v-turbo",
+        "https://arxiv.org/abs/2503.01619"
+      ],
+      "confidence": "medium_high",
+      "open_questions": [
+        "核对 GLM 报告中的 Flame-VLM-Code 是否严格对应 Flame-React-Eval。"
+      ]
+    },
+    {
+      "name": "Vision2Web",
+      "category": "multimodal_coding",
+      "frontend_design_relevance": "high",
+      "task_summary": "层级化视觉网站开发任务，可能包含 PRD、mockup、参考页面、素材资源和 workflow verification。",
+      "glm_5v_turbo_score": "31.0",
+      "comparison": {
+        "Kimi K2.5": "33.2",
+        "Claude Opus 4.6": "43.5"
+      },
+      "interpretation": "更接近真实网站开发流程；GLM-5V-Turbo 在官方表中落后于 Kimi K2.5 和 Claude Opus 4.6。",
+      "source_type": "official_report",
+      "sources": [
+        "https://arxiv.org/abs/2604.26752",
+        "https://docs.z.ai/guides/vlm/glm-5v-turbo",
+        "https://arxiv.org/abs/2603.26648",
+        "https://vision2web-bench.github.io/"
+      ],
+      "confidence": "medium_high",
+      "open_questions": [
+        "持续检查 Vision2Web 公开 leaderboard 是否后续展示 GLM-5V-Turbo 结果。"
+      ]
+    },
+    {
+      "name": "CC-Frontend",
+      "category": "text_coding",
+      "frontend_design_relevance": "medium",
+      "task_summary": "CC-Bench-V2 / Claude Code 风格纯文本 coding 任务里的前端子项。",
+      "glm_5v_turbo_score": "68.4",
+      "comparison": {
+        "GLM-5-Turbo": "69.4",
+        "Kimi K2.5": "62.3",
+        "Claude Opus 4.6": "75.9"
+      },
+      "interpretation": "能说明前端 coding 能力，但不能直接证明视觉设计理解能力。",
+      "source_type": "official_report",
+      "sources": [
+        "https://arxiv.org/abs/2604.26752",
+        "https://arxiv.org/abs/2602.15763"
+      ],
+      "confidence": "high"
+    },
+    {
+      "name": "WebVoyager",
+      "category": "gui_agent",
+      "frontend_design_relevance": "low_medium",
+      "task_summary": "面向 GUI agent 的网页浏览和网页 UI 交互 benchmark。",
+      "glm_5v_turbo_score": "88.5",
+      "comparison": {
+        "Kimi K2.5": "84.3",
+        "Claude Opus 4.6": "88.0"
+      },
+      "interpretation": "可用于说明网页 UI 理解和浏览器 agent 能力，但不是前端设计生成 benchmark。",
+      "source_type": "official_report",
+      "sources": [
+        "https://arxiv.org/abs/2604.26752",
+        "https://docs.z.ai/guides/vlm/glm-5v-turbo"
+      ],
+      "confidence": "high"
+    }
+  ],
+  "not_confirmed": [
+    {
+      "name": "WebPAI DesignBench",
+      "status": "当前调研中没有找到 GLM-5V-Turbo 的公开结果。",
+      "note": "这是相关的前端 benchmark，但尚未确认 GLM-5V-Turbo 已在其上评测。"
+    }
+  ]
+}

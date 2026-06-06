@@ -1,0 +1,3519 @@
+{
+  "schema_version": "1.0",
+  "last_updated": "2026-06-02",
+  "locale": "zh-CN",
+  "scope_note": "给后续 web 展示使用的聚合数据。覆盖前端视觉还原、UI-to-code、CSS repair、网站开发、GUI/Web agent 背景，以及当前已确认的 Zhipu/GLM 和竞品公开结果。",
+  "legends": {
+    "frontend_relevance": {
+      "very_high": "直接衡量前端视觉设计、UI-to-code、CSS repair 或真实网站开发能力。",
+      "high": "强相关，但可能是子任务或特定协议。",
+      "medium": "和前端 coding 或网页 UI 理解相关，但不是视觉设计生成核心指标。",
+      "low_medium": "主要是 GUI/Web agent 背景能力。"
+    },
+    "confidence": {
+      "high": "来自论文主表、官方报告或项目页，口径清晰。",
+      "medium_high": "来源可靠，但命名、split 或 OCR 表格仍需注意。",
+      "medium": "可用于背景展示，但不建议作为强排序依据。"
+    },
+    "source_type": {
+      "official_report": "模型官方技术报告或官方文档。",
+      "benchmark_paper": "benchmark 原论文或系统论文。",
+      "project_page": "benchmark 官方项目页或仓库。",
+      "derived_note": "从已有表格整理出的展示说明。"
+    }
+  },
+  "display_sections": [
+    {
+      "id": "zhipu_main_design_scores",
+      "title": "Zhipu / GLM 主线前端设计分数",
+      "description": "重点展示 GLM-4.1V、GLM-4.5V、GLM-4.6V、GLM-5V-Turbo 在 Design2Code、Flame、Vision2Web 等指标上的变化。",
+      "benchmark_ids": [
+        "design2code",
+        "flame_react_eval",
+        "vision2web",
+        "cc_frontend"
+      ]
+    },
+    {
+      "id": "agentic_design_scores",
+      "title": "Agentic / Closed-loop Design Bench",
+      "description": "展示 VAB-CSS 和 UI2Code^N 这类带工具、渲染反馈或迭代优化的设计能力。",
+      "benchmark_ids": [
+        "vab_css",
+        "ui2code_real",
+        "uipolish",
+        "design2code_hard",
+        "webcode2m_long"
+      ]
+    },
+    {
+      "id": "website_development_scores",
+      "title": "完整网站开发",
+      "description": "展示从静态页面到交互前端和全栈网站的更复杂工作流能力。",
+      "benchmark_ids": [
+        "vision2web"
+      ]
+    },
+    {
+      "id": "web_gui_agent_context",
+      "title": "Web / GUI Agent 背景",
+      "description": "展示 WebVoyager、OSWorld、AndroidWorld、Mind2Web、AITW、AutoWebGLM、AutoGLM 等网页和 GUI 操作能力。",
+      "benchmark_ids": [
+        "webvoyager",
+        "osworld",
+        "androidworld",
+        "webquest",
+        "mind2web",
+        "aitw",
+        "autowebbench",
+        "miniwob",
+        "webarena",
+        "vab_webarena_lite",
+        "androidlab"
+      ]
+    },
+    {
+      "id": "external_benchmark_landscape",
+      "title": "其他模型横向对比",
+      "description": "集中展示 GPT、Claude、Gemini、Qwen、Kimi、Pixtral、InternVL、Flame 等非 Zhipu 或非 GLM 模型在前端设计相关 benchmark 上的位置。",
+      "benchmark_ids": [
+        "design2code",
+        "designbench_webpai",
+        "flame_react_eval",
+        "vision2web",
+        "vab_css",
+        "design2code_hard"
+      ]
+    }
+  ],
+  "benchmarks": [
+    {
+      "id": "design2code",
+      "name": "Design2Code",
+      "year": "2024/2025",
+      "display_group": "UI-to-code / Visual Restoration",
+      "task_type": "网页截图或设计图转 HTML/CSS",
+      "frontend_relevance": "very_high",
+      "input_modality": [
+        "reference webpage screenshot",
+        "optional text augmentation in some protocols"
+      ],
+      "output_artifact": [
+        "HTML",
+        "CSS",
+        "rendered webpage"
+      ],
+      "interaction_mode": "direct generation; some papers also evaluate text augmentation or self revision",
+      "metrics": [
+        {
+          "name": "Block",
+          "direction": "higher_is_better",
+          "meaning": "页面块结构和区域匹配程度。"
+        },
+        {
+          "name": "Text",
+          "direction": "higher_is_better",
+          "meaning": "文本内容还原程度。"
+        },
+        {
+          "name": "Position",
+          "direction": "higher_is_better",
+          "meaning": "元素位置匹配程度。"
+        },
+        {
+          "name": "Color",
+          "direction": "higher_is_better",
+          "meaning": "颜色匹配程度。"
+        },
+        {
+          "name": "CLIP",
+          "direction": "higher_is_better",
+          "meaning": "渲染图与参考图的视觉语义相似度。"
+        },
+        {
+          "name": "VLM Judge",
+          "direction": "higher_is_better",
+          "meaning": "由视觉模型 judge 给出的相似性或成功分数。"
+        }
+      ],
+      "score_interpretation": "越高代表生成页面越接近参考设计。不同论文可能使用 CLIP 或 VLM judge，不要直接合并排序。",
+      "source_type": "benchmark_paper",
+      "primary_sources": [
+        "https://arxiv.org/abs/2403.03163",
+        "https://arxiv.org/abs/2507.01006",
+        "https://arxiv.org/abs/2511.08195",
+        "https://arxiv.org/abs/2604.26752"
+      ],
+      "confidence": "high",
+      "caveat": "GLM/GLM-5V/UI2Code^N 报告中的 Design2Code 多为 VLM judge 或 direct setting 分数；原始 Design2Code 论文的 CLIP 分数是另一套口径。",
+      "publication": {
+        "paper_title": "Design2Code: Benchmarking Multimodal Code Generation for Automated Front-End Engineering",
+        "source_url": "https://arxiv.org/abs/2403.03163",
+        "first_public_date": "2024-03-05",
+        "venue": "NAACL 2025 Long Papers",
+        "venue_rating": "ACL Anthology 主会长文 / 主流 NLP 会议；具体 CCF 等级需按目录版本核对",
+        "publication_status": "已发表会议论文",
+        "source_kind": "benchmark_paper"
+      }
+    },
+    {
+      "id": "flame_react_eval",
+      "name": "Flame-React-Eval / Flame-VLM-Code",
+      "year": "2025",
+      "display_group": "Frontend Code Generation",
+      "task_type": "React / 前端 UI 代码生成",
+      "frontend_relevance": "very_high",
+      "input_modality": [
+        "UI screenshot or multimodal prompt",
+        "task instruction"
+      ],
+      "output_artifact": [
+        "React code",
+        "rendered UI"
+      ],
+      "interaction_mode": "code generation; GLM reports may use VLM-code scoring",
+      "metrics": [
+        {
+          "name": "pass@k",
+          "direction": "higher_is_better",
+          "meaning": "k 次生成中至少一次通过测试或评审的概率。"
+        },
+        {
+          "name": "VLM-Code Score",
+          "direction": "higher_is_better",
+          "meaning": "GLM 报告中的前端 VLM coding 分数。"
+        }
+      ],
+      "score_interpretation": "越高代表 React UI 生成或前端代码生成越可靠。",
+      "source_type": "benchmark_paper",
+      "primary_sources": [
+        "https://arxiv.org/abs/2503.01619",
+        "https://arxiv.org/abs/2507.01006",
+        "https://arxiv.org/abs/2511.08195",
+        "https://arxiv.org/abs/2604.26752"
+      ],
+      "confidence": "medium_high",
+      "caveat": "GLM-5V 报告中的 Flame-VLM-Code 与原 FLAME 论文 Flame-React-Eval 的 split / judge 仍需继续核对。",
+      "publication": {
+        "paper_title": "Advancing Vision-Language Models in Front-End Development via Data Synthesis",
+        "source_url": "https://arxiv.org/abs/2503.01619",
+        "first_public_date": "2025-03-03",
+        "venue": "arXiv preprint",
+        "venue_rating": "arXiv 预印本；暂无会议/期刊评级",
+        "publication_status": "预印本",
+        "source_kind": "benchmark_paper"
+      }
+    },
+    {
+      "id": "vision2web",
+      "name": "Vision2Web",
+      "year": "2026",
+      "display_group": "Website Development",
+      "task_type": "视觉网站开发，覆盖 static webpage、interactive frontend、full-stack website",
+      "frontend_relevance": "very_high",
+      "input_modality": [
+        "prototype or screenshot",
+        "task specification",
+        "assets and environment context"
+      ],
+      "output_artifact": [
+        "static webpage",
+        "interactive frontend",
+        "full-stack website"
+      ],
+      "interaction_mode": "agentic website development with workflow verification",
+      "metrics": [
+        {
+          "name": "Static Avg",
+          "direction": "higher_is_better",
+          "meaning": "静态网页视觉开发平均分。"
+        },
+        {
+          "name": "Interactive Avg",
+          "direction": "higher_is_better",
+          "meaning": "交互式前端任务平均分。"
+        },
+        {
+          "name": "Full-stack Avg",
+          "direction": "higher_is_better",
+          "meaning": "全栈网站任务平均分。"
+        },
+        {
+          "name": "Official Report Score",
+          "direction": "higher_is_better",
+          "meaning": "模型技术报告中汇总的 Vision2Web 分数。"
+        }
+      ],
+      "score_interpretation": "越高代表完整网站开发链路越可靠。比单页截图还原难度更高。",
+      "source_type": "benchmark_paper",
+      "primary_sources": [
+        "https://arxiv.org/abs/2603.26648",
+        "https://vision2web-bench.github.io/",
+        "https://arxiv.org/abs/2604.26752"
+      ],
+      "confidence": "medium_high",
+      "caveat": "GLM-5V-Turbo 的 31.0 来自 GLM-5V 官方报告；Vision2Web 公开榜单是否展示 GLM-5V-Turbo 仍需持续关注。",
+      "publication": {
+        "paper_title": "Vision2Web: A Hierarchical Benchmark for Visual Website Development with Agent Verification",
+        "source_url": "https://arxiv.org/abs/2603.26648",
+        "first_public_date": "2026-03-27",
+        "venue": "arXiv preprint",
+        "venue_rating": "arXiv 预印本；暂无会议/期刊评级",
+        "publication_status": "预印本",
+        "source_kind": "benchmark_paper"
+      }
+    },
+    {
+      "id": "cc_frontend",
+      "name": "CC-Frontend",
+      "year": "2026",
+      "display_group": "Text Frontend Coding",
+      "task_type": "纯文本前端 coding 子项",
+      "frontend_relevance": "medium",
+      "input_modality": [
+        "text instruction",
+        "repository or code context"
+      ],
+      "output_artifact": [
+        "code patch",
+        "frontend implementation"
+      ],
+      "interaction_mode": "coding benchmark",
+      "metrics": [
+        {
+          "name": "Frontend Score",
+          "direction": "higher_is_better",
+          "meaning": "前端代码任务完成质量或成功率。"
+        }
+      ],
+      "score_interpretation": "越高代表前端 coding 能力越强，但不直接衡量视觉设计理解。",
+      "source_type": "official_report",
+      "primary_sources": [
+        "https://arxiv.org/abs/2604.26752",
+        "https://arxiv.org/abs/2602.15763"
+      ],
+      "confidence": "high",
+      "caveat": "这是前端 coding，不是 design-to-code。",
+      "publication": {
+        "paper_title": "GLM-5: from Vibe Coding to Agentic Engineering",
+        "source_url": "https://arxiv.org/abs/2602.15763",
+        "first_public_date": "2026-02-17",
+        "venue": "Z.AI technical report / arXiv",
+        "venue_rating": "技术报告 / 官方报告；暂无会议/期刊评级",
+        "publication_status": "官方技术报告",
+        "source_kind": "official_report"
+      }
+    },
+    {
+      "id": "vab_css",
+      "name": "VisualAgentBench / VAB-CSS",
+      "year": "2024",
+      "display_group": "Agentic Visual Design",
+      "task_type": "CSS repair / visual design repair",
+      "frontend_relevance": "very_high",
+      "input_modality": [
+        "target design screenshot",
+        "current corrupted webpage screenshot",
+        "HTML",
+        "natural-language difference description"
+      ],
+      "output_artifact": [
+        "CSS rule edits",
+        "final rendered webpage"
+      ],
+      "interaction_mode": "agentic tool use with iterative CSS editing",
+      "metrics": [
+        {
+          "name": "Success Rate",
+          "direction": "higher_is_better",
+          "meaning": "最终渲染与目标设计 SSIM 大于 0.9 的任务比例。"
+        },
+        {
+          "name": "Improve Rate",
+          "direction": "higher_is_better",
+          "meaning": "最终渲染比初始错误渲染更接近目标设计的任务比例。"
+        }
+      ],
+      "score_interpretation": "越高代表 agent 越能通过 CSS 修改修复视觉设计问题。",
+      "dataset_summary": {
+        "test_instances": 165,
+        "train_trajectories": 829,
+        "train_steps": 5250,
+        "action_space": 4,
+        "max_round_limit": 10
+      },
+      "source_type": "benchmark_paper",
+      "primary_sources": [
+        "https://arxiv.org/abs/2408.06327",
+        "https://github.com/THUDM/VisualAgentBench"
+      ],
+      "confidence": "high",
+      "caveat": "VAB-CSS 是 CSS repair，不是从零生成网页。GLM-4V/CogAgent 结果是 fine-tuning 设置。",
+      "publication": {
+        "paper_title": "VisualAgentBench: Towards Large Multimodal Models as Visual Foundation Agents",
+        "source_url": "https://arxiv.org/abs/2408.06327",
+        "first_public_date": "2024-08-12",
+        "venue": "ICLR 2025 Poster",
+        "venue_rating": "顶会 / CCF-A 常见口径",
+        "publication_status": "已发表会议论文",
+        "source_kind": "benchmark_paper"
+      }
+    },
+    {
+      "id": "designbench_webpai",
+      "name": "WebPAI DesignBench",
+      "year": "2026",
+      "display_group": "Multi-framework Frontend Design",
+      "task_type": "多框架前端 generation / edit / repair",
+      "frontend_relevance": "very_high",
+      "input_modality": [
+        "design prompt",
+        "webpage screenshot or target state",
+        "edit or repair instruction"
+      ],
+      "output_artifact": [
+        "React code",
+        "Vue code",
+        "Angular code",
+        "Vanilla HTML/CSS/JS"
+      ],
+      "interaction_mode": "generation / edit / repair",
+      "metrics": [
+        {
+          "name": "CLIP",
+          "direction": "higher_is_better",
+          "meaning": "视觉相似度。"
+        },
+        {
+          "name": "SSIM",
+          "direction": "higher_is_better",
+          "meaning": "结构相似度。"
+        },
+        {
+          "name": "CSR",
+          "direction": "higher_is_better",
+          "meaning": "编译或执行成功率。"
+        },
+        {
+          "name": "MLLM Score",
+          "direction": "higher_is_better",
+          "meaning": "由多模态模型 judge 的编辑或修复质量分。"
+        }
+      ],
+      "score_interpretation": "适合展示多框架前端任务全景，不适合压成一个单一总分。",
+      "source_type": "benchmark_paper",
+      "primary_sources": [
+        "https://arxiv.org/abs/2506.06251",
+        "https://github.com/WebPAI/DesignBench"
+      ],
+      "confidence": "high",
+      "caveat": "当前没有找到 GLM-5V-Turbo 在 WebPAI DesignBench 上的公开结果。",
+      "publication": {
+        "paper_title": "DesignBench: A Comprehensive Benchmark for MLLM-based Front-end Code Generation",
+        "source_url": "https://arxiv.org/abs/2506.06251",
+        "first_public_date": "2025-06-06",
+        "venue": "arXiv preprint",
+        "venue_rating": "arXiv 预印本；暂无会议/期刊评级",
+        "publication_status": "预印本",
+        "source_kind": "benchmark_paper"
+      }
+    },
+    {
+      "id": "web2code",
+      "name": "Web2Code",
+      "year": "2024/2025",
+      "display_group": "UI-to-code / Visual Restoration",
+      "task_type": "网页视觉到代码",
+      "frontend_relevance": "high",
+      "input_modality": [
+        "webpage screenshot or UI image"
+      ],
+      "output_artifact": [
+        "frontend code",
+        "rendered webpage"
+      ],
+      "interaction_mode": "UI-to-code generation",
+      "metrics": [
+        {
+          "name": "VLM Judge Score",
+          "direction": "higher_is_better",
+          "meaning": "UI2Code^N 论文主表中的视觉 judge 分数。"
+        }
+      ],
+      "score_interpretation": "越高代表视觉到前端代码还原越好。",
+      "source_type": "benchmark_paper",
+      "primary_sources": [
+        "https://arxiv.org/abs/2406.20098",
+        "https://arxiv.org/abs/2511.08195"
+      ],
+      "confidence": "medium_high",
+      "caveat": "目前主要来自 UI2Code^N 论文中的引用和结果表。",
+      "publication": {
+        "paper_title": "Web2Code: A Large-scale Webpage-to-Code Dataset and Evaluation Framework for Multimodal LLMs",
+        "source_url": "https://arxiv.org/abs/2406.20098",
+        "first_public_date": "2024-06-28",
+        "venue": "NeurIPS 2024 Datasets and Benchmarks Track",
+        "venue_rating": "顶会 / CCF-A 常见口径",
+        "publication_status": "已发表会议论文",
+        "source_kind": "benchmark_paper"
+      }
+    },
+    {
+      "id": "ui2code_real",
+      "name": "UI2Code-Real",
+      "year": "2025/2026",
+      "display_group": "UI-to-code / Real-world",
+      "task_type": "真实网页 UI-to-code",
+      "frontend_relevance": "very_high",
+      "input_modality": [
+        "real-world webpage screenshot"
+      ],
+      "output_artifact": [
+        "frontend code",
+        "rendered webpage"
+      ],
+      "interaction_mode": "UI drafting",
+      "metrics": [
+        {
+          "name": "VLM Judge Score",
+          "direction": "higher_is_better",
+          "meaning": "真实网页 UI 还原质量分。"
+        }
+      ],
+      "score_interpretation": "越高代表模型在真实复杂网页上的泛化越好。",
+      "dataset_summary": {
+        "test_instances": 115
+      },
+      "source_type": "benchmark_paper",
+      "primary_sources": [
+        "https://arxiv.org/abs/2511.08195"
+      ],
+      "confidence": "high",
+      "caveat": "UI2Code^N 自建 benchmark，需标明论文来源。",
+      "publication": {
+        "paper_title": "UI2Code^N: UI-to-Code Generation as Interactive Visual Optimization",
+        "source_url": "https://arxiv.org/abs/2511.08195",
+        "first_public_date": "2025-11-11",
+        "venue": "ICML 2026",
+        "venue_rating": "顶会 / CCF-A 常见口径",
+        "publication_status": "已接收会议论文",
+        "source_kind": "benchmark_paper"
+      }
+    },
+    {
+      "id": "uipolish",
+      "name": "UIPolish-bench",
+      "year": "2025/2026",
+      "display_group": "Closed-loop UI Refinement",
+      "task_type": "UI polishing / rendered-feedback code refinement",
+      "frontend_relevance": "very_high",
+      "input_modality": [
+        "target UI",
+        "current code",
+        "current rendering"
+      ],
+      "output_artifact": [
+        "refined frontend code",
+        "improved rendering"
+      ],
+      "interaction_mode": "closed-loop visual refinement",
+      "metrics": [
+        {
+          "name": "Polish Accuracy",
+          "direction": "higher_is_better",
+          "meaning": "模型修改后视觉质量优于原始或达到目标的比例。"
+        }
+      ],
+      "score_interpretation": "越高代表模型越能基于渲染反馈修复 UI。",
+      "dataset_summary": {
+        "synthetic_instances": 100,
+        "real_instances": 100
+      },
+      "source_type": "benchmark_paper",
+      "primary_sources": [
+        "https://arxiv.org/abs/2511.08195"
+      ],
+      "confidence": "high",
+      "caveat": "UI2Code^N 自建 benchmark，适合展示 closed-loop design 能力。",
+      "publication": {
+        "paper_title": "UI2Code^N: UI-to-Code Generation as Interactive Visual Optimization",
+        "source_url": "https://arxiv.org/abs/2511.08195",
+        "first_public_date": "2025-11-11",
+        "venue": "ICML 2026",
+        "venue_rating": "顶会 / CCF-A 常见口径",
+        "publication_status": "已接收会议论文",
+        "source_kind": "benchmark_paper"
+      }
+    },
+    {
+      "id": "design2code_hard",
+      "name": "Design2Code-HARD",
+      "year": "2025/2026",
+      "display_group": "Hard UI-to-code",
+      "task_type": "困难网页截图转代码",
+      "frontend_relevance": "very_high",
+      "input_modality": [
+        "challenging webpage screenshot"
+      ],
+      "output_artifact": [
+        "frontend code",
+        "rendered webpage"
+      ],
+      "interaction_mode": "agent comparison / end-to-end comparison",
+      "metrics": [
+        {
+          "name": "DINO Acc.",
+          "direction": "higher_is_better",
+          "meaning": "基于视觉特征的匹配准确率。"
+        },
+        {
+          "name": "VLM Judge Acc.",
+          "direction": "higher_is_better",
+          "meaning": "视觉 judge 判定成功的比例。"
+        },
+        {
+          "name": "Latency",
+          "direction": "lower_is_better",
+          "meaning": "平均推理耗时。"
+        },
+        {
+          "name": "Token Cost",
+          "direction": "lower_is_better",
+          "meaning": "平均 token 消耗。"
+        }
+      ],
+      "score_interpretation": "用于比较 agent-based UI-to-code pipeline 和 end-to-end closed-loop 模型。",
+      "source_type": "benchmark_paper",
+      "primary_sources": [
+        "https://arxiv.org/abs/2511.08195"
+      ],
+      "confidence": "high",
+      "caveat": "这是 UI2Code^N 论文中的 agent-based baseline 对比，不是 GLM 官方通用榜单。",
+      "publication": {
+        "paper_title": "UI2Code^N: UI-to-Code Generation as Interactive Visual Optimization",
+        "source_url": "https://arxiv.org/abs/2511.08195",
+        "first_public_date": "2025-11-11",
+        "venue": "ICML 2026",
+        "venue_rating": "顶会 / CCF-A 常见口径",
+        "publication_status": "已接收会议论文",
+        "source_kind": "benchmark_paper"
+      }
+    },
+    {
+      "id": "webcode2m_long",
+      "name": "WebCode2M-Long",
+      "year": "2025/2026",
+      "display_group": "Long UI-to-code",
+      "task_type": "长网页 UI-to-code",
+      "frontend_relevance": "high",
+      "input_modality": [
+        "long webpage UI"
+      ],
+      "output_artifact": [
+        "frontend code"
+      ],
+      "interaction_mode": "UI-to-code generation",
+      "metrics": [
+        {
+          "name": "CLIP Similarity",
+          "direction": "higher_is_better",
+          "meaning": "长网页渲染图与参考图的视觉相似度。"
+        }
+      ],
+      "score_interpretation": "越高代表长网页视觉还原越好。",
+      "source_type": "benchmark_paper",
+      "primary_sources": [
+        "https://arxiv.org/abs/2511.08195"
+      ],
+      "confidence": "medium_high",
+      "caveat": "当前主要作为 UI2Code^N 附录中的补充对比。",
+      "publication": {
+        "paper_title": "UI2Code^N: UI-to-Code Generation as Interactive Visual Optimization",
+        "source_url": "https://arxiv.org/abs/2511.08195",
+        "first_public_date": "2025-11-11",
+        "venue": "ICML 2026",
+        "venue_rating": "顶会 / CCF-A 常见口径",
+        "publication_status": "已接收会议论文",
+        "source_kind": "benchmark_paper"
+      }
+    },
+    {
+      "id": "webvoyager",
+      "name": "WebVoyager",
+      "year": "2024/2026",
+      "display_group": "Web GUI Agent",
+      "task_type": "真实网页浏览和操作",
+      "frontend_relevance": "low_medium",
+      "input_modality": [
+        "webpage observation",
+        "browser state",
+        "natural-language instruction"
+      ],
+      "output_artifact": [
+        "browser actions",
+        "task completion"
+      ],
+      "interaction_mode": "browser agent",
+      "metrics": [
+        {
+          "name": "Success Rate",
+          "direction": "higher_is_better",
+          "meaning": "网页任务完成比例。"
+        }
+      ],
+      "score_interpretation": "越高代表网页 UI 理解和操作能力越强，但不是设计生成能力。",
+      "source_type": "official_report",
+      "primary_sources": [
+        "https://arxiv.org/abs/2401.13919",
+        "https://arxiv.org/abs/2507.01006",
+        "https://arxiv.org/abs/2604.26752"
+      ],
+      "confidence": "high",
+      "caveat": "用于背景，不放入 design-to-code 主榜。",
+      "publication": {
+        "paper_title": "WebVoyager: Building an End-to-End Web Agent with Large Multimodal Models",
+        "source_url": "https://arxiv.org/abs/2401.13919",
+        "first_public_date": "2024-01-25",
+        "venue": "ACL 2024 Long Papers",
+        "venue_rating": "顶会 / CCF-A 常见口径",
+        "publication_status": "已发表会议论文",
+        "source_kind": "benchmark_paper"
+      }
+    },
+    {
+      "id": "osworld",
+      "name": "OSWorld",
+      "year": "2025",
+      "display_group": "Desktop GUI Agent",
+      "task_type": "桌面系统 GUI agent",
+      "frontend_relevance": "low_medium",
+      "input_modality": [
+        "desktop screen observation",
+        "task instruction"
+      ],
+      "output_artifact": [
+        "desktop actions",
+        "task completion"
+      ],
+      "interaction_mode": "desktop GUI agent",
+      "metrics": [
+        {
+          "name": "Success Rate",
+          "direction": "higher_is_better",
+          "meaning": "桌面任务完成比例。"
+        }
+      ],
+      "score_interpretation": "可说明 GUI 操作能力，不直接说明前端设计能力。",
+      "source_type": "official_report",
+      "primary_sources": [
+        "https://arxiv.org/abs/2404.07972",
+        "https://arxiv.org/abs/2507.01006"
+      ],
+      "confidence": "high",
+      "caveat": "背景指标。",
+      "publication": {
+        "paper_title": "OSWorld: Benchmarking Multimodal Agents for Open-Ended Tasks in Real Computer Environments",
+        "source_url": "https://arxiv.org/abs/2404.07972",
+        "first_public_date": "2024-04-11",
+        "venue": "NeurIPS 2024 Datasets and Benchmarks Track",
+        "venue_rating": "顶会 / CCF-A 常见口径",
+        "publication_status": "已发表会议论文",
+        "source_kind": "benchmark_paper"
+      }
+    },
+    {
+      "id": "androidworld",
+      "name": "AndroidWorld",
+      "year": "2025",
+      "display_group": "Mobile GUI Agent",
+      "task_type": "Android GUI agent",
+      "frontend_relevance": "low_medium",
+      "input_modality": [
+        "mobile screen observation",
+        "task instruction"
+      ],
+      "output_artifact": [
+        "mobile actions",
+        "task completion"
+      ],
+      "interaction_mode": "mobile GUI agent",
+      "metrics": [
+        {
+          "name": "Success Rate",
+          "direction": "higher_is_better",
+          "meaning": "Android 任务完成比例。"
+        }
+      ],
+      "score_interpretation": "可说明移动端 UI 操作能力。",
+      "source_type": "official_report",
+      "primary_sources": [
+        "https://arxiv.org/abs/2405.14573",
+        "https://arxiv.org/abs/2507.01006"
+      ],
+      "confidence": "high",
+      "caveat": "背景指标。",
+      "publication": {
+        "paper_title": "AndroidWorld: A Dynamic Benchmarking Environment for Autonomous Agents",
+        "source_url": "https://arxiv.org/abs/2405.14573",
+        "first_public_date": "2024-05-23",
+        "venue": "ICLR 2025 Conference",
+        "venue_rating": "顶会 / CCF-A 常见口径",
+        "publication_status": "已发表会议论文",
+        "source_kind": "benchmark_paper"
+      }
+    },
+    {
+      "id": "webquest",
+      "name": "WebQuest",
+      "year": "2025",
+      "display_group": "Web QA Agent",
+      "task_type": "网页问答和多步网页信息检索",
+      "frontend_relevance": "low_medium",
+      "input_modality": [
+        "webpage content",
+        "question"
+      ],
+      "output_artifact": [
+        "answer",
+        "web interaction trace"
+      ],
+      "interaction_mode": "web QA agent",
+      "metrics": [
+        {
+          "name": "QA Score",
+          "direction": "higher_is_better",
+          "meaning": "网页问答正确率或完成质量。"
+        }
+      ],
+      "score_interpretation": "说明网页理解和检索能力，不是设计生成。",
+      "source_type": "official_report",
+      "primary_sources": [
+        "https://arxiv.org/abs/2409.13711",
+        "https://arxiv.org/abs/2507.01006"
+      ],
+      "confidence": "high",
+      "caveat": "背景指标。",
+      "publication": {
+        "paper_title": "WebQuest: A Benchmark for Multimodal QA on Web Page Sequences",
+        "source_url": "https://arxiv.org/abs/2409.13711",
+        "first_public_date": "2024-09-06",
+        "venue": "arXiv preprint",
+        "venue_rating": "arXiv 预印本；暂无会议/期刊评级",
+        "publication_status": "预印本",
+        "source_kind": "benchmark_paper"
+      }
+    },
+    {
+      "id": "mind2web",
+      "name": "Mind2Web",
+      "year": "2023/2024",
+      "display_group": "Web GUI Agent",
+      "task_type": "真实网站上的下一步网页动作预测",
+      "frontend_relevance": "low_medium",
+      "input_modality": [
+        "webpage snapshot",
+        "previous actions",
+        "task instruction"
+      ],
+      "output_artifact": [
+        "next action",
+        "target element",
+        "operation"
+      ],
+      "interaction_mode": "offline web agent action prediction",
+      "metrics": [
+        {
+          "name": "Step Success Rate",
+          "direction": "higher_is_better",
+          "meaning": "预测动作与标注目标元素和操作匹配的比例。"
+        }
+      ],
+      "score_interpretation": "越高代表网页界面理解和操作预测越强。",
+      "source_type": "benchmark_paper",
+      "primary_sources": [
+        "https://arxiv.org/abs/2306.06070",
+        "https://arxiv.org/abs/2312.08914",
+        "https://arxiv.org/abs/2404.03648"
+      ],
+      "confidence": "high",
+      "caveat": "不是设计生成。",
+      "publication": {
+        "paper_title": "Mind2Web: Towards a Generalist Agent for the Web",
+        "source_url": "https://arxiv.org/abs/2306.06070",
+        "first_public_date": "2023-06-09",
+        "venue": "NeurIPS 2023 Datasets and Benchmarks Track Spotlight",
+        "venue_rating": "顶会 / CCF-A 常见口径",
+        "publication_status": "已发表会议论文",
+        "source_kind": "benchmark_paper"
+      }
+    },
+    {
+      "id": "aitw",
+      "name": "Android in the Wild (AITW)",
+      "year": "2023/2024",
+      "display_group": "Mobile GUI Agent",
+      "task_type": "Android 设备操作预测",
+      "frontend_relevance": "low_medium",
+      "input_modality": [
+        "Android screenshot",
+        "goal instruction",
+        "action history"
+      ],
+      "output_artifact": [
+        "next mobile action",
+        "tap/swipe/type parameters"
+      ],
+      "interaction_mode": "mobile action prediction",
+      "metrics": [
+        {
+          "name": "Matching Score",
+          "direction": "higher_is_better",
+          "meaning": "预测动作与标注动作匹配程度。"
+        }
+      ],
+      "score_interpretation": "越高代表移动端 GUI 操作预测越强。",
+      "source_type": "benchmark_paper",
+      "primary_sources": [
+        "https://arxiv.org/abs/2307.10088",
+        "https://arxiv.org/abs/2312.08914"
+      ],
+      "confidence": "high",
+      "caveat": "不是设计生成。",
+      "publication": {
+        "paper_title": "Android in the Wild: A Large-Scale Dataset for Android Device Control",
+        "source_url": "https://arxiv.org/abs/2307.10088",
+        "first_public_date": "2023-07-19",
+        "venue": "NeurIPS 2023 Datasets and Benchmarks Track",
+        "venue_rating": "顶会 / CCF-A 常见口径",
+        "publication_status": "已发表会议论文",
+        "source_kind": "benchmark_paper"
+      }
+    },
+    {
+      "id": "autowebbench",
+      "name": "AutoWebBench",
+      "year": "2024",
+      "display_group": "Web Navigation Agent",
+      "task_type": "中英文真实网页浏览任务",
+      "frontend_relevance": "low_medium",
+      "input_modality": [
+        "simplified HTML",
+        "URL",
+        "window position",
+        "task instruction"
+      ],
+      "output_artifact": [
+        "web action sequence",
+        "task completion"
+      ],
+      "interaction_mode": "web navigation agent",
+      "metrics": [
+        {
+          "name": "Step Success Rate",
+          "direction": "higher_is_better",
+          "meaning": "网页操作步骤成功率。"
+        }
+      ],
+      "score_interpretation": "越高代表网页浏览 agent 表现越好。",
+      "source_type": "benchmark_paper",
+      "primary_sources": [
+        "https://arxiv.org/abs/2404.03648"
+      ],
+      "confidence": "high",
+      "caveat": "AutoWebGLM 自建 benchmark；背景指标。",
+      "publication": {
+        "paper_title": "AutoWebGLM: A Large Language Model-based Web Navigating Agent",
+        "source_url": "https://arxiv.org/abs/2404.03648",
+        "first_public_date": "2024-04-04",
+        "venue": "KDD 2024",
+        "venue_rating": "顶会 / CCF-A 常见口径",
+        "publication_status": "已发表会议论文",
+        "source_kind": "model_and_benchmark_paper"
+      }
+    },
+    {
+      "id": "miniwob",
+      "name": "MiniWoB++",
+      "year": "2024",
+      "display_group": "Web Navigation Agent",
+      "task_type": "模拟网页环境操作任务",
+      "frontend_relevance": "low_medium",
+      "input_modality": [
+        "web environment state",
+        "task instruction"
+      ],
+      "output_artifact": [
+        "web actions"
+      ],
+      "interaction_mode": "web navigation agent",
+      "metrics": [
+        {
+          "name": "Success Rate",
+          "direction": "higher_is_better",
+          "meaning": "任务完成比例。"
+        }
+      ],
+      "score_interpretation": "越高代表网页操作 agent 能力越强。",
+      "source_type": "benchmark_paper",
+      "primary_sources": [
+        "https://arxiv.org/abs/1802.08802",
+        "https://arxiv.org/abs/2404.03648"
+      ],
+      "confidence": "high",
+      "caveat": "模拟环境，和真实网页设计生成不同。",
+      "publication": {
+        "paper_title": "Reinforcement Learning on Web Interfaces using Workflow-Guided Exploration",
+        "source_url": "https://arxiv.org/abs/1802.08802",
+        "first_public_date": "2018-02-24",
+        "venue": "ICLR 2018 Conference",
+        "venue_rating": "顶会 / CCF-A 常见口径",
+        "publication_status": "已发表会议论文",
+        "source_kind": "benchmark_extension_paper"
+      }
+    },
+    {
+      "id": "webarena",
+      "name": "WebArena",
+      "year": "2024",
+      "display_group": "Web Navigation Agent",
+      "task_type": "真实网站镜像环境中的网页操作任务",
+      "frontend_relevance": "low_medium",
+      "input_modality": [
+        "web environment state",
+        "task instruction"
+      ],
+      "output_artifact": [
+        "web action sequence",
+        "task completion"
+      ],
+      "interaction_mode": "web navigation agent",
+      "metrics": [
+        {
+          "name": "Success Rate",
+          "direction": "higher_is_better",
+          "meaning": "任务完成比例。"
+        }
+      ],
+      "score_interpretation": "越高代表 web agent 在真实网页环境中越可靠。",
+      "source_type": "benchmark_paper",
+      "primary_sources": [
+        "https://arxiv.org/abs/2307.13854",
+        "https://arxiv.org/abs/2404.03648"
+      ],
+      "confidence": "high",
+      "caveat": "背景指标。",
+      "publication": {
+        "paper_title": "WebArena: A Realistic Web Environment for Building Autonomous Agents",
+        "source_url": "https://arxiv.org/abs/2307.13854",
+        "first_public_date": "2023-07-25",
+        "venue": "ICLR 2024 Conference",
+        "venue_rating": "顶会 / CCF-A 常见口径",
+        "publication_status": "已发表会议论文",
+        "source_kind": "benchmark_paper"
+      }
+    },
+    {
+      "id": "vab_webarena_lite",
+      "name": "VAB-WebArena-Lite",
+      "year": "2024",
+      "display_group": "Web GUI Agent",
+      "task_type": "VisualAgentBench 中的网页操作子集",
+      "frontend_relevance": "low_medium",
+      "input_modality": [
+        "browser observation",
+        "task instruction"
+      ],
+      "output_artifact": [
+        "browser actions",
+        "task completion"
+      ],
+      "interaction_mode": "visual web agent",
+      "metrics": [
+        {
+          "name": "Success Rate",
+          "direction": "higher_is_better",
+          "meaning": "任务完成比例。"
+        }
+      ],
+      "score_interpretation": "越高代表 web GUI agent 能力越强。",
+      "source_type": "benchmark_paper",
+      "primary_sources": [
+        "https://arxiv.org/abs/2408.06327",
+        "https://arxiv.org/abs/2411.00820"
+      ],
+      "confidence": "high",
+      "caveat": "不是 VAB-CSS；不要和 visual design repair 混排。",
+      "publication": {
+        "paper_title": "VisualAgentBench: Towards Large Multimodal Models as Visual Foundation Agents",
+        "source_url": "https://arxiv.org/abs/2408.06327",
+        "first_public_date": "2024-08-12",
+        "venue": "ICLR 2025 Poster",
+        "venue_rating": "顶会 / CCF-A 常见口径",
+        "publication_status": "已发表会议论文",
+        "source_kind": "benchmark_paper"
+      }
+    },
+    {
+      "id": "androidlab",
+      "name": "AndroidLab / VAB-Mobile",
+      "year": "2024",
+      "display_group": "Mobile GUI Agent",
+      "task_type": "交互式 Android agent benchmark",
+      "frontend_relevance": "low_medium",
+      "input_modality": [
+        "Android screen",
+        "task instruction"
+      ],
+      "output_artifact": [
+        "mobile actions",
+        "task completion"
+      ],
+      "interaction_mode": "interactive mobile GUI agent",
+      "metrics": [
+        {
+          "name": "Success Rate",
+          "direction": "higher_is_better",
+          "meaning": "Android 任务完成比例。"
+        }
+      ],
+      "score_interpretation": "越高代表移动 GUI agent 能力越强。",
+      "source_type": "benchmark_paper",
+      "primary_sources": [
+        "https://arxiv.org/abs/2411.00820"
+      ],
+      "confidence": "high",
+      "caveat": "背景指标。",
+      "publication": {
+        "paper_title": "AutoGLM: Autonomous Foundation Agents for GUIs",
+        "source_url": "https://arxiv.org/abs/2411.00820",
+        "first_public_date": "2024-10-28",
+        "venue": "arXiv preprint",
+        "venue_rating": "arXiv 预印本；暂无会议/期刊评级",
+        "publication_status": "预印本",
+        "source_kind": "model_and_benchmark_paper"
+      }
+    }
+  ],
+  "scores": [
+    {
+      "benchmark_id": "design2code",
+      "model": "GLM-5V-Turbo",
+      "model_family": "Zhipu / GLM",
+      "score": 94.8,
+      "metric": "Official Report Score",
+      "score_scale": "0-100",
+      "rank_hint": "very_strong",
+      "source_type": "official_report",
+      "source_url": "https://arxiv.org/abs/2604.26752",
+      "confidence": "high",
+      "caveat": "官方报告分数；口径不等同于原始 Design2Code CLIP。",
+      "provenance": {
+        "reported_date": "2026-04-29",
+        "run_date": null,
+        "run_date_display": "2026-04-29（按来源发布日期近似）",
+        "run_date_basis": "原论文/报告未公开具体跑分日期；这里用分数来源的首次公开日期或技术报告发布日期作为近似时间。",
+        "report_title": "GLM-5V-Turbo: Toward a Native Foundation Model for Multimodal Agents",
+        "report_venue": "Z.AI technical report / arXiv",
+        "report_venue_rating": "技术报告 / 官方报告；暂无会议/期刊评级",
+        "report_status": "官方技术报告"
+      }
+    },
+    {
+      "benchmark_id": "design2code",
+      "model": "Kimi K2.5",
+      "model_family": "Moonshot / Kimi",
+      "score": 91.3,
+      "metric": "Official Report Score",
+      "score_scale": "0-100",
+      "source_type": "official_report",
+      "source_url": "https://arxiv.org/abs/2604.26752",
+      "confidence": "high",
+      "caveat": "GLM-5V 报告中的对比模型分数。",
+      "provenance": {
+        "reported_date": "2026-04-29",
+        "run_date": null,
+        "run_date_display": "2026-04-29（按来源发布日期近似）",
+        "run_date_basis": "原论文/报告未公开具体跑分日期；这里用分数来源的首次公开日期或技术报告发布日期作为近似时间。",
+        "report_title": "GLM-5V-Turbo: Toward a Native Foundation Model for Multimodal Agents",
+        "report_venue": "Z.AI technical report / arXiv",
+        "report_venue_rating": "技术报告 / 官方报告；暂无会议/期刊评级",
+        "report_status": "官方技术报告"
+      }
+    },
+    {
+      "benchmark_id": "design2code",
+      "model": "Claude Opus 4.6",
+      "model_family": "Anthropic Claude",
+      "score": 77.3,
+      "metric": "Official Report Score",
+      "score_scale": "0-100",
+      "source_type": "official_report",
+      "source_url": "https://arxiv.org/abs/2604.26752",
+      "confidence": "high",
+      "caveat": "GLM-5V 报告中的对比模型分数。",
+      "provenance": {
+        "reported_date": "2026-04-29",
+        "run_date": null,
+        "run_date_display": "2026-04-29（按来源发布日期近似）",
+        "run_date_basis": "原论文/报告未公开具体跑分日期；这里用分数来源的首次公开日期或技术报告发布日期作为近似时间。",
+        "report_title": "GLM-5V-Turbo: Toward a Native Foundation Model for Multimodal Agents",
+        "report_venue": "Z.AI technical report / arXiv",
+        "report_venue_rating": "技术报告 / 官方报告；暂无会议/期刊评级",
+        "report_status": "官方技术报告"
+      }
+    },
+    {
+      "benchmark_id": "design2code",
+      "model": "GLM-4.6V",
+      "model_family": "Zhipu / GLM",
+      "score": 88.6,
+      "metric": "Official Report Score",
+      "score_scale": "0-100",
+      "source_type": "official_report",
+      "source_url": "https://arxiv.org/abs/2507.01006",
+      "confidence": "high",
+      "caveat": "GLM-4.5V/4.1V 报告表格分数。",
+      "provenance": {
+        "reported_date": "2025-07-01",
+        "run_date": null,
+        "run_date_display": "2025-07-01（按来源发布日期近似）",
+        "run_date_basis": "原论文/报告未公开具体跑分日期；这里用分数来源的首次公开日期或技术报告发布日期作为近似时间。",
+        "report_title": "GLM-4.5V and GLM-4.1V-Thinking: Towards Versatile Multimodal Reasoning with Scalable Reinforcement Learning",
+        "report_venue": "Z.AI technical report / arXiv",
+        "report_venue_rating": "技术报告 / 官方报告；暂无会议/期刊评级",
+        "report_status": "官方技术报告"
+      }
+    },
+    {
+      "benchmark_id": "design2code",
+      "model": "GLM-4.5V",
+      "model_family": "Zhipu / GLM",
+      "score": 82.2,
+      "metric": "Official Report Score",
+      "score_scale": "0-100",
+      "source_type": "official_report",
+      "source_url": "https://arxiv.org/abs/2507.01006",
+      "confidence": "high",
+      "caveat": "GLM-4.5V/4.1V 报告表格分数。",
+      "provenance": {
+        "reported_date": "2025-07-01",
+        "run_date": null,
+        "run_date_display": "2025-07-01（按来源发布日期近似）",
+        "run_date_basis": "原论文/报告未公开具体跑分日期；这里用分数来源的首次公开日期或技术报告发布日期作为近似时间。",
+        "report_title": "GLM-4.5V and GLM-4.1V-Thinking: Towards Versatile Multimodal Reasoning with Scalable Reinforcement Learning",
+        "report_venue": "Z.AI technical report / arXiv",
+        "report_venue_rating": "技术报告 / 官方报告；暂无会议/期刊评级",
+        "report_status": "官方技术报告"
+      }
+    },
+    {
+      "benchmark_id": "design2code",
+      "model": "GLM-4.1V-9B-Thinking",
+      "model_family": "Zhipu / GLM",
+      "score": 64.7,
+      "metric": "Official Report Score",
+      "score_scale": "0-100",
+      "source_type": "official_report",
+      "source_url": "https://arxiv.org/abs/2507.01006",
+      "confidence": "high",
+      "caveat": "GLM-4.5V/4.1V 报告表格分数。",
+      "provenance": {
+        "reported_date": "2025-07-01",
+        "run_date": null,
+        "run_date_display": "2025-07-01（按来源发布日期近似）",
+        "run_date_basis": "原论文/报告未公开具体跑分日期；这里用分数来源的首次公开日期或技术报告发布日期作为近似时间。",
+        "report_title": "GLM-4.5V and GLM-4.1V-Thinking: Towards Versatile Multimodal Reasoning with Scalable Reinforcement Learning",
+        "report_venue": "Z.AI technical report / arXiv",
+        "report_venue_rating": "技术报告 / 官方报告；暂无会议/期刊评级",
+        "report_status": "官方技术报告"
+      }
+    },
+    {
+      "benchmark_id": "design2code",
+      "model": "UI2Code^N-9B-RL",
+      "model_family": "Zhipu / GLM ecosystem",
+      "score": 88.6,
+      "metric": "VLM Judge",
+      "score_scale": "0-100",
+      "source_type": "benchmark_paper",
+      "source_url": "https://arxiv.org/abs/2511.08195",
+      "confidence": "high",
+      "caveat": "UI2Code^N 论文表格结果。",
+      "provenance": {
+        "reported_date": "2025-11-11",
+        "run_date": null,
+        "run_date_display": "2025-11-11（按来源发布日期近似）",
+        "run_date_basis": "原论文/报告未公开具体跑分日期；这里用分数来源的首次公开日期或技术报告发布日期作为近似时间。",
+        "report_title": "UI2Code^N: UI-to-Code Generation as Interactive Visual Optimization",
+        "report_venue": "ICML 2026",
+        "report_venue_rating": "顶会 / CCF-A 常见口径",
+        "report_status": "已接收会议论文"
+      }
+    },
+    {
+      "benchmark_id": "design2code",
+      "model": "GPT-4o Direct",
+      "model_family": "OpenAI GPT",
+      "score": 90.4,
+      "metric": "CLIP",
+      "score_scale": "0-100",
+      "source_type": "benchmark_paper",
+      "source_url": "https://arxiv.org/abs/2403.03163",
+      "confidence": "high",
+      "caveat": "原始 Design2Code 论文 CLIP 分数，不应和 GLM 官方 VLM judge 分数直接排序。",
+      "provenance": {
+        "reported_date": "2024-03-05",
+        "run_date": null,
+        "run_date_display": "2024-03-05（按来源发布日期近似）",
+        "run_date_basis": "原论文/报告未公开具体跑分日期；这里用分数来源的首次公开日期或技术报告发布日期作为近似时间。",
+        "report_title": "Design2Code: Benchmarking Multimodal Code Generation for Automated Front-End Engineering",
+        "report_venue": "NAACL 2025 Long Papers",
+        "report_venue_rating": "ACL Anthology 主会长文 / 主流 NLP 会议；具体 CCF 等级需按目录版本核对",
+        "report_status": "已发表会议论文"
+      }
+    },
+    {
+      "benchmark_id": "flame_react_eval",
+      "model": "GLM-5V-Turbo",
+      "model_family": "Zhipu / GLM",
+      "score": 93.8,
+      "metric": "Flame-VLM-Code",
+      "score_scale": "0-100",
+      "source_type": "official_report",
+      "source_url": "https://arxiv.org/abs/2604.26752",
+      "confidence": "medium_high",
+      "caveat": "需继续核对 Flame-VLM-Code 与 Flame-React-Eval 的严格对应关系。",
+      "provenance": {
+        "reported_date": "2026-04-29",
+        "run_date": null,
+        "run_date_display": "2026-04-29（按来源发布日期近似）",
+        "run_date_basis": "原论文/报告未公开具体跑分日期；这里用分数来源的首次公开日期或技术报告发布日期作为近似时间。",
+        "report_title": "GLM-5V-Turbo: Toward a Native Foundation Model for Multimodal Agents",
+        "report_venue": "Z.AI technical report / arXiv",
+        "report_venue_rating": "技术报告 / 官方报告；暂无会议/期刊评级",
+        "report_status": "官方技术报告"
+      }
+    },
+    {
+      "benchmark_id": "flame_react_eval",
+      "model": "Claude Opus 4.6",
+      "model_family": "Anthropic Claude",
+      "score": 98.8,
+      "metric": "Flame-VLM-Code",
+      "score_scale": "0-100",
+      "source_type": "official_report",
+      "source_url": "https://arxiv.org/abs/2604.26752",
+      "confidence": "medium_high",
+      "caveat": "GLM-5V 报告中的对比模型分数。",
+      "provenance": {
+        "reported_date": "2026-04-29",
+        "run_date": null,
+        "run_date_display": "2026-04-29（按来源发布日期近似）",
+        "run_date_basis": "原论文/报告未公开具体跑分日期；这里用分数来源的首次公开日期或技术报告发布日期作为近似时间。",
+        "report_title": "GLM-5V-Turbo: Toward a Native Foundation Model for Multimodal Agents",
+        "report_venue": "Z.AI technical report / arXiv",
+        "report_venue_rating": "技术报告 / 官方报告；暂无会议/期刊评级",
+        "report_status": "官方技术报告"
+      }
+    },
+    {
+      "benchmark_id": "flame_react_eval",
+      "model": "Kimi K2.5",
+      "model_family": "Moonshot / Kimi",
+      "score": 88.8,
+      "metric": "Flame-VLM-Code",
+      "score_scale": "0-100",
+      "source_type": "official_report",
+      "source_url": "https://arxiv.org/abs/2604.26752",
+      "confidence": "medium_high",
+      "caveat": "GLM-5V 报告中的对比模型分数。",
+      "provenance": {
+        "reported_date": "2026-04-29",
+        "run_date": null,
+        "run_date_display": "2026-04-29（按来源发布日期近似）",
+        "run_date_basis": "原论文/报告未公开具体跑分日期；这里用分数来源的首次公开日期或技术报告发布日期作为近似时间。",
+        "report_title": "GLM-5V-Turbo: Toward a Native Foundation Model for Multimodal Agents",
+        "report_venue": "Z.AI technical report / arXiv",
+        "report_venue_rating": "技术报告 / 官方报告；暂无会议/期刊评级",
+        "report_status": "官方技术报告"
+      }
+    },
+    {
+      "benchmark_id": "flame_react_eval",
+      "model": "GLM-4.6V",
+      "model_family": "Zhipu / GLM",
+      "score": 86.3,
+      "metric": "Flame-React-Eval",
+      "score_scale": "0-100",
+      "source_type": "official_report",
+      "source_url": "https://arxiv.org/abs/2507.01006",
+      "confidence": "high",
+      "caveat": "GLM-4.5V/4.1V 报告表格分数。",
+      "provenance": {
+        "reported_date": "2025-07-01",
+        "run_date": null,
+        "run_date_display": "2025-07-01（按来源发布日期近似）",
+        "run_date_basis": "原论文/报告未公开具体跑分日期；这里用分数来源的首次公开日期或技术报告发布日期作为近似时间。",
+        "report_title": "GLM-4.5V and GLM-4.1V-Thinking: Towards Versatile Multimodal Reasoning with Scalable Reinforcement Learning",
+        "report_venue": "Z.AI technical report / arXiv",
+        "report_venue_rating": "技术报告 / 官方报告；暂无会议/期刊评级",
+        "report_status": "官方技术报告"
+      }
+    },
+    {
+      "benchmark_id": "flame_react_eval",
+      "model": "GLM-4.5V",
+      "model_family": "Zhipu / GLM",
+      "score": 82.5,
+      "metric": "Flame-React-Eval",
+      "score_scale": "0-100",
+      "source_type": "official_report",
+      "source_url": "https://arxiv.org/abs/2507.01006",
+      "confidence": "high",
+      "caveat": "GLM-4.5V/4.1V 报告表格分数。",
+      "provenance": {
+        "reported_date": "2025-07-01",
+        "run_date": null,
+        "run_date_display": "2025-07-01（按来源发布日期近似）",
+        "run_date_basis": "原论文/报告未公开具体跑分日期；这里用分数来源的首次公开日期或技术报告发布日期作为近似时间。",
+        "report_title": "GLM-4.5V and GLM-4.1V-Thinking: Towards Versatile Multimodal Reasoning with Scalable Reinforcement Learning",
+        "report_venue": "Z.AI technical report / arXiv",
+        "report_venue_rating": "技术报告 / 官方报告；暂无会议/期刊评级",
+        "report_status": "官方技术报告"
+      }
+    },
+    {
+      "benchmark_id": "flame_react_eval",
+      "model": "GLM-4.1V-9B-Thinking",
+      "model_family": "Zhipu / GLM",
+      "score": 72.5,
+      "metric": "Flame-React-Eval",
+      "score_scale": "0-100",
+      "source_type": "official_report",
+      "source_url": "https://arxiv.org/abs/2507.01006",
+      "confidence": "high",
+      "caveat": "GLM-4.5V/4.1V 报告表格分数。",
+      "provenance": {
+        "reported_date": "2025-07-01",
+        "run_date": null,
+        "run_date_display": "2025-07-01（按来源发布日期近似）",
+        "run_date_basis": "原论文/报告未公开具体跑分日期；这里用分数来源的首次公开日期或技术报告发布日期作为近似时间。",
+        "report_title": "GLM-4.5V and GLM-4.1V-Thinking: Towards Versatile Multimodal Reasoning with Scalable Reinforcement Learning",
+        "report_venue": "Z.AI technical report / arXiv",
+        "report_venue_rating": "技术报告 / 官方报告；暂无会议/期刊评级",
+        "report_status": "官方技术报告"
+      }
+    },
+    {
+      "benchmark_id": "flame_react_eval",
+      "model": "UI2Code^N-9B-RL",
+      "model_family": "Zhipu / GLM ecosystem",
+      "score": 95,
+      "metric": "VLM Judge",
+      "score_scale": "0-100",
+      "source_type": "benchmark_paper",
+      "source_url": "https://arxiv.org/abs/2511.08195",
+      "confidence": "high",
+      "caveat": "UI2Code^N 论文中的 Flame 分数。",
+      "provenance": {
+        "reported_date": "2025-11-11",
+        "run_date": null,
+        "run_date_display": "2025-11-11（按来源发布日期近似）",
+        "run_date_basis": "原论文/报告未公开具体跑分日期；这里用分数来源的首次公开日期或技术报告发布日期作为近似时间。",
+        "report_title": "UI2Code^N: UI-to-Code Generation as Interactive Visual Optimization",
+        "report_venue": "ICML 2026",
+        "report_venue_rating": "顶会 / CCF-A 常见口径",
+        "report_status": "已接收会议论文"
+      }
+    },
+    {
+      "benchmark_id": "vision2web",
+      "model": "GLM-5V-Turbo",
+      "model_family": "Zhipu / GLM",
+      "score": 31,
+      "metric": "Official Report Score",
+      "score_scale": "0-100",
+      "source_type": "official_report",
+      "source_url": "https://arxiv.org/abs/2604.26752",
+      "confidence": "medium_high",
+      "caveat": "来自 GLM-5V 技术报告，不是 Vision2Web 项目页公开榜单。",
+      "provenance": {
+        "reported_date": "2026-04-29",
+        "run_date": null,
+        "run_date_display": "2026-04-29（按来源发布日期近似）",
+        "run_date_basis": "原论文/报告未公开具体跑分日期；这里用分数来源的首次公开日期或技术报告发布日期作为近似时间。",
+        "report_title": "GLM-5V-Turbo: Toward a Native Foundation Model for Multimodal Agents",
+        "report_venue": "Z.AI technical report / arXiv",
+        "report_venue_rating": "技术报告 / 官方报告；暂无会议/期刊评级",
+        "report_status": "官方技术报告"
+      }
+    },
+    {
+      "benchmark_id": "vision2web",
+      "model": "Claude Opus 4.6",
+      "model_family": "Anthropic Claude",
+      "score": 43.5,
+      "metric": "Official Report Score",
+      "score_scale": "0-100",
+      "source_type": "official_report",
+      "source_url": "https://arxiv.org/abs/2604.26752",
+      "confidence": "medium_high",
+      "caveat": "GLM-5V 报告中的对比模型分数。",
+      "provenance": {
+        "reported_date": "2026-04-29",
+        "run_date": null,
+        "run_date_display": "2026-04-29（按来源发布日期近似）",
+        "run_date_basis": "原论文/报告未公开具体跑分日期；这里用分数来源的首次公开日期或技术报告发布日期作为近似时间。",
+        "report_title": "GLM-5V-Turbo: Toward a Native Foundation Model for Multimodal Agents",
+        "report_venue": "Z.AI technical report / arXiv",
+        "report_venue_rating": "技术报告 / 官方报告；暂无会议/期刊评级",
+        "report_status": "官方技术报告"
+      }
+    },
+    {
+      "benchmark_id": "vision2web",
+      "model": "Kimi K2.5",
+      "model_family": "Moonshot / Kimi",
+      "score": 33.2,
+      "metric": "Official Report Score",
+      "score_scale": "0-100",
+      "source_type": "official_report",
+      "source_url": "https://arxiv.org/abs/2604.26752",
+      "confidence": "medium_high",
+      "caveat": "GLM-5V 报告中的对比模型分数。",
+      "provenance": {
+        "reported_date": "2026-04-29",
+        "run_date": null,
+        "run_date_display": "2026-04-29（按来源发布日期近似）",
+        "run_date_basis": "原论文/报告未公开具体跑分日期；这里用分数来源的首次公开日期或技术报告发布日期作为近似时间。",
+        "report_title": "GLM-5V-Turbo: Toward a Native Foundation Model for Multimodal Agents",
+        "report_venue": "Z.AI technical report / arXiv",
+        "report_venue_rating": "技术报告 / 官方报告；暂无会议/期刊评级",
+        "report_status": "官方技术报告"
+      }
+    },
+    {
+      "benchmark_id": "cc_frontend",
+      "model": "GLM-5V-Turbo",
+      "model_family": "Zhipu / GLM",
+      "score": 68.4,
+      "metric": "Frontend Score",
+      "score_scale": "0-100",
+      "source_type": "official_report",
+      "source_url": "https://arxiv.org/abs/2604.26752",
+      "confidence": "high",
+      "caveat": "文本前端 coding，不是视觉 design。",
+      "provenance": {
+        "reported_date": "2026-04-29",
+        "run_date": null,
+        "run_date_display": "2026-04-29（按来源发布日期近似）",
+        "run_date_basis": "原论文/报告未公开具体跑分日期；这里用分数来源的首次公开日期或技术报告发布日期作为近似时间。",
+        "report_title": "GLM-5V-Turbo: Toward a Native Foundation Model for Multimodal Agents",
+        "report_venue": "Z.AI technical report / arXiv",
+        "report_venue_rating": "技术报告 / 官方报告；暂无会议/期刊评级",
+        "report_status": "官方技术报告"
+      }
+    },
+    {
+      "benchmark_id": "cc_frontend",
+      "model": "Claude Opus 4.6",
+      "model_family": "Anthropic Claude",
+      "score": 75.9,
+      "metric": "Frontend Score",
+      "score_scale": "0-100",
+      "source_type": "official_report",
+      "source_url": "https://arxiv.org/abs/2604.26752",
+      "confidence": "high",
+      "caveat": "GLM-5V 报告中的对比模型分数。",
+      "provenance": {
+        "reported_date": "2026-04-29",
+        "run_date": null,
+        "run_date_display": "2026-04-29（按来源发布日期近似）",
+        "run_date_basis": "原论文/报告未公开具体跑分日期；这里用分数来源的首次公开日期或技术报告发布日期作为近似时间。",
+        "report_title": "GLM-5V-Turbo: Toward a Native Foundation Model for Multimodal Agents",
+        "report_venue": "Z.AI technical report / arXiv",
+        "report_venue_rating": "技术报告 / 官方报告；暂无会议/期刊评级",
+        "report_status": "官方技术报告"
+      }
+    },
+    {
+      "benchmark_id": "vab_css",
+      "model": "GLM-4V",
+      "model_family": "Zhipu / GLM ecosystem",
+      "score": 23.6,
+      "metric": "Success Rate",
+      "score_scale": "0-100",
+      "source_type": "benchmark_paper",
+      "source_url": "https://arxiv.org/abs/2408.06327",
+      "confidence": "high",
+      "caveat": "Fine-tuning 设置；VAB-CSS 是 CSS repair。",
+      "provenance": {
+        "reported_date": "2024-08-12",
+        "run_date": null,
+        "run_date_display": "2024-08-12（按来源发布日期近似）",
+        "run_date_basis": "原论文/报告未公开具体跑分日期；这里用分数来源的首次公开日期或技术报告发布日期作为近似时间。",
+        "report_title": "VisualAgentBench: Towards Large Multimodal Models as Visual Foundation Agents",
+        "report_venue": "ICLR 2025 Poster",
+        "report_venue_rating": "顶会 / CCF-A 常见口径",
+        "report_status": "已发表会议论文"
+      }
+    },
+    {
+      "benchmark_id": "vab_css",
+      "model": "CogAgent",
+      "model_family": "THUDM / CogVLM",
+      "score": 13.9,
+      "metric": "Success Rate",
+      "score_scale": "0-100",
+      "source_type": "benchmark_paper",
+      "source_url": "https://arxiv.org/abs/2408.06327",
+      "confidence": "high",
+      "caveat": "Fine-tuning 设置。",
+      "provenance": {
+        "reported_date": "2024-08-12",
+        "run_date": null,
+        "run_date_display": "2024-08-12（按来源发布日期近似）",
+        "run_date_basis": "原论文/报告未公开具体跑分日期；这里用分数来源的首次公开日期或技术报告发布日期作为近似时间。",
+        "report_title": "VisualAgentBench: Towards Large Multimodal Models as Visual Foundation Agents",
+        "report_venue": "ICLR 2025 Poster",
+        "report_venue_rating": "顶会 / CCF-A 常见口径",
+        "report_status": "已发表会议论文"
+      }
+    },
+    {
+      "benchmark_id": "vab_css",
+      "model": "GPT-4o-2024-05-13",
+      "model_family": "OpenAI GPT",
+      "score": 34.5,
+      "metric": "Success Rate",
+      "score_scale": "0-100",
+      "source_type": "benchmark_paper",
+      "source_url": "https://arxiv.org/abs/2408.06327",
+      "confidence": "high",
+      "caveat": "Prompting 设置。",
+      "provenance": {
+        "reported_date": "2024-08-12",
+        "run_date": null,
+        "run_date_display": "2024-08-12（按来源发布日期近似）",
+        "run_date_basis": "原论文/报告未公开具体跑分日期；这里用分数来源的首次公开日期或技术报告发布日期作为近似时间。",
+        "report_title": "VisualAgentBench: Towards Large Multimodal Models as Visual Foundation Agents",
+        "report_venue": "ICLR 2025 Poster",
+        "report_venue_rating": "顶会 / CCF-A 常见口径",
+        "report_status": "已发表会议论文"
+      }
+    },
+    {
+      "benchmark_id": "web2code",
+      "model": "UI2Code^N-9B-RL",
+      "model_family": "Zhipu / GLM ecosystem",
+      "score": 92.5,
+      "metric": "VLM Judge",
+      "score_scale": "0-100",
+      "source_type": "benchmark_paper",
+      "source_url": "https://arxiv.org/abs/2511.08195",
+      "confidence": "high",
+      "caveat": "UI2Code^N 论文表格结果。",
+      "provenance": {
+        "reported_date": "2025-11-11",
+        "run_date": null,
+        "run_date_display": "2025-11-11（按来源发布日期近似）",
+        "run_date_basis": "原论文/报告未公开具体跑分日期；这里用分数来源的首次公开日期或技术报告发布日期作为近似时间。",
+        "report_title": "UI2Code^N: UI-to-Code Generation as Interactive Visual Optimization",
+        "report_venue": "ICML 2026",
+        "report_venue_rating": "顶会 / CCF-A 常见口径",
+        "report_status": "已接收会议论文"
+      }
+    },
+    {
+      "benchmark_id": "web2code",
+      "model": "GLM-4.1V-9B-Thinking",
+      "model_family": "Zhipu / GLM",
+      "score": 71.3,
+      "metric": "VLM Judge",
+      "score_scale": "0-100",
+      "source_type": "benchmark_paper",
+      "source_url": "https://arxiv.org/abs/2511.08195",
+      "confidence": "high",
+      "caveat": "UI2Code^N 论文表格结果。",
+      "provenance": {
+        "reported_date": "2025-11-11",
+        "run_date": null,
+        "run_date_display": "2025-11-11（按来源发布日期近似）",
+        "run_date_basis": "原论文/报告未公开具体跑分日期；这里用分数来源的首次公开日期或技术报告发布日期作为近似时间。",
+        "report_title": "UI2Code^N: UI-to-Code Generation as Interactive Visual Optimization",
+        "report_venue": "ICML 2026",
+        "report_venue_rating": "顶会 / CCF-A 常见口径",
+        "report_status": "已接收会议论文"
+      }
+    },
+    {
+      "benchmark_id": "ui2code_real",
+      "model": "UI2Code^N-9B-RL",
+      "model_family": "Zhipu / GLM ecosystem",
+      "score": 76.5,
+      "metric": "VLM Judge",
+      "score_scale": "0-100",
+      "source_type": "benchmark_paper",
+      "source_url": "https://arxiv.org/abs/2511.08195",
+      "confidence": "high",
+      "caveat": "UI2Code^N 自建真实网页 benchmark。",
+      "provenance": {
+        "reported_date": "2025-11-11",
+        "run_date": null,
+        "run_date_display": "2025-11-11（按来源发布日期近似）",
+        "run_date_basis": "原论文/报告未公开具体跑分日期；这里用分数来源的首次公开日期或技术报告发布日期作为近似时间。",
+        "report_title": "UI2Code^N: UI-to-Code Generation as Interactive Visual Optimization",
+        "report_venue": "ICML 2026",
+        "report_venue_rating": "顶会 / CCF-A 常见口径",
+        "report_status": "已接收会议论文"
+      }
+    },
+    {
+      "benchmark_id": "uipolish",
+      "model": "UI2Code^N-9B-RL",
+      "model_family": "Zhipu / GLM ecosystem",
+      "score": 80,
+      "metric": "UIPolish-Real Accuracy",
+      "score_scale": "0-100",
+      "source_type": "benchmark_paper",
+      "source_url": "https://arxiv.org/abs/2511.08195",
+      "confidence": "high",
+      "caveat": "Real split。",
+      "provenance": {
+        "reported_date": "2025-11-11",
+        "run_date": null,
+        "run_date_display": "2025-11-11（按来源发布日期近似）",
+        "run_date_basis": "原论文/报告未公开具体跑分日期；这里用分数来源的首次公开日期或技术报告发布日期作为近似时间。",
+        "report_title": "UI2Code^N: UI-to-Code Generation as Interactive Visual Optimization",
+        "report_venue": "ICML 2026",
+        "report_venue_rating": "顶会 / CCF-A 常见口径",
+        "report_status": "已接收会议论文"
+      }
+    },
+    {
+      "benchmark_id": "uipolish",
+      "model": "UI2Code^N-9B-RL",
+      "model_family": "Zhipu / GLM ecosystem",
+      "score": 94,
+      "metric": "UIPolish-Synthetic Accuracy",
+      "score_scale": "0-100",
+      "source_type": "benchmark_paper",
+      "source_url": "https://arxiv.org/abs/2511.08195",
+      "confidence": "high",
+      "caveat": "Synthetic split。",
+      "provenance": {
+        "reported_date": "2025-11-11",
+        "run_date": null,
+        "run_date_display": "2025-11-11（按来源发布日期近似）",
+        "run_date_basis": "原论文/报告未公开具体跑分日期；这里用分数来源的首次公开日期或技术报告发布日期作为近似时间。",
+        "report_title": "UI2Code^N: UI-to-Code Generation as Interactive Visual Optimization",
+        "report_venue": "ICML 2026",
+        "report_venue_rating": "顶会 / CCF-A 常见口径",
+        "report_status": "已接收会议论文"
+      }
+    },
+    {
+      "benchmark_id": "design2code_hard",
+      "model": "UI2Code^N-9B-RL",
+      "model_family": "Zhipu / GLM ecosystem",
+      "score": 88.6,
+      "metric": "VLM Judge Acc.",
+      "score_scale": "0-100",
+      "source_type": "benchmark_paper",
+      "source_url": "https://arxiv.org/abs/2511.08195",
+      "confidence": "high",
+      "caveat": "End-to-end closed-loop 方法。",
+      "provenance": {
+        "reported_date": "2025-11-11",
+        "run_date": null,
+        "run_date_display": "2025-11-11（按来源发布日期近似）",
+        "run_date_basis": "原论文/报告未公开具体跑分日期；这里用分数来源的首次公开日期或技术报告发布日期作为近似时间。",
+        "report_title": "UI2Code^N: UI-to-Code Generation as Interactive Visual Optimization",
+        "report_venue": "ICML 2026",
+        "report_venue_rating": "顶会 / CCF-A 常见口径",
+        "report_status": "已接收会议论文"
+      }
+    },
+    {
+      "benchmark_id": "design2code_hard",
+      "model": "ScreenCoder",
+      "model_family": "Agent-based UI-to-code",
+      "score": 80,
+      "metric": "VLM Judge Acc.",
+      "score_scale": "0-100",
+      "source_type": "benchmark_paper",
+      "source_url": "https://arxiv.org/abs/2511.08195",
+      "confidence": "high",
+      "caveat": "Agent-based baseline。",
+      "provenance": {
+        "reported_date": "2025-11-11",
+        "run_date": null,
+        "run_date_display": "2025-11-11（按来源发布日期近似）",
+        "run_date_basis": "原论文/报告未公开具体跑分日期；这里用分数来源的首次公开日期或技术报告发布日期作为近似时间。",
+        "report_title": "UI2Code^N: UI-to-Code Generation as Interactive Visual Optimization",
+        "report_venue": "ICML 2026",
+        "report_venue_rating": "顶会 / CCF-A 常见口径",
+        "report_status": "已接收会议论文"
+      }
+    },
+    {
+      "benchmark_id": "design2code_hard",
+      "model": "DCGen",
+      "model_family": "Agent-based UI-to-code",
+      "score": 45,
+      "metric": "VLM Judge Acc.",
+      "score_scale": "0-100",
+      "source_type": "benchmark_paper",
+      "source_url": "https://arxiv.org/abs/2511.08195",
+      "confidence": "high",
+      "caveat": "Agent-based baseline。",
+      "provenance": {
+        "reported_date": "2025-11-11",
+        "run_date": null,
+        "run_date_display": "2025-11-11（按来源发布日期近似）",
+        "run_date_basis": "原论文/报告未公开具体跑分日期；这里用分数来源的首次公开日期或技术报告发布日期作为近似时间。",
+        "report_title": "UI2Code^N: UI-to-Code Generation as Interactive Visual Optimization",
+        "report_venue": "ICML 2026",
+        "report_venue_rating": "顶会 / CCF-A 常见口径",
+        "report_status": "已接收会议论文"
+      }
+    },
+    {
+      "benchmark_id": "webcode2m_long",
+      "model": "UI2Code^N-9B-RL",
+      "model_family": "Zhipu / GLM ecosystem",
+      "score": 0.79,
+      "metric": "CLIP Similarity",
+      "score_scale": "0-1",
+      "source_type": "benchmark_paper",
+      "source_url": "https://arxiv.org/abs/2511.08195",
+      "confidence": "medium_high",
+      "caveat": "附录补充对比；std 为 0.09。",
+      "provenance": {
+        "reported_date": "2025-11-11",
+        "run_date": null,
+        "run_date_display": "2025-11-11（按来源发布日期近似）",
+        "run_date_basis": "原论文/报告未公开具体跑分日期；这里用分数来源的首次公开日期或技术报告发布日期作为近似时间。",
+        "report_title": "UI2Code^N: UI-to-Code Generation as Interactive Visual Optimization",
+        "report_venue": "ICML 2026",
+        "report_venue_rating": "顶会 / CCF-A 常见口径",
+        "report_status": "已接收会议论文"
+      }
+    },
+    {
+      "benchmark_id": "webvoyager",
+      "model": "GLM-5V-Turbo",
+      "model_family": "Zhipu / GLM",
+      "score": 88.5,
+      "metric": "Success Rate",
+      "score_scale": "0-100",
+      "source_type": "official_report",
+      "source_url": "https://arxiv.org/abs/2604.26752",
+      "confidence": "high",
+      "caveat": "Web GUI agent，不是 design-to-code。",
+      "provenance": {
+        "reported_date": "2026-04-29",
+        "run_date": null,
+        "run_date_display": "2026-04-29（按来源发布日期近似）",
+        "run_date_basis": "原论文/报告未公开具体跑分日期；这里用分数来源的首次公开日期或技术报告发布日期作为近似时间。",
+        "report_title": "GLM-5V-Turbo: Toward a Native Foundation Model for Multimodal Agents",
+        "report_venue": "Z.AI technical report / arXiv",
+        "report_venue_rating": "技术报告 / 官方报告；暂无会议/期刊评级",
+        "report_status": "官方技术报告"
+      }
+    },
+    {
+      "benchmark_id": "webvoyager",
+      "model": "GLM-4.5V",
+      "model_family": "Zhipu / GLM",
+      "score": 84.4,
+      "metric": "Success Rate",
+      "score_scale": "0-100",
+      "source_type": "official_report",
+      "source_url": "https://arxiv.org/abs/2507.01006",
+      "confidence": "high",
+      "caveat": "Web GUI agent。",
+      "provenance": {
+        "reported_date": "2025-07-01",
+        "run_date": null,
+        "run_date_display": "2025-07-01（按来源发布日期近似）",
+        "run_date_basis": "原论文/报告未公开具体跑分日期；这里用分数来源的首次公开日期或技术报告发布日期作为近似时间。",
+        "report_title": "GLM-4.5V and GLM-4.1V-Thinking: Towards Versatile Multimodal Reasoning with Scalable Reinforcement Learning",
+        "report_venue": "Z.AI technical report / arXiv",
+        "report_venue_rating": "技术报告 / 官方报告；暂无会议/期刊评级",
+        "report_status": "官方技术报告"
+      }
+    },
+    {
+      "benchmark_id": "webvoyager",
+      "model": "GLM-4.6V",
+      "model_family": "Zhipu / GLM",
+      "score": 81,
+      "metric": "Success Rate",
+      "score_scale": "0-100",
+      "source_type": "official_report",
+      "source_url": "https://arxiv.org/abs/2507.01006",
+      "confidence": "high",
+      "caveat": "Web GUI agent。",
+      "provenance": {
+        "reported_date": "2025-07-01",
+        "run_date": null,
+        "run_date_display": "2025-07-01（按来源发布日期近似）",
+        "run_date_basis": "原论文/报告未公开具体跑分日期；这里用分数来源的首次公开日期或技术报告发布日期作为近似时间。",
+        "report_title": "GLM-4.5V and GLM-4.1V-Thinking: Towards Versatile Multimodal Reasoning with Scalable Reinforcement Learning",
+        "report_venue": "Z.AI technical report / arXiv",
+        "report_venue_rating": "技术报告 / 官方报告；暂无会议/期刊评级",
+        "report_status": "官方技术报告"
+      }
+    },
+    {
+      "benchmark_id": "webvoyager",
+      "model": "GLM-4.1V-9B-Thinking",
+      "model_family": "Zhipu / GLM",
+      "score": 69,
+      "metric": "Success Rate",
+      "score_scale": "0-100",
+      "source_type": "official_report",
+      "source_url": "https://arxiv.org/abs/2507.01006",
+      "confidence": "high",
+      "caveat": "Web GUI agent。",
+      "provenance": {
+        "reported_date": "2025-07-01",
+        "run_date": null,
+        "run_date_display": "2025-07-01（按来源发布日期近似）",
+        "run_date_basis": "原论文/报告未公开具体跑分日期；这里用分数来源的首次公开日期或技术报告发布日期作为近似时间。",
+        "report_title": "GLM-4.5V and GLM-4.1V-Thinking: Towards Versatile Multimodal Reasoning with Scalable Reinforcement Learning",
+        "report_venue": "Z.AI technical report / arXiv",
+        "report_venue_rating": "技术报告 / 官方报告；暂无会议/期刊评级",
+        "report_status": "官方技术报告"
+      }
+    },
+    {
+      "benchmark_id": "osworld",
+      "model": "GLM-4.6V",
+      "model_family": "Zhipu / GLM",
+      "score": 37.2,
+      "metric": "Success Rate",
+      "score_scale": "0-100",
+      "source_type": "official_report",
+      "source_url": "https://arxiv.org/abs/2507.01006",
+      "confidence": "high",
+      "caveat": "Desktop GUI agent。",
+      "provenance": {
+        "reported_date": "2025-07-01",
+        "run_date": null,
+        "run_date_display": "2025-07-01（按来源发布日期近似）",
+        "run_date_basis": "原论文/报告未公开具体跑分日期；这里用分数来源的首次公开日期或技术报告发布日期作为近似时间。",
+        "report_title": "GLM-4.5V and GLM-4.1V-Thinking: Towards Versatile Multimodal Reasoning with Scalable Reinforcement Learning",
+        "report_venue": "Z.AI technical report / arXiv",
+        "report_venue_rating": "技术报告 / 官方报告；暂无会议/期刊评级",
+        "report_status": "官方技术报告"
+      }
+    },
+    {
+      "benchmark_id": "androidworld",
+      "model": "GLM-4.6V",
+      "model_family": "Zhipu / GLM",
+      "score": 57,
+      "metric": "Success Rate",
+      "score_scale": "0-100",
+      "source_type": "official_report",
+      "source_url": "https://arxiv.org/abs/2507.01006",
+      "confidence": "high",
+      "caveat": "Mobile GUI agent。",
+      "provenance": {
+        "reported_date": "2025-07-01",
+        "run_date": null,
+        "run_date_display": "2025-07-01（按来源发布日期近似）",
+        "run_date_basis": "原论文/报告未公开具体跑分日期；这里用分数来源的首次公开日期或技术报告发布日期作为近似时间。",
+        "report_title": "GLM-4.5V and GLM-4.1V-Thinking: Towards Versatile Multimodal Reasoning with Scalable Reinforcement Learning",
+        "report_venue": "Z.AI technical report / arXiv",
+        "report_venue_rating": "技术报告 / 官方报告；暂无会议/期刊评级",
+        "report_status": "官方技术报告"
+      }
+    },
+    {
+      "benchmark_id": "webquest",
+      "model": "GLM-4.6V",
+      "model_family": "Zhipu / GLM",
+      "score": 79.5,
+      "metric": "SingleQA",
+      "score_scale": "0-100",
+      "source_type": "official_report",
+      "source_url": "https://arxiv.org/abs/2507.01006",
+      "confidence": "high",
+      "caveat": "Web QA agent。",
+      "provenance": {
+        "reported_date": "2025-07-01",
+        "run_date": null,
+        "run_date_display": "2025-07-01（按来源发布日期近似）",
+        "run_date_basis": "原论文/报告未公开具体跑分日期；这里用分数来源的首次公开日期或技术报告发布日期作为近似时间。",
+        "report_title": "GLM-4.5V and GLM-4.1V-Thinking: Towards Versatile Multimodal Reasoning with Scalable Reinforcement Learning",
+        "report_venue": "Z.AI technical report / arXiv",
+        "report_venue_rating": "技术报告 / 官方报告；暂无会议/期刊评级",
+        "report_status": "官方技术报告"
+      }
+    },
+    {
+      "benchmark_id": "mind2web",
+      "model": "CogAgent",
+      "model_family": "THUDM / CogVLM",
+      "score": 58.2,
+      "metric": "Overall Step SR",
+      "score_scale": "0-100",
+      "source_type": "benchmark_paper",
+      "source_url": "https://arxiv.org/abs/2312.08914",
+      "confidence": "high",
+      "caveat": "Web action prediction。",
+      "provenance": {
+        "reported_date": "2023-12-14",
+        "run_date": null,
+        "run_date_display": "2023-12-14（按来源发布日期近似）",
+        "run_date_basis": "原论文/报告未公开具体跑分日期；这里用分数来源的首次公开日期或技术报告发布日期作为近似时间。",
+        "report_title": "CogAgent: A Visual Language Model for GUI Agents",
+        "report_venue": "CVPR 2024",
+        "report_venue_rating": "顶会 / CCF-A 常见口径",
+        "report_status": "已发表会议论文"
+      }
+    },
+    {
+      "benchmark_id": "mind2web",
+      "model": "AutoWebGLM",
+      "model_family": "Zhipu / ChatGLM",
+      "score": 59.5,
+      "metric": "Average Step SR",
+      "score_scale": "0-100",
+      "source_type": "benchmark_paper",
+      "source_url": "https://arxiv.org/abs/2404.03648",
+      "confidence": "high",
+      "caveat": "Web navigation agent。",
+      "provenance": {
+        "reported_date": "2024-04-04",
+        "run_date": null,
+        "run_date_display": "2024-04-04（按来源发布日期近似）",
+        "run_date_basis": "原论文/报告未公开具体跑分日期；这里用分数来源的首次公开日期或技术报告发布日期作为近似时间。",
+        "report_title": "AutoWebGLM: A Large Language Model-based Web Navigating Agent",
+        "report_venue": "KDD 2024",
+        "report_venue_rating": "顶会 / CCF-A 常见口径",
+        "report_status": "已发表会议论文"
+      }
+    },
+    {
+      "benchmark_id": "aitw",
+      "model": "CogAgent",
+      "model_family": "THUDM / CogVLM",
+      "score": 76.88,
+      "metric": "Overall Matching Score",
+      "score_scale": "0-100",
+      "source_type": "benchmark_paper",
+      "source_url": "https://arxiv.org/abs/2312.08914",
+      "confidence": "high",
+      "caveat": "Mobile action prediction。",
+      "provenance": {
+        "reported_date": "2023-12-14",
+        "run_date": null,
+        "run_date_display": "2023-12-14（按来源发布日期近似）",
+        "run_date_basis": "原论文/报告未公开具体跑分日期；这里用分数来源的首次公开日期或技术报告发布日期作为近似时间。",
+        "report_title": "CogAgent: A Visual Language Model for GUI Agents",
+        "report_venue": "CVPR 2024",
+        "report_venue_rating": "顶会 / CCF-A 常见口径",
+        "report_status": "已发表会议论文"
+      }
+    },
+    {
+      "benchmark_id": "autowebbench",
+      "model": "AutoWebGLM",
+      "model_family": "Zhipu / ChatGLM",
+      "score": 62.7,
+      "metric": "Overall SSR summary",
+      "score_scale": "0-100",
+      "source_type": "benchmark_paper",
+      "source_url": "https://arxiv.org/abs/2404.03648",
+      "confidence": "high",
+      "caveat": "AutoWebBench 由 AutoWebGLM 论文构建；这里用 ablation 表最终 AutoWebGLM 汇总值。",
+      "provenance": {
+        "reported_date": "2024-04-04",
+        "run_date": null,
+        "run_date_display": "2024-04-04（按来源发布日期近似）",
+        "run_date_basis": "原论文/报告未公开具体跑分日期；这里用分数来源的首次公开日期或技术报告发布日期作为近似时间。",
+        "report_title": "AutoWebGLM: A Large Language Model-based Web Navigating Agent",
+        "report_venue": "KDD 2024",
+        "report_venue_rating": "顶会 / CCF-A 常见口径",
+        "report_status": "已发表会议论文"
+      }
+    },
+    {
+      "benchmark_id": "miniwob",
+      "model": "AutoWebGLM",
+      "model_family": "Zhipu / ChatGLM",
+      "score": 89.3,
+      "metric": "Success Rate",
+      "score_scale": "0-100",
+      "source_type": "benchmark_paper",
+      "source_url": "https://arxiv.org/abs/2404.03648",
+      "confidence": "high",
+      "caveat": "模拟网页操作任务。",
+      "provenance": {
+        "reported_date": "2024-04-04",
+        "run_date": null,
+        "run_date_display": "2024-04-04（按来源发布日期近似）",
+        "run_date_basis": "原论文/报告未公开具体跑分日期；这里用分数来源的首次公开日期或技术报告发布日期作为近似时间。",
+        "report_title": "AutoWebGLM: A Large Language Model-based Web Navigating Agent",
+        "report_venue": "KDD 2024",
+        "report_venue_rating": "顶会 / CCF-A 常见口径",
+        "report_status": "已发表会议论文"
+      }
+    },
+    {
+      "benchmark_id": "webarena",
+      "model": "AutoWebGLM",
+      "model_family": "Zhipu / ChatGLM",
+      "score": 18.2,
+      "metric": "Success Rate",
+      "score_scale": "0-100",
+      "source_type": "benchmark_paper",
+      "source_url": "https://arxiv.org/abs/2404.03648",
+      "confidence": "high",
+      "caveat": "真实网站环境 web agent。",
+      "provenance": {
+        "reported_date": "2024-04-04",
+        "run_date": null,
+        "run_date_display": "2024-04-04（按来源发布日期近似）",
+        "run_date_basis": "原论文/报告未公开具体跑分日期；这里用分数来源的首次公开日期或技术报告发布日期作为近似时间。",
+        "report_title": "AutoWebGLM: A Large Language Model-based Web Navigating Agent",
+        "report_venue": "KDD 2024",
+        "report_venue_rating": "顶会 / CCF-A 常见口径",
+        "report_status": "已发表会议论文"
+      }
+    },
+    {
+      "benchmark_id": "vab_webarena_lite",
+      "model": "AutoGLM",
+      "model_family": "Zhipu / ChatGLM",
+      "score": 55.2,
+      "metric": "Success Rate",
+      "score_scale": "0-100",
+      "source_type": "benchmark_paper",
+      "source_url": "https://arxiv.org/abs/2411.00820",
+      "confidence": "high",
+      "caveat": "AutoGLM 论文结果。",
+      "provenance": {
+        "reported_date": "2024-10-28",
+        "run_date": null,
+        "run_date_display": "2024-10-28（按来源发布日期近似）",
+        "run_date_basis": "原论文/报告未公开具体跑分日期；这里用分数来源的首次公开日期或技术报告发布日期作为近似时间。",
+        "report_title": "AutoGLM: Autonomous Foundation Agents for GUIs",
+        "report_venue": "arXiv preprint",
+        "report_venue_rating": "arXiv 预印本；暂无会议/期刊评级",
+        "report_status": "预印本"
+      }
+    },
+    {
+      "benchmark_id": "vab_webarena_lite",
+      "model": "AutoGLM pass@2",
+      "model_family": "Zhipu / ChatGLM",
+      "score": 59.1,
+      "metric": "Success Rate pass@2",
+      "score_scale": "0-100",
+      "source_type": "benchmark_paper",
+      "source_url": "https://arxiv.org/abs/2411.00820",
+      "confidence": "high",
+      "caveat": "第二次尝试机会下的结果。",
+      "provenance": {
+        "reported_date": "2024-10-28",
+        "run_date": null,
+        "run_date_display": "2024-10-28（按来源发布日期近似）",
+        "run_date_basis": "原论文/报告未公开具体跑分日期；这里用分数来源的首次公开日期或技术报告发布日期作为近似时间。",
+        "report_title": "AutoGLM: Autonomous Foundation Agents for GUIs",
+        "report_venue": "arXiv preprint",
+        "report_venue_rating": "arXiv 预印本；暂无会议/期刊评级",
+        "report_status": "预印本"
+      }
+    },
+    {
+      "benchmark_id": "androidlab",
+      "model": "AutoGLM",
+      "model_family": "Zhipu / ChatGLM",
+      "score": 36.2,
+      "metric": "Success Rate",
+      "score_scale": "0-100",
+      "source_type": "benchmark_paper",
+      "source_url": "https://arxiv.org/abs/2411.00820",
+      "confidence": "high",
+      "caveat": "AndroidLab / VAB-Mobile。",
+      "provenance": {
+        "reported_date": "2024-10-28",
+        "run_date": null,
+        "run_date_display": "2024-10-28（按来源发布日期近似）",
+        "run_date_basis": "原论文/报告未公开具体跑分日期；这里用分数来源的首次公开日期或技术报告发布日期作为近似时间。",
+        "report_title": "AutoGLM: Autonomous Foundation Agents for GUIs",
+        "report_venue": "arXiv preprint",
+        "report_venue_rating": "arXiv 预印本；暂无会议/期刊评级",
+        "report_status": "预印本"
+      }
+    },
+    {
+      "benchmark_id": "designbench_webpai",
+      "model": "Claude-3.7",
+      "model_family": "Anthropic Claude",
+      "score": "generation CLIP range 0.6024-0.8319; edit MLLM 8.0152-9.1500; repair MLLM 6.5926-7.1786",
+      "metric": "mixed ranges",
+      "score_scale": "mixed",
+      "source_type": "benchmark_paper",
+      "source_url": "https://arxiv.org/abs/2506.06251",
+      "confidence": "high",
+      "caveat": "DesignBench 不适合压成单分；展示时用范围卡片。",
+      "provenance": {
+        "reported_date": "2025-06-06",
+        "run_date": null,
+        "run_date_display": "2025-06-06（按来源发布日期近似）",
+        "run_date_basis": "原论文/报告未公开具体跑分日期；这里用分数来源的首次公开日期或技术报告发布日期作为近似时间。",
+        "report_title": "DesignBench: A Comprehensive Benchmark for MLLM-based Front-end Code Generation",
+        "report_venue": "arXiv preprint",
+        "report_venue_rating": "arXiv 预印本；暂无会议/期刊评级",
+        "report_status": "预印本"
+      }
+    },
+    {
+      "benchmark_id": "designbench_webpai",
+      "model": "GPT-4o",
+      "model_family": "OpenAI GPT",
+      "score": "generation CLIP range 0.5963-0.7734; edit MLLM 8.0093-9.2250; repair MLLM 5.9286-7.0714",
+      "metric": "mixed ranges",
+      "score_scale": "mixed",
+      "source_type": "benchmark_paper",
+      "source_url": "https://arxiv.org/abs/2506.06251",
+      "confidence": "high",
+      "caveat": "DesignBench 不适合压成单分；展示时用范围卡片。",
+      "provenance": {
+        "reported_date": "2025-06-06",
+        "run_date": null,
+        "run_date_display": "2025-06-06（按来源发布日期近似）",
+        "run_date_basis": "原论文/报告未公开具体跑分日期；这里用分数来源的首次公开日期或技术报告发布日期作为近似时间。",
+        "report_title": "DesignBench: A Comprehensive Benchmark for MLLM-based Front-end Code Generation",
+        "report_venue": "arXiv preprint",
+        "report_venue_rating": "arXiv 预印本；暂无会议/期刊评级",
+        "report_status": "预印本"
+      }
+    },
+    {
+      "rank_hint": null,
+      "confidence": "medium_high",
+      "caveat": "Design2Code 原论文自动指标；和 GLM/UI2Code 报告中的 VLM Judge 不是同一口径。",
+      "benchmark_id": "design2code",
+      "model": "GPT-4o Self-Revision",
+      "model_family": "OpenAI GPT",
+      "score": 90.1,
+      "metric": "CLIP",
+      "score_scale": "0-100",
+      "source_type": "benchmark_paper",
+      "source_url": "https://arxiv.org/abs/2403.03163",
+      "provenance": {
+        "reported_date": "2024-03-05",
+        "run_date": null,
+        "run_date_display": "2024-03-05（按来源发布日期近似）",
+        "run_date_basis": "原论文/报告未公开具体跑分日期；这里用分数来源的首次公开日期或技术报告发布日期作为近似时间。",
+        "report_title": "Design2Code: Benchmarking Multimodal Code Generation for Automated Front-End Engineering",
+        "report_venue": "NAACL 2025 Long Papers",
+        "report_venue_rating": "ACL Anthology 主会长文 / 主流 NLP 会议；具体 CCF 等级需按目录版本核对",
+        "report_status": "已发表会议论文"
+      }
+    },
+    {
+      "rank_hint": null,
+      "confidence": "medium_high",
+      "caveat": "Design2Code 原论文自动指标；和 GLM/UI2Code 报告中的 VLM Judge 不是同一口径。",
+      "benchmark_id": "design2code",
+      "model": "GPT-4V Self-Revision",
+      "model_family": "OpenAI GPT",
+      "score": 87.2,
+      "metric": "CLIP",
+      "score_scale": "0-100",
+      "source_type": "benchmark_paper",
+      "source_url": "https://arxiv.org/abs/2403.03163",
+      "provenance": {
+        "reported_date": "2024-03-05",
+        "run_date": null,
+        "run_date_display": "2024-03-05（按来源发布日期近似）",
+        "run_date_basis": "原论文/报告未公开具体跑分日期；这里用分数来源的首次公开日期或技术报告发布日期作为近似时间。",
+        "report_title": "Design2Code: Benchmarking Multimodal Code Generation for Automated Front-End Engineering",
+        "report_venue": "NAACL 2025 Long Papers",
+        "report_venue_rating": "ACL Anthology 主会长文 / 主流 NLP 会议；具体 CCF 等级需按目录版本核对",
+        "report_status": "已发表会议论文"
+      }
+    },
+    {
+      "rank_hint": null,
+      "confidence": "medium_high",
+      "caveat": "Design2Code 原论文自动指标；和 GLM/UI2Code 报告中的 VLM Judge 不是同一口径。",
+      "benchmark_id": "design2code",
+      "model": "Claude 3 Opus Direct",
+      "model_family": "Anthropic Claude",
+      "score": 87,
+      "metric": "CLIP",
+      "score_scale": "0-100",
+      "source_type": "benchmark_paper",
+      "source_url": "https://arxiv.org/abs/2403.03163",
+      "provenance": {
+        "reported_date": "2024-03-05",
+        "run_date": null,
+        "run_date_display": "2024-03-05（按来源发布日期近似）",
+        "run_date_basis": "原论文/报告未公开具体跑分日期；这里用分数来源的首次公开日期或技术报告发布日期作为近似时间。",
+        "report_title": "Design2Code: Benchmarking Multimodal Code Generation for Automated Front-End Engineering",
+        "report_venue": "NAACL 2025 Long Papers",
+        "report_venue_rating": "ACL Anthology 主会长文 / 主流 NLP 会议；具体 CCF 等级需按目录版本核对",
+        "report_status": "已发表会议论文"
+      }
+    },
+    {
+      "rank_hint": null,
+      "confidence": "medium_high",
+      "caveat": "Design2Code 原论文自动指标；和 GLM/UI2Code 报告中的 VLM Judge 不是同一口径。",
+      "benchmark_id": "design2code",
+      "model": "Gemini 1.0 Pro Vision Direct",
+      "model_family": "Google Gemini",
+      "score": 84.4,
+      "metric": "CLIP",
+      "score_scale": "0-100",
+      "source_type": "benchmark_paper",
+      "source_url": "https://arxiv.org/abs/2403.03163",
+      "provenance": {
+        "reported_date": "2024-03-05",
+        "run_date": null,
+        "run_date_display": "2024-03-05（按来源发布日期近似）",
+        "run_date_basis": "原论文/报告未公开具体跑分日期；这里用分数来源的首次公开日期或技术报告发布日期作为近似时间。",
+        "report_title": "Design2Code: Benchmarking Multimodal Code Generation for Automated Front-End Engineering",
+        "report_venue": "NAACL 2025 Long Papers",
+        "report_venue_rating": "ACL Anthology 主会长文 / 主流 NLP 会议；具体 CCF 等级需按目录版本核对",
+        "report_status": "已发表会议论文"
+      }
+    },
+    {
+      "rank_hint": null,
+      "confidence": "medium_high",
+      "caveat": "Design2Code 原论文自动指标；和 GLM/UI2Code 报告中的 VLM Judge 不是同一口径。",
+      "benchmark_id": "design2code",
+      "model": "WebSight VLM-8B",
+      "model_family": "Open-source UI-to-code",
+      "score": 87.6,
+      "metric": "CLIP",
+      "score_scale": "0-100",
+      "source_type": "benchmark_paper",
+      "source_url": "https://arxiv.org/abs/2403.03163",
+      "provenance": {
+        "reported_date": "2024-03-05",
+        "run_date": null,
+        "run_date_display": "2024-03-05（按来源发布日期近似）",
+        "run_date_basis": "原论文/报告未公开具体跑分日期；这里用分数来源的首次公开日期或技术报告发布日期作为近似时间。",
+        "report_title": "Design2Code: Benchmarking Multimodal Code Generation for Automated Front-End Engineering",
+        "report_venue": "NAACL 2025 Long Papers",
+        "report_venue_rating": "ACL Anthology 主会长文 / 主流 NLP 会议；具体 CCF 等级需按目录版本核对",
+        "report_status": "已发表会议论文"
+      }
+    },
+    {
+      "rank_hint": null,
+      "confidence": "medium_high",
+      "caveat": "Design2Code 原论文自动指标；和 GLM/UI2Code 报告中的 VLM Judge 不是同一口径。",
+      "benchmark_id": "design2code",
+      "model": "Design2Code-18B",
+      "model_family": "Open-source UI-to-code",
+      "score": 85.8,
+      "metric": "CLIP",
+      "score_scale": "0-100",
+      "source_type": "benchmark_paper",
+      "source_url": "https://arxiv.org/abs/2403.03163",
+      "provenance": {
+        "reported_date": "2024-03-05",
+        "run_date": null,
+        "run_date_display": "2024-03-05（按来源发布日期近似）",
+        "run_date_basis": "原论文/报告未公开具体跑分日期；这里用分数来源的首次公开日期或技术报告发布日期作为近似时间。",
+        "report_title": "Design2Code: Benchmarking Multimodal Code Generation for Automated Front-End Engineering",
+        "report_venue": "NAACL 2025 Long Papers",
+        "report_venue_rating": "ACL Anthology 主会长文 / 主流 NLP 会议；具体 CCF 等级需按目录版本核对",
+        "report_status": "已发表会议论文"
+      }
+    },
+    {
+      "rank_hint": null,
+      "confidence": "medium_high",
+      "caveat": "Design2Code-HARD 子集；困难样本，不应和原始 Design2Code 全集直接混排。",
+      "benchmark_id": "design2code_hard",
+      "model": "GPT-4o Self-Revision",
+      "model_family": "OpenAI GPT",
+      "score": 88.2,
+      "metric": "CLIP",
+      "score_scale": "0-100",
+      "source_type": "benchmark_paper",
+      "source_url": "https://arxiv.org/abs/2403.03163",
+      "provenance": {
+        "reported_date": "2024-03-05",
+        "run_date": null,
+        "run_date_display": "2024-03-05（按来源发布日期近似）",
+        "run_date_basis": "原论文/报告未公开具体跑分日期；这里用分数来源的首次公开日期或技术报告发布日期作为近似时间。",
+        "report_title": "Design2Code: Benchmarking Multimodal Code Generation for Automated Front-End Engineering",
+        "report_venue": "NAACL 2025 Long Papers",
+        "report_venue_rating": "ACL Anthology 主会长文 / 主流 NLP 会议；具体 CCF 等级需按目录版本核对",
+        "report_status": "已发表会议论文"
+      }
+    },
+    {
+      "rank_hint": null,
+      "confidence": "medium_high",
+      "caveat": "Design2Code-HARD 子集；困难样本，不应和原始 Design2Code 全集直接混排。",
+      "benchmark_id": "design2code_hard",
+      "model": "Claude 3.5 Sonnet Direct",
+      "model_family": "Anthropic Claude",
+      "score": 89.5,
+      "metric": "CLIP",
+      "score_scale": "0-100",
+      "source_type": "benchmark_paper",
+      "source_url": "https://arxiv.org/abs/2403.03163",
+      "provenance": {
+        "reported_date": "2024-03-05",
+        "run_date": null,
+        "run_date_display": "2024-03-05（按来源发布日期近似）",
+        "run_date_basis": "原论文/报告未公开具体跑分日期；这里用分数来源的首次公开日期或技术报告发布日期作为近似时间。",
+        "report_title": "Design2Code: Benchmarking Multimodal Code Generation for Automated Front-End Engineering",
+        "report_venue": "NAACL 2025 Long Papers",
+        "report_venue_rating": "ACL Anthology 主会长文 / 主流 NLP 会议；具体 CCF 等级需按目录版本核对",
+        "report_status": "已发表会议论文"
+      }
+    },
+    {
+      "rank_hint": null,
+      "confidence": "medium_high",
+      "caveat": "Design2Code-HARD 子集；困难样本，不应和原始 Design2Code 全集直接混排。",
+      "benchmark_id": "design2code_hard",
+      "model": "Gemini 1.5 Pro Text-Augmented",
+      "model_family": "Google Gemini",
+      "score": 88.2,
+      "metric": "CLIP",
+      "score_scale": "0-100",
+      "source_type": "benchmark_paper",
+      "source_url": "https://arxiv.org/abs/2403.03163",
+      "provenance": {
+        "reported_date": "2024-03-05",
+        "run_date": null,
+        "run_date_display": "2024-03-05（按来源发布日期近似）",
+        "run_date_basis": "原论文/报告未公开具体跑分日期；这里用分数来源的首次公开日期或技术报告发布日期作为近似时间。",
+        "report_title": "Design2Code: Benchmarking Multimodal Code Generation for Automated Front-End Engineering",
+        "report_venue": "NAACL 2025 Long Papers",
+        "report_venue_rating": "ACL Anthology 主会长文 / 主流 NLP 会议；具体 CCF 等级需按目录版本核对",
+        "report_status": "已发表会议论文"
+      }
+    },
+    {
+      "rank_hint": null,
+      "confidence": "medium_high",
+      "caveat": "Design2Code-HARD 子集；困难样本，不应和原始 Design2Code 全集直接混排。",
+      "benchmark_id": "design2code_hard",
+      "model": "Gemini 1.5 Flash Text-Augmented",
+      "model_family": "Google Gemini",
+      "score": 87.6,
+      "metric": "CLIP",
+      "score_scale": "0-100",
+      "source_type": "benchmark_paper",
+      "source_url": "https://arxiv.org/abs/2403.03163",
+      "provenance": {
+        "reported_date": "2024-03-05",
+        "run_date": null,
+        "run_date_display": "2024-03-05（按来源发布日期近似）",
+        "run_date_basis": "原论文/报告未公开具体跑分日期；这里用分数来源的首次公开日期或技术报告发布日期作为近似时间。",
+        "report_title": "Design2Code: Benchmarking Multimodal Code Generation for Automated Front-End Engineering",
+        "report_venue": "NAACL 2025 Long Papers",
+        "report_venue_rating": "ACL Anthology 主会长文 / 主流 NLP 会议；具体 CCF 等级需按目录版本核对",
+        "report_status": "已发表会议论文"
+      }
+    },
+    {
+      "rank_hint": null,
+      "confidence": "medium",
+      "caveat": "DesignBench 论文中的多任务范围值；适合看 top-tier 模型，不适合压成一个总分。",
+      "benchmark_id": "designbench_webpai",
+      "model": "Gemini-2.0",
+      "model_family": "Google Gemini",
+      "score": "generation CLIP range 0.6006-0.7611; edit MLLM 7.8148-9.1364; repair MLLM 5.2857-7.3214",
+      "metric": "mixed ranges",
+      "score_scale": "mixed",
+      "source_type": "benchmark_paper",
+      "source_url": "https://arxiv.org/abs/2506.06251",
+      "provenance": {
+        "reported_date": "2025-06-06",
+        "run_date": null,
+        "run_date_display": "2025-06-06（按来源发布日期近似）",
+        "run_date_basis": "原论文/报告未公开具体跑分日期；这里用分数来源的首次公开日期或技术报告发布日期作为近似时间。",
+        "report_title": "DesignBench: A Comprehensive Benchmark for MLLM-based Front-end Code Generation",
+        "report_venue": "arXiv preprint",
+        "report_venue_rating": "arXiv 预印本；暂无会议/期刊评级",
+        "report_status": "预印本"
+      }
+    },
+    {
+      "rank_hint": null,
+      "confidence": "medium",
+      "caveat": "DesignBench 论文中的多任务范围值；适合看 top-tier 模型，不适合压成一个总分。",
+      "benchmark_id": "designbench_webpai",
+      "model": "Pixtral-124B",
+      "model_family": "Mistral / Pixtral",
+      "score": "generation CLIP range 0.6324-0.7811; edit MLLM 8.0185-9.1125; repair MLLM 6.3704-6.9643",
+      "metric": "mixed ranges",
+      "score_scale": "mixed",
+      "source_type": "benchmark_paper",
+      "source_url": "https://arxiv.org/abs/2506.06251",
+      "provenance": {
+        "reported_date": "2025-06-06",
+        "run_date": null,
+        "run_date_display": "2025-06-06（按来源发布日期近似）",
+        "run_date_basis": "原论文/报告未公开具体跑分日期；这里用分数来源的首次公开日期或技术报告发布日期作为近似时间。",
+        "report_title": "DesignBench: A Comprehensive Benchmark for MLLM-based Front-end Code Generation",
+        "report_venue": "arXiv preprint",
+        "report_venue_rating": "arXiv 预印本；暂无会议/期刊评级",
+        "report_status": "预印本"
+      }
+    },
+    {
+      "rank_hint": null,
+      "confidence": "medium_high",
+      "caveat": "FLAME 原论文 pass@1；偏 React 工程正确性，和 GLM 报告 Flame-VLM-Code 分数口径不同。",
+      "benchmark_id": "flame_react_eval",
+      "model": "Flame-Evo-7B",
+      "model_family": "Flame-Code-VLM",
+      "score": 43.8,
+      "metric": "pass@1",
+      "score_scale": "0-100",
+      "source_type": "benchmark_paper",
+      "source_url": "https://arxiv.org/abs/2503.01619",
+      "provenance": {
+        "reported_date": "2025-03-03",
+        "run_date": null,
+        "run_date_display": "2025-03-03（按来源发布日期近似）",
+        "run_date_basis": "原论文/报告未公开具体跑分日期；这里用分数来源的首次公开日期或技术报告发布日期作为近似时间。",
+        "report_title": "Advancing Vision-Language Models in Front-End Development via Data Synthesis",
+        "report_venue": "arXiv preprint",
+        "report_venue_rating": "arXiv 预印本；暂无会议/期刊评级",
+        "report_status": "预印本"
+      }
+    },
+    {
+      "rank_hint": null,
+      "confidence": "medium_high",
+      "caveat": "FLAME 原论文 pass@1；偏 React 工程正确性，和 GLM 报告 Flame-VLM-Code 分数口径不同。",
+      "benchmark_id": "flame_react_eval",
+      "model": "Flame-Waterfall-7B",
+      "model_family": "Flame-Code-VLM",
+      "score": 52.6,
+      "metric": "pass@1",
+      "score_scale": "0-100",
+      "source_type": "benchmark_paper",
+      "source_url": "https://arxiv.org/abs/2503.01619",
+      "provenance": {
+        "reported_date": "2025-03-03",
+        "run_date": null,
+        "run_date_display": "2025-03-03（按来源发布日期近似）",
+        "run_date_basis": "原论文/报告未公开具体跑分日期；这里用分数来源的首次公开日期或技术报告发布日期作为近似时间。",
+        "report_title": "Advancing Vision-Language Models in Front-End Development via Data Synthesis",
+        "report_venue": "arXiv preprint",
+        "report_venue_rating": "arXiv 预印本；暂无会议/期刊评级",
+        "report_status": "预印本"
+      }
+    },
+    {
+      "rank_hint": null,
+      "confidence": "medium_high",
+      "caveat": "FLAME 原论文 pass@1；偏 React 工程正确性，和 GLM 报告 Flame-VLM-Code 分数口径不同。",
+      "benchmark_id": "flame_react_eval",
+      "model": "Flame-Additive-7B",
+      "model_family": "Flame-Code-VLM",
+      "score": 51.6,
+      "metric": "pass@1",
+      "score_scale": "0-100",
+      "source_type": "benchmark_paper",
+      "source_url": "https://arxiv.org/abs/2503.01619",
+      "provenance": {
+        "reported_date": "2025-03-03",
+        "run_date": null,
+        "run_date_display": "2025-03-03（按来源发布日期近似）",
+        "run_date_basis": "原论文/报告未公开具体跑分日期；这里用分数来源的首次公开日期或技术报告发布日期作为近似时间。",
+        "report_title": "Advancing Vision-Language Models in Front-End Development via Data Synthesis",
+        "report_venue": "arXiv preprint",
+        "report_venue_rating": "arXiv 预印本；暂无会议/期刊评级",
+        "report_status": "预印本"
+      }
+    },
+    {
+      "rank_hint": null,
+      "confidence": "medium_high",
+      "caveat": "FLAME 原论文 pass@1；偏 React 工程正确性，和 GLM 报告 Flame-VLM-Code 分数口径不同。",
+      "benchmark_id": "flame_react_eval",
+      "model": "LLaVA-Qwen2-7B-OV",
+      "model_family": "LLaVA / Qwen",
+      "score": 3.6,
+      "metric": "pass@1",
+      "score_scale": "0-100",
+      "source_type": "benchmark_paper",
+      "source_url": "https://arxiv.org/abs/2503.01619",
+      "provenance": {
+        "reported_date": "2025-03-03",
+        "run_date": null,
+        "run_date_display": "2025-03-03（按来源发布日期近似）",
+        "run_date_basis": "原论文/报告未公开具体跑分日期；这里用分数来源的首次公开日期或技术报告发布日期作为近似时间。",
+        "report_title": "Advancing Vision-Language Models in Front-End Development via Data Synthesis",
+        "report_venue": "arXiv preprint",
+        "report_venue_rating": "arXiv 预印本；暂无会议/期刊评级",
+        "report_status": "预印本"
+      }
+    },
+    {
+      "rank_hint": null,
+      "confidence": "medium_high",
+      "caveat": "FLAME 原论文 pass@1；偏 React 工程正确性，和 GLM 报告 Flame-VLM-Code 分数口径不同。",
+      "benchmark_id": "flame_react_eval",
+      "model": "InternVL2.5 78B",
+      "model_family": "InternVL",
+      "score": 3.8,
+      "metric": "pass@1",
+      "score_scale": "0-100",
+      "source_type": "benchmark_paper",
+      "source_url": "https://arxiv.org/abs/2503.01619",
+      "provenance": {
+        "reported_date": "2025-03-03",
+        "run_date": null,
+        "run_date_display": "2025-03-03（按来源发布日期近似）",
+        "run_date_basis": "原论文/报告未公开具体跑分日期；这里用分数来源的首次公开日期或技术报告发布日期作为近似时间。",
+        "report_title": "Advancing Vision-Language Models in Front-End Development via Data Synthesis",
+        "report_venue": "arXiv preprint",
+        "report_venue_rating": "arXiv 预印本；暂无会议/期刊评级",
+        "report_status": "预印本"
+      }
+    },
+    {
+      "rank_hint": null,
+      "confidence": "medium_high",
+      "caveat": "FLAME 原论文 pass@1；偏 React 工程正确性，和 GLM 报告 Flame-VLM-Code 分数口径不同。",
+      "benchmark_id": "flame_react_eval",
+      "model": "GPT-4o-2024-08-06",
+      "model_family": "OpenAI GPT",
+      "score": 4.9,
+      "metric": "pass@1",
+      "score_scale": "0-100",
+      "source_type": "benchmark_paper",
+      "source_url": "https://arxiv.org/abs/2503.01619",
+      "provenance": {
+        "reported_date": "2025-03-03",
+        "run_date": null,
+        "run_date_display": "2025-03-03（按来源发布日期近似）",
+        "run_date_basis": "原论文/报告未公开具体跑分日期；这里用分数来源的首次公开日期或技术报告发布日期作为近似时间。",
+        "report_title": "Advancing Vision-Language Models in Front-End Development via Data Synthesis",
+        "report_venue": "arXiv preprint",
+        "report_venue_rating": "arXiv 预印本；暂无会议/期刊评级",
+        "report_status": "预印本"
+      }
+    },
+    {
+      "rank_hint": null,
+      "confidence": "medium_high",
+      "caveat": "FLAME 原论文 pass@1；偏 React 工程正确性，和 GLM 报告 Flame-VLM-Code 分数口径不同。",
+      "benchmark_id": "flame_react_eval",
+      "model": "Gemini 1.5 Flash",
+      "model_family": "Google Gemini",
+      "score": 11.1,
+      "metric": "pass@1",
+      "score_scale": "0-100",
+      "source_type": "benchmark_paper",
+      "source_url": "https://arxiv.org/abs/2503.01619",
+      "provenance": {
+        "reported_date": "2025-03-03",
+        "run_date": null,
+        "run_date_display": "2025-03-03（按来源发布日期近似）",
+        "run_date_basis": "原论文/报告未公开具体跑分日期；这里用分数来源的首次公开日期或技术报告发布日期作为近似时间。",
+        "report_title": "Advancing Vision-Language Models in Front-End Development via Data Synthesis",
+        "report_venue": "arXiv preprint",
+        "report_venue_rating": "arXiv 预印本；暂无会议/期刊评级",
+        "report_status": "预印本"
+      }
+    },
+    {
+      "rank_hint": null,
+      "confidence": "medium_high",
+      "caveat": "Vision2Web OpenHands 框架设置；和 GLM-5V 报告中的单一 Official Report Score 不完全同口径。",
+      "benchmark_id": "vision2web",
+      "model": "Claude Opus 4.5",
+      "model_family": "Anthropic Claude",
+      "score": 53.4,
+      "metric": "OpenHands Static Avg",
+      "score_scale": "0-100",
+      "source_type": "benchmark_paper",
+      "source_url": "https://arxiv.org/abs/2603.26648",
+      "provenance": {
+        "reported_date": "2026-03-27",
+        "run_date": null,
+        "run_date_display": "2026-03-27（按来源发布日期近似）",
+        "run_date_basis": "原论文/报告未公开具体跑分日期；这里用分数来源的首次公开日期或技术报告发布日期作为近似时间。",
+        "report_title": "Vision2Web: A Hierarchical Benchmark for Visual Website Development with Agent Verification",
+        "report_venue": "arXiv preprint",
+        "report_venue_rating": "arXiv 预印本；暂无会议/期刊评级",
+        "report_status": "预印本"
+      }
+    },
+    {
+      "rank_hint": null,
+      "confidence": "medium_high",
+      "caveat": "Vision2Web OpenHands 框架设置；和 GLM-5V 报告中的单一 Official Report Score 不完全同口径。",
+      "benchmark_id": "vision2web",
+      "model": "Claude Opus 4.5",
+      "model_family": "Anthropic Claude",
+      "score": 56.6,
+      "metric": "OpenHands Interactive Avg",
+      "score_scale": "0-100",
+      "source_type": "benchmark_paper",
+      "source_url": "https://arxiv.org/abs/2603.26648",
+      "provenance": {
+        "reported_date": "2026-03-27",
+        "run_date": null,
+        "run_date_display": "2026-03-27（按来源发布日期近似）",
+        "run_date_basis": "原论文/报告未公开具体跑分日期；这里用分数来源的首次公开日期或技术报告发布日期作为近似时间。",
+        "report_title": "Vision2Web: A Hierarchical Benchmark for Visual Website Development with Agent Verification",
+        "report_venue": "arXiv preprint",
+        "report_venue_rating": "arXiv 预印本；暂无会议/期刊评级",
+        "report_status": "预印本"
+      }
+    },
+    {
+      "rank_hint": null,
+      "confidence": "medium_high",
+      "caveat": "Vision2Web OpenHands 框架设置；和 GLM-5V 报告中的单一 Official Report Score 不完全同口径。",
+      "benchmark_id": "vision2web",
+      "model": "Claude Opus 4.5",
+      "model_family": "Anthropic Claude",
+      "score": 48,
+      "metric": "OpenHands Full-stack Avg",
+      "score_scale": "0-100",
+      "source_type": "benchmark_paper",
+      "source_url": "https://arxiv.org/abs/2603.26648",
+      "provenance": {
+        "reported_date": "2026-03-27",
+        "run_date": null,
+        "run_date_display": "2026-03-27（按来源发布日期近似）",
+        "run_date_basis": "原论文/报告未公开具体跑分日期；这里用分数来源的首次公开日期或技术报告发布日期作为近似时间。",
+        "report_title": "Vision2Web: A Hierarchical Benchmark for Visual Website Development with Agent Verification",
+        "report_venue": "arXiv preprint",
+        "report_venue_rating": "arXiv 预印本；暂无会议/期刊评级",
+        "report_status": "预印本"
+      }
+    },
+    {
+      "rank_hint": null,
+      "confidence": "medium_high",
+      "caveat": "Vision2Web OpenHands 框架设置；和 GLM-5V 报告中的单一 Official Report Score 不完全同口径。",
+      "benchmark_id": "vision2web",
+      "model": "Claude Sonnet 4.5",
+      "model_family": "Anthropic Claude",
+      "score": 47.1,
+      "metric": "OpenHands Static Avg",
+      "score_scale": "0-100",
+      "source_type": "benchmark_paper",
+      "source_url": "https://arxiv.org/abs/2603.26648",
+      "provenance": {
+        "reported_date": "2026-03-27",
+        "run_date": null,
+        "run_date_display": "2026-03-27（按来源发布日期近似）",
+        "run_date_basis": "原论文/报告未公开具体跑分日期；这里用分数来源的首次公开日期或技术报告发布日期作为近似时间。",
+        "report_title": "Vision2Web: A Hierarchical Benchmark for Visual Website Development with Agent Verification",
+        "report_venue": "arXiv preprint",
+        "report_venue_rating": "arXiv 预印本；暂无会议/期刊评级",
+        "report_status": "预印本"
+      }
+    },
+    {
+      "rank_hint": null,
+      "confidence": "medium_high",
+      "caveat": "Vision2Web OpenHands 框架设置；和 GLM-5V 报告中的单一 Official Report Score 不完全同口径。",
+      "benchmark_id": "vision2web",
+      "model": "Claude Sonnet 4.5",
+      "model_family": "Anthropic Claude",
+      "score": 45.7,
+      "metric": "OpenHands Interactive Avg",
+      "score_scale": "0-100",
+      "source_type": "benchmark_paper",
+      "source_url": "https://arxiv.org/abs/2603.26648",
+      "provenance": {
+        "reported_date": "2026-03-27",
+        "run_date": null,
+        "run_date_display": "2026-03-27（按来源发布日期近似）",
+        "run_date_basis": "原论文/报告未公开具体跑分日期；这里用分数来源的首次公开日期或技术报告发布日期作为近似时间。",
+        "report_title": "Vision2Web: A Hierarchical Benchmark for Visual Website Development with Agent Verification",
+        "report_venue": "arXiv preprint",
+        "report_venue_rating": "arXiv 预印本；暂无会议/期刊评级",
+        "report_status": "预印本"
+      }
+    },
+    {
+      "rank_hint": null,
+      "confidence": "medium_high",
+      "caveat": "Vision2Web OpenHands 框架设置；和 GLM-5V 报告中的单一 Official Report Score 不完全同口径。",
+      "benchmark_id": "vision2web",
+      "model": "Claude Sonnet 4.5",
+      "model_family": "Anthropic Claude",
+      "score": 20.4,
+      "metric": "OpenHands Full-stack Avg",
+      "score_scale": "0-100",
+      "source_type": "benchmark_paper",
+      "source_url": "https://arxiv.org/abs/2603.26648",
+      "provenance": {
+        "reported_date": "2026-03-27",
+        "run_date": null,
+        "run_date_display": "2026-03-27（按来源发布日期近似）",
+        "run_date_basis": "原论文/报告未公开具体跑分日期；这里用分数来源的首次公开日期或技术报告发布日期作为近似时间。",
+        "report_title": "Vision2Web: A Hierarchical Benchmark for Visual Website Development with Agent Verification",
+        "report_venue": "arXiv preprint",
+        "report_venue_rating": "arXiv 预印本；暂无会议/期刊评级",
+        "report_status": "预印本"
+      }
+    },
+    {
+      "rank_hint": null,
+      "confidence": "medium_high",
+      "caveat": "Vision2Web OpenHands 框架设置；和 GLM-5V 报告中的单一 Official Report Score 不完全同口径。",
+      "benchmark_id": "vision2web",
+      "model": "GPT-5",
+      "model_family": "OpenAI GPT",
+      "score": 44.7,
+      "metric": "OpenHands Static Avg",
+      "score_scale": "0-100",
+      "source_type": "benchmark_paper",
+      "source_url": "https://arxiv.org/abs/2603.26648",
+      "provenance": {
+        "reported_date": "2026-03-27",
+        "run_date": null,
+        "run_date_display": "2026-03-27（按来源发布日期近似）",
+        "run_date_basis": "原论文/报告未公开具体跑分日期；这里用分数来源的首次公开日期或技术报告发布日期作为近似时间。",
+        "report_title": "Vision2Web: A Hierarchical Benchmark for Visual Website Development with Agent Verification",
+        "report_venue": "arXiv preprint",
+        "report_venue_rating": "arXiv 预印本；暂无会议/期刊评级",
+        "report_status": "预印本"
+      }
+    },
+    {
+      "rank_hint": null,
+      "confidence": "medium_high",
+      "caveat": "Vision2Web OpenHands 框架设置；和 GLM-5V 报告中的单一 Official Report Score 不完全同口径。",
+      "benchmark_id": "vision2web",
+      "model": "GPT-5",
+      "model_family": "OpenAI GPT",
+      "score": 43.2,
+      "metric": "OpenHands Interactive Avg",
+      "score_scale": "0-100",
+      "source_type": "benchmark_paper",
+      "source_url": "https://arxiv.org/abs/2603.26648",
+      "provenance": {
+        "reported_date": "2026-03-27",
+        "run_date": null,
+        "run_date_display": "2026-03-27（按来源发布日期近似）",
+        "run_date_basis": "原论文/报告未公开具体跑分日期；这里用分数来源的首次公开日期或技术报告发布日期作为近似时间。",
+        "report_title": "Vision2Web: A Hierarchical Benchmark for Visual Website Development with Agent Verification",
+        "report_venue": "arXiv preprint",
+        "report_venue_rating": "arXiv 预印本；暂无会议/期刊评级",
+        "report_status": "预印本"
+      }
+    },
+    {
+      "rank_hint": null,
+      "confidence": "medium_high",
+      "caveat": "Vision2Web OpenHands 框架设置；和 GLM-5V 报告中的单一 Official Report Score 不完全同口径。",
+      "benchmark_id": "vision2web",
+      "model": "GPT-5",
+      "model_family": "OpenAI GPT",
+      "score": 34.1,
+      "metric": "OpenHands Full-stack Avg",
+      "score_scale": "0-100",
+      "source_type": "benchmark_paper",
+      "source_url": "https://arxiv.org/abs/2603.26648",
+      "provenance": {
+        "reported_date": "2026-03-27",
+        "run_date": null,
+        "run_date_display": "2026-03-27（按来源发布日期近似）",
+        "run_date_basis": "原论文/报告未公开具体跑分日期；这里用分数来源的首次公开日期或技术报告发布日期作为近似时间。",
+        "report_title": "Vision2Web: A Hierarchical Benchmark for Visual Website Development with Agent Verification",
+        "report_venue": "arXiv preprint",
+        "report_venue_rating": "arXiv 预印本；暂无会议/期刊评级",
+        "report_status": "预印本"
+      }
+    },
+    {
+      "rank_hint": null,
+      "confidence": "medium_high",
+      "caveat": "Vision2Web OpenHands 框架设置；和 GLM-5V 报告中的单一 Official Report Score 不完全同口径。",
+      "benchmark_id": "vision2web",
+      "model": "Gemini 3 Pro Preview",
+      "model_family": "Google Gemini",
+      "score": 55.8,
+      "metric": "OpenHands Static Avg",
+      "score_scale": "0-100",
+      "source_type": "benchmark_paper",
+      "source_url": "https://arxiv.org/abs/2603.26648",
+      "provenance": {
+        "reported_date": "2026-03-27",
+        "run_date": null,
+        "run_date_display": "2026-03-27（按来源发布日期近似）",
+        "run_date_basis": "原论文/报告未公开具体跑分日期；这里用分数来源的首次公开日期或技术报告发布日期作为近似时间。",
+        "report_title": "Vision2Web: A Hierarchical Benchmark for Visual Website Development with Agent Verification",
+        "report_venue": "arXiv preprint",
+        "report_venue_rating": "arXiv 预印本；暂无会议/期刊评级",
+        "report_status": "预印本"
+      }
+    },
+    {
+      "rank_hint": null,
+      "confidence": "medium_high",
+      "caveat": "Vision2Web OpenHands 框架设置；和 GLM-5V 报告中的单一 Official Report Score 不完全同口径。",
+      "benchmark_id": "vision2web",
+      "model": "Gemini 3 Pro Preview",
+      "model_family": "Google Gemini",
+      "score": 35.2,
+      "metric": "OpenHands Interactive Avg",
+      "score_scale": "0-100",
+      "source_type": "benchmark_paper",
+      "source_url": "https://arxiv.org/abs/2603.26648",
+      "provenance": {
+        "reported_date": "2026-03-27",
+        "run_date": null,
+        "run_date_display": "2026-03-27（按来源发布日期近似）",
+        "run_date_basis": "原论文/报告未公开具体跑分日期；这里用分数来源的首次公开日期或技术报告发布日期作为近似时间。",
+        "report_title": "Vision2Web: A Hierarchical Benchmark for Visual Website Development with Agent Verification",
+        "report_venue": "arXiv preprint",
+        "report_venue_rating": "arXiv 预印本；暂无会议/期刊评级",
+        "report_status": "预印本"
+      }
+    },
+    {
+      "rank_hint": null,
+      "confidence": "medium_high",
+      "caveat": "Vision2Web OpenHands 框架设置；和 GLM-5V 报告中的单一 Official Report Score 不完全同口径。",
+      "benchmark_id": "vision2web",
+      "model": "Gemini 3 Pro Preview",
+      "model_family": "Google Gemini",
+      "score": 17.2,
+      "metric": "OpenHands Full-stack Avg",
+      "score_scale": "0-100",
+      "source_type": "benchmark_paper",
+      "source_url": "https://arxiv.org/abs/2603.26648",
+      "provenance": {
+        "reported_date": "2026-03-27",
+        "run_date": null,
+        "run_date_display": "2026-03-27（按来源发布日期近似）",
+        "run_date_basis": "原论文/报告未公开具体跑分日期；这里用分数来源的首次公开日期或技术报告发布日期作为近似时间。",
+        "report_title": "Vision2Web: A Hierarchical Benchmark for Visual Website Development with Agent Verification",
+        "report_venue": "arXiv preprint",
+        "report_venue_rating": "arXiv 预印本；暂无会议/期刊评级",
+        "report_status": "预印本"
+      }
+    },
+    {
+      "rank_hint": null,
+      "confidence": "medium_high",
+      "caveat": "Vision2Web OpenHands 框架设置；和 GLM-5V 报告中的单一 Official Report Score 不完全同口径。",
+      "benchmark_id": "vision2web",
+      "model": "Gemini 3 Flash Preview",
+      "model_family": "Google Gemini",
+      "score": 47.8,
+      "metric": "OpenHands Static Avg",
+      "score_scale": "0-100",
+      "source_type": "benchmark_paper",
+      "source_url": "https://arxiv.org/abs/2603.26648",
+      "provenance": {
+        "reported_date": "2026-03-27",
+        "run_date": null,
+        "run_date_display": "2026-03-27（按来源发布日期近似）",
+        "run_date_basis": "原论文/报告未公开具体跑分日期；这里用分数来源的首次公开日期或技术报告发布日期作为近似时间。",
+        "report_title": "Vision2Web: A Hierarchical Benchmark for Visual Website Development with Agent Verification",
+        "report_venue": "arXiv preprint",
+        "report_venue_rating": "arXiv 预印本；暂无会议/期刊评级",
+        "report_status": "预印本"
+      }
+    },
+    {
+      "rank_hint": null,
+      "confidence": "medium_high",
+      "caveat": "Vision2Web OpenHands 框架设置；和 GLM-5V 报告中的单一 Official Report Score 不完全同口径。",
+      "benchmark_id": "vision2web",
+      "model": "Gemini 3 Flash Preview",
+      "model_family": "Google Gemini",
+      "score": 32.2,
+      "metric": "OpenHands Interactive Avg",
+      "score_scale": "0-100",
+      "source_type": "benchmark_paper",
+      "source_url": "https://arxiv.org/abs/2603.26648",
+      "provenance": {
+        "reported_date": "2026-03-27",
+        "run_date": null,
+        "run_date_display": "2026-03-27（按来源发布日期近似）",
+        "run_date_basis": "原论文/报告未公开具体跑分日期；这里用分数来源的首次公开日期或技术报告发布日期作为近似时间。",
+        "report_title": "Vision2Web: A Hierarchical Benchmark for Visual Website Development with Agent Verification",
+        "report_venue": "arXiv preprint",
+        "report_venue_rating": "arXiv 预印本；暂无会议/期刊评级",
+        "report_status": "预印本"
+      }
+    },
+    {
+      "rank_hint": null,
+      "confidence": "medium_high",
+      "caveat": "Vision2Web OpenHands 框架设置；和 GLM-5V 报告中的单一 Official Report Score 不完全同口径。",
+      "benchmark_id": "vision2web",
+      "model": "Gemini 3 Flash Preview",
+      "model_family": "Google Gemini",
+      "score": 12.5,
+      "metric": "OpenHands Full-stack Avg",
+      "score_scale": "0-100",
+      "source_type": "benchmark_paper",
+      "source_url": "https://arxiv.org/abs/2603.26648",
+      "provenance": {
+        "reported_date": "2026-03-27",
+        "run_date": null,
+        "run_date_display": "2026-03-27（按来源发布日期近似）",
+        "run_date_basis": "原论文/报告未公开具体跑分日期；这里用分数来源的首次公开日期或技术报告发布日期作为近似时间。",
+        "report_title": "Vision2Web: A Hierarchical Benchmark for Visual Website Development with Agent Verification",
+        "report_venue": "arXiv preprint",
+        "report_venue_rating": "arXiv 预印本；暂无会议/期刊评级",
+        "report_status": "预印本"
+      }
+    },
+    {
+      "rank_hint": null,
+      "confidence": "medium_high",
+      "caveat": "Vision2Web OpenHands 框架设置；和 GLM-5V 报告中的单一 Official Report Score 不完全同口径。",
+      "benchmark_id": "vision2web",
+      "model": "Seed-1.8-VL",
+      "model_family": "ByteDance Seed",
+      "score": 1.3,
+      "metric": "OpenHands Static Avg",
+      "score_scale": "0-100",
+      "source_type": "benchmark_paper",
+      "source_url": "https://arxiv.org/abs/2603.26648",
+      "provenance": {
+        "reported_date": "2026-03-27",
+        "run_date": null,
+        "run_date_display": "2026-03-27（按来源发布日期近似）",
+        "run_date_basis": "原论文/报告未公开具体跑分日期；这里用分数来源的首次公开日期或技术报告发布日期作为近似时间。",
+        "report_title": "Vision2Web: A Hierarchical Benchmark for Visual Website Development with Agent Verification",
+        "report_venue": "arXiv preprint",
+        "report_venue_rating": "arXiv 预印本；暂无会议/期刊评级",
+        "report_status": "预印本"
+      }
+    },
+    {
+      "rank_hint": null,
+      "confidence": "medium_high",
+      "caveat": "Vision2Web OpenHands 框架设置；和 GLM-5V 报告中的单一 Official Report Score 不完全同口径。",
+      "benchmark_id": "vision2web",
+      "model": "Seed-1.8-VL",
+      "model_family": "ByteDance Seed",
+      "score": 20.2,
+      "metric": "OpenHands Interactive Avg",
+      "score_scale": "0-100",
+      "source_type": "benchmark_paper",
+      "source_url": "https://arxiv.org/abs/2603.26648",
+      "provenance": {
+        "reported_date": "2026-03-27",
+        "run_date": null,
+        "run_date_display": "2026-03-27（按来源发布日期近似）",
+        "run_date_basis": "原论文/报告未公开具体跑分日期；这里用分数来源的首次公开日期或技术报告发布日期作为近似时间。",
+        "report_title": "Vision2Web: A Hierarchical Benchmark for Visual Website Development with Agent Verification",
+        "report_venue": "arXiv preprint",
+        "report_venue_rating": "arXiv 预印本；暂无会议/期刊评级",
+        "report_status": "预印本"
+      }
+    },
+    {
+      "rank_hint": null,
+      "confidence": "medium_high",
+      "caveat": "Vision2Web OpenHands 框架设置；和 GLM-5V 报告中的单一 Official Report Score 不完全同口径。",
+      "benchmark_id": "vision2web",
+      "model": "Seed-1.8-VL",
+      "model_family": "ByteDance Seed",
+      "score": 0,
+      "metric": "OpenHands Full-stack Avg",
+      "score_scale": "0-100",
+      "source_type": "benchmark_paper",
+      "source_url": "https://arxiv.org/abs/2603.26648",
+      "provenance": {
+        "reported_date": "2026-03-27",
+        "run_date": null,
+        "run_date_display": "2026-03-27（按来源发布日期近似）",
+        "run_date_basis": "原论文/报告未公开具体跑分日期；这里用分数来源的首次公开日期或技术报告发布日期作为近似时间。",
+        "report_title": "Vision2Web: A Hierarchical Benchmark for Visual Website Development with Agent Verification",
+        "report_venue": "arXiv preprint",
+        "report_venue_rating": "arXiv 预印本；暂无会议/期刊评级",
+        "report_status": "预印本"
+      }
+    },
+    {
+      "rank_hint": null,
+      "confidence": "medium_high",
+      "caveat": "Vision2Web OpenHands 框架设置；和 GLM-5V 报告中的单一 Official Report Score 不完全同口径。",
+      "benchmark_id": "vision2web",
+      "model": "Qwen3-VL-32B-Instruct",
+      "model_family": "Alibaba Qwen",
+      "score": 0,
+      "metric": "OpenHands Static Avg",
+      "score_scale": "0-100",
+      "source_type": "benchmark_paper",
+      "source_url": "https://arxiv.org/abs/2603.26648",
+      "provenance": {
+        "reported_date": "2026-03-27",
+        "run_date": null,
+        "run_date_display": "2026-03-27（按来源发布日期近似）",
+        "run_date_basis": "原论文/报告未公开具体跑分日期；这里用分数来源的首次公开日期或技术报告发布日期作为近似时间。",
+        "report_title": "Vision2Web: A Hierarchical Benchmark for Visual Website Development with Agent Verification",
+        "report_venue": "arXiv preprint",
+        "report_venue_rating": "arXiv 预印本；暂无会议/期刊评级",
+        "report_status": "预印本"
+      }
+    },
+    {
+      "rank_hint": null,
+      "confidence": "medium_high",
+      "caveat": "Vision2Web OpenHands 框架设置；和 GLM-5V 报告中的单一 Official Report Score 不完全同口径。",
+      "benchmark_id": "vision2web",
+      "model": "Qwen3-VL-32B-Instruct",
+      "model_family": "Alibaba Qwen",
+      "score": 0,
+      "metric": "OpenHands Interactive Avg",
+      "score_scale": "0-100",
+      "source_type": "benchmark_paper",
+      "source_url": "https://arxiv.org/abs/2603.26648",
+      "provenance": {
+        "reported_date": "2026-03-27",
+        "run_date": null,
+        "run_date_display": "2026-03-27（按来源发布日期近似）",
+        "run_date_basis": "原论文/报告未公开具体跑分日期；这里用分数来源的首次公开日期或技术报告发布日期作为近似时间。",
+        "report_title": "Vision2Web: A Hierarchical Benchmark for Visual Website Development with Agent Verification",
+        "report_venue": "arXiv preprint",
+        "report_venue_rating": "arXiv 预印本；暂无会议/期刊评级",
+        "report_status": "预印本"
+      }
+    },
+    {
+      "rank_hint": null,
+      "confidence": "medium_high",
+      "caveat": "Vision2Web OpenHands 框架设置；和 GLM-5V 报告中的单一 Official Report Score 不完全同口径。",
+      "benchmark_id": "vision2web",
+      "model": "Qwen3-VL-32B-Instruct",
+      "model_family": "Alibaba Qwen",
+      "score": 0,
+      "metric": "OpenHands Full-stack Avg",
+      "score_scale": "0-100",
+      "source_type": "benchmark_paper",
+      "source_url": "https://arxiv.org/abs/2603.26648",
+      "provenance": {
+        "reported_date": "2026-03-27",
+        "run_date": null,
+        "run_date_display": "2026-03-27（按来源发布日期近似）",
+        "run_date_basis": "原论文/报告未公开具体跑分日期；这里用分数来源的首次公开日期或技术报告发布日期作为近似时间。",
+        "report_title": "Vision2Web: A Hierarchical Benchmark for Visual Website Development with Agent Verification",
+        "report_venue": "arXiv preprint",
+        "report_venue_rating": "arXiv 预印本；暂无会议/期刊评级",
+        "report_status": "预印本"
+      }
+    },
+    {
+      "rank_hint": null,
+      "confidence": "medium_high",
+      "caveat": "Vision2Web OpenHands 框架设置；和 GLM-5V 报告中的单一 Official Report Score 不完全同口径。",
+      "benchmark_id": "vision2web",
+      "model": "Qwen3-VL-8B-Instruct",
+      "model_family": "Alibaba Qwen",
+      "score": 0.1,
+      "metric": "OpenHands Static Avg",
+      "score_scale": "0-100",
+      "source_type": "benchmark_paper",
+      "source_url": "https://arxiv.org/abs/2603.26648",
+      "provenance": {
+        "reported_date": "2026-03-27",
+        "run_date": null,
+        "run_date_display": "2026-03-27（按来源发布日期近似）",
+        "run_date_basis": "原论文/报告未公开具体跑分日期；这里用分数来源的首次公开日期或技术报告发布日期作为近似时间。",
+        "report_title": "Vision2Web: A Hierarchical Benchmark for Visual Website Development with Agent Verification",
+        "report_venue": "arXiv preprint",
+        "report_venue_rating": "arXiv 预印本；暂无会议/期刊评级",
+        "report_status": "预印本"
+      }
+    },
+    {
+      "rank_hint": null,
+      "confidence": "medium_high",
+      "caveat": "Vision2Web OpenHands 框架设置；和 GLM-5V 报告中的单一 Official Report Score 不完全同口径。",
+      "benchmark_id": "vision2web",
+      "model": "Qwen3-VL-8B-Instruct",
+      "model_family": "Alibaba Qwen",
+      "score": 0,
+      "metric": "OpenHands Interactive Avg",
+      "score_scale": "0-100",
+      "source_type": "benchmark_paper",
+      "source_url": "https://arxiv.org/abs/2603.26648",
+      "provenance": {
+        "reported_date": "2026-03-27",
+        "run_date": null,
+        "run_date_display": "2026-03-27（按来源发布日期近似）",
+        "run_date_basis": "原论文/报告未公开具体跑分日期；这里用分数来源的首次公开日期或技术报告发布日期作为近似时间。",
+        "report_title": "Vision2Web: A Hierarchical Benchmark for Visual Website Development with Agent Verification",
+        "report_venue": "arXiv preprint",
+        "report_venue_rating": "arXiv 预印本；暂无会议/期刊评级",
+        "report_status": "预印本"
+      }
+    },
+    {
+      "rank_hint": null,
+      "confidence": "medium_high",
+      "caveat": "Vision2Web OpenHands 框架设置；和 GLM-5V 报告中的单一 Official Report Score 不完全同口径。",
+      "benchmark_id": "vision2web",
+      "model": "Qwen3-VL-8B-Instruct",
+      "model_family": "Alibaba Qwen",
+      "score": 0,
+      "metric": "OpenHands Full-stack Avg",
+      "score_scale": "0-100",
+      "source_type": "benchmark_paper",
+      "source_url": "https://arxiv.org/abs/2603.26648",
+      "provenance": {
+        "reported_date": "2026-03-27",
+        "run_date": null,
+        "run_date_display": "2026-03-27（按来源发布日期近似）",
+        "run_date_basis": "原论文/报告未公开具体跑分日期；这里用分数来源的首次公开日期或技术报告发布日期作为近似时间。",
+        "report_title": "Vision2Web: A Hierarchical Benchmark for Visual Website Development with Agent Verification",
+        "report_venue": "arXiv preprint",
+        "report_venue_rating": "arXiv 预印本；暂无会议/期刊评级",
+        "report_status": "预印本"
+      }
+    }
+  ],
+  "model_cards": [
+    {
+      "id": "glm_5v_turbo",
+      "name": "GLM-5V-Turbo",
+      "organization": "Z.AI / Zhipu",
+      "year": "2026",
+      "type": "general VLM",
+      "headline": "Design2Code 和 Flame-VLM-Code 很强，Vision2Web 相对弱。",
+      "key_scores": [
+        {
+          "benchmark_id": "design2code",
+          "score": 94.8
+        },
+        {
+          "benchmark_id": "flame_react_eval",
+          "score": 93.8
+        },
+        {
+          "benchmark_id": "vision2web",
+          "score": 31
+        },
+        {
+          "benchmark_id": "cc_frontend",
+          "score": 68.4
+        },
+        {
+          "benchmark_id": "webvoyager",
+          "score": 88.5
+        }
+      ]
+    },
+    {
+      "id": "glm_4v_series",
+      "name": "GLM-4V / GLM-4.1V / GLM-4.5V / GLM-4.6V",
+      "organization": "Z.AI / THUDM / Zhipu",
+      "year": "2024-2025",
+      "type": "VLM series",
+      "headline": "从 GLM-4.1V 到 GLM-4.6V，Design2Code 和 Flame 分数显著提升；GLM-4V 另有 VAB-CSS agentic design 结果。",
+      "key_scores": [
+        {
+          "benchmark_id": "design2code",
+          "score": "64.7 -> 82.2 -> 88.6"
+        },
+        {
+          "benchmark_id": "flame_react_eval",
+          "score": "72.5 -> 82.5 -> 86.3"
+        },
+        {
+          "benchmark_id": "vab_css",
+          "score": 23.6
+        }
+      ]
+    },
+    {
+      "id": "ui2code_n",
+      "name": "UI2Code^N-9B-RL",
+      "organization": "Zhipu / Tsinghua GLM ecosystem",
+      "year": "2025/2026",
+      "type": "specialized UI-to-code model",
+      "headline": "通过渲染反馈闭环和 RVPO，在 UI-to-code、UI polishing 和 Design2Code-HARD 上表现突出。",
+      "key_scores": [
+        {
+          "benchmark_id": "design2code",
+          "score": 88.6
+        },
+        {
+          "benchmark_id": "flame_react_eval",
+          "score": 95
+        },
+        {
+          "benchmark_id": "web2code",
+          "score": 92.5
+        },
+        {
+          "benchmark_id": "uipolish",
+          "score": "80.0 real / 94.0 synthetic"
+        }
+      ]
+    }
+  ],
+  "global_caveats": [
+    "不要把不同 benchmark 的分数合并成一个总榜。",
+    "Design2Code 的 CLIP 指标和 VLM judge 指标要分开展示。",
+    "Flame-VLM-Code 与 Flame-React-Eval 的口径需要保留注释。",
+    "Vision2Web 比单页 UI-to-code 更接近真实网站开发，难度更高。",
+    "Web/GUI agent 指标只作为网页界面理解和操作背景，不直接证明前端设计生成能力。",
+    "VAB-CSS 是 CSS repair / visual design repair，应单独成组展示。"
+  ],
+  "source_index": [
+    "https://arxiv.org/abs/1802.08802",
+    "https://arxiv.org/abs/2306.06070",
+    "https://arxiv.org/abs/2307.10088",
+    "https://arxiv.org/abs/2307.13854",
+    "https://arxiv.org/abs/2312.08914",
+    "https://arxiv.org/abs/2401.13919",
+    "https://arxiv.org/abs/2403.03163",
+    "https://arxiv.org/abs/2404.03648",
+    "https://arxiv.org/abs/2404.07972",
+    "https://arxiv.org/abs/2405.14573",
+    "https://arxiv.org/abs/2406.20098",
+    "https://arxiv.org/abs/2408.06327",
+    "https://arxiv.org/abs/2409.13711",
+    "https://arxiv.org/abs/2411.00820",
+    "https://arxiv.org/abs/2503.01619",
+    "https://arxiv.org/abs/2506.06251",
+    "https://arxiv.org/abs/2507.01006",
+    "https://arxiv.org/abs/2511.08195",
+    "https://arxiv.org/abs/2602.15763",
+    "https://arxiv.org/abs/2603.26648",
+    "https://arxiv.org/abs/2604.26752",
+    "https://docs.z.ai/guides/vlm/glm-5v-turbo",
+    "https://github.com/THUDM/VisualAgentBench",
+    "https://github.com/WebPAI/DesignBench",
+    "https://vision2web-bench.github.io/"
+  ],
+  "provenance_policy": {
+    "score_run_date_basis": "原论文/报告未公开具体跑分日期；这里用分数来源的首次公开日期或技术报告发布日期作为近似时间。",
+    "venue_rating_basis": "会议评级使用“顶会/CCF-A 常见口径”作浏览提示；正式引用时仍应按目标机构采用的 CCF/CORE/中科院等目录版本复核。arXiv/技术报告不标会议评级。",
+    "last_checked": "2026-06-02"
+  },
+  "source_reports": {
+    "https://arxiv.org/abs/2403.03163": {
+      "title": "Design2Code: Benchmarking Multimodal Code Generation for Automated Front-End Engineering",
+      "first_public_date": "2024-03-05",
+      "venue": "NAACL 2025 Long Papers",
+      "venue_rating": "ACL Anthology 主会长文 / 主流 NLP 会议；具体 CCF 等级需按目录版本核对",
+      "publication_status": "已发表会议论文",
+      "source_kind": "benchmark_paper"
+    },
+    "https://arxiv.org/abs/2503.01619": {
+      "title": "Advancing Vision-Language Models in Front-End Development via Data Synthesis",
+      "first_public_date": "2025-03-03",
+      "venue": "arXiv preprint",
+      "venue_rating": "arXiv 预印本；暂无会议/期刊评级",
+      "publication_status": "预印本",
+      "source_kind": "benchmark_paper"
+    },
+    "https://arxiv.org/abs/2506.06251": {
+      "title": "DesignBench: A Comprehensive Benchmark for MLLM-based Front-end Code Generation",
+      "first_public_date": "2025-06-06",
+      "venue": "arXiv preprint",
+      "venue_rating": "arXiv 预印本；暂无会议/期刊评级",
+      "publication_status": "预印本",
+      "source_kind": "benchmark_paper"
+    },
+    "https://arxiv.org/abs/2603.26648": {
+      "title": "Vision2Web: A Hierarchical Benchmark for Visual Website Development with Agent Verification",
+      "first_public_date": "2026-03-27",
+      "venue": "arXiv preprint",
+      "venue_rating": "arXiv 预印本；暂无会议/期刊评级",
+      "publication_status": "预印本",
+      "source_kind": "benchmark_paper"
+    },
+    "https://arxiv.org/abs/2408.06327": {
+      "title": "VisualAgentBench: Towards Large Multimodal Models as Visual Foundation Agents",
+      "first_public_date": "2024-08-12",
+      "venue": "ICLR 2025 Poster",
+      "venue_rating": "顶会 / CCF-A 常见口径",
+      "publication_status": "已发表会议论文",
+      "source_kind": "benchmark_paper"
+    },
+    "https://arxiv.org/abs/2511.08195": {
+      "title": "UI2Code^N: UI-to-Code Generation as Interactive Visual Optimization",
+      "first_public_date": "2025-11-11",
+      "venue": "ICML 2026",
+      "venue_rating": "顶会 / CCF-A 常见口径",
+      "publication_status": "已接收会议论文",
+      "source_kind": "benchmark_paper"
+    },
+    "https://arxiv.org/abs/2507.01006": {
+      "title": "GLM-4.5V and GLM-4.1V-Thinking: Towards Versatile Multimodal Reasoning with Scalable Reinforcement Learning",
+      "first_public_date": "2025-07-01",
+      "venue": "Z.AI technical report / arXiv",
+      "venue_rating": "技术报告 / 官方报告；暂无会议/期刊评级",
+      "publication_status": "官方技术报告",
+      "source_kind": "official_report"
+    },
+    "https://arxiv.org/abs/2604.26752": {
+      "title": "GLM-5V-Turbo: Toward a Native Foundation Model for Multimodal Agents",
+      "first_public_date": "2026-04-29",
+      "venue": "Z.AI technical report / arXiv",
+      "venue_rating": "技术报告 / 官方报告；暂无会议/期刊评级",
+      "publication_status": "官方技术报告",
+      "source_kind": "official_report"
+    },
+    "https://arxiv.org/abs/2602.15763": {
+      "title": "GLM-5: from Vibe Coding to Agentic Engineering",
+      "first_public_date": "2026-02-17",
+      "venue": "Z.AI technical report / arXiv",
+      "venue_rating": "技术报告 / 官方报告；暂无会议/期刊评级",
+      "publication_status": "官方技术报告",
+      "source_kind": "official_report"
+    },
+    "https://arxiv.org/abs/2312.08914": {
+      "title": "CogAgent: A Visual Language Model for GUI Agents",
+      "first_public_date": "2023-12-14",
+      "venue": "CVPR 2024",
+      "venue_rating": "顶会 / CCF-A 常见口径",
+      "publication_status": "已发表会议论文",
+      "source_kind": "model_paper"
+    },
+    "https://arxiv.org/abs/2404.03648": {
+      "title": "AutoWebGLM: A Large Language Model-based Web Navigating Agent",
+      "first_public_date": "2024-04-04",
+      "venue": "KDD 2024",
+      "venue_rating": "顶会 / CCF-A 常见口径",
+      "publication_status": "已发表会议论文",
+      "source_kind": "model_and_benchmark_paper"
+    },
+    "https://arxiv.org/abs/2411.00820": {
+      "title": "AutoGLM: Autonomous Foundation Agents for GUIs",
+      "first_public_date": "2024-10-28",
+      "venue": "arXiv preprint",
+      "venue_rating": "arXiv 预印本；暂无会议/期刊评级",
+      "publication_status": "预印本",
+      "source_kind": "model_and_benchmark_paper"
+    },
+    "https://arxiv.org/abs/2401.13919": {
+      "title": "WebVoyager: Building an End-to-End Web Agent with Large Multimodal Models",
+      "first_public_date": "2024-01-25",
+      "venue": "ACL 2024 Long Papers",
+      "venue_rating": "顶会 / CCF-A 常见口径",
+      "publication_status": "已发表会议论文",
+      "source_kind": "benchmark_paper"
+    },
+    "https://arxiv.org/abs/2404.07972": {
+      "title": "OSWorld: Benchmarking Multimodal Agents for Open-Ended Tasks in Real Computer Environments",
+      "first_public_date": "2024-04-11",
+      "venue": "NeurIPS 2024 Datasets and Benchmarks Track",
+      "venue_rating": "顶会 / CCF-A 常见口径",
+      "publication_status": "已发表会议论文",
+      "source_kind": "benchmark_paper"
+    },
+    "https://arxiv.org/abs/2405.14573": {
+      "title": "AndroidWorld: A Dynamic Benchmarking Environment for Autonomous Agents",
+      "first_public_date": "2024-05-23",
+      "venue": "ICLR 2025 Conference",
+      "venue_rating": "顶会 / CCF-A 常见口径",
+      "publication_status": "已发表会议论文",
+      "source_kind": "benchmark_paper"
+    },
+    "https://arxiv.org/abs/2409.13711": {
+      "title": "WebQuest: A Benchmark for Multimodal QA on Web Page Sequences",
+      "first_public_date": "2024-09-06",
+      "venue": "arXiv preprint",
+      "venue_rating": "arXiv 预印本；暂无会议/期刊评级",
+      "publication_status": "预印本",
+      "source_kind": "benchmark_paper"
+    },
+    "https://arxiv.org/abs/2306.06070": {
+      "title": "Mind2Web: Towards a Generalist Agent for the Web",
+      "first_public_date": "2023-06-09",
+      "venue": "NeurIPS 2023 Datasets and Benchmarks Track Spotlight",
+      "venue_rating": "顶会 / CCF-A 常见口径",
+      "publication_status": "已发表会议论文",
+      "source_kind": "benchmark_paper"
+    },
+    "https://arxiv.org/abs/2307.10088": {
+      "title": "Android in the Wild: A Large-Scale Dataset for Android Device Control",
+      "first_public_date": "2023-07-19",
+      "venue": "NeurIPS 2023 Datasets and Benchmarks Track",
+      "venue_rating": "顶会 / CCF-A 常见口径",
+      "publication_status": "已发表会议论文",
+      "source_kind": "benchmark_paper"
+    },
+    "https://arxiv.org/abs/2307.13854": {
+      "title": "WebArena: A Realistic Web Environment for Building Autonomous Agents",
+      "first_public_date": "2023-07-25",
+      "venue": "ICLR 2024 Conference",
+      "venue_rating": "顶会 / CCF-A 常见口径",
+      "publication_status": "已发表会议论文",
+      "source_kind": "benchmark_paper"
+    },
+    "https://arxiv.org/abs/1802.08802": {
+      "title": "Reinforcement Learning on Web Interfaces using Workflow-Guided Exploration",
+      "first_public_date": "2018-02-24",
+      "venue": "ICLR 2018 Conference",
+      "venue_rating": "顶会 / CCF-A 常见口径",
+      "publication_status": "已发表会议论文",
+      "source_kind": "benchmark_extension_paper"
+    },
+    "https://arxiv.org/abs/2406.20098": {
+      "title": "Web2Code: A Large-scale Webpage-to-Code Dataset and Evaluation Framework for Multimodal LLMs",
+      "first_public_date": "2024-06-28",
+      "venue": "NeurIPS 2024 Datasets and Benchmarks Track",
+      "venue_rating": "顶会 / CCF-A 常见口径",
+      "publication_status": "已发表会议论文",
+      "source_kind": "benchmark_paper"
+    }
+  },
+  "cross_comparison": {
+    "title": "其他模型横向对比",
+    "note": "不同 benchmark 的指标口径差异很大。本视图只在同一个 benchmark 内排序或对比，不把 Design2Code、FLAME、Vision2Web 等分数相加。",
+    "benchmark_ids": [
+      "design2code",
+      "design2code_hard",
+      "flame_react_eval",
+      "designbench_webpai",
+      "vision2web",
+      "vab_css"
+    ],
+    "preferred_metrics": {
+      "design2code": [
+        "Official Report Score",
+        "VLM Judge",
+        "CLIP"
+      ],
+      "design2code_hard": [
+        "VLM Judge Acc.",
+        "CLIP"
+      ],
+      "flame_react_eval": [
+        "Flame-VLM-Code",
+        "VLM Judge",
+        "pass@1"
+      ],
+      "designbench_webpai": [
+        "mixed ranges"
+      ],
+      "vision2web": [
+        "Official Report Score",
+        "OpenHands Full-stack Avg",
+        "OpenHands Interactive Avg",
+        "OpenHands Static Avg"
+      ],
+      "vab_css": [
+        "Success Rate"
+      ]
+    }
+  }
+}

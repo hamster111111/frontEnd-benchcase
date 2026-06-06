@@ -1,0 +1,351 @@
+{
+  "schema_version": "1.0",
+  "last_updated": "2026-06-02",
+  "scope_note": "用于筛选第一阶段要拉入研究主线的 frontend/design benchmark。不是总榜，不跨 benchmark 合并分数。",
+  "selection_policy": {
+    "formula": "headroom × feasibility × story_fit",
+    "headroom": "代表分数低或真实场景仍有明显失败空间。",
+    "feasibility": "API-only、少量样本可跑、评测脚本清楚优先。",
+    "story_fit": "前端 design、UI-to-code、repair、interaction 优先；Web/GUI agent 主要作背景。"
+  },
+  "score_zone_legend": {
+    "low": "<50，分数空间大",
+    "medium": "50-80，有明显提升空间",
+    "upper_mid": "80-90，可做稳定性、成本、泛化或 hard case",
+    "high": "90+，主榜冲分空间小，适合作基线或辅助实验",
+    "unknown": "公开可比总分尚未整理到聚合数据"
+  },
+  "priority_legend": {
+    "P0": "第一轮 smoke test / 主实验候选",
+    "P1": "第二轮重点候选或主线扩展",
+    "P2": "资料价值高但工程或数据成本较重",
+    "P3": "背景资料或暂缓"
+  },
+  "benchmarks": [
+    {
+      "id": "design2code",
+      "name": "Design2Code",
+      "task_focus": "网页截图或设计图转 HTML/CSS",
+      "score_zone": "high",
+      "representative_score": "GLM-5V-Turbo 94.8 Official Report Score",
+      "frontend_role": "direct_design",
+      "priority": "P1",
+      "research_role": "baseline",
+      "api_gpu": "API 模型生成不需要 GPU；自动评测基本无 GPU；训练 18B 级模型才需要 40GB+。",
+      "next_action": "拉少量样本跑渲染和传统指标，和 Design2Code-HARD 共用 pipeline。",
+      "caveat": "主榜偏饱和，不适合单纯刷分。"
+    },
+    {
+      "id": "flame_react_eval",
+      "name": "Flame-React-Eval / Flame-VLM-Code",
+      "task_focus": "React UI 代码生成",
+      "score_zone": "high",
+      "representative_score": "Claude Opus 4.6 98.8；UI2Code^N 95.0；GLM-5V-Turbo 93.8",
+      "frontend_role": "react_frontend",
+      "priority": "P1",
+      "research_role": "extension",
+      "api_gpu": "API-only 可生成；React 编译和浏览器渲染不需要 GPU。",
+      "next_action": "选小样本检查编译失败、布局漂移、交互缺失。",
+      "caveat": "分数偏高，重点应转向 compile/render 可靠性。"
+    },
+    {
+      "id": "vision2web",
+      "name": "Vision2Web",
+      "task_focus": "static / interactive / full-stack 视觉网站开发",
+      "score_zone": "medium",
+      "representative_score": "OpenHands interactive 约 56.6；GLM-5V-Turbo Official Report Score 31.0",
+      "frontend_role": "website_development",
+      "priority": "P1",
+      "research_role": "high_value_extension",
+      "api_gpu": "API agent 可无 GPU；自部署 VLM/GUI agent 约 24-80GB。",
+      "next_action": "先只拉 static level 样本和 evaluator，估 token/latency 成本。",
+      "caveat": "论文价值强，但第一轮工程成本偏高。"
+    },
+    {
+      "id": "cc_frontend",
+      "name": "CC-Frontend",
+      "task_focus": "纯文本前端 coding",
+      "score_zone": "medium",
+      "representative_score": "GLM-5V-Turbo 68.4；Claude Opus 4.6 75.9",
+      "frontend_role": "coding_background",
+      "priority": "P2",
+      "research_role": "background",
+      "api_gpu": "API-only 可跑；不是视觉 design benchmark。",
+      "next_action": "只作为 Zhipu 前端 coding 背景。",
+      "caveat": "不能替代 design-to-code 证据。"
+    },
+    {
+      "id": "vab_css",
+      "name": "VisualAgentBench / VAB-CSS",
+      "task_focus": "CSS repair / visual design repair",
+      "score_zone": "low",
+      "representative_score": "GPT-4o prompting 34.5；GLM-4V fine-tuning 23.6；CogAgent 13.9",
+      "frontend_role": "visual_repair",
+      "priority": "P0",
+      "research_role": "main_candidate",
+      "api_gpu": "API agent 可无 GPU；训练 open LMM 约 24GB+；环境/Docker 成本高。",
+      "next_action": "读 VAB-CSS setup，先跑 1-2 个 CSS repair task 或分析样例。",
+      "caveat": "不是从零生成网页，应单独归类为 repair。"
+    },
+    {
+      "id": "designbench_webpai",
+      "name": "WebPAI DesignBench",
+      "task_focus": "多框架前端 generation / edit / repair / compile repair",
+      "score_zone": "unknown",
+      "representative_score": "聚合数据未收统一公开分数",
+      "frontend_role": "multi_framework_design",
+      "priority": "P0",
+      "research_role": "main_candidate",
+      "api_gpu": "Node/browser/API key；API 路线不需要本地 GPU。",
+      "next_action": "只拉 Vanilla/React 小样本，核对 CLIP/SSIM/CSR/MLLM score 输出。",
+      "caveat": "需要继续补不同任务 split 的公开结果。"
+    },
+    {
+      "id": "web2code",
+      "name": "Web2Code",
+      "task_focus": "网页截图到 HTML + 网页理解",
+      "score_zone": "high",
+      "representative_score": "UI2Code^N 92.5；GLM-4.1V-9B 71.3",
+      "frontend_role": "ui_to_code_data",
+      "priority": "P1",
+      "research_role": "generalization",
+      "api_gpu": "小样本 API 评测可无 GPU；训练/本地模型建议 40GB+。",
+      "next_action": "小样本跑 evaluate，确认可否作为 held-out 泛化集。",
+      "caveat": "主表高分，纯刷分故事较弱。"
+    },
+    {
+      "id": "ui2code_real",
+      "name": "UI2Code-Real",
+      "task_focus": "真实网页 UI-to-code",
+      "score_zone": "medium",
+      "representative_score": "UI2Code^N-9B-RL 76.5",
+      "frontend_role": "real_world_ui_to_code",
+      "priority": "P0",
+      "research_role": "main_candidate",
+      "api_gpu": "本地 9B 推理约 24-48GB；只跑 judge/已有输出可用 API。",
+      "next_action": "核对 UI2Code_N evaluation 数据是否完整公开，先不训练。",
+      "caveat": "自建 benchmark，必须清楚标注来源和可公开性。"
+    },
+    {
+      "id": "uipolish",
+      "name": "UIPolish-bench",
+      "task_focus": "UI polishing / rendered-feedback code refinement",
+      "score_zone": "upper_mid",
+      "representative_score": "Real 80.0；Synthetic 94.0",
+      "frontend_role": "visual_repair",
+      "priority": "P0",
+      "research_role": "main_candidate",
+      "api_gpu": "本地 9B 推理约 24-48GB；API judge 可无 GPU。",
+      "next_action": "优先 Real，Synthetic 只作可控 ablation。",
+      "caveat": "真实集比 synthetic 更有论文价值。"
+    },
+    {
+      "id": "design2code_hard",
+      "name": "Design2Code-HARD",
+      "task_focus": "困难网页截图转代码",
+      "score_zone": "upper_mid",
+      "representative_score": "UI2Code^N VLM Judge Acc. 88.6；CLIP 最好约 89.5",
+      "frontend_role": "hard_ui_to_code",
+      "priority": "P0",
+      "research_role": "main_candidate",
+      "api_gpu": "API-only 可做生成/修复/rerank；评测不需要训练 GPU。",
+      "next_action": "下载 3-5 个样本，跑 direct、multi-candidate、render-feedback baseline。",
+      "caveat": "不同指标不可混排，但整体仍有 hard-case 空间。"
+    },
+    {
+      "id": "webcode2m_long",
+      "name": "WebCode2M-Long",
+      "task_focus": "长网页 UI-to-code",
+      "score_zone": "unknown",
+      "representative_score": "UI2Code^N CLIP 0.79 +/- 0.09",
+      "frontend_role": "long_context_pressure",
+      "priority": "P2",
+      "research_role": "stress_test",
+      "api_gpu": "小样本 API 可试；全量数据/训练偏重，可能需要 80GB 级或多卡。",
+      "next_action": "只记录格式和 license，暂不下载大数据。",
+      "caveat": "数据量和训练成本不适合第一轮。"
+    },
+    {
+      "id": "webvoyager",
+      "name": "WebVoyager",
+      "task_focus": "真实网页浏览和操作",
+      "score_zone": "upper_mid",
+      "representative_score": "GLM-5V-Turbo 88.5",
+      "frontend_role": "web_agent_background",
+      "priority": "P3",
+      "research_role": "background",
+      "api_gpu": "API agent 可跑；浏览器环境成本中等。",
+      "next_action": "只在 related work 中引用。",
+      "caveat": "不是 design-to-code。"
+    },
+    {
+      "id": "osworld",
+      "name": "OSWorld",
+      "task_focus": "桌面系统 GUI agent",
+      "score_zone": "low",
+      "representative_score": "GLM-4.6V 37.2",
+      "frontend_role": "gui_agent_background",
+      "priority": "P3",
+      "research_role": "background_defer",
+      "api_gpu": "环境重；API agent 也需要虚拟机/桌面环境；本地 VLM 约 24-80GB。",
+      "next_action": "只保留为 GUI agent 上限证据。",
+      "caveat": "低分但和前端 design 距离远。"
+    },
+    {
+      "id": "androidworld",
+      "name": "AndroidWorld",
+      "task_focus": "Android GUI agent",
+      "score_zone": "medium",
+      "representative_score": "GLM-4.6V 57.0",
+      "frontend_role": "mobile_agent_background",
+      "priority": "P3",
+      "research_role": "background_defer",
+      "api_gpu": "Android 环境成本高；非前端 web design。",
+      "next_action": "不进第一轮。",
+      "caveat": "只作移动 GUI 背景。"
+    },
+    {
+      "id": "webquest",
+      "name": "WebQuest",
+      "task_focus": "网页序列 QA",
+      "score_zone": "medium",
+      "representative_score": "GLM-4.6V SingleQA 79.5",
+      "frontend_role": "web_understanding_background",
+      "priority": "P3",
+      "research_role": "background",
+      "api_gpu": "API-only 可评，但任务是 QA。",
+      "next_action": "只作为网页理解背景。",
+      "caveat": "不是生成或修复。"
+    },
+    {
+      "id": "mind2web",
+      "name": "Mind2Web",
+      "task_focus": "真实网站动作预测",
+      "score_zone": "medium",
+      "representative_score": "AutoWebGLM average Step SR 59.5；CogAgent 58.2",
+      "frontend_role": "web_agent_background",
+      "priority": "P2",
+      "research_role": "grounding_background",
+      "api_gpu": "offline action prediction 可 API；训练/本地模型需 GPU。",
+      "next_action": "若做 browser repair agent，可用作 action grounding 参考。",
+      "caveat": "不直接衡量前端设计生成。"
+    },
+    {
+      "id": "aitw",
+      "name": "Android in the Wild (AITW)",
+      "task_focus": "Android 操作预测",
+      "score_zone": "medium",
+      "representative_score": "CogAgent 76.88",
+      "frontend_role": "mobile_agent_background",
+      "priority": "P3",
+      "research_role": "background_defer",
+      "api_gpu": "移动端数据/模型路线，非前端主线。",
+      "next_action": "不进第一轮。",
+      "caveat": "和 web/front-end design 关系弱。"
+    },
+    {
+      "id": "autowebbench",
+      "name": "AutoWebBench",
+      "task_focus": "中英文真实网页浏览",
+      "score_zone": "medium",
+      "representative_score": "AutoWebGLM overall SSR 62.7",
+      "frontend_role": "zhipu_web_agent_background",
+      "priority": "P2",
+      "research_role": "zhipu_framework_evidence",
+      "api_gpu": "API agent 可跑；真实网页环境需维护。",
+      "next_action": "用于回答 Zhipu 是否有 framework 跑 bench。",
+      "caveat": "不是 design benchmark。"
+    },
+    {
+      "id": "miniwob",
+      "name": "MiniWoB++",
+      "task_focus": "模拟网页操作任务",
+      "score_zone": "upper_mid",
+      "representative_score": "AutoWebGLM 89.3",
+      "frontend_role": "web_agent_background",
+      "priority": "P3",
+      "research_role": "background_defer",
+      "api_gpu": "环境相对轻，但任务离现代前端 design 远。",
+      "next_action": "不投入第一轮。",
+      "caveat": "偏老、偏模拟且接近饱和。"
+    },
+    {
+      "id": "webarena",
+      "name": "WebArena",
+      "task_focus": "真实网站镜像 web agent",
+      "score_zone": "low",
+      "representative_score": "AutoWebGLM 18.2",
+      "frontend_role": "web_agent_background",
+      "priority": "P3",
+      "research_role": "long_term_extension",
+      "api_gpu": "自托管环境重；API agent 可无 GPU 但成本高。",
+      "next_action": "当前不拉，只保留远期 browser agent 扩展。",
+      "caveat": "低分但不是 design-to-code。"
+    },
+    {
+      "id": "vab_webarena_lite",
+      "name": "VAB-WebArena-Lite",
+      "task_focus": "VisualAgentBench 中的网页操作子集",
+      "score_zone": "medium",
+      "representative_score": "AutoGLM 55.2；pass@2 59.1",
+      "frontend_role": "web_agent_background",
+      "priority": "P2",
+      "research_role": "future_extension",
+      "api_gpu": "API agent 可无 GPU；环境比 VAB-CSS 更偏 web task。",
+      "next_action": "若 VAB-CSS 跑通，再考虑。",
+      "caveat": "不是 CSS repair 或 UI-to-code 主线。"
+    },
+    {
+      "id": "androidlab",
+      "name": "AndroidLab / VAB-Mobile",
+      "task_focus": "Android GUI agent",
+      "score_zone": "low",
+      "representative_score": "AutoGLM 36.2",
+      "frontend_role": "mobile_agent_background",
+      "priority": "P3",
+      "research_role": "background_defer",
+      "api_gpu": "Android 环境和 agent 成本高。",
+      "next_action": "不进第一轮。",
+      "caveat": "只作为 AutoGLM/GUI agent 背景。"
+    }
+  ],
+  "next_batch_to_add": [
+    {
+      "name": "Interaction2Code",
+      "value": "交互原型到可交互网页，ASE 2025；比静态截图更接近真实前端。",
+      "priority": "P0/P1"
+    },
+    {
+      "name": "DCGen real-world website set",
+      "value": "FSE 2025，分块 UI-to-code，API-only 可跑。",
+      "priority": "P0/P1"
+    },
+    {
+      "name": "Figma2Code",
+      "value": "ICLR 2026，Figma metadata + screenshot + assets。",
+      "priority": "P2"
+    },
+    {
+      "name": "ScreenBench / ScreenCoder",
+      "value": "1000 个真实网页截图和 HTML source，模块化 UI-to-code agent。",
+      "priority": "P1/P2"
+    },
+    {
+      "name": "WebMMU Mockup2Code",
+      "value": "EMNLP 2025，多语言网站理解、代码编辑和 mockup-to-code。",
+      "priority": "P2"
+    },
+    {
+      "name": "WebGen-Bench",
+      "value": "prompt-to-web-app / agent benchmark，系统级工程重。",
+      "priority": "P2/P3"
+    }
+  ],
+  "download_order": [
+    "Design2Code-HARD 小样本",
+    "UIPolish-Real evaluation 数据和已有输出",
+    "WebPAI DesignBench Vanilla/React 小样本",
+    "VAB-CSS setup 与少量任务",
+    "Vision2Web static level"
+  ]
+}
