@@ -780,11 +780,10 @@
                 </thead>
                 <tbody>
                   <tr><td>生成 / records</td><td>375/375 records</td><td>完成</td><td>全部 records 已调用模型生成</td><td>论文称 374 interactions，本地 full_dataset 展开为 375 records</td><td>按本地 375 records 记录覆盖</td></tr>
-                  <tr><td>HTML 抽取 / 完整性</td><td>HTML extracted 346/375；HTML complete 335/375</td><td>部分完成</td><td>可进入渲染/评测的主体样本已覆盖</td><td>未抽取或不完整 HTML 不能直接进入完整指标</td><td>后续指标使用可渲染/可评分子集</td></tr>
-                  <tr><td>渲染 / full-page 图像指标</td><td>rendered 342/375；CLIP/SSIM scored 342/375</td><td>部分完成</td><td>Full CLIP 0.8181；Full SSIM 0.7174</td><td>Full-page Text/OCR 没有全量评测</td><td>Full CLIP/SSIM 用 342 个已评样本 available mean</td></tr>
-                  <tr><td>interaction 图像 / OCR</td><td>interaction image/OCR scored 288/375</td><td>部分完成</td><td>Inter CLIP 0.7736；Inter SSIM 0.5660；Text ratio 0.4708</td><td>部分样本 missing_interact1、trigger_error 或无视觉变化</td><td>Inter CLIP/SSIM 使用 288 个已评样本 available mean</td></tr>
-                  <tr><td>官方 Text 对齐近似</td><td>official-like BLEU 263/375</td><td>部分完成</td><td>Inter Text official-like BLEU 0.5585</td><td>不是完整官方 OCR BLEU pipeline；full-page Text 缺失</td><td>Leaderboard 对齐行的 Inter Text 使用 263 个 BLEU 样本均值</td></tr>
-                  <tr><td>Position / IR</td><td>Position 288/375；IR proxy 375/375</td><td>proxy 完成</td><td>Position 0.7708；IR proxy 0.8267</td><td>Position 是近似实现，IR 不是严格官方 Implement Rate</td><td>作为 proxy 指标填入 ours 对齐行，并在备注标明</td></tr>
+                  <tr><td>HTML 抽取 / 完整性</td><td>official evaluator scored 273/375；missing_generated 29；score_errors 73</td><td>完成（含失败计 0）</td><td>可评分 273 条</td><td>73 条 official evaluator 抛错；29 条缺生成产物</td><td>缺失/失败按 0 纳入 375 分母</td></tr>
+                  <tr><td>渲染 / full-page 图像指标</td><td>official scored 273/375</td><td>完成</td><td>Full CLIP 0.5269；Full SSIM 0.4099；Full Text 0.4538</td><td>这是 full375 penalized mean；scored-only 均值只作诊断</td><td>Leaderboard 对齐行使用 full375</td></tr>
+                  <tr><td>interaction 图像 / OCR</td><td>official scored 273/375</td><td>完成</td><td>Inter CLIP 0.4373；Inter SSIM 0.3069；Inter Text 0.2167</td><td>score_errors / missing_generated 全部按 0</td><td>对齐论文 Interaction Part</td></tr>
+                  <tr><td>Position / IR</td><td>Position official scored 273/375；IR 224/375</td><td>完成</td><td>Position 0.2958；IR 0.5973</td><td>WS/WMR 未复现；Position_after 0.3678 只作补充</td><td>对齐 paper table 的 Position / Implement Rate</td></tr>
                 </tbody>
               </table>
             </div>
@@ -792,8 +791,8 @@
 
           <div class="panel">
             <div class="panel-title">
-              <h4>我们的 Leaderboard 对齐行（available mean）</h4>
-              <p>按官方 leaderboard 的列展示 ours；没评完的指标用已评测样本均值，未评测的 full-page Text 保持空缺。</p>
+              <h4>我们的 Leaderboard 对齐行（official full375）</h4>
+              <p>按官方 leaderboard 的列展示 ours；缺失、生成失败和 official evaluator 报错样本按 0 纳入 375 分母。</p>
             </div>
             <div class="table-wrap">
               <table class="wide-table">
@@ -814,7 +813,7 @@
                   </tr>
                 </thead>
                 <tbody>
-                  <tr><td>Ours / qwen3.5-9b</td><td>Mark</td><td>Full image 342/375；Interaction image 288/375；Inter BLEU 263/375；IR proxy 375/375</td><td class="num">0.8181</td><td class="num">0.7174</td><td class="num">-</td><td class="num">0.7736</td><td class="num">0.5660</td><td class="num">0.5585</td><td class="num">0.7708</td><td class="num">0.8267</td><td>Inter Text 用 official-like BLEU；Full Text 没有全量 OCR。</td></tr>
+                  <tr><td>Ours / qwen3.5-9b</td><td>Mark</td><td>official full375；scored 273/375；implemented 224/375</td><td class="num">0.5269</td><td class="num">0.4099</td><td class="num">0.4538</td><td class="num">0.4373</td><td class="num">0.3069</td><td class="num">0.2167</td><td class="num">0.2958</td><td class="num">0.5973</td><td>使用 official <code>get_all_score()</code>；WS/WMR 未复现。</td></tr>
                 </tbody>
               </table>
             </div>
@@ -825,30 +824,31 @@
             <div class="table-wrap">
               <table>
                 <thead>
-                  <tr><th>指标</th><th class="num">available mean</th><th class="num">penalized mean</th><th class="num">count</th><th>说明</th></tr>
+                  <tr><th>指标</th><th class="num">scored-only mean</th><th class="num">full375 mean</th><th class="num">count</th><th>说明</th></tr>
                 </thead>
                 <tbody>
-                  <tr><td>full_page_clip</td><td class="num">0.8181</td><td class="num">0.7461</td><td class="num">342</td><td>本地渲染后计算</td></tr>
-                  <tr><td>full_page_ssim</td><td class="num">0.7174</td><td class="num">0.6543</td><td class="num">342</td><td>本地渲染后计算</td></tr>
-                  <tr><td>interaction_clip</td><td class="num">0.7736</td><td class="num">0.5941</td><td class="num">288</td><td>交互截图可评分子集</td></tr>
-                  <tr><td>interaction_ssim</td><td class="num">0.5660</td><td class="num">0.4347</td><td class="num">288</td><td>交互截图可评分子集</td></tr>
-                  <tr><td>interaction_text_ratio</td><td class="num">0.4708</td><td class="num">0.3616</td><td class="num">288</td><td>EasyOCR 文本 ratio，非论文 BLEU</td></tr>
-                  <tr><td>interaction_text_official_like_bleu</td><td class="num">0.5585</td><td class="num">0.3917</td><td class="num">263</td><td>近似官方 OCR BLEU</td></tr>
-                  <tr><td>interaction_position</td><td class="num">0.7708</td><td class="num">0.5920</td><td class="num">288</td><td>用参考红框中心和生成变化框中心近似</td></tr>
-                  <tr><td>implement_rate_proxy</td><td class="num">0.8267</td><td class="num">-</td><td class="num">375</td><td>触发/实现率 proxy，不等同官方 IR</td></tr>
+                  <tr><td>full_page_clip</td><td class="num">0.7238</td><td class="num">0.5269</td><td class="num">273</td><td>official evaluator scored-only / full375</td></tr>
+                  <tr><td>full_page_ssim</td><td class="num">0.5630</td><td class="num">0.4099</td><td class="num">273</td><td>official evaluator scored-only / full375</td></tr>
+                  <tr><td>full_page_text</td><td class="num">0.6233</td><td class="num">0.4538</td><td class="num">273</td><td>official OCR/Text 口径</td></tr>
+                  <tr><td>interaction_clip</td><td class="num">0.6007</td><td class="num">0.4373</td><td class="num">273</td><td>official evaluator scored-only / full375</td></tr>
+                  <tr><td>interaction_ssim</td><td class="num">0.4216</td><td class="num">0.3069</td><td class="num">273</td><td>official evaluator scored-only / full375</td></tr>
+                  <tr><td>interaction_text</td><td class="num">0.2977</td><td class="num">0.2167</td><td class="num">273</td><td>official OCR/Text 口径</td></tr>
+                  <tr><td>position</td><td class="num">0.4063</td><td class="num">0.2958</td><td class="num">273</td><td>official evaluator Position</td></tr>
+                  <tr><td>position_after</td><td class="num">0.5052</td><td class="num">0.3678</td><td class="num">273</td><td>补充诊断，不进入论文主表</td></tr>
+                  <tr><td>implement_rate</td><td class="num">-</td><td class="num">0.5973</td><td class="num">375</td><td>224/375 implemented</td></tr>
                 </tbody>
               </table>
             </div>
-            <p class="note">生成覆盖：records 375，HTML extracted 346，HTML complete 335，rendered 342，interaction image/OCR scored 288。当前没有全量 full-page OCR，因此不要合成官方 overall。</p>
+            <p class="note">official evaluator 覆盖：records 375，scored 273，missing_generated 29，score_errors 73，implemented 224。主表指标均按 full375 penalized mean 展示。</p>
           </div>
 
           <div class="panel">
             <div class="panel-title"><h4>和原论文不一样的地方</h4><p>Interaction2Code 的结果最容易“看起来很好”，但需要严格标注 evaluator 差异。</p></div>
             <div class="diff-list">
               <div class="diff"><strong>分母不同</strong><span>论文称 127 pages / 374 interactions；本地 full_dataset 展开为 375 条 records。</span></div>
-              <div class="diff"><strong>Text 指标不同</strong><span>论文 Text 使用 OCR 后 BLEU；我们主表有 EasyOCR ratio 和 official-like BLEU 两套，不能混写。</span></div>
-              <div class="diff"><strong>Position 近似</strong><span>我们用变化框中心相似度近似 position/position_after，不是官方逐项复现。</span></div>
-              <div class="diff"><strong>覆盖未满</strong><span>375 条生成完成，但可评分 full-page 为 342，interaction 为 288；失败样本缺失不能直接忽略。</span></div>
+              <div class="diff"><strong>Text 指标已官方化</strong><span>主表使用 official evaluator 的 Text；旧 EasyOCR ratio / official-like BLEU 只作为历史诊断。</span></div>
+              <div class="diff"><strong>Position / IR 已官方化</strong><span>主表现在使用 official <code>get_all_score()</code> full375：Position 0.2958，IR 0.5973；旧 staged proxy 不再作为主结果。</span></div>
+              <div class="diff"><strong>覆盖未满</strong><span>375 条生成记录完成；official evaluator scored 273，missing_generated 29，score_errors 73；失败样本按 0 纳入主表。</span></div>
             </div>
           </div>
         </section>

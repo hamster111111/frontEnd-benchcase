@@ -1,0 +1,2420 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Interaction2Code 实验分析报告</title>
+  <style>
+    :root {
+      --bg: #f7f8f5;
+      --ink: #1f2522;
+      --muted: #626b66;
+      --line: #d9ded8;
+      --panel: #ffffff;
+      --accent: #1f6f78;
+      --accent-2: #b35c23;
+      --bad: #b6423c;
+      --warn: #a26b0b;
+      --good: #2d6d4b;
+      --soft: #eef3ef;
+      --shadow: 0 16px 40px rgba(31, 37, 34, 0.08);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--ink);
+      font: 15px/1.55 -apple-system, BlinkMacSystemFont, "Segoe UI", "Microsoft YaHei", sans-serif;
+    }
+
+    a {
+      color: var(--accent);
+      text-decoration: none;
+    }
+
+    a:hover {
+      text-decoration: underline;
+    }
+
+    .shell {
+      min-height: 100vh;
+    }
+
+    .topbar {
+      position: sticky;
+      top: 0;
+      z-index: 20;
+      border-bottom: 1px solid var(--line);
+      background: rgba(247, 248, 245, 0.92);
+      backdrop-filter: blur(12px);
+    }
+
+    .topbar-inner {
+      max-width: 1480px;
+      margin: 0 auto;
+      padding: 12px 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-weight: 700;
+      letter-spacing: 0;
+    }
+
+    .brand-mark {
+      width: 12px;
+      height: 28px;
+      border-radius: 2px;
+      background: linear-gradient(180deg, var(--accent), var(--accent-2));
+    }
+
+    .nav {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 4px;
+      justify-content: flex-end;
+    }
+
+    .nav a {
+      padding: 7px 10px;
+      border-radius: 6px;
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .nav a:hover {
+      background: var(--soft);
+      color: var(--ink);
+      text-decoration: none;
+    }
+
+    main {
+      max-width: 1480px;
+      margin: 0 auto;
+      padding: 34px 24px 64px;
+    }
+
+    .report-layout {
+      display: grid;
+      grid-template-columns: 228px minmax(0, 1fr);
+      gap: 28px;
+      align-items: start;
+    }
+
+    .report-content {
+      min-width: 0;
+    }
+
+    .side-nav {
+      position: sticky;
+      top: 78px;
+      align-self: start;
+      max-height: calc(100vh - 96px);
+      overflow: auto;
+      padding: 14px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: rgba(255, 255, 255, 0.86);
+      box-shadow: var(--shadow);
+    }
+
+    .side-nav-title {
+      margin: 0 0 10px;
+      color: var(--muted);
+      font-size: 12px;
+      font-weight: 800;
+    }
+
+    .side-nav a {
+      display: grid;
+      grid-template-columns: 22px minmax(0, 1fr);
+      align-items: center;
+      gap: 8px;
+      min-height: 34px;
+      padding: 6px 8px;
+      border-radius: 6px;
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.25;
+    }
+
+    .side-nav a:hover,
+    .side-nav a.active {
+      background: var(--soft);
+      color: var(--ink);
+      text-decoration: none;
+    }
+
+    .side-nav a.active {
+      font-weight: 800;
+    }
+
+    .side-nav-index {
+      display: inline-grid;
+      place-items: center;
+      width: 20px;
+      height: 20px;
+      border-radius: 999px;
+      background: #edf2ee;
+      color: var(--accent);
+      font-size: 11px;
+      font-weight: 800;
+      font-variant-numeric: tabular-nums;
+    }
+
+    .side-nav a.active .side-nav-index {
+      background: var(--accent);
+      color: #fff;
+    }
+
+    .hero {
+      display: grid;
+      grid-template-columns: minmax(0, 1.35fr) minmax(280px, 0.65fr);
+      gap: 34px;
+      align-items: end;
+      padding: 18px 0 30px;
+      border-bottom: 1px solid var(--line);
+    }
+
+    h1 {
+      margin: 0 0 14px;
+      font-size: clamp(34px, 5vw, 64px);
+      line-height: 1.02;
+      letter-spacing: 0;
+    }
+
+    .lead {
+      max-width: 780px;
+      margin: 0;
+      color: var(--muted);
+      font-size: 18px;
+    }
+
+    .stamp {
+      justify-self: end;
+      width: min(100%, 360px);
+      padding: 18px;
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      box-shadow: var(--shadow);
+    }
+
+    .stamp-row {
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      padding: 8px 0;
+      border-bottom: 1px solid var(--line);
+      font-size: 13px;
+    }
+
+    .stamp-row:last-child {
+      border-bottom: 0;
+    }
+
+    .stamp-row span:first-child {
+      color: var(--muted);
+    }
+
+    section {
+      margin-top: 42px;
+      scroll-margin-top: 82px;
+    }
+
+    .section-head {
+      display: flex;
+      justify-content: space-between;
+      gap: 20px;
+      align-items: end;
+      margin-bottom: 16px;
+    }
+
+    h2 {
+      margin: 0;
+      font-size: 24px;
+      letter-spacing: 0;
+    }
+
+    .note {
+      margin: 0;
+      color: var(--muted);
+      max-width: 720px;
+    }
+
+    .stats {
+      display: grid;
+      grid-template-columns: repeat(5, minmax(0, 1fr));
+      gap: 10px;
+    }
+
+    .stat {
+      min-height: 132px;
+      padding: 16px;
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: 8px;
+    }
+
+    .stat-value {
+      font-size: 34px;
+      line-height: 1;
+      font-weight: 760;
+      letter-spacing: 0;
+    }
+
+    .stat-label {
+      margin-top: 10px;
+      font-weight: 650;
+    }
+
+    .stat-sub {
+      margin-top: 6px;
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .grid-2 {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+      gap: 16px;
+    }
+
+    .grid-3 {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 16px;
+    }
+
+    .definition {
+      display: grid;
+      gap: 1px;
+      background: var(--line);
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      overflow: hidden;
+    }
+
+    .definition-row {
+      display: grid;
+      grid-template-columns: 150px minmax(0, 1fr);
+      gap: 1px;
+      background: var(--line);
+    }
+
+    .definition-row > div {
+      background: var(--panel);
+      padding: 13px 14px;
+    }
+
+    .definition-row > div:first-child {
+      color: var(--muted);
+      font-weight: 700;
+    }
+
+    .callout {
+      border-left: 4px solid var(--accent);
+      background: #edf6f6;
+      padding: 14px 16px;
+      border-radius: 6px;
+      color: #21494d;
+    }
+
+    .callout p {
+      margin: 0;
+    }
+
+    .figure-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1.2fr) minmax(260px, 0.8fr);
+      gap: 16px;
+      align-items: start;
+    }
+
+    .figure-panel {
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      overflow: hidden;
+    }
+
+    .figure-panel img {
+      display: block;
+      width: 100%;
+      height: auto;
+      background: #fff;
+    }
+
+    .caption {
+      padding: 11px 14px;
+      color: var(--muted);
+      border-top: 1px solid var(--line);
+      font-size: 13px;
+    }
+
+    .table-wrap {
+      overflow-x: auto;
+    }
+
+    .result-row td {
+      background: #eef7f6;
+      font-weight: 700;
+    }
+
+    .paper-table {
+      padding: 22px;
+      background: #fff;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      overflow-x: auto;
+    }
+
+    .paper-table-title {
+      text-align: center;
+      font-family: Georgia, "Times New Roman", serif;
+      margin-bottom: 10px;
+      color: #111;
+    }
+
+    .paper-table-title strong {
+      display: block;
+      font-size: 16px;
+      margin-bottom: 3px;
+      letter-spacing: 0.02em;
+    }
+
+    .paper-table-title span {
+      display: block;
+      font-size: 12px;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+    }
+
+    .paper-like {
+      min-width: 980px;
+      font-family: Georgia, "Times New Roman", serif;
+      color: #111;
+      border-top: 2px solid #111;
+      border-bottom: 2px solid #111;
+      font-size: 16px;
+    }
+
+    .paper-like th,
+    .paper-like td {
+      position: static;
+      background: #fff;
+      border-bottom: 0;
+      padding: 8px 9px;
+      text-align: center;
+      vertical-align: middle;
+    }
+
+    .paper-like thead tr:last-child th {
+      border-bottom: 1px solid #222;
+    }
+
+    .paper-like .sep-left {
+      border-left: 1px solid #777;
+    }
+
+    .paper-like .model-cell {
+      text-align: left;
+      white-space: nowrap;
+    }
+
+    .paper-like .ours-values td {
+      font-weight: 700;
+    }
+
+    .paper-note {
+      margin: 10px 0 0;
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .tree-grid {
+      display: block;
+    }
+
+    .issue-tree {
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: 16px;
+    }
+
+    .tree-node {
+      border-left: 2px solid var(--line);
+      margin-left: 10px;
+      padding-left: 16px;
+    }
+
+    .tree-node.root {
+      border-left: 0;
+      margin-left: 0;
+      padding-left: 0;
+    }
+
+    .node-line {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto auto;
+      gap: 10px;
+      align-items: center;
+      min-height: 34px;
+      padding: 6px 0;
+      border-bottom: 1px solid #edf0eb;
+    }
+
+    .tree-node:last-child > .node-line {
+      border-bottom: 0;
+    }
+
+    .node-name {
+      font-weight: 700;
+    }
+
+    .node-count {
+      font-variant-numeric: tabular-nums;
+      font-weight: 800;
+    }
+
+    .node-rate {
+      color: var(--muted);
+      font-size: 12px;
+      font-variant-numeric: tabular-nums;
+      white-space: nowrap;
+    }
+
+    .node-note {
+      margin: 2px 0 8px;
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .tree-node.bad > .node-line .node-count,
+    .tree-node.bad > .node-line .node-name {
+      color: var(--bad);
+    }
+
+    .tree-node.warn > .node-line .node-count,
+    .tree-node.warn > .node-line .node-name {
+      color: var(--warn);
+    }
+
+    .tree-node.good > .node-line .node-count,
+    .tree-node.good > .node-line .node-name {
+      color: var(--good);
+    }
+
+    .tree-legend {
+      display: grid;
+      gap: 10px;
+    }
+
+    .tree-summary {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 10px;
+      margin: 0 0 18px;
+    }
+
+    .summary-chip {
+      min-height: 76px;
+      padding: 12px;
+      border: 1px solid rgba(217, 222, 216, 0.9);
+      border-radius: 8px;
+      background: rgba(255, 255, 255, 0.86);
+      display: grid;
+      align-content: center;
+      gap: 4px;
+    }
+
+    .summary-chip.bad {
+      background: #fff8f7;
+      border-color: #edd0cc;
+    }
+
+    .summary-chip.good {
+      background: #f5faf7;
+      border-color: #cfe2d6;
+    }
+
+    .summary-chip.warn {
+      background: #fffaf1;
+      border-color: #eadab6;
+    }
+
+    .summary-label {
+      color: var(--muted);
+      font-size: 12px;
+      font-weight: 700;
+    }
+
+    .summary-value {
+      color: var(--ink);
+      font-size: 25px;
+      line-height: 1;
+      font-weight: 850;
+      font-variant-numeric: tabular-nums;
+    }
+
+    .tree-stage {
+      display: inline-flex;
+      align-items: center;
+      min-height: 26px;
+      margin: 14px 0 5px 18px;
+      padding: 3px 9px;
+      border: 1px solid rgba(31, 111, 120, 0.18);
+      border-radius: 999px;
+      background: rgba(31, 111, 120, 0.08);
+      color: var(--accent);
+      font-size: 12px;
+      font-weight: 800;
+    }
+
+    .issue-tree {
+      position: relative;
+      overflow: hidden;
+      padding: 20px;
+      background:
+        linear-gradient(180deg, rgba(238, 243, 239, 0.75), transparent 190px),
+        var(--panel);
+      box-shadow: var(--shadow);
+    }
+
+    .tree-node {
+      position: relative;
+      border-left: 2px solid rgba(31, 111, 120, 0.18);
+      margin-left: 18px;
+      padding-left: 18px;
+    }
+
+    .tree-node.root {
+      margin-left: 0;
+      padding-left: 0;
+    }
+
+    .tree-node:not(.root)::before {
+      content: "";
+      position: absolute;
+      left: -2px;
+      top: 22px;
+      width: 14px;
+      border-top: 2px solid rgba(31, 111, 120, 0.18);
+      transform: translateX(-100%);
+    }
+
+    .node-line {
+      grid-template-columns: minmax(0, 1fr) auto auto;
+      min-height: 42px;
+      margin: 7px 0;
+      padding: 9px 10px 9px 12px;
+      border: 1px solid rgba(217, 222, 216, 0.95);
+      border-left: 4px solid rgba(31, 111, 120, 0.3);
+      border-bottom: 1px solid rgba(217, 222, 216, 0.95);
+      border-radius: 8px;
+      background: rgba(255, 255, 255, 0.88);
+      box-shadow: 0 8px 18px rgba(31, 37, 34, 0.05);
+    }
+
+    .tree-node.root > .node-line {
+      background: #1f2522;
+      color: #fff;
+      border-color: #1f2522;
+      box-shadow: 0 12px 28px rgba(31, 37, 34, 0.15);
+    }
+
+    .tree-node.root > .node-line .node-rate {
+      color: rgba(255, 255, 255, 0.72);
+    }
+
+    .node-name {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      min-width: 0;
+    }
+
+    .node-name::before {
+      content: "";
+      flex: 0 0 auto;
+      width: 8px;
+      height: 8px;
+      border-radius: 999px;
+      background: var(--accent);
+    }
+
+    .tree-node.bad > .node-line .node-name::before {
+      background: var(--bad);
+    }
+
+    .tree-node.bad > .node-line {
+      border-left-color: var(--bad);
+    }
+
+    .tree-node.warn > .node-line .node-name::before {
+      background: var(--warn);
+    }
+
+    .tree-node.warn > .node-line {
+      border-left-color: var(--warn);
+    }
+
+    .tree-node.good > .node-line .node-name::before {
+      background: var(--good);
+    }
+
+    .tree-node.good > .node-line {
+      border-left-color: var(--good);
+    }
+
+    .tree-node.root > .node-line .node-name::before {
+      background: #fff;
+    }
+
+    .node-count {
+      min-width: 50px;
+      padding: 4px 9px;
+      border-radius: 999px;
+      background: var(--soft);
+      text-align: center;
+    }
+
+    .tree-node.bad > .node-line .node-count {
+      background: #f8e9e7;
+    }
+
+    .tree-node.warn > .node-line .node-count {
+      background: #f6edda;
+    }
+
+    .tree-node.good > .node-line .node-count {
+      background: #e4f0e9;
+    }
+
+    .tree-node.root > .node-line .node-count {
+      background: rgba(255, 255, 255, 0.14);
+      color: #fff;
+    }
+
+    .node-rate {
+      min-width: 96px;
+      text-align: right;
+    }
+
+    .node-note {
+      margin: -2px 0 9px 12px;
+      padding: 8px 10px;
+      border-left: 3px solid var(--line);
+      background: rgba(238, 243, 239, 0.65);
+      border-radius: 0 6px 6px 0;
+    }
+
+    .metric-chip {
+      display: inline-flex;
+      align-items: center;
+      min-height: 24px;
+      padding: 2px 8px;
+      border-radius: 6px;
+      background: var(--soft);
+      font-weight: 700;
+      white-space: nowrap;
+    }
+
+    .panel {
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      overflow: hidden;
+    }
+
+    .panel-pad {
+      padding: 18px;
+    }
+
+    .insight-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 14px;
+    }
+
+    .insight-card {
+      display: grid;
+      gap: 12px;
+      padding: 16px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: var(--panel);
+      box-shadow: 0 10px 26px rgba(31, 37, 34, 0.06);
+    }
+
+    .insight-card.primary {
+      border-left: 4px solid var(--accent);
+    }
+
+    .insight-card.support {
+      border-left: 4px solid var(--accent-2);
+    }
+
+    .insight-card.caution {
+      border-left: 4px solid var(--warn);
+    }
+
+    .insight-head {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 12px;
+    }
+
+    .insight-card h3 {
+      margin: 0;
+      font-size: 17px;
+      line-height: 1.28;
+    }
+
+    .insight-card p {
+      margin: 0;
+      color: var(--muted);
+    }
+
+    .insight-card dl {
+      display: grid;
+      grid-template-columns: 72px minmax(0, 1fr);
+      gap: 7px 10px;
+      margin: 0;
+      font-size: 13px;
+    }
+
+    .insight-card dt {
+      color: var(--muted);
+      font-weight: 800;
+    }
+
+    .insight-card dd {
+      margin: 0;
+    }
+
+    .insight-priority {
+      flex: 0 0 auto;
+      min-width: 42px;
+      padding: 3px 8px;
+      border-radius: 999px;
+      background: var(--soft);
+      color: var(--accent);
+      font-size: 12px;
+      font-weight: 850;
+      text-align: center;
+    }
+
+    .method-strip {
+      display: grid;
+      grid-template-columns: repeat(5, minmax(0, 1fr));
+      gap: 10px;
+      margin-top: 14px;
+    }
+
+    .method-step {
+      min-height: 98px;
+      padding: 12px;
+      border: 1px solid rgba(31, 111, 120, 0.16);
+      border-radius: 8px;
+      background: #edf6f6;
+    }
+
+    .method-step strong {
+      display: block;
+      margin-bottom: 6px;
+      color: #21494d;
+    }
+
+    .method-step span {
+      color: var(--muted);
+      font-size: 12px;
+    }
+
+    .bar-list {
+      display: grid;
+      gap: 10px;
+    }
+
+    .bar-row {
+      display: grid;
+      grid-template-columns: 190px minmax(0, 1fr) 64px;
+      gap: 12px;
+      align-items: center;
+      font-size: 13px;
+    }
+
+    .bar-label {
+      color: var(--ink);
+      font-weight: 620;
+    }
+
+    .bar-track {
+      height: 10px;
+      background: #e5e9e4;
+      border-radius: 999px;
+      overflow: hidden;
+    }
+
+    .bar-fill {
+      height: 100%;
+      background: var(--accent);
+      border-radius: 999px;
+    }
+
+    .bar-fill.bad {
+      background: var(--bad);
+    }
+
+    .bar-fill.warn {
+      background: var(--warn);
+    }
+
+    .bar-fill.good {
+      background: var(--good);
+    }
+
+    .bar-value {
+      color: var(--muted);
+      text-align: right;
+      font-variant-numeric: tabular-nums;
+    }
+
+    .pipeline {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 1px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      overflow: hidden;
+      background: var(--line);
+    }
+
+    .pipe-step {
+      background: var(--panel);
+      padding: 18px;
+      min-height: 170px;
+    }
+
+    .pipe-index {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 28px;
+      height: 28px;
+      border-radius: 999px;
+      background: var(--soft);
+      color: var(--accent);
+      font-weight: 760;
+      margin-bottom: 12px;
+    }
+
+    .pipe-step h3 {
+      margin: 0 0 8px;
+      font-size: 16px;
+    }
+
+    .pipe-step p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 13px;
+    }
+
+    th,
+    td {
+      text-align: left;
+      vertical-align: top;
+      padding: 11px 12px;
+      border-bottom: 1px solid var(--line);
+    }
+
+    th {
+      color: var(--muted);
+      font-size: 12px;
+      font-weight: 700;
+      background: #fbfcfa;
+      position: sticky;
+      top: 53px;
+      z-index: 5;
+    }
+
+    tr:last-child td {
+      border-bottom: 0;
+    }
+
+    .tag {
+      display: inline-flex;
+      align-items: center;
+      height: 24px;
+      padding: 0 8px;
+      border-radius: 999px;
+      background: var(--soft);
+      color: var(--ink);
+      font-size: 12px;
+      font-weight: 650;
+      white-space: nowrap;
+    }
+
+    .tag.bad {
+      background: #f8e9e7;
+      color: var(--bad);
+    }
+
+    .tag.warn {
+      background: #f6edda;
+      color: var(--warn);
+    }
+
+    .tag.good {
+      background: #e4f0e9;
+      color: var(--good);
+    }
+
+    .controls {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-bottom: 14px;
+    }
+
+    button {
+      height: 34px;
+      border: 1px solid var(--line);
+      background: var(--panel);
+      color: var(--ink);
+      border-radius: 6px;
+      padding: 0 12px;
+      font: inherit;
+      font-size: 13px;
+      cursor: pointer;
+    }
+
+    button.active {
+      border-color: var(--accent);
+      background: #e4f0f1;
+      color: var(--accent);
+      font-weight: 700;
+    }
+
+    .search {
+      flex: 1 1 240px;
+      min-width: 220px;
+      height: 34px;
+      border: 1px solid var(--line);
+      border-radius: 6px;
+      padding: 0 10px;
+      background: var(--panel);
+      color: var(--ink);
+      font: inherit;
+      font-size: 13px;
+    }
+
+    .case-links {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+    }
+
+    .case-links a {
+      display: inline-flex;
+      align-items: center;
+      min-height: 26px;
+      padding: 2px 8px;
+      border: 1px solid var(--line);
+      border-radius: 6px;
+      background: #fbfcfa;
+      font-variant-numeric: tabular-nums;
+    }
+
+    .case-links a:hover {
+      background: var(--soft);
+      text-decoration: none;
+    }
+
+    .example-stack {
+      display: grid;
+      gap: 16px;
+    }
+
+    .example-card {
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: var(--panel);
+      box-shadow: var(--shadow);
+      overflow: hidden;
+    }
+
+    .example-head {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 14px;
+      padding: 16px;
+      border-bottom: 1px solid var(--line);
+      background: #fbfcfa;
+    }
+
+    .example-title {
+      margin: 0 0 7px;
+      font-size: 17px;
+      line-height: 1.25;
+    }
+
+    .example-sub {
+      margin: 0;
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .example-body {
+      padding: 16px;
+    }
+
+    .example-body p {
+      margin: 0 0 12px;
+      color: var(--muted);
+    }
+
+    .image-compare {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 14px;
+    }
+
+    .compare-shot {
+      margin: 0;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: #fbfcfa;
+      overflow: hidden;
+    }
+
+    .compare-shot img {
+      display: block;
+      width: 100%;
+      aspect-ratio: 16 / 9;
+      object-fit: contain;
+      background: #eef3ef;
+      cursor: zoom-in;
+    }
+
+    .compare-shot figcaption {
+      min-height: 36px;
+      padding: 8px 9px;
+      border-top: 1px solid var(--line);
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.25;
+    }
+
+    .missing-shot {
+      min-height: 160px;
+      display: grid;
+      place-items: center;
+      padding: 18px;
+      color: var(--bad);
+      background: #fff8f7;
+      font-weight: 800;
+      text-align: center;
+    }
+
+    .code-snippet {
+      margin: 0;
+      min-height: 260px;
+      max-height: 360px;
+      overflow: auto;
+      padding: 14px;
+      border: 1px solid rgba(31, 37, 34, 0.14);
+      border-radius: 8px;
+      background: #111612;
+      color: #e6eee8;
+      font: 12px/1.5 ui-monospace, SFMono-Regular, Consolas, "Liberation Mono", monospace;
+      white-space: pre-wrap;
+    }
+
+    .code-snippet mark {
+      padding: 0 3px;
+      border-radius: 3px;
+      background: rgba(182, 66, 60, 0.36);
+      color: #fff;
+    }
+
+    .score-block {
+      margin-top: 12px;
+      overflow-x: auto;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: #fbfcfa;
+    }
+
+    .score-block table {
+      min-width: 920px;
+      margin: 0;
+      font-size: 12px;
+    }
+
+    .score-block th,
+    .score-block td {
+      padding: 7px 8px;
+      white-space: nowrap;
+    }
+
+    .score-block th {
+      position: static;
+      background: #eef3ef;
+    }
+
+    .score-block td:first-child {
+      font-weight: 800;
+    }
+
+    .lightbox {
+      position: fixed;
+      inset: 0;
+      z-index: 80;
+      display: none;
+      padding: 22px;
+      background: rgba(31, 37, 34, 0.78);
+      backdrop-filter: blur(10px);
+    }
+
+    .lightbox.open {
+      display: grid;
+      place-items: center;
+    }
+
+    .lightbox-shell {
+      width: min(1180px, 100%);
+      max-height: calc(100vh - 44px);
+      display: grid;
+      grid-template-rows: auto minmax(0, 1fr);
+      border: 1px solid rgba(255, 255, 255, 0.18);
+      border-radius: 8px;
+      background: #101411;
+      box-shadow: 0 24px 70px rgba(0, 0, 0, 0.45);
+      overflow: hidden;
+    }
+
+    .lightbox-toolbar {
+      min-height: 52px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      padding: 10px 12px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+      color: #fff;
+    }
+
+    .lightbox-caption {
+      min-width: 0;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      font-size: 13px;
+    }
+
+    .lightbox-actions {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      flex: 0 0 auto;
+    }
+
+    .lightbox-actions button {
+      height: 32px;
+      border-color: rgba(255, 255, 255, 0.2);
+      background: rgba(255, 255, 255, 0.08);
+      color: #fff;
+    }
+
+    .lightbox-actions button:hover {
+      background: rgba(255, 255, 255, 0.15);
+    }
+
+    .zoom-readout {
+      min-width: 52px;
+      color: rgba(255, 255, 255, 0.76);
+      font-size: 12px;
+      text-align: center;
+      font-variant-numeric: tabular-nums;
+    }
+
+    .lightbox-canvas {
+      min-height: 0;
+      overflow: auto;
+      display: grid;
+      place-items: center;
+      padding: 16px;
+      cursor: grab;
+      user-select: none;
+      touch-action: none;
+      background:
+        linear-gradient(45deg, rgba(255,255,255,0.04) 25%, transparent 25%),
+        linear-gradient(-45deg, rgba(255,255,255,0.04) 25%, transparent 25%),
+        linear-gradient(45deg, transparent 75%, rgba(255,255,255,0.04) 75%),
+        linear-gradient(-45deg, transparent 75%, rgba(255,255,255,0.04) 75%),
+        #151a17;
+      background-size: 22px 22px;
+      background-position: 0 0, 0 11px, 11px -11px, -11px 0;
+    }
+
+    .lightbox-canvas.dragging {
+      cursor: grabbing;
+    }
+
+    .lightbox-canvas img {
+      display: block;
+      max-width: 100%;
+      max-height: calc(100vh - 150px);
+      object-fit: contain;
+      transform-origin: center center;
+      transition: transform 80ms ease;
+      will-change: transform;
+      pointer-events: none;
+    }
+
+    .foot {
+      margin-top: 42px;
+      padding-top: 20px;
+      border-top: 1px solid var(--line);
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .mono {
+      font-family: ui-monospace, SFMono-Regular, Consolas, "Liberation Mono", monospace;
+      font-size: 12px;
+    }
+
+    @media (max-width: 980px) {
+      .report-layout {
+        grid-template-columns: 1fr;
+      }
+
+      .side-nav {
+        position: static;
+        max-height: none;
+      }
+
+      .side-nav nav {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 4px;
+      }
+
+      .hero,
+      .grid-2,
+      .grid-3,
+      .figure-grid,
+      .tree-grid,
+      .pipeline,
+      .insight-grid,
+      .method-strip {
+        grid-template-columns: 1fr;
+      }
+
+      .stamp {
+        justify-self: stretch;
+      }
+
+      .stats {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+
+      .tree-summary {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+
+      .image-compare {
+        grid-template-columns: 1fr;
+      }
+
+      .bar-row {
+        grid-template-columns: 1fr;
+      }
+
+      .node-line {
+        grid-template-columns: minmax(0, 1fr) auto;
+      }
+
+      .node-rate {
+        grid-column: 1 / -1;
+        text-align: left;
+        min-width: 0;
+        padding-left: 16px;
+      }
+
+      th {
+        position: static;
+      }
+    }
+
+    @media (max-width: 560px) {
+      .topbar-inner {
+        align-items: flex-start;
+        flex-direction: column;
+      }
+
+      main {
+        padding: 24px 14px 48px;
+      }
+
+      .stats {
+        grid-template-columns: 1fr;
+      }
+
+      .issue-tree {
+        padding: 14px;
+      }
+
+      .tree-summary {
+        grid-template-columns: 1fr;
+      }
+
+      .example-head {
+        display: grid;
+      }
+
+      .image-compare {
+        grid-template-columns: 1fr;
+      }
+
+      .lightbox {
+        padding: 10px;
+      }
+
+      .lightbox-toolbar {
+        align-items: flex-start;
+        flex-direction: column;
+      }
+
+      .lightbox-actions {
+        width: 100%;
+        flex-wrap: wrap;
+      }
+
+      .tree-node {
+        margin-left: 10px;
+        padding-left: 12px;
+      }
+
+      .tree-stage {
+        margin-left: 10px;
+      }
+
+      h1 {
+        font-size: 34px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="shell">
+    <header class="topbar">
+      <div class="topbar-inner">
+        <div class="brand"><span class="brand-mark"></span><span>Interaction2Code Bench 报告</span></div>
+        <nav class="nav" aria-label="页面导航">
+          <a href="#overview">概览</a>
+          <a href="#task">任务</a>
+          <a href="#pipeline">链路</a>
+          <a href="#metrics">指标</a>
+          <a href="#paper">论文主表</a>
+          <a href="#results">跑分</a>
+          <a href="#insights">优化点</a>
+          <a href="#diagnostics">问题树</a>
+          <a href="#examples">代表样本</a>
+        </nav>
+      </div>
+    </header>
+
+    <main>
+      <div class="report-layout">
+        <aside class="side-nav" aria-label="报告侧边栏">
+          <p class="side-nav-title">页面目录</p>
+          <nav>
+            <a href="#overview" class="active"><span class="side-nav-index">1</span><span>概览</span></a>
+            <a href="#task"><span class="side-nav-index">2</span><span>Bench 任务</span></a>
+            <a href="#pipeline"><span class="side-nav-index">3</span><span>官方链路</span></a>
+            <a href="#metrics"><span class="side-nav-index">4</span><span>评测指标</span></a>
+            <a href="#paper"><span class="side-nav-index">5</span><span>论文主表</span></a>
+            <a href="#results"><span class="side-nav-index">6</span><span>我们的跑分</span></a>
+            <a href="#insights"><span class="side-nav-index">7</span><span>可优化问题</span></a>
+            <a href="#diagnostics"><span class="side-nav-index">8</span><span>问题分布树</span></a>
+            <a href="#examples"><span class="side-nav-index">9</span><span>代表样本</span></a>
+          </nav>
+        </aside>
+        <div class="report-content">
+      <section class="hero" id="overview">
+        <div>
+          <h1>Interaction2Code Bench 与跑分对齐报告</h1>
+          <p class="lead">先说明这个 benchmark 在测什么、输入输出是什么、官方链路如何评测，再把论文主图和主表放在同一页，最后对齐展示我们用 Qwen3.5 9B 跑出的结果。</p>
+        </div>
+        <div class="stamp">
+          <div class="stamp-row"><span>论文/仓库</span><strong>Interaction2Code</strong></div>
+          <div class="stamp-row"><span>发表</span><strong>ASE 2025</strong></div>
+          <div class="stamp-row"><span>Benchmark 规模</span><strong>127 页 / 374 交互</strong></div>
+          <div class="stamp-row"><span>我们的样本</span><strong>375 条本地 case</strong></div>
+          <div class="stamp-row"><span>模型设置</span><strong>Qwen3.5-9B / Mark</strong></div>
+          <div class="stamp-row"><span>统计日期</span><strong>2026-06-11</strong></div>
+          <div class="stamp-row"><span>数据目录</span><strong class="mono">bench_case_result_hub/interaction2code</strong></div>
+        </div>
+      </section>
+
+      <section id="task">
+        <div class="section-head">
+          <h2>Bench 在做什么</h2>
+          <p class="note">Interaction2Code 关注的是从交互原型截图生成可交互网页，而不是只复刻静态页面。</p>
+        </div>
+        <div class="stats">
+          <div class="stat">
+            <div class="stat-value">127</div>
+            <div class="stat-label">unique webpages</div>
+            <div class="stat-sub">覆盖不同网页主题和前端框架</div>
+          </div>
+          <div class="stat">
+            <div class="stat-value">374</div>
+            <div class="stat-label">distinct interactions</div>
+            <div class="stat-sub">论文/README 标注规模；本地 hub 有 375 条 case</div>
+          </div>
+          <div class="stat">
+            <div class="stat-value">15</div>
+            <div class="stat-label">webpage types</div>
+            <div class="stat-sub">商品、博客、文档、工具、系统页等</div>
+          </div>
+          <div class="stat">
+            <div class="stat-value">31</div>
+            <div class="stat-label">interaction categories</div>
+            <div class="stat-sub">点击、悬停、输入、选择、新页面、新组件等</div>
+          </div>
+          <div class="stat">
+            <div class="stat-value">ASE</div>
+            <div class="stat-label">论文发表</div>
+            <div class="stat-sub">40th IEEE/ACM ASE 2025</div>
+          </div>
+        </div>
+        <div class="definition" style="margin-top:16px;">
+          <div class="definition-row">
+            <div>输入</div>
+            <div>同一网页交互前后的截图：例如 <span class="mono">0.png</span> 表示原始状态，<span class="mono">1.png</span> 表示执行第 1 个交互后的状态；Mark prompt 还会给交互元素和变化区域画红框。</div>
+          </div>
+          <div class="definition-row">
+            <div>输出</div>
+            <div>一个可运行网页 HTML，初始状态要像 before 图；用户触发指定元素后，页面状态要像 after 图。官方 prompt 要求触发元素使用 <span class="mono">id="interact1"</span>。</div>
+          </div>
+          <div class="definition-row">
+            <div>核心难点</div>
+            <div>模型既要复刻静态视觉，又要理解交互意图、绑定正确页面元素、写出脚本状态变化，并让截图链路能捕获交互后的视觉状态。</div>
+          </div>
+        </div>
+      </section>
+
+      <section id="pipeline">
+        <div class="section-head">
+          <h2>官方链路</h2>
+          <p class="note">从输入截图到最终分数，中间至少经过生成、渲染、触发、截图和指标计算五件事。</p>
+        </div>
+        <div class="pipeline">
+          <div class="pipe-step">
+            <div class="pipe-index">1</div>
+            <h3>读取数据</h3>
+            <p>每个网页目录包含多张交互原型图和 <span class="mono">action.json</span>。配置里记录 src/dst、交互动作、tag type 和 visual type。</p>
+          </div>
+          <div class="pipe-step">
+            <div class="pipe-index">2</div>
+            <h3>模型生成</h3>
+            <p>MLLM 接收 before/after 或 mark 图，生成完整 HTML/CSS/JS。Mark prompt 强制把触发元素标为 <span class="mono">interact1</span>。</p>
+          </div>
+          <div class="pipe-step">
+            <div class="pipe-index">3</div>
+            <h3>浏览器执行</h3>
+            <p>官方代码用 Selenium/Firefox 打开 HTML，保存 <span class="mono">0_source.png</span>，再滚动到交互元素并点击，保存 <span class="mono">1_x_y_click.png</span>。</p>
+          </div>
+          <div class="pipe-step">
+            <div class="pipe-index">4</div>
+            <h3>指标计算</h3>
+            <p>先用 CLIP 从点击截图中找最接近目标 after 图的一张；如果 evaluator 判断交互有效，再计算 Text、SSIM、Position 和 interaction 区域指标。</p>
+          </div>
+        </div>
+      </section>
+
+      <section id="metrics">
+        <div class="section-head">
+          <h2>评测指标</h2>
+          <p class="note">论文主表分为 Full Page 和 Interaction Part；README 显式展示的是 Interaction Part leaderboard。</p>
+        </div>
+        <div class="panel table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>指标</th>
+                <th>作用域</th>
+                <th>含义</th>
+                <th>需要注意</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><span class="metric-chip">CLIP</span></td>
+                <td>Full / Interaction</td>
+                <td>整体视觉语义相似度 proxy。</td>
+                <td>对组件主题和视觉大意敏感，但不保证像素级布局一致。</td>
+              </tr>
+              <tr>
+                <td><span class="metric-chip">SSIM</span></td>
+                <td>Full / Interaction</td>
+                <td>低层结构、边缘、布局相似度 proxy。</td>
+                <td>会被截图尺寸、滚动、字体、缩放影响，不是纯 layout。</td>
+              </tr>
+              <tr>
+                <td><span class="metric-chip">Text</span></td>
+                <td>Full / Interaction</td>
+                <td>OCR 后的文本相似度。</td>
+                <td>文字没抄准、OCR 失败、截图没截到区域都会拉低。</td>
+              </tr>
+              <tr>
+                <td><span class="metric-chip">Position</span></td>
+                <td>Interaction</td>
+                <td>交互元素位置与红框标注位置的相似度。</td>
+                <td>官方代码使用点击图文件名里的元素坐标和 mark 图红框位置计算。</td>
+              </tr>
+              <tr>
+                <td><span class="metric-chip">IR</span></td>
+                <td>Interaction</td>
+                <td>Implement Rate，交互是否被 evaluator 判定为实现。</td>
+                <td>缺网页文件、无点击后截图、交互前后图相同等会导致 IR 失败或计 0。</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <section id="paper">
+        <div class="section-head">
+          <h2>论文主表</h2>
+          <p class="note">这里嵌入的是论文 PDF 第 6 页 Table IV 的原始截图，包含 Full Page 和 Interaction Part 两组指标。下一节再把我们的 Qwen3.5-9B 结果接到同一列结构里。</p>
+        </div>
+        <figure class="figure-panel">
+          <img src="assets/paper_table_iv_main.png" alt="Interaction2Code paper Table IV main result table" />
+          <figcaption class="caption">论文 Table IV 原图截图：Performance of different MLLMs under different prompts on Interaction-to-Code task，不包含我们的结果。</figcaption>
+        </figure>
+        <div class="panel table-wrap" style="display:none;">
+          <table>
+            <thead>
+              <tr>
+                <th>Model</th>
+                <th>Prompt</th>
+                <th>CLIP</th>
+                <th>SSIM</th>
+                <th>Text</th>
+                <th>Position</th>
+                <th>Implement Rate</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr><td>Qwen2.5-vl-3B-instruct</td><td>Direct</td><td>0.2100</td><td>0.1531</td><td>0.0415</td><td>0.2090</td><td>0.3449</td></tr>
+              <tr><td>Qwen2.5-vl-3B-instruct</td><td>CoT</td><td>0.1219</td><td>0.0894</td><td>0.0352</td><td>0.1212</td><td>0.1979</td></tr>
+              <tr><td>Qwen2.5-vl-3B-instruct</td><td>Mark</td><td>0.1706</td><td>0.1188</td><td>0.0514</td><td>0.1706</td><td>0.2647</td></tr>
+              <tr><td>Qwen2.5-vl-3B-instruct</td><td>Average</td><td>0.1675</td><td>0.1204</td><td>0.0427</td><td>0.1669</td><td>0.2692</td></tr>
+              <tr><td>Qwen2.5-vl-7B-instruct</td><td>Direct</td><td>0.3230</td><td>0.2177</td><td>0.0952</td><td>0.2529</td><td>0.4786</td></tr>
+              <tr><td>Qwen2.5-vl-7B-instruct</td><td>CoT</td><td>0.2806</td><td>0.1981</td><td>0.0744</td><td>0.2259</td><td>0.4305</td></tr>
+              <tr><td>Qwen2.5-vl-7B-instruct</td><td>Mark</td><td>0.3541</td><td>0.2468</td><td>0.1348</td><td>0.2798</td><td>0.5267</td></tr>
+              <tr><td>Qwen2.5-vl-7B-instruct</td><td>Average</td><td>0.3192</td><td>0.2209</td><td>0.1015</td><td>0.2529</td><td>0.4786</td></tr>
+              <tr><td>Qwen2.5-vl-72B-instruct</td><td>Direct</td><td>0.4624</td><td>0.3207</td><td>0.2450</td><td>0.3950</td><td>0.6524</td></tr>
+              <tr><td>Qwen2.5-vl-72B-instruct</td><td>CoT</td><td>0.5090</td><td>0.3692</td><td>0.2376</td><td>0.4385</td><td>0.7380</td></tr>
+              <tr><td>Qwen2.5-vl-72B-instruct</td><td>Mark</td><td>0.4992</td><td>0.3621</td><td>0.2995</td><td>0.4541</td><td>0.7112</td></tr>
+              <tr><td>Qwen2.5-vl-72B-instruct</td><td>Average</td><td>0.4902</td><td>0.3507</td><td>0.2607</td><td>0.4292</td><td>0.7005</td></tr>
+              <tr><td>Gemini-1.5-flash</td><td>Direct</td><td>0.4737</td><td>0.3616</td><td>0.2809</td><td>0.4320</td><td>0.6738</td></tr>
+              <tr><td>Gemini-1.5-flash</td><td>CoT</td><td>0.5093</td><td>0.3854</td><td>0.3217</td><td>0.4511</td><td>0.7112</td></tr>
+              <tr><td>Gemini-1.5-flash</td><td>Mark</td><td>0.5194</td><td>0.3898</td><td>0.3454</td><td>0.4612</td><td>0.7326</td></tr>
+              <tr><td>Gemini-1.5-flash</td><td>Average</td><td>0.5008</td><td>0.3789</td><td>0.3160</td><td>0.4481</td><td>0.7059</td></tr>
+              <tr><td>GPT-4o-20240806</td><td>Direct</td><td>0.5605</td><td>0.4149</td><td>0.3590</td><td>0.4888</td><td>0.7754</td></tr>
+              <tr><td>GPT-4o-20240806</td><td>CoT</td><td>0.5234</td><td>0.4013</td><td>0.3663</td><td>0.4668</td><td>0.7273</td></tr>
+              <tr><td>GPT-4o-20240806</td><td>Mark</td><td>0.5955</td><td>0.4488</td><td>0.4474</td><td>0.5225</td><td>0.8128</td></tr>
+              <tr><td>GPT-4o-20240806</td><td>Average</td><td>0.5598</td><td>0.4217</td><td>0.3909</td><td>0.4927</td><td>0.7718</td></tr>
+              <tr><td>Claude-3.5-Sonnet-20240620</td><td>Direct</td><td>0.5674</td><td>0.4209</td><td>0.3833</td><td>0.5123</td><td>0.7914</td></tr>
+              <tr><td>Claude-3.5-Sonnet-20240620</td><td>CoT</td><td>0.5606</td><td>0.4005</td><td>0.3662</td><td>0.5085</td><td>0.7727</td></tr>
+              <tr><td>Claude-3.5-Sonnet-20240620</td><td>Mark</td><td>0.5944</td><td>0.4282</td><td>0.4319</td><td>0.5149</td><td>0.7968</td></tr>
+              <tr><td>Claude-3.5-Sonnet-20240620</td><td>Average</td><td>0.5742</td><td>0.4165</td><td>0.3938</td><td>0.5119</td><td>0.7870</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <section id="results">
+        <div class="section-head">
+          <h2>论文主表对齐结果</h2>
+          <p class="note">我们只跑了 Mark 提示词；这一行使用官方评测器的全量 375 惩罚均值，缺失、生成失败、评测器未产出分数都按 0 计入 375 分母。</p>
+        </div>
+        <div class="paper-table">
+          <div class="paper-table-title">
+            <strong>OUR RESULT ALIGNED TO TABLE IV</strong>
+            <span>Qwen3.5-9B under Mark prompt on Interaction-to-Code task</span>
+          </div>
+          <table class="paper-like">
+            <thead>
+              <tr>
+                <th rowspan="2">Model</th>
+                <th rowspan="2" class="sep-left">Prompt</th>
+                <th colspan="5" class="sep-left">Full Page</th>
+                <th colspan="5" class="sep-left">Interaction Part</th>
+              </tr>
+              <tr>
+                <th class="sep-left">CLIP</th>
+                <th>SSIM</th>
+                <th>Text</th>
+                <th>WS</th>
+                <th>WMR</th>
+                <th class="sep-left">CLIP</th>
+                <th>SSIM</th>
+                <th>Text</th>
+                <th>Position</th>
+                <th>IR</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr class="ours-values">
+                <td class="model-cell">Qwen3.5-9B</td>
+                <td class="sep-left">Mark</td>
+                <td class="sep-left">0.5269</td>
+                <td>0.4099</td>
+                <td>0.4538</td>
+                <td>-</td>
+                <td>-</td>
+                <td class="sep-left">0.4373</td>
+                <td>0.3069</td>
+                <td>0.2167</td>
+                <td>0.2958</td>
+                <td>0.5973</td>
+              </tr>
+            </tbody>
+          </table>
+          <p class="paper-note">WS/WMR 本轮没有覆盖，保留论文主表列但置为 “-”。该行使用官方评测器的全量 375 惩罚均值：273/375 已评分，29 个未生成，73 个评测器未产出分数，224/375 完成实现。</p>
+        </div>
+      </section>
+
+      <section id="insights">
+        <div class="section-head">
+          <h2>可优化问题总结</h2>
+          <p class="note">这些不是单纯的 case 现象，而是可以组织成方法动机的失败类型。优先级越靠前，越适合作为论文主线；后面的点更适合作为补强模块或实验分析工具。</p>
+        </div>
+        <div class="insight-grid">
+          <article class="insight-card primary">
+            <div class="insight-head">
+              <h3>全局布局和比例不稳</h3>
+              <span class="insight-priority">主线 1</span>
+            </div>
+            <p>模型能识别组件，但经常把左右结构生成成上下结构，主内容、侧栏、卡片和图片比例也不稳定。</p>
+            <dl>
+              <dt>表现</dt><dd>页面大结构错、组件尺寸错、间距错，Full Page 的 CLIP/SSIM 都容易被拉低。</dd>
+              <dt>方向</dt><dd>先显式抽取页面骨架、区域比例和组件层级，再约束代码生成。</dd>
+            </dl>
+          </article>
+
+          <article class="insight-card primary">
+            <div class="insight-head">
+              <h3>交互状态转移理解不足</h3>
+              <span class="insight-priority">主线 2</span>
+            </div>
+            <p>模型不一定理解 before 图到 after 图之间发生了什么，经常只复刻某一张静态图。</p>
+            <dl>
+              <dt>表现</dt><dd>点击后本应换页面、展开菜单、选择日期范围或更新筛选结果，但生成页面没有形成正确状态变化。</dd>
+              <dt>方向</dt><dd>把任务显式拆成初始状态、用户动作、目标状态、变化区域和转移类型。</dd>
+            </dl>
+          </article>
+
+          <article class="insight-card primary">
+            <div class="insight-head">
+              <h3>缺少渲染反馈和自检</h3>
+              <span class="insight-priority">主线 3</span>
+            </div>
+            <p>当前生成更像单轮写代码，写完后没有打开页面检查，也没有根据截图差异修正。</p>
+            <dl>
+              <dt>表现</dt><dd>HTML 截断、空页面、交互没生效、截图为空，往往要到评测阶段才暴露。</dd>
+              <dt>方向</dt><dd>生成后自动渲染、截图、检查空白和变化区域，再进行一到多轮修复。</dd>
+            </dl>
+          </article>
+
+          <article class="insight-card primary">
+            <div class="insight-head">
+              <h3>触发器绑定和交互代码易错</h3>
+              <span class="insight-priority">主线 4</span>
+            </div>
+            <p>模型经常不是完全没写交互，而是事件绑定、状态类名、选择器和目标节点没有对上。</p>
+            <dl>
+              <dt>表现</dt><dd>例如样式要求菜单节点加 active，但脚本把 active 加到父节点，点击后视觉状态没有变化。</dd>
+              <dt>方向</dt><dd>对生成代码做事件绑定检查、目标元素检查和触发后状态差异检查。</dd>
+            </dl>
+          </article>
+
+          <article class="insight-card support">
+            <div class="insight-head">
+              <h3>视觉素材还原能力弱</h3>
+              <span class="insight-priority">补强</span>
+            </div>
+            <p>图片、图标、头像、商品图、logo 和 banner 经常被灰块、蓝块或空白占位替代。</p>
+            <dl>
+              <dt>表现</dt><dd>页面主题和视觉重心丢失，真实图片比例没有被复现，布局也会被带偏。</dd>
+              <dt>方向</dt><dd>先定位关键视觉素材，区分可复用素材、可近似素材和必须生成的占位。</dd>
+            </dl>
+          </article>
+
+          <article class="insight-card support">
+            <div class="insight-head">
+              <h3>字体、字号和文本密度不准</h3>
+              <span class="insight-priority">补强</span>
+            </div>
+            <p>很多页面结构大体正确，但一眼看起来不像，原因往往在文字系统。</p>
+            <dl>
+              <dt>表现</dt><dd>标题过大或过小、行高不对、字重不对、换行方式不对，导航和卡片文字密度偏差明显。</dd>
+              <dt>方向</dt><dd>从截图估计字号层级、行高、字重和文本块密度，作为代码生成约束。</dd>
+            </dl>
+          </article>
+
+          <article class="insight-card support">
+            <div class="insight-head">
+              <h3>组件层级和浮层位置不稳</h3>
+              <span class="insight-priority">补强</span>
+            </div>
+            <p>弹窗、下拉菜单、tooltip、hover 卡片和侧边栏这些浮层组件经常位置或遮挡关系错误。</p>
+            <dl>
+              <dt>表现</dt><dd>应该覆盖的没有覆盖，应该贴着触发按钮的浮层跑偏，或者 z-index 不正确。</dd>
+              <dt>方向</dt><dd>显式建模浮层锚点、相对位置、覆盖范围和层级关系。</dd>
+            </dl>
+          </article>
+
+          <article class="insight-card support">
+            <div class="insight-head">
+              <h3>页面任务语义理解不够</h3>
+              <span class="insight-priority">补强</span>
+            </div>
+            <p>有些错误不是某个按钮错了，而是模型没看懂这个页面到底在完成什么业务动作。</p>
+            <dl>
+              <dt>表现</dt><dd>后台管理页写成展示页，筛选流程只做成静态表单，多状态页面只还原了一个状态。</dd>
+              <dt>方向</dt><dd>先判断页面类型和交互意图，再决定需要实现的组件状态和数据变化。</dd>
+            </dl>
+          </article>
+
+          <article class="insight-card caution">
+            <div class="insight-head">
+              <h3>生成完整性和源码异常</h3>
+              <span class="insight-priority">质检</span>
+            </div>
+            <p>部分任务不是审美失败，而是代码文件本身不完整或输出内容异常。</p>
+            <dl>
+              <dt>表现</dt><dd>HTML 被截断、空文件、重复输出、模板残留、助手文本泄露、标签未闭合。</dd>
+              <dt>方向</dt><dd>加入静态完整性检查、HTML 解析检查和异常输出过滤。</dd>
+            </dl>
+          </article>
+
+          <article class="insight-card caution">
+            <div class="insight-head">
+              <h3>评测链路本身存在噪声</h3>
+              <span class="insight-priority">分析</span>
+            </div>
+            <p>低分不一定全部来自模型能力，截图、裁剪和官方打分函数也会引入失败。</p>
+            <dl>
+              <dt>表现</dt><dd>点击前后截图尺寸不一致、交互裁剪为空、评测器中断后按 0 计入。</dd>
+              <dt>方向</dt><dd>建立失败归因层，把生成失败、交互失败、截图失败和评测失败分开统计。</dd>
+            </dl>
+          </article>
+        </div>
+        <div class="method-strip" aria-label="可落地方法路径">
+          <div class="method-step"><strong>布局先验</strong><span>先抽页面骨架和比例，再写 HTML/CSS。</span></div>
+          <div class="method-step"><strong>状态建模</strong><span>显式描述动作前后状态和变化区域。</span></div>
+          <div class="method-step"><strong>执行检查</strong><span>自动点击目标元素，确认页面确实变化。</span></div>
+          <div class="method-step"><strong>渲染修复</strong><span>用截图差异驱动一到多轮代码修正。</span></div>
+          <div class="method-step"><strong>失败归因</strong><span>把模型失败和评测链路失败拆开分析。</span></div>
+        </div>
+      </section>
+
+      <section id="diagnostics">
+        <div class="section-head">
+          <h2>问题分布树</h2>
+          <p class="note">这里采用互斥路径：前置阶段失败后，不再把同一个任务继续塞进后续截图/指标问题里，避免把生成失败、触发器失败和评测失败混在一起。</p>
+        </div>
+        <div class="tree-grid">
+          <div class="issue-tree">
+            <div class="tree-summary" aria-label="问题分布摘要">
+              <div class="summary-chip">
+                <div class="summary-label">全量任务</div>
+                <div class="summary-value">375</div>
+              </div>
+              <div class="summary-chip bad">
+                <div class="summary-label">无网页文件</div>
+                <div class="summary-value">29</div>
+              </div>
+              <div class="summary-chip good">
+                <div class="summary-label">网页文件基本完整</div>
+                <div class="summary-value">335</div>
+              </div>
+              <div class="summary-chip warn">
+                <div class="summary-label">可有效进入分析</div>
+                <div class="summary-value">160</div>
+              </div>
+            </div>
+            <div class="tree-node root">
+              <div class="node-line">
+                <div class="node-name">Interaction2Code 本地全量任务</div>
+                <div class="node-count">375</div>
+                <div class="node-rate">100%</div>
+              </div>
+              <div class="tree-stage">生成阶段</div>
+              <div class="tree-node bad">
+                <div class="node-line">
+                  <div class="node-name">没生成网页文件</div>
+                  <div class="node-count">29</div>
+                  <div class="node-rate">7.7%</div>
+                </div>
+                <p class="node-note">没有最终 <span class="mono">output/index.html</span>，不能进入渲染和交互评测。</p>
+                <div class="tree-node bad">
+                  <div class="node-line"><div class="node-name">输出超长，被截断</div><div class="node-count">24</div><div class="node-rate">占无网页文件的 82.8%</div></div>
+                </div>
+                <div class="tree-node bad">
+                  <div class="node-line"><div class="node-name">生成结果缺失</div><div class="node-count">4</div><div class="node-rate">13.8%</div></div>
+                </div>
+                <div class="tree-node bad">
+                  <div class="node-line"><div class="node-name">接口或结果解析错误</div><div class="node-count">1</div><div class="node-rate">3.4%</div></div>
+                </div>
+              </div>
+              <div class="tree-node good">
+                <div class="node-line">
+                  <div class="node-name">生成了网页文件</div>
+                  <div class="node-count">346</div>
+                  <div class="node-rate">92.3%</div>
+                </div>
+                <div class="tree-stage">HTML 完整性</div>
+                <div class="tree-node warn">
+                  <div class="node-line">
+                    <div class="node-name">网页文件不完整</div>
+                    <div class="node-count">11</div>
+                    <div class="node-rate">占已生成的 3.2%</div>
+                  </div>
+                  <p class="node-note">有 HTML 文件，但缺 <span class="mono">&lt;/html&gt;</span> 或 <span class="mono">&lt;/body&gt;</span>。</p>
+                </div>
+                <div class="tree-node good">
+                  <div class="node-line">
+                    <div class="node-name">网页文件基本完整</div>
+                    <div class="node-count">335</div>
+                    <div class="node-rate">占已生成的 97.0%</div>
+                  </div>
+                  <div class="tree-stage">交互触发</div>
+                  <div class="tree-node bad">
+                    <div class="node-line">
+                      <div class="node-name">硬触发器失败</div>
+                      <div class="node-count">29</div>
+                      <div class="node-rate">占完整网页的 8.7%</div>
+                    </div>
+                    <div class="tree-node bad">
+                      <div class="node-line"><div class="node-name">缺少第 1 个交互截图</div><div class="node-count">19</div><div class="node-rate">65.5%</div></div>
+                    </div>
+                    <div class="tree-node bad">
+                      <div class="node-line"><div class="node-name">触发器执行报错</div><div class="node-count">10</div><div class="node-rate">34.5%</div></div>
+                    </div>
+                  </div>
+                  <div class="tree-node good">
+                    <div class="node-line">
+                      <div class="node-name">触发器成功</div>
+                      <div class="node-count">306</div>
+                      <div class="node-rate">占完整网页的 91.3%</div>
+                    </div>
+                    <div class="tree-node warn">
+                      <div class="node-line">
+                        <div class="node-name">触发后页面无明显变化</div>
+                        <div class="node-count">69</div>
+                        <div class="node-rate">占触发成功的 22.5%</div>
+                      </div>
+                      <p class="node-note">更像交互逻辑没做出来、状态没变，或交互类型不适合当前截图方式。</p>
+                    </div>
+                    <div class="tree-node good">
+                      <div class="node-line">
+                        <div class="node-name">触发后页面有明显变化</div>
+                        <div class="node-count">237</div>
+                        <div class="node-rate">占触发成功的 77.5%</div>
+                      </div>
+                      <div class="tree-stage">截图与评分</div>
+                      <div class="tree-node warn">
+                        <div class="node-line">
+                          <div class="node-name">官方式截图链路疑似异常</div>
+                          <div class="node-count">15</div>
+                          <div class="node-rate">占有明显变化的 6.3%</div>
+                        </div>
+                        <p class="node-note">诊断截图有变化，但官方式截图缺图，或点击前后几乎没变化。</p>
+                      </div>
+                      <div class="tree-node good">
+                        <div class="node-line">
+                          <div class="node-name">官方式截图基本可用</div>
+                          <div class="node-count">222</div>
+                          <div class="node-rate">占有明显变化的 93.7%</div>
+                        </div>
+                        <div class="tree-node warn">
+                          <div class="node-line"><div class="node-name">官方评测器未产出分数</div><div class="node-count">61</div><div class="node-rate">27.5%</div></div>
+                          <p class="node-note">这不是“模型得分低”，而是官方打分函数没有返回分数。主要触发原因是交互前后差异区域为空，或裁剪出的交互区域为空；官方代码没有兜底处理，所以程序中断。全量惩罚口径下这些任务按 0 计入，分析失败原因时应单独看。</p>
+                        </div>
+                        <div class="tree-node warn">
+                          <div class="node-line"><div class="node-name">已评分，但消息标记为否</div><div class="node-count">1</div><div class="node-rate">0.5%</div></div>
+                        </div>
+                        <div class="tree-node good">
+                          <div class="node-line"><div class="node-name">已评分，且消息标记为是</div><div class="node-count">160</div><div class="node-rate">72.1%</div></div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="examples">
+        <div class="section-head">
+          <h2>代表性失败样本</h2>
+          <p class="note">每类问题选一个代表任务，用目标图、模型渲染图和官方式截图对比说明。点击样本编号可打开对应 <span class="mono">case.md</span>。</p>
+          <p class="note">分数表里的“官方评测器口径”指 Interaction2Code 官方打分函数产出的结果，会进入论文主表对齐；“我们诊断口径”指本报告额外做的渲染、触发和裁剪，只用于分析失败原因，不进入主表。</p>
+        </div>
+        <div class="example-stack">
+          <article class="example-card">
+            <div class="example-head">
+              <div>
+                <h3 class="example-title">没生成网页文件</h3>
+                <p class="example-sub">代表样本：<a href="cases/110_2/case.md">110_2</a>，点击数据库卡片后应进入数据库页面。</p>
+              </div>
+              <span class="tag bad">生成失败</span>
+            </div>
+            <div class="example-body">
+              <p>这类样本不要看渲染图，因为模型没有给出最终网页文件。更有价值的是看输出尾部：这里最终网页内容为空，推理尾部反复重复同一段判断，直到被长度限制截断。</p>
+              <pre class="code-snippet"><code>最终网页内容：空文件
+结束原因：长度限制
+
+输出尾部片段：
+- Wait, the blue rectangle is the "Authentication" card.
+- Let's look at the "Postgres Database" card in S1. It has text "Every project is a full Postgres database...". Below that, there is a blue rectangle.
+- No, the blue rectangle is the "Authentication" card.
+- Let's look at the "Postgres Database" card in S1. It has text "Every project is a full Postgres database...". Below that, there is a blue rectangle.
+- Wait, the blue rectangle is the "Authentication" card.
+- Let's look at the "Postgres Database" card in S1. It has text "Every project is a full Postgres database...". Below that, there is a blue rectangle.
+- No, the blue rectangle is the "Authentication" card.
+- Let's look at the "Postgres Database" card in S1. It has text</code></pre>
+              <div class="score-block">
+                <table>
+                  <thead><tr><th>口径</th><th>状态</th><th>实现标记</th><th>全页 CLIP</th><th>全页 SSIM</th><th>全页文本</th><th>交互 CLIP</th><th>交互 SSIM</th><th>交互文本</th><th>位置</th></tr></thead>
+                  <tbody>
+                    <tr><td>官方</td><td>未生成，按 0 计入</td><td>-</td><td>0.0000</td><td>0.0000</td><td>0.0000</td><td>0.0000</td><td>0.0000</td><td>0.0000</td><td>0.0000</td></tr>
+                    <tr><td>诊断</td><td>无网页文件</td><td>-</td><td>-</td><td>-</td><td>-</td><td>-</td><td>-</td><td>-</td><td>-</td></tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </article>
+
+          <article class="example-card">
+            <div class="example-head">
+              <div>
+                <h3 class="example-title">网页文件不完整</h3>
+                <p class="example-sub">代表样本：<a href="cases/116_4/case.md">116_4</a>，点击 Learn more 后应弹出仓库信息。</p>
+              </div>
+              <span class="tag bad">截断</span>
+            </div>
+            <div class="example-body">
+              <p>这一类有网页文件，但源码尾部不完整。页面可能还能被浏览器容错渲染出来，但交互代码和后续结构不可靠，低分不能只按视觉相似度解释。</p>
+              <div class="image-compare">
+                <figure class="compare-shot"><img src="cases/116_4/input/before_mark.png" alt="116_4 输入标注图交互前" /><figcaption>输入标注图：交互前</figcaption></figure>
+                <figure class="compare-shot"><img src="cases/116_4/input/after_mark.png" alt="116_4 输入标注图交互后" /><figcaption>输入标注图：交互后</figcaption></figure>
+                <figure class="compare-shot"><img src="cases/116_4/output/staged_after_generated.png" alt="116_4 模型触发后" /><figcaption>模型触发后诊断图</figcaption></figure>
+                <figure class="compare-shot"><img src="cases/116_4/output/1_717_546_click.png" alt="116_4 官方式点击后" /><figcaption>官方式点击后截图</figcaption></figure>
+              </div>
+              <div class="score-block">
+                <table>
+                  <thead><tr><th>口径</th><th>状态</th><th>实现标记</th><th>全页 CLIP</th><th>全页 SSIM</th><th>全页文本</th><th>交互 CLIP</th><th>交互 SSIM</th><th>交互文本</th><th>位置</th></tr></thead>
+                  <tbody>
+                    <tr><td>官方</td><td>已评分</td><td>否</td><td>0.6772</td><td>0.0000</td><td>0.0000</td><td>0.0000</td><td>0.0000</td><td>0.0000</td><td>0.0000</td></tr>
+                    <tr><td>诊断</td><td>触发成功</td><td>是</td><td>0.6941</td><td>0.8186</td><td>-</td><td>0.7135</td><td>0.6715</td><td>-</td><td>0.9436</td></tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </article>
+
+          <article class="example-card">
+            <div class="example-head">
+              <div>
+                <h3 class="example-title">网页源码幻觉或异常</h3>
+                <p class="example-sub">代表样本：<a href="cases/100_1/case.md">100_1</a>，页面能渲染，但源码层面有明显异常痕迹。</p>
+              </div>
+              <span class="tag warn">源码异常</span>
+            </div>
+            <div class="example-body">
+              <p>这类样本不能只看截图。即使页面有一定视觉结果，源码中仍可能出现重复片段、模板残留或助手内容泄露，说明生成过程缺少自检。</p>
+              <div class="image-compare">
+                <figure class="compare-shot"><img src="cases/100_1/input/before_mark.png" alt="100_1 输入标注图交互前" /><figcaption>输入标注图：交互前</figcaption></figure>
+                <figure class="compare-shot"><img src="cases/100_1/input/after_mark.png" alt="100_1 输入标注图交互后" /><figcaption>输入标注图：交互后</figcaption></figure>
+                <figure class="compare-shot"><img src="cases/100_1/output/staged_after_generated.png" alt="100_1 模型触发后" /><figcaption>模型触发后诊断图</figcaption></figure>
+                <figure class="compare-shot"><img src="cases/100_1/output/official_interact.png" alt="100_1 官方交互裁剪" /><figcaption>官方交互裁剪图</figcaption></figure>
+              </div>
+              <div class="score-block">
+                <table>
+                  <thead><tr><th>口径</th><th>状态</th><th>实现标记</th><th>全页 CLIP</th><th>全页 SSIM</th><th>全页文本</th><th>交互 CLIP</th><th>交互 SSIM</th><th>交互文本</th><th>位置</th></tr></thead>
+                  <tbody>
+                    <tr><td>官方</td><td>已评分</td><td>是</td><td>0.6880</td><td>0.6840</td><td>0.0151</td><td>0.4993</td><td>0.4782</td><td>0.4444</td><td>0.5080</td></tr>
+                    <tr><td>诊断</td><td>触发成功</td><td>是</td><td>0.5726</td><td>0.6578</td><td>-</td><td>-</td><td>-</td><td>-</td><td>-</td></tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </article>
+
+          <article class="example-card">
+            <div class="example-head">
+              <div>
+                <h3 class="example-title">硬触发器失败</h3>
+                <p class="example-sub">代表样本：<a href="cases/54_3/case.md">54_3</a>，网页文件存在，但没有得到有效的第 1 个交互截图。</p>
+              </div>
+              <span class="tag bad">触发器失败</span>
+            </div>
+            <div class="example-body">
+              <p>这类问题通常不是纯视觉问题，而是交互元素定位、元素标识或事件绑定没有对上。页面能打开，但评测链路找不到可用交互结果。</p>
+              <div class="image-compare">
+                <figure class="compare-shot"><img src="cases/54_3/input/before_mark.png" alt="54_3 输入标注图交互前" /><figcaption>输入标注图：交互前</figcaption></figure>
+                <figure class="compare-shot"><img src="cases/54_3/input/after_mark.png" alt="54_3 输入标注图交互后" /><figcaption>输入标注图：交互后</figcaption></figure>
+                <figure class="compare-shot"><img src="cases/54_3/output/staged_before_generated.png" alt="54_3 模型触发前" /><figcaption>模型触发前诊断图</figcaption></figure>
+                <figure class="compare-shot"><img src="cases/54_3/output/staged_after_generated.png" alt="54_3 模型触发后" /><figcaption>模型触发后诊断图</figcaption></figure>
+              </div>
+              <div class="score-block">
+                <table>
+                  <thead><tr><th>口径</th><th>状态</th><th>实现标记</th><th>全页 CLIP</th><th>全页 SSIM</th><th>全页文本</th><th>交互 CLIP</th><th>交互 SSIM</th><th>交互文本</th><th>位置</th></tr></thead>
+                  <tbody>
+                    <tr><td>官方</td><td>已评分</td><td>否</td><td>0.0000</td><td>0.0000</td><td>0.0000</td><td>0.0000</td><td>0.0000</td><td>0.0000</td><td>0.0000</td></tr>
+                    <tr><td>诊断</td><td>缺第 1 个交互图</td><td>否</td><td>0.8919</td><td>0.7518</td><td>-</td><td>-</td><td>-</td><td>-</td><td>-</td></tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </article>
+
+          <article class="example-card">
+            <div class="example-head">
+              <div>
+                <h3 class="example-title">触发器执行报错</h3>
+                <p class="example-sub">代表样本：<a href="cases/77_1/case.md">77_1</a>，元素或动作在执行阶段出错。</p>
+              </div>
+              <span class="tag bad">执行失败</span>
+            </div>
+            <div class="example-body">
+              <p>这类样本说明模型可能生成了页面结构，但指定动作无法稳定执行。常见原因是目标元素不可见、被遮挡、交互类型不匹配或脚本绑定错误。</p>
+              <div class="image-compare">
+                <figure class="compare-shot"><img src="cases/77_1/input/before_mark.png" alt="77_1 输入标注图交互前" /><figcaption>输入标注图：交互前</figcaption></figure>
+                <figure class="compare-shot"><img src="cases/77_1/input/after_mark.png" alt="77_1 输入标注图交互后" /><figcaption>输入标注图：交互后</figcaption></figure>
+                <figure class="compare-shot"><img src="cases/77_1/output/staged_before_generated.png" alt="77_1 模型触发前" /><figcaption>模型触发前诊断图</figcaption></figure>
+                <figure class="compare-shot"><img src="cases/77_1/output/staged_after_generated.png" alt="77_1 模型触发后" /><figcaption>模型触发后诊断图</figcaption></figure>
+              </div>
+              <div class="score-block">
+                <table>
+                  <thead><tr><th>口径</th><th>状态</th><th>实现标记</th><th>全页 CLIP</th><th>全页 SSIM</th><th>全页文本</th><th>交互 CLIP</th><th>交互 SSIM</th><th>交互文本</th><th>位置</th></tr></thead>
+                  <tbody>
+                    <tr><td>官方</td><td>已评分</td><td>否</td><td>0.0000</td><td>0.0000</td><td>0.0000</td><td>0.0000</td><td>0.0000</td><td>0.0000</td><td>0.0000</td></tr>
+                    <tr><td>诊断</td><td>触发器执行报错</td><td>否</td><td>0.8150</td><td>0.6970</td><td>-</td><td>-</td><td>-</td><td>-</td><td>-</td></tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </article>
+
+          <article class="example-card">
+            <div class="example-head">
+              <div>
+                <h3 class="example-title">触发后页面无明显变化</h3>
+                <p class="example-sub">代表样本：<a href="cases/58_2/case.md">58_2</a>，评测动作执行完，但页面状态几乎不变。</p>
+              </div>
+              <span class="tag warn">状态未变</span>
+            </div>
+            <div class="example-body">
+              <p>这个样本主要是触发逻辑没写好：样式要求 <span class="mono">.dropdown-menu.active</span> 才显示菜单，但脚本把 <span class="mono">active</span> 加在父级 <span class="mono">#interact1</span> 上；收起逻辑又检查内联 <span class="mono">display</span>，实际从未把菜单设为显示。因此点击后没有打开目标下拉菜单。</p>
+              <div class="image-compare">
+                <figure class="compare-shot"><img src="cases/58_2/input/before_mark.png" alt="58_2 输入标注图交互前" /><figcaption>输入标注图：交互前</figcaption></figure>
+                <figure class="compare-shot"><img src="cases/58_2/input/after_mark.png" alt="58_2 输入标注图交互后" /><figcaption>输入标注图：交互后</figcaption></figure>
+                <figure class="compare-shot"><img src="cases/58_2/output/staged_before_generated.png" alt="58_2 模型触发前" /><figcaption>模型触发前诊断图</figcaption></figure>
+                <figure class="compare-shot"><img src="cases/58_2/output/staged_after_generated.png" alt="58_2 模型触发后" /><figcaption>模型触发后诊断图</figcaption></figure>
+                <figure class="compare-shot"><img src="cases/58_2/output/staged_generated_change_bbox_overlay.png" alt="58_2 变化区域" /><figcaption>诊断变化区域</figcaption></figure>
+              </div>
+              <div class="score-block">
+                <table>
+                  <thead><tr><th>口径</th><th>状态</th><th>实现标记</th><th>全页 CLIP</th><th>全页 SSIM</th><th>全页文本</th><th>交互 CLIP</th><th>交互 SSIM</th><th>交互文本</th><th>位置</th></tr></thead>
+                  <tbody>
+                    <tr><td>官方</td><td>已评分</td><td>是</td><td>0.6919</td><td>0.6934</td><td>0.6872</td><td>0.4656</td><td>0.3482</td><td>0.0000</td><td>0.1039</td></tr>
+                    <tr><td>诊断</td><td>触发成功</td><td>是</td><td>0.6233</td><td>0.6534</td><td>-</td><td>0.5359</td><td>0.4108</td><td>-</td><td>0.5821</td></tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </article>
+
+          <article class="example-card">
+            <div class="example-head">
+              <div>
+                <h3 class="example-title">官方式截图链路疑似异常</h3>
+                <p class="example-sub">代表样本：<a href="cases/119_7/case.md">119_7</a>，诊断图能看到变化，但官方式截图不一定捕获到关键变化。</p>
+              </div>
+              <span class="tag warn">截图链路</span>
+            </div>
+            <div class="example-body">
+              <p>这类样本要优先区分“模型没做对”和“截图没截准”。如果诊断截图有变化，而官方式截图缺图、偏移或变化不明显，就不能直接把低分归因到模型能力。</p>
+              <div class="image-compare">
+                <figure class="compare-shot"><img src="cases/119_7/input/before_mark.png" alt="119_7 输入标注图交互前" /><figcaption>输入标注图：交互前</figcaption></figure>
+                <figure class="compare-shot"><img src="cases/119_7/input/after_mark.png" alt="119_7 输入标注图交互后" /><figcaption>输入标注图：交互后</figcaption></figure>
+                <figure class="compare-shot"><img src="cases/119_7/output/staged_after_generated.png" alt="119_7 诊断触发后" /><figcaption>模型触发后诊断图</figcaption></figure>
+                <figure class="compare-shot"><img src="cases/119_7/output/official_0_source.png" alt="119_7 官方式触发前" /><figcaption>官方式触发前截图</figcaption></figure>
+                <figure class="compare-shot"><img src="cases/119_7/output/1_1295_494_click.png" alt="119_7 官方式点击后" /><figcaption>官方式点击后截图</figcaption></figure>
+              </div>
+              <div class="score-block">
+                <table>
+                  <thead><tr><th>口径</th><th>状态</th><th>实现标记</th><th>全页 CLIP</th><th>全页 SSIM</th><th>全页文本</th><th>交互 CLIP</th><th>交互 SSIM</th><th>交互文本</th><th>位置</th></tr></thead>
+                  <tbody>
+                    <tr><td>官方</td><td>已评分</td><td>是</td><td>0.8218</td><td>0.6300</td><td>0.6724</td><td>0.4744</td><td>0.4902</td><td>0.0000</td><td>0.5270</td></tr>
+                    <tr><td>诊断</td><td>触发成功</td><td>是</td><td>0.8202</td><td>0.6219</td><td>-</td><td>0.6665</td><td>0.4779</td><td>-</td><td>0.8684</td></tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </article>
+
+          <article class="example-card">
+            <div class="example-head">
+              <div>
+                <h3 class="example-title">官方评测器未产出分数</h3>
+                <p class="example-sub">代表样本：<a href="cases/104_4/case.md">104_4</a>，官方式截图存在，但打分函数没有返回分数。</p>
+              </div>
+              <span class="tag warn">评测中断</span>
+            </div>
+            <div class="example-body">
+              <p>诊断图显示交互后页面有变化，但官方式触发前图是 1366×996，点击后图是 1366×1176，高度不一致。官方裁剪函数进入尺寸不一致分支后没有拿到差异行，缺少兜底处理后中断；全量惩罚口径下按 0 计入。</p>
+              <div class="image-compare">
+                <figure class="compare-shot"><img src="cases/104_4/input/before_mark.png" alt="104_4 输入标注图交互前" /><figcaption>输入标注图：交互前</figcaption></figure>
+                <figure class="compare-shot"><img src="cases/104_4/input/after_mark.png" alt="104_4 输入标注图交互后" /><figcaption>输入标注图：交互后</figcaption></figure>
+                <figure class="compare-shot"><img src="cases/104_4/output/staged_after_generated.png" alt="104_4 诊断触发后" /><figcaption>模型触发后诊断图</figcaption></figure>
+                <figure class="compare-shot"><img src="cases/104_4/output/official_0_source.png" alt="104_4 官方式触发前" /><figcaption>官方式触发前截图</figcaption></figure>
+                <figure class="compare-shot"><img src="cases/104_4/output/1_0_199_click.png" alt="104_4 官方式点击后" /><figcaption>官方式点击后截图</figcaption></figure>
+                <figure class="compare-shot"><div class="missing-shot">官方交互裁剪未产出</div><figcaption>官方评测器中断，未生成官方交互裁剪图</figcaption></figure>
+              </div>
+              <div class="score-block">
+                <table>
+                  <thead><tr><th>口径</th><th>状态</th><th>实现标记</th><th>全页 CLIP</th><th>全页 SSIM</th><th>全页文本</th><th>交互 CLIP</th><th>交互 SSIM</th><th>交互文本</th><th>位置</th></tr></thead>
+                  <tbody>
+                    <tr><td>官方评测器口径</td><td>未产出分数，按 0 计入</td><td>-</td><td>0.0000</td><td>0.0000</td><td>0.0000</td><td>0.0000</td><td>0.0000</td><td>0.0000</td><td>0.0000</td></tr>
+                    <tr><td>我们诊断口径</td><td>触发成功</td><td>是</td><td>0.5692</td><td>0.7671</td><td>-</td><td>0.6928</td><td>0.6808</td><td>-</td><td>0.8591</td></tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <p class="foot">本报告由现有本地实验产物汇总而成；没有重新跑模型或评测器。路径相对本 HTML 所在目录。</p>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <div class="lightbox" id="imageLightbox" aria-hidden="true">
+    <div class="lightbox-shell" role="dialog" aria-modal="true" aria-label="图片预览">
+      <div class="lightbox-toolbar">
+        <div class="lightbox-caption" id="lightboxCaption">图片预览</div>
+        <div class="lightbox-actions">
+          <button type="button" data-lightbox-zoom="out">缩小</button>
+          <span class="zoom-readout" id="lightboxZoom">100%</span>
+          <button type="button" data-lightbox-zoom="in">放大</button>
+          <button type="button" data-lightbox-zoom="reset">还原</button>
+          <button type="button" data-lightbox-close>关闭</button>
+        </div>
+      </div>
+      <div class="lightbox-canvas">
+        <img id="lightboxImage" alt="" />
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const totalCases = 375;
+    const bars = [
+      { label: "生成出网页文件", value: 346, tone: "good" },
+      { label: "无网页文件", value: 29, tone: "bad" },
+      { label: "硬触发器错误", value: 32, tone: "bad" },
+      { label: "触发后无明显变化", value: 73, tone: "warn" },
+      { label: "截图强可疑", value: 15, tone: "warn" },
+      { label: "网页源码幻觉/异常", value: 41, tone: "warn" },
+      { label: "官方式截图尺寸可疑", value: 176, tone: "" }
+    ];
+
+    const problemBars = document.querySelector("#problemBars");
+    if (problemBars) {
+      bars.forEach(item => {
+        const row = document.createElement("div");
+        row.className = "bar-row";
+        const pct = Math.round((item.value / totalCases) * 1000) / 10;
+        row.innerHTML = `
+          <div class="bar-label">${item.label}</div>
+          <div class="bar-track"><div class="bar-fill ${item.tone}" style="width:${pct}%"></div></div>
+          <div class="bar-value">${item.value} / ${pct}%</div>
+        `;
+        problemBars.appendChild(row);
+      });
+    }
+
+    const sideLinks = Array.from(document.querySelectorAll(".side-nav a"));
+    const observedSections = sideLinks
+      .map(link => document.querySelector(link.getAttribute("href")))
+      .filter(Boolean);
+    if ("IntersectionObserver" in window && observedSections.length > 0) {
+      const sectionObserver = new IntersectionObserver(entries => {
+        const visible = entries
+          .filter(entry => entry.isIntersecting)
+          .sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0];
+        if (!visible) return;
+        sideLinks.forEach(link => {
+          link.classList.toggle("active", link.getAttribute("href") === `#${visible.target.id}`);
+        });
+      }, {
+        rootMargin: "-18% 0px -68% 0px",
+        threshold: [0.01, 0.2, 0.45]
+      });
+      observedSections.forEach(section => sectionObserver.observe(section));
+    }
+
+    const lightbox = document.querySelector("#imageLightbox");
+    const lightboxCanvas = document.querySelector(".lightbox-canvas");
+    const lightboxImage = document.querySelector("#lightboxImage");
+    const lightboxCaption = document.querySelector("#lightboxCaption");
+    const lightboxZoom = document.querySelector("#lightboxZoom");
+    let currentZoom = 1;
+    let panX = 0;
+    let panY = 0;
+    let dragStartX = 0;
+    let dragStartY = 0;
+    let isDragging = false;
+
+    function applyLightboxTransform() {
+      lightboxImage.style.transform = `translate(${panX}px, ${panY}px) scale(${currentZoom})`;
+      lightboxZoom.textContent = `${Math.round(currentZoom * 100)}%`;
+    }
+
+    function setLightboxZoom(value) {
+      currentZoom = Math.max(0.5, Math.min(5, Math.round(value * 100) / 100));
+      if (currentZoom === 1) {
+        panX = 0;
+        panY = 0;
+      }
+      applyLightboxTransform();
+    }
+
+    function resetLightboxView() {
+      currentZoom = 1;
+      panX = 0;
+      panY = 0;
+      applyLightboxTransform();
+    }
+
+    function openLightbox(sourceImage) {
+      const figure = sourceImage.closest("figure");
+      const caption = figure?.querySelector("figcaption")?.textContent || sourceImage.alt || "图片预览";
+      lightboxImage.src = sourceImage.currentSrc || sourceImage.src;
+      lightboxImage.alt = sourceImage.alt || caption;
+      lightboxCaption.textContent = caption;
+      lightbox.classList.add("open");
+      lightbox.setAttribute("aria-hidden", "false");
+      document.body.style.overflow = "hidden";
+      resetLightboxView();
+    }
+
+    function closeLightbox() {
+      lightbox.classList.remove("open");
+      lightbox.setAttribute("aria-hidden", "true");
+      document.body.style.overflow = "";
+      lightboxImage.removeAttribute("src");
+    }
+
+    document.querySelectorAll(".compare-shot img").forEach(image => {
+      image.addEventListener("click", () => openLightbox(image));
+    });
+
+    lightbox.addEventListener("click", event => {
+      if (event.target === lightbox) {
+        closeLightbox();
+      }
+    });
+
+    document.querySelector("[data-lightbox-close]").addEventListener("click", closeLightbox);
+
+    document.querySelectorAll("[data-lightbox-zoom]").forEach(button => {
+      button.addEventListener("click", () => {
+        const action = button.dataset.lightboxZoom;
+        if (action === "in") setLightboxZoom(currentZoom + 0.25);
+        if (action === "out") setLightboxZoom(currentZoom - 0.25);
+        if (action === "reset") resetLightboxView();
+      });
+    });
+
+    lightboxCanvas.addEventListener("wheel", event => {
+      if (!lightbox.classList.contains("open") || !event.ctrlKey) return;
+      event.preventDefault();
+      const direction = event.deltaY < 0 ? 1 : -1;
+      setLightboxZoom(currentZoom + direction * 0.12);
+    }, { passive: false });
+
+    lightboxCanvas.addEventListener("pointerdown", event => {
+      if (!lightbox.classList.contains("open") || event.button !== 0) return;
+      isDragging = true;
+      dragStartX = event.clientX - panX;
+      dragStartY = event.clientY - panY;
+      lightboxCanvas.classList.add("dragging");
+      lightboxCanvas.setPointerCapture(event.pointerId);
+    });
+
+    lightboxCanvas.addEventListener("pointermove", event => {
+      if (!isDragging) return;
+      panX = event.clientX - dragStartX;
+      panY = event.clientY - dragStartY;
+      applyLightboxTransform();
+    });
+
+    function stopLightboxDrag(event) {
+      if (!isDragging) return;
+      isDragging = false;
+      lightboxCanvas.classList.remove("dragging");
+      if (event?.pointerId !== undefined && lightboxCanvas.hasPointerCapture(event.pointerId)) {
+        lightboxCanvas.releasePointerCapture(event.pointerId);
+      }
+    }
+
+    lightboxCanvas.addEventListener("pointerup", stopLightboxDrag);
+    lightboxCanvas.addEventListener("pointercancel", stopLightboxDrag);
+    lightboxCanvas.addEventListener("pointerleave", stopLightboxDrag);
+
+    document.addEventListener("keydown", event => {
+      if (!lightbox.classList.contains("open")) return;
+      if (event.key === "Escape") closeLightbox();
+      if (event.key === "+" || event.key === "=") setLightboxZoom(currentZoom + 0.25);
+      if (event.key === "-") setLightboxZoom(currentZoom - 0.25);
+      if (event.key === "0") resetLightboxView();
+    });
+  </script>
+</body>
+</html>
