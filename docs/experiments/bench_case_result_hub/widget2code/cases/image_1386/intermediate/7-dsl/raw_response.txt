@@ -1,0 +1,133 @@
+```json
+{
+  "widget": {
+    "backgroundColor": "#100e0f",
+    "borderRadius": 24,
+    "padding": 0,
+    "aspectRatio": 1.0,
+    "root": {
+      "type": "container",
+      "direction": "col",
+      "gap": 0,
+      "flex": 1,
+      "children": [
+        {
+          "type": "container",
+          "direction": "row",
+          "gap": 12,
+          "flex": 0,
+          "alignCross": "center",
+          "padding": 16,
+          "backgroundColor": "rgba(0,0,0,0.3)",
+          "borderRadius": 16,
+          "children": [
+            {
+              "type": "leaf",
+              "component": "Icon",
+              "flex": "none",
+              "props": {
+                "size": 20,
+                "color": "#FFFFFF",
+                "name": "sf:SfHandThumbsup"
+              }
+            },
+            {
+              "type": "leaf",
+              "component": "Text",
+              "flex": 0,
+              "props": {
+                "fontSize": 15,
+                "color": "#FFFFFF",
+                "fontWeight": 600,
+                "lineHeight": 20
+              },
+              "content": "Next Flight"
+            }
+          ]
+        },
+        {
+          "type": "leaf",
+          "component": "Text",
+          "flex": 0,
+          "props": {
+            "fontSize": 48,
+            "color": "#FFFFFF",
+            "fontWeight": 700,
+            "lineHeight": 56
+          },
+          "content": "LONDON"
+        },
+        {
+          "type": "container",
+          "direction": "col",
+          "gap": 0,
+          "flex": 1,
+          "alignCross": "center",
+          "children": [
+            {
+              "type": "leaf",
+              "component": "Text",
+              "flex": 0,
+              "props": {
+                "fontSize": 36,
+                "color": "#FFFFFF",
+                "fontWeight": 600,
+                "lineHeight": 44
+              },
+              "content": "16"
+            },
+            {
+              "type": "leaf",
+              "component": "Text",
+              "flex": 0,
+              "props": {
+                "fontSize": 36,
+                "color": "#FFFFFF",
+                "fontWeight": 600,
+                "lineHeight": 44
+              },
+              "content": "JAN"
+            },
+            {
+              "type": "leaf",
+              "component": "Text",
+              "flex": 0,
+              "props": {
+                "fontSize": 36,
+                "color": "#FFFFFF",
+                "fontWeight": 600,
+                "lineHeight": 44
+              },
+              "content": "18"
+            },
+            {
+              "type": "leaf",
+              "component": "Text",
+              "flex": 0,
+              "props": {
+                "fontSize": 36,
+                "color": "#FFFFFF",
+                "fontWeight": 600,
+                "lineHeight": 44
+              },
+              "content": ":"
+            },
+            {
+              "type": "leaf",
+              "component": "Text",
+              "flex": 0,
+              "props": {
+                "fontSize": 36,
+                "color": "#FFFFFF",
+                "fontWeight": 600,
+                "lineHeight": 44
+              },
+              "content": "00"
+            }
+          ]
+        }
+      ]
+    }
+  }
+}
+```

@@ -1,0 +1,121 @@
+```json
+{
+  "widget": {
+    "backgroundColor": "#000000",
+    "borderRadius": 40,
+    "padding": 0,
+    "aspectRatio": 1.0,
+    "root": {
+      "type": "container",
+      "direction": "col",
+      "gap": 0,
+      "flex": 1,
+      "children": [
+        {
+          "type": "container",
+          "direction": "col",
+          "gap": 0,
+          "flex": 1,
+          "alignCross": "center",
+          "children": [
+            {
+              "type": "container",
+              "direction": "col",
+              "gap": 0,
+              "flex": 1,
+              "alignCross": "center",
+              "children": [
+                {
+                  "type": "container",
+                  "direction": "col",
+                  "gap": 0,
+                  "flex": 1,
+                  "alignCross": "center",
+                  "children": [
+                    {
+                      "type": "leaf",
+                      "component": "ProgressRing",
+                      "flex": 0,
+                      "props": {
+                        "color": "#dc9008",
+                        "arc": 100,
+                        "fill": true,
+                        "text": true,
+                        "textColor": "#ffffff",
+                        "textSize": 24,
+                        "textWeight": 600,
+                        "textLineHeight": 1.2,
+                        "textPosition": "center"
+                      }
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "container",
+              "direction": "row",
+              "gap": 0,
+              "flex": 1,
+              "alignMain": "start",
+              "alignCross": "center",
+              "children": [
+                {
+                  "type": "container",
+                  "direction": "col",
+                  "gap": 0,
+                  "flex": 1,
+                  "alignCross": "center",
+                  "children": [
+                    {
+                      "type": "leaf",
+                      "component": "ProgressRing",
+                      "flex": 0,
+                      "props": {
+                        "color": "#dc4508",
+                        "arc": 100,
+                        "fill": true,
+                        "text": true,
+                        "textColor": "#ffffff",
+                        "textSize": 24,
+                        "textWeight": 600,
+                        "textLineHeight": 1.2,
+                        "textPosition": "center"
+                      }
+                    }
+                  ]
+                },
+                {
+                  "type": "container",
+                  "direction": "col",
+                  "gap": 0,
+                  "flex": 1,
+                  "alignCross": "center",
+                  "children": [
+                    {
+                      "type": "leaf",
+                      "component": "ProgressRing",
+                      "flex": 0,
+                      "props": {
+                        "color": "#6d3018",
+                        "arc": 100,
+                        "fill": true,
+                        "text": true,
+                        "textColor": "#ffffff",
+                        "textSize": 24,
+                        "textWeight": 600,
+                        "textLineHeight": 1.2,
+                        "textPosition": "center"
+                      }
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  }
+}
+```

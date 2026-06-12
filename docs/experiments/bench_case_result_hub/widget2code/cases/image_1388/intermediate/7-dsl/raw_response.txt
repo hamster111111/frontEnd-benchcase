@@ -1,0 +1,112 @@
+```json
+{
+  "widget": {
+    "backgroundColor": "#160c0f",
+    "borderRadius": 28,
+    "padding": 0,
+    "aspectRatio": 1.002,
+    "root": {
+      "type": "container",
+      "direction": "col",
+      "gap": 0,
+      "flex": 1,
+      "children": [
+        {
+          "type": "leaf",
+          "component": "Image",
+          "width": 1024,
+          "height": 1024,
+          "props": {
+            "src": "https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&w=1024&q=80",
+            "borderRadius": 28
+          }
+        },
+        {
+          "type": "container",
+          "direction": "row",
+          "gap": 24,
+          "flex": 0,
+          "alignMain": "center",
+          "alignCross": "center",
+          "children": [
+            {
+              "type": "leaf",
+              "component": "Button",
+              "width": 112,
+              "height": 112,
+              "flex": 0,
+              "props": {
+                "icon": "sf:SfPhoneFill",
+                "backgroundColor": "#FF4081",
+                "color": "#FFFFFF",
+                "borderRadius": 56,
+                "padding": 12
+              }
+            },
+            {
+              "type": "leaf",
+              "component": "Button",
+              "width": 112,
+              "height": 112,
+              "flex": 0,
+              "props": {
+                "icon": "sf:SfVideoFill",
+                "backgroundColor": "#FF4081",
+                "color": "#FFFFFF",
+                "borderRadius": 56,
+                "padding": 12
+              }
+            },
+            {
+              "type": "leaf",
+              "component": "Button",
+              "width": 112,
+              "height": 112,
+              "flex": 0,
+              "props": {
+                "icon": "sf:SfPhoneFill",
+                "backgroundColor": "#FF4081",
+                "color": "#FFFFFF",
+                "borderRadius": 56,
+                "padding": 12
+              }
+            }
+          ]
+        },
+        {
+          "type": "container",
+          "direction": "col",
+          "gap": 8,
+          "flex": 0,
+          "alignMain": "center",
+          "alignCross": "center",
+          "children": [
+            {
+              "type": "leaf",
+              "component": "Text",
+              "flex": 0,
+              "props": {
+                "fontSize": 32,
+                "color": "#FFFFFF",
+                "fontWeight": 700
+              },
+              "content": "Lana Samee"
+            },
+            {
+              "type": "leaf",
+              "component": "Text",
+              "flex": 0,
+              "props": {
+                "fontSize": 18,
+                "color": "#FFFFFF",
+                "fontWeight": 400
+              },
+              "content": "is calling now ..."
+            }
+          ]
+        }
+      ]
+    }
+  }
+}
+```

@@ -1,0 +1,312 @@
+{
+  "image_id": "image_1629",
+  "created_at": "2026-06-12T22:22:08",
+  "note": "Copied from existing Widget2Code stage runs; no model or evaluator rerun was performed.",
+  "source_runs": {
+    "layout": "benchmarks/widget2code/experiments/widget2code/layout_qwen35-9b_reason_budget4000_max8000_full1000_c100_retry1_20260609_145626",
+    "icon_caption": "benchmarks/widget2code/experiments/widget2code/icon_caption_qwen35-9b_full997_c100_20260609_164059",
+    "icon_retrieval": "benchmarks/widget2code/experiments/widget2code/icon_retrieval_cache_gpu_full997_20260609_170955",
+    "applogo_caption": "benchmarks/widget2code/experiments/widget2code/applogo_caption_qwen35-9b_full997_c100_20260609_182505",
+    "applogo_retrieval": "benchmarks/widget2code/experiments/widget2code/applogo_retrieval_si_cache_gpu_full997_20260609_183219",
+    "graph_color": "benchmarks/widget2code/experiments/widget2code/graph_color_prompt_cached_full997_c30_20260609_185049",
+    "dsl": "benchmarks/widget2code/experiments/widget2code/dsl_qwen35-9b_cached_prompt_full997_c50_retry1_20260609_193427"
+  },
+  "stages": {
+    "1-preprocess": {
+      "files": [
+        {
+          "label": "preprocessed_image",
+          "source": "benchmarks/widget2code/experiments/widget2code/icon_caption_qwen35-9b_full997_c100_20260609_164059/image_1629/artifacts/1-preprocess/1.2-preprocessed.png",
+          "target": "docs/experiments/bench_case_result_hub/widget2code/cases/image_1629/intermediate/1-preprocess/1.2-preprocessed.png",
+          "bytes": 897811
+        }
+      ],
+      "missing": []
+    },
+    "2-layout": {
+      "files": [
+        {
+          "label": "layout_data",
+          "source": "benchmarks/widget2code/experiments/widget2code/layout_qwen35-9b_reason_budget4000_max8000_full1000_c100_retry1_20260609_145626/image_1629/artifacts/2-layout/layout-data.json",
+          "target": "docs/experiments/bench_case_result_hub/widget2code/cases/image_1629/intermediate/2-layout/layout-data.json",
+          "bytes": 4737
+        },
+        {
+          "label": "layout_stage_meta",
+          "source": "benchmarks/widget2code/experiments/widget2code/layout_qwen35-9b_reason_budget4000_max8000_full1000_c100_retry1_20260609_145626/image_1629/artifacts/2-layout/layout-stage-meta.json",
+          "target": "docs/experiments/bench_case_result_hub/widget2code/cases/image_1629/intermediate/2-layout/layout-stage-meta.json",
+          "bytes": 472
+        },
+        {
+          "label": "layout_llm_response",
+          "source": "benchmarks/widget2code/experiments/widget2code/layout_qwen35-9b_reason_budget4000_max8000_full1000_c100_retry1_20260609_145626/image_1629/artifacts/2-layout/llm-response.txt",
+          "target": "docs/experiments/bench_case_result_hub/widget2code/cases/image_1629/intermediate/2-layout/llm-response.txt",
+          "bytes": 776
+        },
+        {
+          "label": "layout_visualization",
+          "source": "benchmarks/widget2code/experiments/widget2code/layout_qwen35-9b_reason_budget4000_max8000_full1000_c100_retry1_20260609_145626/image_1629/artifacts/2-layout/layout-visualization.png",
+          "target": "docs/experiments/bench_case_result_hub/widget2code/cases/image_1629/intermediate/2-layout/layout-visualization.png",
+          "bytes": 889717
+        },
+        {
+          "label": "icon_crops/icon-1.png",
+          "source": "benchmarks/widget2code/experiments/widget2code/layout_qwen35-9b_reason_budget4000_max8000_full1000_c100_retry1_20260609_145626/image_1629/artifacts/2-layout/icon-crops/icon-1.png",
+          "target": "docs/experiments/bench_case_result_hub/widget2code/cases/image_1629/intermediate/2-layout/icon-crops/icon-1.png",
+          "bytes": 2507
+        }
+      ],
+      "missing": []
+    },
+    "3-icon-caption": {
+      "files": [
+        {
+          "label": "icon_captions",
+          "source": "benchmarks/widget2code/experiments/widget2code/icon_caption_qwen35-9b_full997_c100_20260609_164059/image_1629/artifacts/3-icon-caption/icon-captions.json",
+          "target": "docs/experiments/bench_case_result_hub/widget2code/cases/image_1629/intermediate/3-icon-caption/icon-captions.json",
+          "bytes": 1375
+        },
+        {
+          "label": "icon_caption_stage_meta",
+          "source": "benchmarks/widget2code/experiments/widget2code/icon_caption_qwen35-9b_full997_c100_20260609_164059/image_1629/log/icon-caption-stage-meta.json",
+          "target": "docs/experiments/bench_case_result_hub/widget2code/cases/image_1629/intermediate/3-icon-caption/icon-caption-stage-meta.json",
+          "bytes": 214
+        }
+      ],
+      "missing": []
+    },
+    "4-icon-retrieval": {
+      "files": [
+        {
+          "label": "icon_retrieval",
+          "source": "benchmarks/widget2code/experiments/widget2code/icon_retrieval_cache_gpu_full997_20260609_170955/image_1629/artifacts/3-retrieval/icon-retrieval.json",
+          "target": "docs/experiments/bench_case_result_hub/widget2code/cases/image_1629/intermediate/4-icon-retrieval/icon-retrieval.json",
+          "bytes": 8108
+        },
+        {
+          "label": "icon_debug",
+          "source": "benchmarks/widget2code/experiments/widget2code/icon_retrieval_cache_gpu_full997_20260609_170955/image_1629/artifacts/3-retrieval/icon-debug.json",
+          "target": "docs/experiments/bench_case_result_hub/widget2code/cases/image_1629/intermediate/4-icon-retrieval/icon-debug.json",
+          "bytes": 10175
+        },
+        {
+          "label": "icon_retrieval_stage_meta",
+          "source": "benchmarks/widget2code/experiments/widget2code/icon_retrieval_cache_gpu_full997_20260609_170955/image_1629/log/icon-retrieval-stage-meta.json",
+          "target": "docs/experiments/bench_case_result_hub/widget2code/cases/image_1629/intermediate/4-icon-retrieval/icon-retrieval-stage-meta.json",
+          "bytes": 198
+        }
+      ],
+      "missing": []
+    },
+    "5-applogo": {
+      "files": [
+        {
+          "label": "applogo_captions",
+          "source": "benchmarks/widget2code/experiments/widget2code/applogo_caption_qwen35-9b_full997_c100_20260609_182505/image_1629/artifacts/3-icon-caption/icon-captions.json",
+          "target": "docs/experiments/bench_case_result_hub/widget2code/cases/image_1629/intermediate/5-applogo/applogo-captions.json",
+          "bytes": 647
+        },
+        {
+          "label": "applogo_caption_stage_meta",
+          "source": "benchmarks/widget2code/experiments/widget2code/applogo_caption_qwen35-9b_full997_c100_20260609_182505/image_1629/log/icon-caption-stage-meta.json",
+          "target": "docs/experiments/bench_case_result_hub/widget2code/cases/image_1629/intermediate/5-applogo/applogo-caption-stage-meta.json",
+          "bytes": 215
+        },
+        {
+          "label": "applogo_retrieval",
+          "source": "benchmarks/widget2code/experiments/widget2code/applogo_retrieval_si_cache_gpu_full997_20260609_183219/image_1629/artifacts/3-retrieval/icon-retrieval.json",
+          "target": "docs/experiments/bench_case_result_hub/widget2code/cases/image_1629/intermediate/5-applogo/applogo-retrieval.json",
+          "bytes": 665
+        },
+        {
+          "label": "applogo_debug",
+          "source": "benchmarks/widget2code/experiments/widget2code/applogo_retrieval_si_cache_gpu_full997_20260609_183219/image_1629/artifacts/3-retrieval/icon-debug.json",
+          "target": "docs/experiments/bench_case_result_hub/widget2code/cases/image_1629/intermediate/5-applogo/applogo-debug.json",
+          "bytes": 503
+        },
+        {
+          "label": "applogo_retrieval_stage_meta",
+          "source": "benchmarks/widget2code/experiments/widget2code/applogo_retrieval_si_cache_gpu_full997_20260609_183219/image_1629/log/icon-retrieval-stage-meta.json",
+          "target": "docs/experiments/bench_case_result_hub/widget2code/cases/image_1629/intermediate/5-applogo/applogo-retrieval-stage-meta.json",
+          "bytes": 199
+        }
+      ],
+      "missing": []
+    },
+    "6-graph-color": {
+      "files": [
+        {
+          "label": "graph_color",
+          "source": "benchmarks/widget2code/experiments/widget2code/graph_color_prompt_cached_full997_c30_20260609_185049/image_1629/artifacts/3-graph-color.json",
+          "target": "docs/experiments/bench_case_result_hub/widget2code/cases/image_1629/intermediate/6-graph-color/3-graph-color.json",
+          "bytes": 1351
+        },
+        {
+          "label": "graph_color_prompt_debug",
+          "source": "benchmarks/widget2code/experiments/widget2code/graph_color_prompt_cached_full997_c30_20260609_185049/image_1629/log/graph-color-prompt-debug.json",
+          "target": "docs/experiments/bench_case_result_hub/widget2code/cases/image_1629/intermediate/6-graph-color/graph-color-prompt-debug.json",
+          "bytes": 164438
+        },
+        {
+          "label": "graph_color_prompt_stage_meta",
+          "source": "benchmarks/widget2code/experiments/widget2code/graph_color_prompt_cached_full997_c30_20260609_185049/image_1629/log/graph-color-prompt-stage-meta.json",
+          "target": "docs/experiments/bench_case_result_hub/widget2code/cases/image_1629/intermediate/6-graph-color/graph-color-prompt-stage-meta.json",
+          "bytes": 1002
+        },
+        {
+          "label": "prompt_chain/1-base.md",
+          "source": "benchmarks/widget2code/experiments/widget2code/graph_color_prompt_cached_full997_c30_20260609_185049/image_1629/prompts/1-base.md",
+          "target": "docs/experiments/bench_case_result_hub/widget2code/cases/image_1629/intermediate/6-graph-color/prompts/1-base.md",
+          "bytes": 13393
+        },
+        {
+          "label": "prompt_chain/2-with-layout.md",
+          "source": "benchmarks/widget2code/experiments/widget2code/graph_color_prompt_cached_full997_c30_20260609_185049/image_1629/prompts/2-with-layout.md",
+          "target": "docs/experiments/bench_case_result_hub/widget2code/cases/image_1629/intermediate/6-graph-color/prompts/2-with-layout.md",
+          "bytes": 14536
+        },
+        {
+          "label": "prompt_chain/3-with-colors.md",
+          "source": "benchmarks/widget2code/experiments/widget2code/graph_color_prompt_cached_full997_c30_20260609_185049/image_1629/prompts/3-with-colors.md",
+          "target": "docs/experiments/bench_case_result_hub/widget2code/cases/image_1629/intermediate/6-graph-color/prompts/3-with-colors.md",
+          "bytes": 20151
+        },
+        {
+          "label": "prompt_chain/4-with-graphs.md",
+          "source": "benchmarks/widget2code/experiments/widget2code/graph_color_prompt_cached_full997_c30_20260609_185049/image_1629/prompts/4-with-graphs.md",
+          "target": "docs/experiments/bench_case_result_hub/widget2code/cases/image_1629/intermediate/6-graph-color/prompts/4-with-graphs.md",
+          "bytes": 20151
+        },
+        {
+          "label": "prompt_chain/5-with-icons.md",
+          "source": "benchmarks/widget2code/experiments/widget2code/graph_color_prompt_cached_full997_c30_20260609_185049/image_1629/prompts/5-with-icons.md",
+          "target": "docs/experiments/bench_case_result_hub/widget2code/cases/image_1629/intermediate/6-graph-color/prompts/5-with-icons.md",
+          "bytes": 22233
+        },
+        {
+          "label": "prompt_chain/5.5-with-applogos.md",
+          "source": "benchmarks/widget2code/experiments/widget2code/graph_color_prompt_cached_full997_c30_20260609_185049/image_1629/prompts/5.5-with-applogos.md",
+          "target": "docs/experiments/bench_case_result_hub/widget2code/cases/image_1629/intermediate/6-graph-color/prompts/5.5-with-applogos.md",
+          "bytes": 22233
+        },
+        {
+          "label": "prompt_chain/6-final.md",
+          "source": "benchmarks/widget2code/experiments/widget2code/graph_color_prompt_cached_full997_c30_20260609_185049/image_1629/prompts/6-final.md",
+          "target": "docs/experiments/bench_case_result_hub/widget2code/cases/image_1629/intermediate/6-graph-color/prompts/6-final.md",
+          "bytes": 22247
+        }
+      ],
+      "missing": []
+    },
+    "7-dsl": {
+      "files": [
+        {
+          "label": "dsl_widget_json",
+          "source": "benchmarks/widget2code/experiments/widget2code/dsl_qwen35-9b_cached_prompt_full997_c50_retry1_20260609_193427/image_1629/artifacts/4-dsl/widget.json",
+          "target": "docs/experiments/bench_case_result_hub/widget2code/cases/image_1629/intermediate/7-dsl/widget.json",
+          "bytes": 2875
+        },
+        {
+          "label": "dsl_prompt",
+          "source": "benchmarks/widget2code/experiments/widget2code/dsl_qwen35-9b_cached_prompt_full997_c50_retry1_20260609_193427/image_1629/prompts/6-final.md",
+          "target": "docs/experiments/bench_case_result_hub/widget2code/cases/image_1629/intermediate/7-dsl/prompt.md",
+          "bytes": 22247
+        },
+        {
+          "label": "dsl_raw_response",
+          "source": "benchmarks/widget2code/experiments/widget2code/dsl_qwen35-9b_cached_prompt_full997_c50_retry1_20260609_193427/image_1629/log/dsl-raw-response.txt",
+          "target": "docs/experiments/bench_case_result_hub/widget2code/cases/image_1629/intermediate/7-dsl/raw_response.txt",
+          "bytes": 2968
+        },
+        {
+          "label": "dsl_stage_meta",
+          "source": "benchmarks/widget2code/experiments/widget2code/dsl_qwen35-9b_cached_prompt_full997_c50_retry1_20260609_193427/image_1629/log/dsl-stage-meta.json",
+          "target": "docs/experiments/bench_case_result_hub/widget2code/cases/image_1629/intermediate/7-dsl/dsl-stage-meta.json",
+          "bytes": 553
+        }
+      ],
+      "missing": []
+    },
+    "8-compilation": {
+      "files": [
+        {
+          "label": "raw_json",
+          "source": "benchmarks/widget2code/experiments/widget2code/dsl_qwen35-9b_cached_prompt_full997_c50_retry1_20260609_193427/image_1629/artifacts/5-compilation/1-raw.json",
+          "target": "docs/experiments/bench_case_result_hub/widget2code/cases/image_1629/intermediate/8-compilation/1-raw.json",
+          "bytes": 2838
+        },
+        {
+          "label": "after_validation_json",
+          "source": "benchmarks/widget2code/experiments/widget2code/dsl_qwen35-9b_cached_prompt_full997_c50_retry1_20260609_193427/image_1629/artifacts/5-compilation/2-after-validation.json",
+          "target": "docs/experiments/bench_case_result_hub/widget2code/cases/image_1629/intermediate/8-compilation/2-after-validation.json",
+          "bytes": 2838
+        },
+        {
+          "label": "final_json",
+          "source": "benchmarks/widget2code/experiments/widget2code/dsl_qwen35-9b_cached_prompt_full997_c50_retry1_20260609_193427/image_1629/artifacts/5-compilation/3-final.json",
+          "target": "docs/experiments/bench_case_result_hub/widget2code/cases/image_1629/intermediate/8-compilation/3-final.json",
+          "bytes": 2838
+        },
+        {
+          "label": "layout_jsx",
+          "source": "benchmarks/widget2code/experiments/widget2code/dsl_qwen35-9b_cached_prompt_full997_c50_retry1_20260609_193427/image_1629/artifacts/5-compilation/layout.jsx",
+          "target": "docs/experiments/bench_case_result_hub/widget2code/cases/image_1629/intermediate/8-compilation/layout.jsx",
+          "bytes": 252
+        },
+        {
+          "label": "widget_jsx",
+          "source": "benchmarks/widget2code/experiments/widget2code/dsl_qwen35-9b_cached_prompt_full997_c50_retry1_20260609_193427/image_1629/artifacts/5-compilation/widget.jsx",
+          "target": "docs/experiments/bench_case_result_hub/widget2code/cases/image_1629/intermediate/8-compilation/widget.jsx",
+          "bytes": 2798
+        }
+      ],
+      "missing": []
+    },
+    "9-rendering": {
+      "files": [
+        {
+          "label": "raw_render",
+          "source": "benchmarks/widget2code/experiments/widget2code/dsl_qwen35-9b_cached_prompt_full997_c50_retry1_20260609_193427/image_1629/artifacts/6-rendering/6.1-raw.png",
+          "target": "docs/experiments/bench_case_result_hub/widget2code/cases/image_1629/intermediate/9-rendering/6.1-raw.png",
+          "bytes": 24040
+        },
+        {
+          "label": "autoresize_render",
+          "source": "benchmarks/widget2code/experiments/widget2code/dsl_qwen35-9b_cached_prompt_full997_c50_retry1_20260609_193427/image_1629/artifacts/6-rendering/6.2-autoresize.png",
+          "target": "docs/experiments/bench_case_result_hub/widget2code/cases/image_1629/intermediate/9-rendering/6.2-autoresize.png",
+          "bytes": 69733
+        },
+        {
+          "label": "final_resized_render",
+          "source": "benchmarks/widget2code/experiments/widget2code/dsl_qwen35-9b_cached_prompt_full997_c50_retry1_20260609_193427/image_1629/artifacts/6-rendering/6.3-resize.png",
+          "target": "docs/experiments/bench_case_result_hub/widget2code/cases/image_1629/intermediate/9-rendering/6.3-resize.png",
+          "bytes": 27905
+        },
+        {
+          "label": "render_bounding_boxes",
+          "source": "benchmarks/widget2code/experiments/widget2code/dsl_qwen35-9b_cached_prompt_full997_c50_retry1_20260609_193427/image_1629/artifacts/6-rendering/6.4-bounding-boxes.json",
+          "target": "docs/experiments/bench_case_result_hub/widget2code/cases/image_1629/intermediate/9-rendering/6.4-bounding-boxes.json",
+          "bytes": 1946
+        },
+        {
+          "label": "render_debug",
+          "source": "benchmarks/widget2code/experiments/widget2code/dsl_qwen35-9b_cached_prompt_full997_c50_retry1_20260609_193427/image_1629/log/debug.json",
+          "target": "docs/experiments/bench_case_result_hub/widget2code/cases/image_1629/intermediate/9-rendering/debug.json",
+          "bytes": 1879
+        }
+      ],
+      "missing": []
+    }
+  },
+  "stats": {
+    "1-preprocess:files": 1,
+    "2-layout:files": 5,
+    "3-icon-caption:files": 2,
+    "4-icon-retrieval:files": 3,
+    "5-applogo:files": 5,
+    "6-graph-color:files": 10,
+    "7-dsl:files": 4,
+    "8-compilation:files": 5,
+    "9-rendering:files": 5
+  }
+}

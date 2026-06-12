@@ -1,0 +1,15 @@
+{
+  "imageId": "image_0212",
+  "status": "no_icons",
+  "layoutSourceRun": "layout_qwen35-9b_reason_budget4000_max8000_full1000_c100_retry1_20260609_145626",
+  "layoutPath": "D:\\Code\\frontEnd-direction\\benchmarks\\widget2code\\experiments\\widget2code\\layout_qwen35-9b_reason_budget4000_max8000_full1000_c100_retry1_20260609_145626\\image_0212\\artifacts\\2-layout\\layout-data.json",
+  "imagePath": "D:\\Code\\frontEnd-direction\\benchmarks\\widget2code\\data\\widget2code-benchmark\\test\\image_0212.png",
+  "preprocessed": {
+    "width": 1000,
+    "height": 1000,
+    "aspectRatio": 1.0
+  },
+  "iconCount": 0,
+  "retrieved": 0,
+  "perIcon": []
+}

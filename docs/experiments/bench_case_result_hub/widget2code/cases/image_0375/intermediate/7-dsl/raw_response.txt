@@ -1,0 +1,303 @@
+```json
+{
+  "widget": {
+    "backgroundColor": "#f7f7fb",
+    "borderRadius": 28,
+    "padding": 0,
+    "aspectRatio": 0.942,
+    "root": {
+      "type": "container",
+      "direction": "col",
+      "gap": 0,
+      "flex": 1,
+      "children": [
+        {
+          "type": "container",
+          "direction": "row",
+          "gap": 0,
+          "flex": 0,
+          "alignMain": "start",
+          "alignCross": "stretch",
+          "backgroundColor": "#f7f7fb",
+          "children": [
+            {
+              "type": "container",
+              "direction": "col",
+              "gap": 0,
+              "flex": 0,
+              "alignMain": "start",
+              "alignCross": "stretch",
+              "borderRadius": 28,
+              "children": [
+                {
+                  "type": "leaf",
+                  "component": "Icon",
+                  "flex": "none",
+                  "props": {
+                    "size": 40,
+                    "color": "#FF6B6B",
+                    "name": "lu:LuImages"
+                  }
+                },
+                {
+                  "type": "leaf",
+                  "component": "Image",
+                  "width": 200,
+                  "height": 200,
+                  "props": {
+                    "src": "https://images.unsplash.com/photo-1470225620780-dba8ba36b745"
+                  },
+                  "borderRadius": 28
+                }
+              ]
+            },
+            {
+              "type": "container",
+              "direction": "col",
+              "gap": 11,
+              "flex": 1,
+              "alignMain": "start",
+              "alignCross": "start",
+              "padding": 16,
+              "children": [
+                {
+                  "type": "leaf",
+                  "component": "Text",
+                  "flex": 0,
+                  "props": {
+                    "fontSize": 14,
+                    "color": "#FF6B6B",
+                    "fontWeight": 400
+                  },
+                  "content": "NOW PLAYING"
+                },
+                {
+                  "type": "leaf",
+                  "component": "Text",
+                  "flex": 0,
+                  "props": {
+                    "fontSize": 24,
+                    "color": "#000000",
+                    "fontWeight": 700,
+                    "lineHeight": 1.2
+                  },
+                  "content": "Sweet melody"
+                },
+                {
+                  "type": "leaf",
+                  "component": "Text",
+                  "flex": 0,
+                  "props": {
+                    "fontSize": 18,
+                    "color": "#000000",
+                    "fontWeight": 400,
+                    "lineHeight": 1.3
+                  },
+                  "content": "Little Mix"
+                },
+                {
+                  "type": "leaf",
+                  "component": "Text",
+                  "flex": 0,
+                  "props": {
+                    "fontSize": 16,
+                    "color": "#8E8E93",
+                    "fontWeight": 400,
+                    "lineHeight": 1.3
+                  },
+                  "content": "Winter Hits 2020"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "container",
+          "direction": "col",
+          "gap": 0,
+          "flex": 1,
+          "alignMain": "start",
+          "alignCross": "start",
+          "backgroundColor": "#f7f7fb",
+          "borderRadius": 28,
+          "children": [
+            {
+              "type": "container",
+              "direction": "col",
+              "gap": 16,
+              "flex": 1,
+              "alignMain": "start",
+              "alignCross": "start",
+              "padding": 16,
+              "children": [
+                {
+                  "type": "leaf",
+                  "component": "Text",
+                  "flex": 0,
+                  "props": {
+                    "fontSize": 16,
+                    "color": "#8E8E93",
+                    "fontWeight": 500
+                  },
+                  "content": "UP NEXT"
+                },
+                {
+                  "type": "container",
+                  "direction": "row",
+                  "gap": 11,
+                  "flex": 0,
+                  "alignMain": "start",
+                  "alignCross": "center",
+                  "children": [
+                    {
+                      "type": "leaf",
+                      "component": "Image",
+                      "width": 88,
+                      "height": 88,
+                      "props": {
+                        "src": "https://images.unsplash.com/photo-1493225255756-d9584f8606e9"
+                      },
+                      "borderRadius": 8
+                    },
+                    {
+                      "type": "container",
+                      "direction": "col",
+                      "gap": 4,
+                      "flex": 1,
+                      "alignMain": "start",
+                      "alignCross": "start",
+                      "children": [
+                        {
+                          "type": "leaf",
+                          "component": "Text",
+                          "flex": 0,
+                          "props": {
+                            "fontSize": 18,
+                            "color": "#000000",
+                            "fontWeight": 700,
+                            "lineHeight": 1.2
+                          },
+                          "content": "Midnight sky"
+                        },
+                        {
+                          "type": "leaf",
+                          "component": "Text",
+                          "flex": 0,
+                          "props": {
+                            "fontSize": 16,
+                            "color": "#000000",
+                            "fontWeight": 400,
+                            "lineHeight": 1.3
+                          },
+                          "content": "Miley Cyrus"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "type": "leaf",
+                  "component": "Divider",
+                  "flex": 0,
+                  "props": {
+                    "orientation": "horizontal",
+                    "type": "solid",
+                    "thickness": 1,
+                    "color": "#E5E5EA"
+                  }
+                },
+                {
+                  "type": "container",
+                  "direction": "row",
+                  "gap": 11,
+                  "flex": 0,
+                  "alignMain": "start",
+                  "alignCross": "center",
+                  "children": [
+                    {
+                      "type": "leaf",
+                      "component": "Image",
+                      "width": 88,
+                      "height": 88,
+                      "props": {
+                        "src": "https://images.unsplash.com/photo-1516280440614-6697288d5d38"
+                      },
+                      "borderRadius": 8
+                    },
+                    {
+                      "type": "container",
+                      "direction": "col",
+                      "gap": 4,
+                      "flex": 1,
+                      "alignMain": "start",
+                      "alignCross": "start",
+                      "children": [
+                        {
+                          "type": "leaf",
+                          "component": "Text",
+                          "flex": 0,
+                          "props": {
+                            "fontSize": 18,
+                            "color": "#000000",
+                            "fontWeight": 700,
+                            "lineHeight": 1.2
+                          },
+                          "content": "All I want for christmas"
+                        },
+                        {
+                          "type": "leaf",
+                          "component": "Text",
+                          "flex": 0,
+                          "props": {
+                            "fontSize": 16,
+                            "color": "#000000",
+                            "fontWeight": 400,
+                            "lineHeight": 1.3
+                          },
+                          "content": "Mariah Carey"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "container",
+              "direction": "row",
+              "gap": 6,
+              "flex": 0,
+              "alignMain": "start",
+              "alignCross": "center",
+              "padding": [16, 16, 28, 16],
+              "children": [
+                {
+                  "type": "leaf",
+                  "component": "Icon",
+                  "flex": "none",
+                  "props": {
+                    "size": 20,
+                    "color": "#FF6B6B",
+                    "name": "lu:LuImageMinus"
+                  }
+                },
+                {
+                  "type": "leaf",
+                  "component": "Text",
+                  "flex": 1,
+                  "props": {
+                    "fontSize": 16,
+                    "color": "#FF6B6B",
+                    "fontWeight": 400
+                  },
+                  "content": "SEE PLAYLIST"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  }
+}
+```

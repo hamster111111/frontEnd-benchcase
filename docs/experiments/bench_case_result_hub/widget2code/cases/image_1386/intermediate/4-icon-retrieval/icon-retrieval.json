@@ -1,0 +1,295 @@
+{
+  "imageId": "image_1386",
+  "status": "success",
+  "layoutSourceRun": "layout_qwen35-9b_reason_budget4000_max8000_full1000_c100_retry1_20260609_145626",
+  "layoutPath": "D:\\Code\\frontEnd-direction\\benchmarks\\widget2code\\experiments\\widget2code\\layout_qwen35-9b_reason_budget4000_max8000_full1000_c100_retry1_20260609_145626\\image_1386\\artifacts\\2-layout\\layout-data.json",
+  "imagePath": "D:\\Code\\frontEnd-direction\\benchmarks\\widget2code\\data\\widget2code-benchmark\\test\\image_1386.png",
+  "preprocessed": {
+    "width": 1000,
+    "height": 1000,
+    "aspectRatio": 1.0
+  },
+  "iconCount": 1,
+  "retrieved": 1,
+  "perIcon": [
+    {
+      "imageId": "image_1386",
+      "iconIndex": 0,
+      "bbox": [
+        152,
+        52,
+        208,
+        108
+      ],
+      "description": "type:airplane,color:#FFFFFF",
+      "caption": "blurred gradient texture",
+      "captionRaw": "blurred gradient texture",
+      "cropPath": "D:\\Code\\frontEnd-direction\\benchmarks\\widget2code\\experiments\\widget2code\\icon_retrieval_cache_gpu_full997_20260609_170955\\image_1386\\artifacts\\2-layout\\icon-crops\\icon-1.png",
+      "status": "success",
+      "topCandidates": [
+        {
+          "rank": 1,
+          "src_svg": "lu/LuImageMinus.svg",
+          "component_id": "lu:LuImageMinus",
+          "aliases": [
+            "lu",
+            "image",
+            "minus"
+          ],
+          "score_img": 0.5708,
+          "score_txt": 0.6112,
+          "score_final": 0.5789,
+          "name": "lu:LuImageMinus"
+        },
+        {
+          "rank": 2,
+          "src_svg": "sf/person.3.svg",
+          "component_id": "sf:SfPerson3",
+          "aliases": [
+            "person",
+            "3"
+          ],
+          "score_img": 0.5703,
+          "score_txt": 0.6104,
+          "score_final": 0.5784,
+          "name": "sf:SfPerson3"
+        },
+        {
+          "rank": 3,
+          "src_svg": "sf/person.3.fill.svg",
+          "component_id": "sf:SfPerson3Fill",
+          "aliases": [
+            "person",
+            "3",
+            "fill"
+          ],
+          "score_img": 0.5683,
+          "score_txt": 0.6104,
+          "score_final": 0.5767,
+          "name": "sf:SfPerson3Fill"
+        },
+        {
+          "rank": 4,
+          "src_svg": "sf/building.2.crop.circle.fill.svg",
+          "component_id": "sf:SfBuilding2CropCircleFill",
+          "aliases": [
+            "building",
+            "2",
+            "crop",
+            "circle",
+            "fill"
+          ],
+          "score_img": 0.5672,
+          "score_txt": 0.5893,
+          "score_final": 0.5716,
+          "name": "sf:SfBuilding2CropCircleFill"
+        },
+        {
+          "rank": 5,
+          "src_svg": "lu/LuUsers.svg",
+          "component_id": "lu:LuUsers",
+          "aliases": [
+            "lu",
+            "users"
+          ],
+          "score_img": 0.5578,
+          "score_txt": 0.6105,
+          "score_final": 0.5683,
+          "name": "lu:LuUsers"
+        },
+        {
+          "rank": 6,
+          "src_svg": "lu/LuBookImage.svg",
+          "component_id": "lu:LuBookImage",
+          "aliases": [
+            "lu",
+            "book",
+            "image"
+          ],
+          "score_img": 0.5646,
+          "score_txt": 0.5682,
+          "score_final": 0.5653,
+          "name": "lu:LuBookImage"
+        },
+        {
+          "rank": 7,
+          "src_svg": "sf/hand.thumbsup.fill.svg",
+          "component_id": "sf:SfHandThumbsupFill",
+          "aliases": [
+            "hand",
+            "thumbsup",
+            "fill"
+          ],
+          "score_img": 0.5599,
+          "score_txt": 0.5849,
+          "score_final": 0.5649,
+          "name": "sf:SfHandThumbsupFill"
+        },
+        {
+          "rank": 8,
+          "src_svg": "lu/LuUserRound.svg",
+          "component_id": "lu:LuUserRound",
+          "aliases": [
+            "lu",
+            "user",
+            "round"
+          ],
+          "score_img": 0.5533,
+          "score_txt": 0.6105,
+          "score_final": 0.5647,
+          "name": "lu:LuUserRound"
+        },
+        {
+          "rank": 9,
+          "src_svg": "lu/LuQrCode.svg",
+          "component_id": "lu:LuQrCode",
+          "aliases": [
+            "lu",
+            "qr",
+            "code"
+          ],
+          "score_img": 0.5612,
+          "score_txt": 0.5768,
+          "score_final": 0.5643,
+          "name": "lu:LuQrCode"
+        },
+        {
+          "rank": 10,
+          "src_svg": "sf/hand.thumbsup.svg",
+          "component_id": "sf:SfHandThumbsup",
+          "aliases": [
+            "hand",
+            "thumbsup"
+          ],
+          "score_img": 0.5586,
+          "score_txt": 0.5849,
+          "score_final": 0.5638,
+          "name": "sf:SfHandThumbsup"
+        }
+      ],
+      "imageOnlyTop10": [
+        {
+          "rank": 1,
+          "src_svg": "sf/camera.on.rectangle.fill.svg",
+          "component_id": "sf:SfCameraOnRectangleFill",
+          "aliases": [
+            "camera",
+            "on",
+            "rectangle",
+            "fill"
+          ],
+          "score_img": 0.5723,
+          "name": "sf:SfCameraOnRectangleFill"
+        },
+        {
+          "rank": 2,
+          "src_svg": "lu/LuImageMinus.svg",
+          "component_id": "lu:LuImageMinus",
+          "aliases": [
+            "lu",
+            "image",
+            "minus"
+          ],
+          "score_img": 0.5708,
+          "name": "lu:LuImageMinus"
+        },
+        {
+          "rank": 3,
+          "src_svg": "sf/person.3.svg",
+          "component_id": "sf:SfPerson3",
+          "aliases": [
+            "person",
+            "3"
+          ],
+          "score_img": 0.5703,
+          "name": "sf:SfPerson3"
+        },
+        {
+          "rank": 4,
+          "src_svg": "sf/house.lodge.circle.fill.svg",
+          "component_id": "sf:SfHouseLodgeCircleFill",
+          "aliases": [
+            "house",
+            "lodge",
+            "circle",
+            "fill"
+          ],
+          "score_img": 0.5688,
+          "name": "sf:SfHouseLodgeCircleFill"
+        },
+        {
+          "rank": 5,
+          "src_svg": "sf/person.2.svg",
+          "component_id": "sf:SfPerson2",
+          "aliases": [
+            "person",
+            "2"
+          ],
+          "score_img": 0.5687,
+          "name": "sf:SfPerson2"
+        },
+        {
+          "rank": 6,
+          "src_svg": "sf/person.3.sequence.svg",
+          "component_id": "sf:SfPerson3Sequence",
+          "aliases": [
+            "person",
+            "3",
+            "sequence"
+          ],
+          "score_img": 0.5685,
+          "name": "sf:SfPerson3Sequence"
+        },
+        {
+          "rank": 7,
+          "src_svg": "sf/person.3.fill.svg",
+          "component_id": "sf:SfPerson3Fill",
+          "aliases": [
+            "person",
+            "3",
+            "fill"
+          ],
+          "score_img": 0.5683,
+          "name": "sf:SfPerson3Fill"
+        },
+        {
+          "rank": 8,
+          "src_svg": "sf/house.lodge.fill.svg",
+          "component_id": "sf:SfHouseLodgeFill",
+          "aliases": [
+            "house",
+            "lodge",
+            "fill"
+          ],
+          "score_img": 0.5674,
+          "name": "sf:SfHouseLodgeFill"
+        },
+        {
+          "rank": 9,
+          "src_svg": "sf/building.2.crop.circle.fill.svg",
+          "component_id": "sf:SfBuilding2CropCircleFill",
+          "aliases": [
+            "building",
+            "2",
+            "crop",
+            "circle",
+            "fill"
+          ],
+          "score_img": 0.5672,
+          "name": "sf:SfBuilding2CropCircleFill"
+        },
+        {
+          "rank": 10,
+          "src_svg": "lu/LuImage.svg",
+          "component_id": "lu:LuImage",
+          "aliases": [
+            "lu",
+            "image"
+          ],
+          "score_img": 0.5668,
+          "name": "lu:LuImage"
+        }
+      ]
+    }
+  ]
+}

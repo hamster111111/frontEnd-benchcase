@@ -1,0 +1,117 @@
+```json
+{
+  "widget": {
+    "backgroundColor": "#1a1a2e",
+    "borderRadius": 24,
+    "padding": 0,
+    "aspectRatio": 1.0,
+    "root": {
+      "type": "container",
+      "direction": "col",
+      "gap": 0,
+      "flex": 1,
+      "children": [
+        {
+          "type": "container",
+          "direction": "row",
+          "gap": 16,
+          "flex": 0,
+          "padding": 16,
+          "alignCross": "center",
+          "backgroundColor": "linear-gradient(180deg, #1a1a2e 0%, #4a5568 100%)",
+          "children": [
+            {
+              "type": "leaf",
+              "component": "Icon",
+              "flex": "none",
+              "props": {
+                "size": 24,
+                "color": "#FFFFFF",
+                "name": "lu:LuCloud"
+              }
+            },
+            {
+              "type": "leaf",
+              "component": "Text",
+              "flex": 1,
+              "props": {
+                "fontSize": 16,
+                "color": "#FFFFFF",
+                "fontWeight": 400
+              },
+              "content": "Cloudy"
+            }
+          ]
+        },
+        {
+          "type": "container",
+          "direction": "row",
+          "gap": 0,
+          "flex": 0,
+          "padding": 16,
+          "alignCross": "center",
+          "children": [
+            {
+              "type": "leaf",
+              "component": "Slider",
+              "flex": 1,
+              "props": {
+                "value": 50,
+                "enabled": true,
+                "color": "#3A3A3C",
+                "thumbColor": "#8E8E93",
+                "thumbSize": 42,
+                "width": 400,
+                "height": 21
+              }
+            },
+            {
+              "type": "leaf",
+              "component": "Text",
+              "flex": 0,
+              "props": {
+                "fontSize": 24,
+                "color": "#FFFFFF",
+                "fontWeight": 600
+              },
+              "content": "20°"
+            }
+          ]
+        },
+        {
+          "type": "container",
+          "direction": "row",
+          "gap": 80,
+          "flex": 0,
+          "padding": 16,
+          "alignCross": "center",
+          "children": [
+            {
+              "type": "leaf",
+              "component": "Text",
+              "flex": "none",
+              "props": {
+                "fontSize": 14,
+                "color": "#FFFFFF",
+                "fontWeight": 400
+              },
+              "content": "16°"
+            },
+            {
+              "type": "leaf",
+              "component": "Text",
+              "flex": "none",
+              "props": {
+                "fontSize": 14,
+                "color": "#FFFFFF",
+                "fontWeight": 400
+              },
+              "content": "23°"
+            }
+          ]
+        }
+      ]
+    }
+  }
+}
+```

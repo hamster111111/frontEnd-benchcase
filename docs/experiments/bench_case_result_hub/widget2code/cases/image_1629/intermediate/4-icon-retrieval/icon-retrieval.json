@@ -1,0 +1,293 @@
+{
+  "imageId": "image_1629",
+  "status": "success",
+  "layoutSourceRun": "layout_qwen35-9b_reason_budget4000_max8000_full1000_c100_retry1_20260609_145626",
+  "layoutPath": "D:\\Code\\frontEnd-direction\\benchmarks\\widget2code\\experiments\\widget2code\\layout_qwen35-9b_reason_budget4000_max8000_full1000_c100_retry1_20260609_145626\\image_1629\\artifacts\\2-layout\\layout-data.json",
+  "imagePath": "D:\\Code\\frontEnd-direction\\benchmarks\\widget2code\\data\\widget2code-benchmark\\test\\image_1629.png",
+  "preprocessed": {
+    "width": 1399,
+    "height": 1399,
+    "aspectRatio": 1.0
+  },
+  "iconCount": 1,
+  "retrieved": 1,
+  "perIcon": [
+    {
+      "imageId": "image_1629",
+      "iconIndex": 0,
+      "bbox": [
+        544,
+        546,
+        609,
+        594
+      ],
+      "description": "type:cloud,color:#FFFFFF",
+      "caption": "cloud icon",
+      "captionRaw": "cloud icon",
+      "cropPath": "D:\\Code\\frontEnd-direction\\benchmarks\\widget2code\\experiments\\widget2code\\icon_retrieval_cache_gpu_full997_20260609_170955\\image_1629\\artifacts\\2-layout\\icon-crops\\icon-1.png",
+      "status": "success",
+      "topCandidates": [
+        {
+          "rank": 1,
+          "src_svg": "lu/LuImageMinus.svg",
+          "component_id": "lu:LuImageMinus",
+          "aliases": [
+            "lu",
+            "image",
+            "minus"
+          ],
+          "score_img": 0.5953,
+          "score_txt": 0.7521,
+          "score_final": 0.6266,
+          "name": "lu:LuImageMinus"
+        },
+        {
+          "rank": 2,
+          "src_svg": "sf/person.3.svg",
+          "component_id": "sf:SfPerson3",
+          "aliases": [
+            "person",
+            "3"
+          ],
+          "score_img": 0.5887,
+          "score_txt": 0.7504,
+          "score_final": 0.621,
+          "name": "sf:SfPerson3"
+        },
+        {
+          "rank": 3,
+          "src_svg": "sf/person.3.fill.svg",
+          "component_id": "sf:SfPerson3Fill",
+          "aliases": [
+            "person",
+            "3",
+            "fill"
+          ],
+          "score_img": 0.5866,
+          "score_txt": 0.7504,
+          "score_final": 0.6194,
+          "name": "sf:SfPerson3Fill"
+        },
+        {
+          "rank": 4,
+          "src_svg": "sf/building.2.crop.circle.fill.svg",
+          "component_id": "sf:SfBuilding2CropCircleFill",
+          "aliases": [
+            "building",
+            "2",
+            "crop",
+            "circle",
+            "fill"
+          ],
+          "score_img": 0.5847,
+          "score_txt": 0.7429,
+          "score_final": 0.6164,
+          "name": "sf:SfBuilding2CropCircleFill"
+        },
+        {
+          "rank": 5,
+          "src_svg": "lu/LuBookImage.svg",
+          "component_id": "lu:LuBookImage",
+          "aliases": [
+            "lu",
+            "book",
+            "image"
+          ],
+          "score_img": 0.5891,
+          "score_txt": 0.7169,
+          "score_final": 0.6147,
+          "name": "lu:LuBookImage"
+        },
+        {
+          "rank": 6,
+          "src_svg": "lu/LuUsers.svg",
+          "component_id": "lu:LuUsers",
+          "aliases": [
+            "lu",
+            "users"
+          ],
+          "score_img": 0.5751,
+          "score_txt": 0.765,
+          "score_final": 0.6131,
+          "name": "lu:LuUsers"
+        },
+        {
+          "rank": 7,
+          "src_svg": "sf/bed.double.fill.svg",
+          "component_id": "sf:SfBedDoubleFill",
+          "aliases": [
+            "bed",
+            "double",
+            "fill"
+          ],
+          "score_img": 0.5778,
+          "score_txt": 0.7518,
+          "score_final": 0.6126,
+          "name": "sf:SfBedDoubleFill"
+        },
+        {
+          "rank": 8,
+          "src_svg": "lu/LuMapPinned.svg",
+          "component_id": "lu:LuMapPinned",
+          "aliases": [
+            "lu",
+            "map",
+            "pinned"
+          ],
+          "score_img": 0.5746,
+          "score_txt": 0.7617,
+          "score_final": 0.612,
+          "name": "lu:LuMapPinned"
+        },
+        {
+          "rank": 9,
+          "src_svg": "lu/LuImages.svg",
+          "component_id": "lu:LuImages",
+          "aliases": [
+            "lu",
+            "images"
+          ],
+          "score_img": 0.5838,
+          "score_txt": 0.7169,
+          "score_final": 0.6104,
+          "name": "lu:LuImages"
+        },
+        {
+          "rank": 10,
+          "src_svg": "lu/LuUserRound.svg",
+          "component_id": "lu:LuUserRound",
+          "aliases": [
+            "lu",
+            "user",
+            "round"
+          ],
+          "score_img": 0.5714,
+          "score_txt": 0.765,
+          "score_final": 0.6101,
+          "name": "lu:LuUserRound"
+        }
+      ],
+      "imageOnlyTop10": [
+        {
+          "rank": 1,
+          "src_svg": "sf/camera.on.rectangle.fill.svg",
+          "component_id": "sf:SfCameraOnRectangleFill",
+          "aliases": [
+            "camera",
+            "on",
+            "rectangle",
+            "fill"
+          ],
+          "score_img": 0.596,
+          "name": "sf:SfCameraOnRectangleFill"
+        },
+        {
+          "rank": 2,
+          "src_svg": "lu/LuImageMinus.svg",
+          "component_id": "lu:LuImageMinus",
+          "aliases": [
+            "lu",
+            "image",
+            "minus"
+          ],
+          "score_img": 0.5953,
+          "name": "lu:LuImageMinus"
+        },
+        {
+          "rank": 3,
+          "src_svg": "sf/photo.fill.on.rectangle.fill.svg",
+          "component_id": "sf:SfPhotoFillOnRectangle",
+          "aliases": [
+            "photo",
+            "fill",
+            "on",
+            "rectangle"
+          ],
+          "score_img": 0.5919,
+          "name": "sf:SfPhotoFillOnRectangle"
+        },
+        {
+          "rank": 4,
+          "src_svg": "lu/LuImage.svg",
+          "component_id": "lu:LuImage",
+          "aliases": [
+            "lu",
+            "image"
+          ],
+          "score_img": 0.5914,
+          "name": "lu:LuImage"
+        },
+        {
+          "rank": 5,
+          "src_svg": "sf/camera.svg",
+          "component_id": "sf:SfCamera",
+          "aliases": [
+            "camera"
+          ],
+          "score_img": 0.5909,
+          "name": "sf:SfCamera"
+        },
+        {
+          "rank": 6,
+          "src_svg": "sf/camera.fill.svg",
+          "component_id": "sf:SfCameraFill",
+          "aliases": [
+            "camera",
+            "fill"
+          ],
+          "score_img": 0.5907,
+          "name": "sf:SfCameraFill"
+        },
+        {
+          "rank": 7,
+          "src_svg": "sf/tshirt.circle.fill.svg",
+          "component_id": "sf:SfTshirtCircleFill",
+          "aliases": [
+            "tshirt",
+            "circle",
+            "fill"
+          ],
+          "score_img": 0.5906,
+          "name": "sf:SfTshirtCircleFill"
+        },
+        {
+          "rank": 8,
+          "src_svg": "sf/photo.circle.fill.svg",
+          "component_id": "sf:SfPhotoCircleFill",
+          "aliases": [
+            "photo",
+            "circle",
+            "fill"
+          ],
+          "score_img": 0.5901,
+          "name": "sf:SfPhotoCircleFill"
+        },
+        {
+          "rank": 9,
+          "src_svg": "sf/photo.fill.svg",
+          "component_id": "sf:SfPhotoFill",
+          "aliases": [
+            "photo",
+            "fill"
+          ],
+          "score_img": 0.5895,
+          "name": "sf:SfPhotoFill"
+        },
+        {
+          "rank": 10,
+          "src_svg": "sf/photo.on.rectangle.angled.fill.svg",
+          "component_id": "sf:SfPhotoOnRectangleAngledFill",
+          "aliases": [
+            "photo",
+            "on",
+            "rectangle",
+            "angled",
+            "fill"
+          ],
+          "score_img": 0.5893,
+          "name": "sf:SfPhotoOnRectangleAngledFill"
+        }
+      ]
+    }
+  ]
+}

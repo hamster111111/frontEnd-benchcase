@@ -1,0 +1,581 @@
+{
+  "imageId": "image_0375",
+  "status": "success",
+  "layoutSourceRun": "layout_qwen35-9b_reason_budget4000_max8000_full1000_c100_retry1_20260609_145626",
+  "layoutPath": "D:\\Code\\frontEnd-direction\\benchmarks\\widget2code\\experiments\\widget2code\\layout_qwen35-9b_reason_budget4000_max8000_full1000_c100_retry1_20260609_145626\\image_0375\\artifacts\\2-layout\\layout-data.json",
+  "imagePath": "D:\\Code\\frontEnd-direction\\benchmarks\\widget2code\\data\\widget2code-benchmark\\test\\image_0375.png",
+  "preprocessed": {
+    "width": 1356,
+    "height": 1439,
+    "aspectRatio": 0.9423210562890897
+  },
+  "iconCount": 2,
+  "retrieved": 2,
+  "perIcon": [
+    {
+      "imageId": "image_0375",
+      "iconIndex": 0,
+      "bbox": [
+        39,
+        22,
+        236,
+        233
+      ],
+      "description": "type:music_note,color:#FF6B6B,shape:rounded_square",
+      "caption": "music note icon",
+      "captionRaw": "music note icon",
+      "cropPath": "D:\\Code\\frontEnd-direction\\benchmarks\\widget2code\\experiments\\widget2code\\icon_retrieval_cache_gpu_full997_20260609_170955\\image_0375\\artifacts\\2-layout\\icon-crops\\icon-1.png",
+      "status": "success",
+      "topCandidates": [
+        {
+          "rank": 1,
+          "src_svg": "lu/LuImageMinus.svg",
+          "component_id": "lu:LuImageMinus",
+          "aliases": [
+            "lu",
+            "image",
+            "minus"
+          ],
+          "score_img": 0.6484,
+          "score_txt": 0.733,
+          "score_final": 0.6653,
+          "name": "lu:LuImageMinus"
+        },
+        {
+          "rank": 2,
+          "src_svg": "lu/LuBookImage.svg",
+          "component_id": "lu:LuBookImage",
+          "aliases": [
+            "lu",
+            "book",
+            "image"
+          ],
+          "score_img": 0.6366,
+          "score_txt": 0.6834,
+          "score_final": 0.646,
+          "name": "lu:LuBookImage"
+        },
+        {
+          "rank": 3,
+          "src_svg": "lu/LuImages.svg",
+          "component_id": "lu:LuImages",
+          "aliases": [
+            "lu",
+            "images"
+          ],
+          "score_img": 0.6358,
+          "score_txt": 0.6834,
+          "score_final": 0.6453,
+          "name": "lu:LuImages"
+        },
+        {
+          "rank": 4,
+          "src_svg": "sf/photo.badge.magnifyingglass.fill.svg",
+          "component_id": "sf:SfPhotoBadgeMagnifyingglassFill",
+          "aliases": [
+            "photo",
+            "badge",
+            "magnifyingglass",
+            "fill"
+          ],
+          "score_img": 0.6327,
+          "score_txt": 0.6809,
+          "score_final": 0.6424,
+          "name": "sf:SfPhotoBadgeMagnifyingglassFill"
+        },
+        {
+          "rank": 5,
+          "src_svg": "sf/fork.knife.svg",
+          "component_id": "sf:SfForkKnife",
+          "aliases": [
+            "fork",
+            "knife"
+          ],
+          "score_img": 0.617,
+          "score_txt": 0.7175,
+          "score_final": 0.6371,
+          "name": "sf:SfForkKnife"
+        },
+        {
+          "rank": 6,
+          "src_svg": "sf/building.2.crop.circle.fill.svg",
+          "component_id": "sf:SfBuilding2CropCircleFill",
+          "aliases": [
+            "building",
+            "2",
+            "crop",
+            "circle",
+            "fill"
+          ],
+          "score_img": 0.6176,
+          "score_txt": 0.7107,
+          "score_final": 0.6363,
+          "name": "sf:SfBuilding2CropCircleFill"
+        },
+        {
+          "rank": 7,
+          "src_svg": "lu/LuUsers.svg",
+          "component_id": "lu:LuUsers",
+          "aliases": [
+            "lu",
+            "users"
+          ],
+          "score_img": 0.6081,
+          "score_txt": 0.7405,
+          "score_final": 0.6345,
+          "name": "lu:LuUsers"
+        },
+        {
+          "rank": 8,
+          "src_svg": "lu/LuMapPinned.svg",
+          "component_id": "lu:LuMapPinned",
+          "aliases": [
+            "lu",
+            "map",
+            "pinned"
+          ],
+          "score_img": 0.6086,
+          "score_txt": 0.7365,
+          "score_final": 0.6342,
+          "name": "lu:LuMapPinned"
+        },
+        {
+          "rank": 9,
+          "src_svg": "lu/LuWallpaper.svg",
+          "component_id": "lu:LuWallpaper",
+          "aliases": [
+            "lu",
+            "wallpaper"
+          ],
+          "score_img": 0.6185,
+          "score_txt": 0.6932,
+          "score_final": 0.6334,
+          "name": "lu:LuWallpaper"
+        },
+        {
+          "rank": 10,
+          "src_svg": "sf/photo.fill.on.rectangle.fill.svg",
+          "component_id": "sf:SfPhotoFillOnRectangle",
+          "aliases": [
+            "photo",
+            "fill",
+            "on",
+            "rectangle"
+          ],
+          "score_img": 0.6366,
+          "score_txt": 0.6153,
+          "score_final": 0.6324,
+          "name": "sf:SfPhotoFillOnRectangle"
+        }
+      ],
+      "imageOnlyTop10": [
+        {
+          "rank": 1,
+          "src_svg": "lu/LuImageMinus.svg",
+          "component_id": "lu:LuImageMinus",
+          "aliases": [
+            "lu",
+            "image",
+            "minus"
+          ],
+          "score_img": 0.6484,
+          "name": "lu:LuImageMinus"
+        },
+        {
+          "rank": 2,
+          "src_svg": "lu/LuImage.svg",
+          "component_id": "lu:LuImage",
+          "aliases": [
+            "lu",
+            "image"
+          ],
+          "score_img": 0.6367,
+          "name": "lu:LuImage"
+        },
+        {
+          "rank": 3,
+          "src_svg": "sf/photo.fill.on.rectangle.fill.svg",
+          "component_id": "sf:SfPhotoFillOnRectangle",
+          "aliases": [
+            "photo",
+            "fill",
+            "on",
+            "rectangle"
+          ],
+          "score_img": 0.6366,
+          "name": "sf:SfPhotoFillOnRectangle"
+        },
+        {
+          "rank": 4,
+          "src_svg": "lu/LuBookImage.svg",
+          "component_id": "lu:LuBookImage",
+          "aliases": [
+            "lu",
+            "book",
+            "image"
+          ],
+          "score_img": 0.6366,
+          "name": "lu:LuBookImage"
+        },
+        {
+          "rank": 5,
+          "src_svg": "sf/camera.on.rectangle.fill.svg",
+          "component_id": "sf:SfCameraOnRectangleFill",
+          "aliases": [
+            "camera",
+            "on",
+            "rectangle",
+            "fill"
+          ],
+          "score_img": 0.636,
+          "name": "sf:SfCameraOnRectangleFill"
+        },
+        {
+          "rank": 6,
+          "src_svg": "lu/LuImages.svg",
+          "component_id": "lu:LuImages",
+          "aliases": [
+            "lu",
+            "images"
+          ],
+          "score_img": 0.6358,
+          "name": "lu:LuImages"
+        },
+        {
+          "rank": 7,
+          "src_svg": "sf/photo.fill.svg",
+          "component_id": "sf:SfPhotoFill",
+          "aliases": [
+            "photo",
+            "fill"
+          ],
+          "score_img": 0.6348,
+          "name": "sf:SfPhotoFill"
+        },
+        {
+          "rank": 8,
+          "src_svg": "sf/photo.on.rectangle.angled.fill.svg",
+          "component_id": "sf:SfPhotoOnRectangleAngledFill",
+          "aliases": [
+            "photo",
+            "on",
+            "rectangle",
+            "angled",
+            "fill"
+          ],
+          "score_img": 0.6336,
+          "name": "sf:SfPhotoOnRectangleAngledFill"
+        },
+        {
+          "rank": 9,
+          "src_svg": "sf/photo.circle.fill.svg",
+          "component_id": "sf:SfPhotoCircleFill",
+          "aliases": [
+            "photo",
+            "circle",
+            "fill"
+          ],
+          "score_img": 0.6335,
+          "name": "sf:SfPhotoCircleFill"
+        },
+        {
+          "rank": 10,
+          "src_svg": "sf/person.crop.square.badge.camera.svg",
+          "component_id": "sf:SfPersonCropSquareBadgeCamera",
+          "aliases": [
+            "person",
+            "crop",
+            "square",
+            "badge",
+            "camera"
+          ],
+          "score_img": 0.6334,
+          "name": "sf:SfPersonCropSquareBadgeCamera"
+        }
+      ]
+    },
+    {
+      "imageId": "image_0375",
+      "iconIndex": 1,
+      "bbox": [
+        71,
+        1297,
+        120,
+        1344
+      ],
+      "description": "type:list,color:#FF6B6B",
+      "caption": "three sliders icon",
+      "captionRaw": "three sliders icon",
+      "cropPath": "D:\\Code\\frontEnd-direction\\benchmarks\\widget2code\\experiments\\widget2code\\icon_retrieval_cache_gpu_full997_20260609_170955\\image_0375\\artifacts\\2-layout\\icon-crops\\icon-2.png",
+      "status": "success",
+      "topCandidates": [
+        {
+          "rank": 1,
+          "src_svg": "lu/LuImageMinus.svg",
+          "component_id": "lu:LuImageMinus",
+          "aliases": [
+            "lu",
+            "image",
+            "minus"
+          ],
+          "score_img": 0.6377,
+          "score_txt": 0.6261,
+          "score_final": 0.6354,
+          "name": "lu:LuImageMinus"
+        },
+        {
+          "rank": 2,
+          "src_svg": "lu/LuBookImage.svg",
+          "component_id": "lu:LuBookImage",
+          "aliases": [
+            "lu",
+            "book",
+            "image"
+          ],
+          "score_img": 0.6272,
+          "score_txt": 0.5977,
+          "score_final": 0.6213,
+          "name": "lu:LuBookImage"
+        },
+        {
+          "rank": 3,
+          "src_svg": "sf/photo.badge.magnifyingglass.fill.svg",
+          "component_id": "sf:SfPhotoBadgeMagnifyingglassFill",
+          "aliases": [
+            "photo",
+            "badge",
+            "magnifyingglass",
+            "fill"
+          ],
+          "score_img": 0.6232,
+          "score_txt": 0.609,
+          "score_final": 0.6204,
+          "name": "sf:SfPhotoBadgeMagnifyingglassFill"
+        },
+        {
+          "rank": 4,
+          "src_svg": "lu/LuImages.svg",
+          "component_id": "lu:LuImages",
+          "aliases": [
+            "lu",
+            "images"
+          ],
+          "score_img": 0.6235,
+          "score_txt": 0.5977,
+          "score_final": 0.6184,
+          "name": "lu:LuImages"
+        },
+        {
+          "rank": 5,
+          "src_svg": "sf/photo.fill.on.rectangle.fill.svg",
+          "component_id": "sf:SfPhotoFillOnRectangle",
+          "aliases": [
+            "photo",
+            "fill",
+            "on",
+            "rectangle"
+          ],
+          "score_img": 0.6301,
+          "score_txt": 0.5476,
+          "score_final": 0.6136,
+          "name": "sf:SfPhotoFillOnRectangle"
+        },
+        {
+          "rank": 6,
+          "src_svg": "sf/photo.badge.magnifyingglass.svg",
+          "component_id": "sf:SfPhotoBadgeMagnifyingglass",
+          "aliases": [
+            "photo",
+            "badge",
+            "magnifyingglass"
+          ],
+          "score_img": 0.6211,
+          "score_txt": 0.5676,
+          "score_final": 0.6104,
+          "name": "sf:SfPhotoBadgeMagnifyingglass"
+        },
+        {
+          "rank": 7,
+          "src_svg": "sf/photo.on.rectangle.svg",
+          "component_id": "sf:SfPhotoOnRectangle",
+          "aliases": [
+            "photo",
+            "on",
+            "rectangle"
+          ],
+          "score_img": 0.6232,
+          "score_txt": 0.5588,
+          "score_final": 0.6103,
+          "name": "sf:SfPhotoOnRectangle"
+        },
+        {
+          "rank": 8,
+          "src_svg": "sf/photo.circle.fill.svg",
+          "component_id": "sf:SfPhotoCircleFill",
+          "aliases": [
+            "photo",
+            "circle",
+            "fill"
+          ],
+          "score_img": 0.6266,
+          "score_txt": 0.5425,
+          "score_final": 0.6098,
+          "name": "sf:SfPhotoCircleFill"
+        },
+        {
+          "rank": 9,
+          "src_svg": "sf/photo.on.rectangle.angled.fill.svg",
+          "component_id": "sf:SfPhotoOnRectangleAngledFill",
+          "aliases": [
+            "photo",
+            "on",
+            "rectangle",
+            "angled",
+            "fill"
+          ],
+          "score_img": 0.6275,
+          "score_txt": 0.5388,
+          "score_final": 0.6098,
+          "name": "sf:SfPhotoOnRectangleAngledFill"
+        },
+        {
+          "rank": 10,
+          "src_svg": "sf/photo.fill.svg",
+          "component_id": "sf:SfPhotoFill",
+          "aliases": [
+            "photo",
+            "fill"
+          ],
+          "score_img": 0.6293,
+          "score_txt": 0.5289,
+          "score_final": 0.6092,
+          "name": "sf:SfPhotoFill"
+        }
+      ],
+      "imageOnlyTop10": [
+        {
+          "rank": 1,
+          "src_svg": "lu/LuImageMinus.svg",
+          "component_id": "lu:LuImageMinus",
+          "aliases": [
+            "lu",
+            "image",
+            "minus"
+          ],
+          "score_img": 0.6377,
+          "name": "lu:LuImageMinus"
+        },
+        {
+          "rank": 2,
+          "src_svg": "sf/camera.on.rectangle.fill.svg",
+          "component_id": "sf:SfCameraOnRectangleFill",
+          "aliases": [
+            "camera",
+            "on",
+            "rectangle",
+            "fill"
+          ],
+          "score_img": 0.6314,
+          "name": "sf:SfCameraOnRectangleFill"
+        },
+        {
+          "rank": 3,
+          "src_svg": "sf/photo.fill.on.rectangle.fill.svg",
+          "component_id": "sf:SfPhotoFillOnRectangle",
+          "aliases": [
+            "photo",
+            "fill",
+            "on",
+            "rectangle"
+          ],
+          "score_img": 0.6301,
+          "name": "sf:SfPhotoFillOnRectangle"
+        },
+        {
+          "rank": 4,
+          "src_svg": "sf/photo.fill.svg",
+          "component_id": "sf:SfPhotoFill",
+          "aliases": [
+            "photo",
+            "fill"
+          ],
+          "score_img": 0.6293,
+          "name": "sf:SfPhotoFill"
+        },
+        {
+          "rank": 5,
+          "src_svg": "lu/LuImage.svg",
+          "component_id": "lu:LuImage",
+          "aliases": [
+            "lu",
+            "image"
+          ],
+          "score_img": 0.629,
+          "name": "lu:LuImage"
+        },
+        {
+          "rank": 6,
+          "src_svg": "sf/person.crop.square.badge.camera.svg",
+          "component_id": "sf:SfPersonCropSquareBadgeCamera",
+          "aliases": [
+            "person",
+            "crop",
+            "square",
+            "badge",
+            "camera"
+          ],
+          "score_img": 0.6283,
+          "name": "sf:SfPersonCropSquareBadgeCamera"
+        },
+        {
+          "rank": 7,
+          "src_svg": "sf/photo.on.rectangle.angled.fill.svg",
+          "component_id": "sf:SfPhotoOnRectangleAngledFill",
+          "aliases": [
+            "photo",
+            "on",
+            "rectangle",
+            "angled",
+            "fill"
+          ],
+          "score_img": 0.6275,
+          "name": "sf:SfPhotoOnRectangleAngledFill"
+        },
+        {
+          "rank": 8,
+          "src_svg": "lu/LuBookImage.svg",
+          "component_id": "lu:LuBookImage",
+          "aliases": [
+            "lu",
+            "book",
+            "image"
+          ],
+          "score_img": 0.6272,
+          "name": "lu:LuBookImage"
+        },
+        {
+          "rank": 9,
+          "src_svg": "sf/photo.svg",
+          "component_id": "sf:SfPhoto",
+          "aliases": [
+            "photo"
+          ],
+          "score_img": 0.627,
+          "name": "sf:SfPhoto"
+        },
+        {
+          "rank": 10,
+          "src_svg": "sf/photo.circle.fill.svg",
+          "component_id": "sf:SfPhotoCircleFill",
+          "aliases": [
+            "photo",
+            "circle",
+            "fill"
+          ],
+          "score_img": 0.6266,
+          "name": "sf:SfPhotoCircleFill"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,998 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="icon" href="data:," />
+  <title>Widget2Code 实验分析报告</title>
+  <style>
+    :root {
+      --bg: #f7f8f5;
+      --ink: #1f2522;
+      --muted: #626b66;
+      --line: #d9ded8;
+      --panel: #ffffff;
+      --accent: #1f6f78;
+      --accent-2: #b35c23;
+      --bad: #b6423c;
+      --warn: #a26b0b;
+      --good: #2d6d4b;
+      --soft: #eef3ef;
+      --shadow: 0 16px 40px rgba(31, 37, 34, 0.08);
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--ink);
+      font: 15px/1.55 -apple-system, BlinkMacSystemFont, "Segoe UI", "Microsoft YaHei", sans-serif;
+    }
+    a { color: var(--accent); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    code, .mono { font-family: "SFMono-Regular", Consolas, "Liberation Mono", monospace; }
+    .topbar {
+      position: sticky;
+      top: 0;
+      z-index: 20;
+      border-bottom: 1px solid var(--line);
+      background: rgba(247, 248, 245, 0.92);
+      backdrop-filter: blur(12px);
+    }
+    .topbar-inner {
+      max-width: 1480px;
+      margin: 0 auto;
+      padding: 12px 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+    }
+    .brand { display: flex; align-items: center; gap: 10px; font-weight: 800; }
+    .brand-mark { width: 12px; height: 28px; border-radius: 2px; background: linear-gradient(180deg, var(--accent), var(--accent-2)); }
+    .nav { display: flex; flex-wrap: wrap; gap: 4px; justify-content: flex-end; }
+    .nav a { padding: 7px 10px; border-radius: 6px; color: var(--muted); font-size: 13px; }
+    .nav a:hover { background: var(--soft); color: var(--ink); text-decoration: none; }
+    main { max-width: 1480px; margin: 0 auto; padding: 34px 24px 64px; }
+    .report-layout { display: grid; grid-template-columns: 228px minmax(0, 1fr); gap: 28px; align-items: start; }
+    .report-content { min-width: 0; }
+    .side-nav {
+      position: sticky;
+      top: 78px;
+      max-height: calc(100vh - 96px);
+      overflow: auto;
+      padding: 14px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: rgba(255, 255, 255, 0.86);
+      box-shadow: var(--shadow);
+    }
+    .side-nav-title { margin: 0 0 10px; color: var(--muted); font-size: 12px; font-weight: 800; }
+    .side-nav a {
+      display: grid;
+      grid-template-columns: 22px minmax(0, 1fr);
+      align-items: center;
+      gap: 8px;
+      min-height: 34px;
+      padding: 6px 8px;
+      border-radius: 6px;
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.25;
+    }
+    .side-nav a:hover, .side-nav a.active { background: var(--soft); color: var(--ink); text-decoration: none; }
+    .side-nav a.active { font-weight: 800; }
+    .side-nav-index {
+      display: inline-grid;
+      place-items: center;
+      width: 20px;
+      height: 20px;
+      border-radius: 999px;
+      background: #edf2ee;
+      color: var(--accent);
+      font-size: 11px;
+      font-weight: 800;
+      font-variant-numeric: tabular-nums;
+    }
+    .side-nav a.active .side-nav-index { background: var(--accent); color: #fff; }
+    .hero {
+      display: grid;
+      grid-template-columns: minmax(0, 1.25fr) minmax(300px, 0.75fr);
+      gap: 34px;
+      align-items: end;
+      padding: 18px 0 30px;
+      border-bottom: 1px solid var(--line);
+    }
+    h1 { margin: 0 0 14px; font-size: clamp(34px, 5vw, 64px); line-height: 1.02; letter-spacing: 0; }
+    h2 { margin: 0; font-size: 28px; line-height: 1.18; }
+    h3 { margin: 0; font-size: 18px; }
+    .lead { max-width: 860px; margin: 0; color: var(--muted); font-size: 18px; }
+    .stamp {
+      justify-self: end;
+      width: min(100%, 400px);
+      padding: 18px;
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      box-shadow: var(--shadow);
+    }
+    .stamp-row { display: flex; justify-content: space-between; gap: 12px; padding: 8px 0; border-bottom: 1px solid var(--line); font-size: 13px; }
+    .stamp-row:last-child { border-bottom: 0; }
+    .stamp-row span:first-child { color: var(--muted); }
+    section { padding: 34px 0 0; scroll-margin-top: 80px; }
+    .section-head { display: flex; align-items: end; justify-content: space-between; gap: 18px; margin-bottom: 16px; padding-bottom: 10px; border-bottom: 1px solid var(--line); }
+    .note { margin: 6px 0 0; color: var(--muted); font-size: 13px; }
+    .metrics { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 14px; }
+    .metric {
+      padding: 16px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: var(--panel);
+      box-shadow: var(--shadow);
+    }
+    .metric b { display: block; font-size: 28px; line-height: 1.1; }
+    .metric span { display: block; margin-top: 6px; color: var(--muted); font-size: 13px; }
+    .grid-2 { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; }
+    .grid-3 { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; }
+    .panel {
+      padding: 18px;
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      box-shadow: var(--shadow);
+    }
+    .panel h3 { margin-bottom: 8px; }
+    .panel p { margin: 0; color: var(--muted); }
+    .table-wrap { overflow-x: auto; border: 1px solid var(--line); border-radius: 8px; background: var(--panel); box-shadow: var(--shadow); }
+    table { width: 100%; border-collapse: collapse; min-width: 820px; }
+    th, td { padding: 10px 12px; border-bottom: 1px solid var(--line); text-align: left; vertical-align: top; }
+    th { background: #f0f3ef; font-size: 12px; color: var(--muted); font-weight: 800; }
+    td span { color: var(--muted); font-size: 12px; }
+    tr:last-child td { border-bottom: 0; }
+    .num { text-align: right; font-variant-numeric: tabular-nums; white-space: nowrap; }
+    .paper-figure { margin: 0; padding: 14px; border: 1px solid var(--line); border-radius: 8px; background: var(--panel); box-shadow: var(--shadow); }
+    .paper-figure img { width: 100%; display: block; border-radius: 4px; background: #fff; }
+    .paper-figure figcaption, .caption { margin-top: 8px; color: var(--muted); font-size: 12px; }
+    .paper-table {
+      border: 1px solid #161a18;
+      background: #fff;
+      box-shadow: var(--shadow);
+      overflow-x: auto;
+    }
+    .paper-table-title { padding: 12px 14px; border-bottom: 2px solid #161a18; display: flex; justify-content: space-between; gap: 12px; }
+    .paper-like th { color: #111; background: #fff; border-bottom: 2px solid #111; text-align: center; }
+    .paper-like td { color: #111; background: #fff; text-align: center; }
+    .paper-like td:first-child, .paper-like th:first-child { text-align: left; font-weight: 800; }
+    .paper-note { margin: 10px 14px 14px; color: var(--muted); font-size: 12px; }
+    .mini-bar { display: block; width: 120px; height: 8px; border-radius: 999px; background: #e6e9e3; overflow: hidden; }
+    .mini-bar i { display: block; height: 100%; border-radius: inherit; background: var(--accent); }
+    .mini-bar.bad i { background: var(--bad); }
+    .mini-bar.warn i { background: var(--warn); }
+    .mini-bar.good i { background: var(--good); }
+    .pipeline { display: grid; gap: 10px; }
+    .step { display: grid; grid-template-columns: 120px minmax(0, 1fr); gap: 14px; padding: 14px; border-left: 4px solid var(--accent); background: var(--panel); border-radius: 6px; border-top: 1px solid var(--line); border-right: 1px solid var(--line); border-bottom: 1px solid var(--line); }
+    .step b { font-size: 13px; }
+    .step p { margin: 0; color: var(--muted); }
+    .funnel {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 10px;
+      margin-bottom: 16px;
+    }
+    .funnel-step {
+      position: relative;
+      min-height: 108px;
+      padding: 14px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: var(--panel);
+      box-shadow: var(--shadow);
+      overflow: hidden;
+    }
+    .funnel-step::after {
+      content: "";
+      position: absolute;
+      inset: auto 0 0;
+      height: 4px;
+      background: var(--accent);
+      opacity: 0.9;
+    }
+    .funnel-step.warn::after { background: var(--warn); }
+    .funnel-step.bad::after { background: var(--bad); }
+    .funnel-step b { display: block; font-size: 26px; line-height: 1.05; }
+    .funnel-step span { display: block; margin-top: 7px; color: var(--muted); font-size: 13px; }
+    .problem-method {
+      display: grid;
+      grid-template-columns: 0.9fr 1.1fr;
+      gap: 14px;
+      margin-bottom: 16px;
+    }
+    .problem-method .panel { box-shadow: none; }
+    .problem-method ul { margin: 8px 0 0; padding-left: 18px; color: var(--muted); }
+    .problem-method li { margin: 4px 0; }
+    .problem-table td:first-child { min-width: 230px; }
+    .problem-table td:nth-child(5) { min-width: 300px; }
+    .problem-table a {
+      display: inline-block;
+      margin: 0 5px 5px 0;
+      padding: 3px 7px;
+      border-radius: 999px;
+      background: var(--soft);
+      font-size: 12px;
+      font-weight: 800;
+    }
+    .matrix-table td:first-child { min-width: 190px; }
+    .tree { display: grid; gap: 12px; }
+    .tree-node { border: 1px solid var(--line); border-radius: 8px; background: var(--panel); box-shadow: var(--shadow); overflow: hidden; }
+    .tree-node header { display: flex; justify-content: space-between; gap: 12px; padding: 14px 16px; border-bottom: 1px solid var(--line); }
+    .tree-node header strong { font-size: 17px; }
+    .tree-node header span { color: var(--muted); font-size: 13px; }
+    .tree-node p { margin: 0; padding: 14px 16px; color: var(--muted); }
+    .tree-children { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 10px; padding: 0 16px 16px; }
+    .tree-leaf { min-height: 104px; padding: 12px; border-radius: 6px; background: var(--soft); }
+    .tree-leaf b { display: block; margin-bottom: 4px; }
+    .tree-leaf span { color: var(--muted); font-size: 12px; }
+    .case-block { display: grid; grid-template-columns: minmax(300px, 0.42fr) minmax(0, 0.58fr); gap: 18px; padding: 18px 0; border-bottom: 1px solid var(--line); }
+    .case-block:last-child { border-bottom: 0; }
+    .case-copy p { margin: 8px 0; color: var(--muted); }
+    .case-kicker { display: flex; flex-wrap: wrap; gap: 6px; margin: 0 0 8px !important; }
+    .case-kicker span { padding: 3px 7px; border-radius: 999px; background: var(--soft); color: var(--accent); font-size: 12px; font-weight: 800; }
+    .case-images { display: grid; gap: 10px; }
+    .case-images.tri { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+    .case-images.duo { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .compare-shot { margin: 0; min-width: 0; }
+    .compare-shot img { display: block; width: 100%; max-height: 340px; object-fit: contain; background: #f2f3f0; border: 1px solid var(--line); border-radius: 6px; cursor: zoom-in; }
+    .compare-shot figcaption { margin-top: 6px; color: var(--muted); font-size: 12px; }
+    .compact-score { min-width: 0; margin-top: 10px; border: 1px solid var(--line); border-radius: 6px; overflow: hidden; }
+    .compact-score td { padding: 6px 8px; }
+    .pathline { font-size: 12px; }
+    .insight-list { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px; }
+    .method-thesis {
+      margin-bottom: 14px;
+      padding: 18px;
+      border: 1px solid var(--line);
+      border-left: 4px solid var(--accent);
+      border-radius: 8px;
+      background: var(--panel);
+      box-shadow: var(--shadow);
+    }
+    .method-thesis strong { display: block; margin-bottom: 6px; font-size: 17px; }
+    .method-thesis p { margin: 0; color: var(--muted); }
+    .insight { padding: 16px; border: 1px solid var(--line); border-radius: 8px; background: var(--panel); box-shadow: var(--shadow); }
+    .insight strong { display: block; margin-bottom: 6px; font-size: 16px; }
+    .insight p { margin: 0; color: var(--muted); }
+    .foot { margin: 36px 0 0; color: var(--muted); font-size: 12px; }
+    .lightbox {
+      position: fixed;
+      inset: 0;
+      z-index: 100;
+      display: none;
+      padding: 20px;
+      background: rgba(12, 16, 14, 0.88);
+    }
+    .lightbox.open { display: block; }
+    .lightbox-shell { width: 100%; height: 100%; display: grid; grid-template-rows: auto minmax(0, 1fr); gap: 10px; }
+    .lightbox-toolbar { display: flex; align-items: center; justify-content: space-between; gap: 12px; color: #fff; }
+    .lightbox-caption { font-weight: 800; }
+    .lightbox-actions { display: flex; align-items: center; gap: 8px; }
+    .lightbox-actions button { border: 1px solid rgba(255,255,255,0.3); background: rgba(255,255,255,0.12); color: #fff; border-radius: 6px; padding: 7px 10px; cursor: pointer; }
+    .zoom-readout { min-width: 48px; text-align: center; }
+    .lightbox-canvas { min-height: 0; overflow: hidden; display: grid; place-items: center; cursor: grab; }
+    .lightbox-canvas.dragging { cursor: grabbing; }
+    .lightbox-canvas img { max-width: 92vw; max-height: 82vh; transform-origin: center center; transition: transform 80ms ease; }
+    @media (max-width: 1020px) {
+      .report-layout { grid-template-columns: 1fr; }
+      .side-nav { position: static; max-height: none; }
+      .hero, .case-block { grid-template-columns: 1fr; }
+      .stamp { justify-self: start; }
+      .metrics, .grid-3, .tree-children, .insight-list, .funnel, .problem-method { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    }
+    @media (max-width: 720px) {
+      main { padding: 22px 14px 48px; }
+      .topbar-inner { padding: 10px 14px; }
+      .nav { display: none; }
+      .metrics, .grid-2, .grid-3, .tree-children, .insight-list, .case-images.tri, .case-images.duo, .funnel, .problem-method { grid-template-columns: 1fr; }
+      table { min-width: 720px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="topbar">
+    <div class="topbar-inner">
+      <div class="brand"><span class="brand-mark"></span><span>Widget2Code 分析报告</span></div>
+      <nav class="nav" aria-label="顶部导航">
+        <a href="../../../index.html">首页</a>
+        <a href="../interaction2code/interaction2code_analysis_report.html">Interaction2Code</a>
+        <a href="../webgen_bench/webgen_bench_analysis_report.html">WebGen-Bench</a>
+      </nav>
+    </div>
+  </div>
+  <main>
+    <div class="report-layout">
+      <aside class="side-nav" aria-label="页面目录">
+        <p class="side-nav-title">目录</p>
+        <a class="active" href="#overview"><span class="side-nav-index">1</span><span>概览</span></a>
+        <a href="#task"><span class="side-nav-index">2</span><span>任务与链路</span></a>
+        <a href="#metrics"><span class="side-nav-index">3</span><span>评测口径</span></a>
+        <a href="#paper"><span class="side-nav-index">4</span><span>论文主表</span></a>
+        <a href="#results"><span class="side-nav-index">5</span><span>我们的结果</span></a>
+        <a href="#submetrics"><span class="side-nav-index">6</span><span>12 个小指标</span></a>
+        <a href="#problem-distribution"><span class="side-nav-index">7</span><span>问题分布</span></a>
+        <a href="#cases"><span class="side-nav-index">8</span><span>代表 case</span></a>
+        <a href="#directions"><span class="side-nav-index">9</span><span>方法 insight</span></a>
+      </aside>
+
+      <div class="report-content">
+        <section class="hero" id="overview">
+          <div>
+            <h1>Widget2Code：截图到结构化 Widget 的失败分析</h1>
+            <p class="lead">这个页面把 Widget2Code 的官方评测口径、Qwen3.5-9B stage-wise pipeline 跑分、12 个小指标分布和代表性失败 case 放在一起，用于后续找方法动机。</p>
+          </div>
+          <div class="stamp">
+            <div class="stamp-row"><span>Benchmark</span><strong>Widget2Code</strong></div>
+            <div class="stamp-row"><span>模型</span><strong>Qwen3.5-9B</strong></div>
+            <div class="stamp-row"><span>样本覆盖</span><strong>975 / 1000 evaluated</strong></div>
+            <div class="stamp-row"><span>评测</span><strong>官方 evaluator，两图比较</strong></div>
+            <div class="stamp-row"><span>数据目录</span><strong class="mono">bench_case_result_hub/widget2code</strong></div>
+          </div>
+        </section>
+
+        <section id="task">
+          <div class="section-head">
+            <div>
+              <h2>任务与输入输出</h2>
+              <p class="note">Widget2Code 的任务不是生成普通网页，而是把一张 widget 截图转成结构化 DSL，再编译渲染成 widget 图像。</p>
+            </div>
+          </div>
+          <div class="metrics">
+            <div class="metric"><b>1000</b><span>官方 test images</span></div>
+            <div class="metric"><b>997</b><span>生成了 widget.json</span></div>
+            <div class="metric"><b>987</b><span>产出 output.png</span></div>
+            <div class="metric"><b>975</b><span>成功写出 evaluation.json</span></div>
+          </div>
+          <div class="grid-3" style="margin-top:16px;">
+            <div class="panel"><h3>模型输入</h3><p>主要输入是一张 widget 截图；pipeline 会先做 layout detection、icon caption/retrieval、图表/颜色识别，再拼出最终 DSL prompt。</p></div>
+            <div class="panel"><h3>模型输出</h3><p>核心输出是结构化 <code>widget.json</code>，随后自动编译成 <code>widget.jsx</code> 并通过浏览器渲染出 <code>output.png</code>。</p></div>
+            <div class="panel"><h3>官方评分输入</h3><p>评分阶段只比较两张图：参考图 <code>gt/image_xxxx.png</code> 和生成图 <code>image_xxxx/output.png</code>。中间件不进入分数。</p></div>
+          </div>
+        </section>
+
+        <section id="metrics">
+          <div class="section-head">
+            <div>
+              <h2>官方评测口径</h2>
+              <p class="note">官方 evaluator 在 <code>tools/evaluation/eval.py</code> 中读取 GT 图和 output 图，resize 后计算五组指标。</p>
+            </div>
+          </div>
+          <div class="pipeline">
+            <div class="step"><b>1. 找图</b><p>从 <code>gt_dir</code> 读参考图，从 <code>pred_dir/image_xxxx/output.png</code> 读生成图。</p></div>
+            <div class="step"><b>2. 对齐尺寸</b><p>把生成图 resize 到参考图尺寸，用于 layout、legibility、style 和 perceptual 指标。</p></div>
+            <div class="step"><b>3. 计算指标</b><p>Geometry、Perceptual、Layout、Legibility、Style 五组指标全部由两张图计算。</p></div>
+            <div class="step"><b>4. 写结果</b><p>每个 case 写出 <code>evaluation.json</code>；我们的 case hub 额外保存 DSL、JSX、debug 和中间产物，供失败归因。</p></div>
+          </div>
+        </section>
+
+        <section id="paper">
+          <div class="section-head">
+            <div>
+              <h2>论文/README 主表</h2>
+              <p class="note">下面是 Widget2Code 官方主表截图。我们下一节只对齐同一列结构，不把自己的结果混进原图。</p>
+            </div>
+          </div>
+          <figure class="paper-figure compare-shot">
+            <img src="assets/paper_main_table.png" alt="Widget2Code official benchmark table" />
+            <figcaption>官方主表截图：Layout、Legibility、Style、Perceptual、Geometry 五组指标。</figcaption>
+          </figure>
+        </section>
+
+        <section id="results">
+          <div class="section-head">
+            <div>
+              <h2>我们的主表对齐结果</h2>
+              <p class="note">本行是 OpenRouter <code>qwen/qwen3.5-9b</code>，stage-wise cached Widget2Code pipeline。已补 SigLIP image-to-image 作为 CLIP 类视觉相似度，987/1000 个样本有该分数，975/1000 成功写出官方 evaluation。</p>
+            </div>
+          </div>
+          <div class="paper-table">
+            <div class="paper-table-title">
+              <strong>Widget2Code main table aligned row</strong>
+              <span>Qwen3.5-9B · 975 evaluated / 1000 official test images</span>
+            </div>
+            <table class="paper-like">
+              <thead>
+                <tr>
+                  <th>Methods</th>
+                  <th>Margin</th><th>Content</th><th>Area</th>
+                  <th>Text</th><th>Contrast</th><th>LocCon</th>
+                  <th>Palette</th><th>Vibrancy</th><th>Polarity</th>
+                  <th>SSIM</th><th>LPIPS↓</th><th>CLIP</th><th>Geometry</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>Qwen3.5-9B (ours run)</td>
+                  <td>67.90</td>
+                  <td>65.19</td>
+                  <td>74.84</td>
+                  <td>59.74</td>
+                  <td>61.46</td>
+                  <td>59.81</td>
+                  <td>43.25</td>
+                  <td>38.72</td>
+                  <td>59.49</td>
+                  <td>0.677</td>
+                  <td>0.376</td>
+                  <td>0.860</td>
+                  <td>100.00</td>
+                </tr>
+              </tbody>
+            </table>
+            <p class="paper-note">覆盖差异：3 个样本未进入 DSL，10 个样本未渲染，12 个样本有 output 但 evaluator 在本机 GPU/CPU fallback 仍未产出 evaluation.json。CLIP 列使用本地补算的 SigLIP image-to-image 相似度，不一定与论文主表使用的 CLIP backbone 完全同源。</p>
+          </div>
+        </section>
+
+        <section id="submetrics">
+          <div class="section-head">
+            <div>
+              <h2>12 个小指标分布</h2>
+              <p class="note">不再只看 layout_avg/style_avg，而是直接看小指标。低分数量越多，越适合作为 failure case 切入口。</p>
+            </div>
+          </div>
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>指标</th><th>组别</th><th class="num">均分</th><th>相对强弱</th><th class="num">P10 阈值</th><th class="num">低于 50</th><th>说明</th>
+                </tr>
+              </thead>
+              <tbody>
+                
+            <tr>
+              <td><code>MarginAsymmetry</code><br><span>边距对称性</span></td>
+              <td>Layout</td>
+              <td class="num">67.90</td>
+              <td><span class="mini-bar good"><i style="width:67.9%"></i></span></td>
+              <td class="num">4.42</td>
+              <td class="num">309</td>
+              <td>页面左右/上下留白是否接近参考图。</td>
+            </tr>
+            
+
+            <tr>
+              <td><code>ContentAspectDiff</code><br><span>内容宽高比例</span></td>
+              <td>Layout</td>
+              <td class="num">65.19</td>
+              <td><span class="mini-bar good"><i style="width:65.2%"></i></span></td>
+              <td class="num">0.10</td>
+              <td class="num">349</td>
+              <td>主要内容区域的宽高比例是否接近参考图。</td>
+            </tr>
+            
+
+            <tr>
+              <td><code>AreaRatioDiff</code><br><span>内容面积比例</span></td>
+              <td>Layout</td>
+              <td class="num">74.84</td>
+              <td><span class="mini-bar good"><i style="width:74.8%"></i></span></td>
+              <td class="num">32.64</td>
+              <td class="num">161</td>
+              <td>主要内容占画面的面积比例是否接近参考图。</td>
+            </tr>
+            
+
+            <tr>
+              <td><code>TextJaccard</code><br><span>文本重合度</span></td>
+              <td>Legibility</td>
+              <td class="num">59.74</td>
+              <td><span class="mini-bar warn"><i style="width:59.7%"></i></span></td>
+              <td class="num">6.49</td>
+              <td class="num">310</td>
+              <td>生成图与参考图中的文字集合重合程度。</td>
+            </tr>
+            
+
+            <tr>
+              <td><code>ContrastDiff</code><br><span>整体对比度</span></td>
+              <td>Legibility</td>
+              <td class="num">61.46</td>
+              <td><span class="mini-bar warn"><i style="width:61.5%"></i></span></td>
+              <td class="num">0.00</td>
+              <td class="num">319</td>
+              <td>整体文字/背景对比度是否接近参考图。</td>
+            </tr>
+            
+
+            <tr>
+              <td><code>ContrastLocalDiff</code><br><span>局部对比度</span></td>
+              <td>Legibility</td>
+              <td class="num">59.81</td>
+              <td><span class="mini-bar warn"><i style="width:59.8%"></i></span></td>
+              <td class="num">0.00</td>
+              <td class="num">327</td>
+              <td>局部区域文字和背景的可读性是否接近参考图。</td>
+            </tr>
+            
+
+            <tr>
+              <td><code>PaletteDistance</code><br><span>调色板一致性</span></td>
+              <td>Style</td>
+              <td class="num">43.25</td>
+              <td><span class="mini-bar warn"><i style="width:43.3%"></i></span></td>
+              <td class="num">0.20</td>
+              <td class="num">529</td>
+              <td>主色、辅色和整体配色是否接近参考图；这里按 evaluator 的 0-100 分数使用。</td>
+            </tr>
+            
+
+            <tr>
+              <td><code>Vibrancy</code><br><span>色彩鲜明度</span></td>
+              <td>Style</td>
+              <td class="num">38.72</td>
+              <td><span class="mini-bar bad"><i style="width:38.7%"></i></span></td>
+              <td class="num">1.95</td>
+              <td class="num">638</td>
+              <td>颜色饱和度和视觉鲜明程度是否接近参考图。</td>
+            </tr>
+            
+
+            <tr>
+              <td><code>PolarityConsistency</code><br><span>明暗极性一致性</span></td>
+              <td>Style</td>
+              <td class="num">59.49</td>
+              <td><span class="mini-bar warn"><i style="width:59.5%"></i></span></td>
+              <td class="num">9.64</td>
+              <td class="num">374</td>
+              <td>深色/浅色主题和整体明暗关系是否一致。</td>
+            </tr>
+            
+
+            <tr>
+              <td><code>SSIM</code><br><span>结构相似度</span></td>
+              <td>Perceptual</td>
+              <td class="num">67.72</td>
+              <td><span class="mini-bar good"><i style="width:67.7%"></i></span></td>
+              <td class="num">46.18</td>
+              <td class="num">126</td>
+              <td>图像结构相似度；原始 ssim 为 0-1，这里转成 0-100。</td>
+            </tr>
+            
+
+            <tr>
+              <td><code>LPIPS_quality</code><br><span>感知距离质量</span></td>
+              <td>Perceptual</td>
+              <td class="num">62.45</td>
+              <td><span class="mini-bar warn"><i style="width:62.4%"></i></span></td>
+              <td class="num">47.34</td>
+              <td class="num">125</td>
+              <td>由 LPIPS 距离转换而来：quality=(1-lp)*100；原始 lp 越低越好。</td>
+            </tr>
+            
+              </tbody>
+            </table>
+          </div>
+        </section>
+
+        <section id="problem-distribution">
+          <div class="section-head">
+            <div>
+              <h2>问题分布 proxy</h2>
+              <p class="note">这里不是人工精标，也不是官方统计；它用现有小指标和 layout label 做多标签启发式分桶，目的是帮助我们定位值得深入看的 failure mechanism。</p>
+            </div>
+          </div>
+          <div class="funnel" aria-label="实验覆盖漏斗">
+            <div class="funnel-step"><b>1000</b><span>官方测试图。分母固定，不代表全部进入正式评分。</span></div>
+            <div class="funnel-step warn"><b>997</b><span>生成了 <code>widget.json</code>。缺失样本多半是生成前失败。</span></div>
+            <div class="funnel-step warn"><b>987</b><span>产出 <code>output.png</code>。渲染失败样本不进入两图评分。</span></div>
+            <div class="funnel-step bad"><b>975</b><span>写出官方 <code>evaluation.json</code>，作为下面 proxy 的分母。</span></div>
+          </div>
+          <div class="problem-method">
+            <div class="panel">
+              <h3>怎么读这个分布</h3>
+              <p>每个样本可以同时落入多个桶，所以各桶数量不能相加。这个视图回答的是“哪些失败机制覆盖面大、值得设计方法去修”。</p>
+            </div>
+            <div class="panel">
+              <h3>分桶依据</h3>
+              <ul>
+                <li>分数阈值主要用小指标 <code>&lt; 50</code>，整体视觉用 <code>SSIM &lt; 0.60</code> 或 <code>SigLIP &lt; 0.75</code>。</li>
+                <li>资产和组件类还会参考 layout detector 的 label，例如 <code>Icon</code>、<code>Image</code>、<code>ProgressRing</code>。</li>
+                <li>layout label 本身带噪声，所以它只用于辅助归因，不当作官方答案。</li>
+              </ul>
+            </div>
+          </div>
+          <div class="table-wrap">
+            <table class="problem-table">
+              <thead>
+                <tr>
+                  <th>问题桶与规则</th><th class="num">样本数</th><th>占比</th><th>主要受伤指标</th><th>典型现象</th><th>代表 case</th>
+                </tr>
+              </thead>
+              <tbody>
+                
+            <tr>
+              <td><strong>资产 grounding 错配</strong><br><span>layout detector 识别到 Icon / AppLogo / Image，且 SigLIP &lt; 0.80 或 Palette/Vibrancy &lt; 50。</span></td>
+              <td class="num">684<br><span>70.2%</span></td>
+              <td><span class="mini-bar good"><i style="width:70.2%"></i></span></td>
+              <td>CLIP/SigLIP、Palette、Vibrancy、SSIM</td>
+              <td>图标、Logo、图片区域被替换成语义相近但视觉不对的资产，颜色和比例也会被连带拉偏。</td>
+              <td><a href="#case-image_0729">image_0729</a> <a href="#case-image_1388">image_1388</a> <a href="#case-image_0375">image_0375</a> <a href="#case-image_1629">image_1629</a></td>
+            </tr>
+            
+
+            <tr>
+              <td><strong>布局比例失真</strong><br><span>MarginAsymmetry / ContentAspectDiff / AreaRatioDiff 任一项 &lt; 50。</span></td>
+              <td class="num">501<br><span>51.4%</span></td>
+              <td><span class="mini-bar warn"><i style="width:51.4%"></i></span></td>
+              <td>Layout、SSIM、LPIPS</td>
+              <td>整体宽高、内容面积、局部-全局比例不稳，小 widget 被放大、横向卡片被缩角、overlay 变成上下堆叠。</td>
+              <td><a href="#case-image_1386">image_1386</a> <a href="#case-image_1629">image_1629</a> <a href="#case-image_0729">image_0729</a> <a href="#case-image_1388">image_1388</a></td>
+            </tr>
+            
+
+            <tr>
+              <td><strong>文本与可读性缺失</strong><br><span>TextJaccard / ContrastDiff / ContrastLocalDiff 任一项 &lt; 50。</span></td>
+              <td class="num">619<br><span>63.5%</span></td>
+              <td><span class="mini-bar warn"><i style="width:63.5%"></i></span></td>
+              <td>Legibility、TextJaccard、Contrast</td>
+              <td>文字内容漏掉、字号过小、文本集合不重合，或前景/背景对比度和参考图差距大。</td>
+              <td><a href="#case-image_1386">image_1386</a> <a href="#case-image_0375">image_0375</a> <a href="#case-image_0212">image_0212</a> <a href="#case-image_1388">image_1388</a></td>
+            </tr>
+            
+
+            <tr>
+              <td><strong>颜色与风格偏移</strong><br><span>PaletteDistance / Vibrancy / PolarityConsistency 任一项 &lt; 50。</span></td>
+              <td class="num">833<br><span>85.4%</span></td>
+              <td><span class="mini-bar good"><i style="width:85.4%"></i></span></td>
+              <td>Style、Palette、Vibrancy、Polarity</td>
+              <td>主色、饱和度、深浅主题或局部色彩关系没对齐，尤其在图片替换和背景层级错误时很明显。</td>
+              <td><a href="#case-image_0375">image_0375</a> <a href="#case-image_1629">image_1629</a> <a href="#case-image_1388">image_1388</a> <a href="#case-image_0729">image_0729</a></td>
+            </tr>
+            
+
+            <tr>
+              <td><strong>组件语义没有落地</strong><br><span>layout detector 识别到交互/图表/进度类组件，且 Text/Layout/SSIM 任一相关项偏低。</span></td>
+              <td class="num">420<br><span>43.1%</span></td>
+              <td><span class="mini-bar warn"><i style="width:43.1%"></i></span></td>
+              <td>TextJaccard、ContentAspect、Area、SSIM</td>
+              <td>识别到组件名，但没有实现内部状态、数值、中心文本、选中态、轨道/进度等关键语义。</td>
+              <td><a href="#case-image_0212">image_0212</a> <a href="#case-image_1629">image_1629</a> <a href="#case-image_0002">image_0002</a> <a href="#case-image_0005">image_0005</a></td>
+            </tr>
+            
+
+            <tr>
+              <td><strong>整体视觉相似度低</strong><br><span>SSIM &lt; 0.60 或 SigLIP &lt; 0.75。</span></td>
+              <td class="num">304<br><span>31.2%</span></td>
+              <td><span class="mini-bar bad"><i style="width:31.2%"></i></span></td>
+              <td>SSIM、LPIPS、CLIP/SigLIP</td>
+              <td>即使部分元素被识别，最终图像整体结构或语义视觉相似度仍明显偏离。</td>
+              <td><a href="#case-image_1386">image_1386</a> <a href="#case-image_1629">image_1629</a> <a href="#case-image_1388">image_1388</a> <a href="#case-image_0375">image_0375</a></td>
+            </tr>
+            
+              </tbody>
+            </table>
+          </div>
+          <div class="table-wrap" style="margin-top:16px;">
+            <table class="matrix-table">
+              <thead>
+                <tr>
+                  <th>问题桶</th><th class="num">Layout 均分</th><th class="num">Legibility 均分</th><th class="num">Style 均分</th><th class="num">SSIM</th><th class="num">SigLIP</th>
+                </tr>
+              </thead>
+              <tbody>
+                
+            <tr>
+              <td><strong>资产 grounding 错配</strong></td>
+              <td class="num">68.36</td>
+              <td class="num">59.15</td>
+              <td class="num">40.52</td>
+              <td class="num">0.658</td>
+              <td class="num">0.835</td>
+            </tr>
+            
+
+            <tr>
+              <td><strong>布局比例失真</strong></td>
+              <td class="num">46.86</td>
+              <td class="num">56.32</td>
+              <td class="num">45.31</td>
+              <td class="num">0.657</td>
+              <td class="num">0.843</td>
+            </tr>
+            
+
+            <tr>
+              <td><strong>文本与可读性缺失</strong></td>
+              <td class="num">67.31</td>
+              <td class="num">47.03</td>
+              <td class="num">44.23</td>
+              <td class="num">0.649</td>
+              <td class="num">0.846</td>
+            </tr>
+            
+
+            <tr>
+              <td><strong>颜色与风格偏移</strong></td>
+              <td class="num">69.72</td>
+              <td class="num">58.42</td>
+              <td class="num">41.63</td>
+              <td class="num">0.666</td>
+              <td class="num">0.851</td>
+            </tr>
+            
+
+            <tr>
+              <td><strong>组件语义没有落地</strong></td>
+              <td class="num">57.10</td>
+              <td class="num">54.05</td>
+              <td class="num">43.42</td>
+              <td class="num">0.658</td>
+              <td class="num">0.848</td>
+            </tr>
+            
+
+            <tr>
+              <td><strong>整体视觉相似度低</strong></td>
+              <td class="num">63.11</td>
+              <td class="num">50.09</td>
+              <td class="num">37.33</td>
+              <td class="num">0.511</td>
+              <td class="num">0.768</td>
+            </tr>
+            
+              </tbody>
+            </table>
+          </div>
+          <p class="note">对应 CSV 已保存到 <code>submetric_analysis/problem_distribution_proxy.csv</code>。如果后续要写论文，建议从这些桶里抽样人工复核，再把 proxy 分布升级成人工标注分布。</p>
+        </section>
+
+        <section id="cases">
+          <div class="section-head">
+            <div>
+              <h2>代表性失败 case</h2>
+              <p class="note">每个 case 只展示参考输入图和最终输出图。layout 可视化是中间 VLM detector 的带噪声结果，不作为主报告的核心视觉证据；需要排查时可进入 case 目录查看。</p>
+            </div>
+          </div>
+          <div class="case-list">
+            
+      <article class="case-block" id="case-image_1386">
+        <div class="case-copy">
+          <p class="case-kicker"><span>尺度</span><span>文本</span><span>overflow</span></p>
+          <h3><a href="cases/image_1386/case.md">image_1386</a> · 尺度规划与点阵文字失败</h3>
+          <p><strong>肉眼现象：</strong>航班倒计时卡片被渲染成近乎黑屏，只剩很小文字。</p>
+          <p><strong>初步归因：</strong>layout 已识别顶部胶囊和三行大字，但 DSL 将点阵文字拆成普通 Text，并产生纵向 overflow。</p>
+          <table class="compact-score">
+            <tr><td>ContentAspectDiff</td><td class="num">0.00</td></tr><tr><td>AreaRatioDiff</td><td class="num">0.01</td></tr><tr><td>TextJaccard</td><td class="num">0.00</td></tr><tr><td>SSIM</td><td class="num">0.099</td></tr>
+          </table>
+          <p class="pathline">中间产物：<a href="cases/image_1386/intermediate/intermediate_manifest.json">manifest</a> · <a href="cases/image_1386/intermediate/7-dsl/raw_response.txt">raw response</a> · <a href="cases/image_1386/intermediate/4-icon-retrieval/icon-retrieval.json">icon retrieval</a></p>
+        </div>
+        <div class="case-images duo">
+          <figure class="compare-shot"><img src="cases/image_1386/input/input.png" alt="image_1386 输入图"><figcaption>参考输入图</figcaption></figure>
+          <figure class="compare-shot"><img src="cases/image_1386/output/output.png" alt="image_1386 输出图"><figcaption>模型最终输出图</figcaption></figure>
+        </div>
+      </article>
+    
+      <article class="case-block" id="case-image_0375">
+        <div class="case-copy">
+          <p class="case-kicker"><span>DSL</span><span>红屏</span><span>schema</span></p>
+          <h3><a href="cases/image_0375/case.md">image_0375</a> · DSL 合法性没有被约束</h3>
+          <p><strong>肉眼现象：</strong>音乐播放列表输出为红色 error overlay。</p>
+          <p><strong>初步归因：</strong>widget.json 中数组 padding 被编译成非法 JSX，说明结构化 DSL 和 renderer schema 没闭环。</p>
+          <table class="compact-score">
+            <tr><td>TextJaccard</td><td class="num">0.00</td></tr><tr><td>ContrastDiff</td><td class="num">0.00</td></tr><tr><td>Vibrancy</td><td class="num">0.00</td></tr><tr><td>SSIM</td><td class="num">0.192</td></tr>
+          </table>
+          <p class="pathline">中间产物：<a href="cases/image_0375/intermediate/intermediate_manifest.json">manifest</a> · <a href="cases/image_0375/intermediate/7-dsl/raw_response.txt">raw response</a> · <a href="cases/image_0375/intermediate/4-icon-retrieval/icon-retrieval.json">icon retrieval</a></p>
+        </div>
+        <div class="case-images duo">
+          <figure class="compare-shot"><img src="cases/image_0375/input/input.png" alt="image_0375 输入图"><figcaption>参考输入图</figcaption></figure>
+          <figure class="compare-shot"><img src="cases/image_0375/output/output.png" alt="image_0375 输出图"><figcaption>模型最终输出图</figcaption></figure>
+        </div>
+      </article>
+    
+      <article class="case-block" id="case-image_0729">
+        <div class="case-copy">
+          <p class="case-kicker"><span>图片</span><span>logo</span><span>比例</span></p>
+          <h3><a href="cases/image_0729/case.md">image_0729</a> · 图片资产替换与横向比例丢失</h3>
+          <p><strong>肉眼现象：</strong>Apple TV 横向卡片被缩到左上角，海报和 logo 都不保真。</p>
+          <p><strong>初步归因：</strong>layout 抓到了卡片、文本和 tv+，但 DSL 使用远程图片替代原图，固定尺寸和画布比例没有对齐。</p>
+          <table class="compact-score">
+            <tr><td>ContentAspectDiff</td><td class="num">0.00</td></tr><tr><td>TextJaccard</td><td class="num">0.00</td></tr><tr><td>ContrastDiff</td><td class="num">0.00</td></tr><tr><td>SSIM</td><td class="num">0.558</td></tr>
+          </table>
+          <p class="pathline">中间产物：<a href="cases/image_0729/intermediate/intermediate_manifest.json">manifest</a> · <a href="cases/image_0729/intermediate/7-dsl/raw_response.txt">raw response</a> · <a href="cases/image_0729/intermediate/4-icon-retrieval/icon-retrieval.json">icon retrieval</a></p>
+        </div>
+        <div class="case-images duo">
+          <figure class="compare-shot"><img src="cases/image_0729/input/input.png" alt="image_0729 输入图"><figcaption>参考输入图</figcaption></figure>
+          <figure class="compare-shot"><img src="cases/image_0729/output/output.png" alt="image_0729 输出图"><figcaption>模型最终输出图</figcaption></figure>
+        </div>
+      </article>
+    
+      <article class="case-block" id="case-image_0212">
+        <div class="case-copy">
+          <p class="case-kicker"><span>组件</span><span>文本</span><span>语义</span></p>
+          <h3><a href="cases/image_0212/case.md">image_0212</a> · 组件识别对了但内部语义没实现</h3>
+          <p><strong>肉眼现象：</strong>三个彩色计时器变成三个空心圆环，中心时间文字消失。</p>
+          <p><strong>初步归因：</strong>layout 已识别 ProgressRing 和文本，但 DSL 只保留圆环组件，没有实现实心渐变圆盘和中心文本。</p>
+          <table class="compact-score">
+            <tr><td>TextJaccard</td><td class="num">0.00</td></tr><tr><td>Polarity</td><td class="num">0.00</td></tr><tr><td>SSIM</td><td class="num">0.046</td></tr><tr><td>LPIPS</td><td class="num">0.464</td></tr>
+          </table>
+          <p class="pathline">中间产物：<a href="cases/image_0212/intermediate/intermediate_manifest.json">manifest</a> · <a href="cases/image_0212/intermediate/7-dsl/raw_response.txt">raw response</a> · <a href="cases/image_0212/intermediate/4-icon-retrieval/icon-retrieval.json">icon retrieval</a></p>
+        </div>
+        <div class="case-images duo">
+          <figure class="compare-shot"><img src="cases/image_0212/input/input.png" alt="image_0212 输入图"><figcaption>参考输入图</figcaption></figure>
+          <figure class="compare-shot"><img src="cases/image_0212/output/output.png" alt="image_0212 输出图"><figcaption>模型最终输出图</figcaption></figure>
+        </div>
+      </article>
+    
+      <article class="case-block" id="case-image_1629">
+        <div class="case-copy">
+          <p class="case-kicker"><span>局部-全局</span><span>尺度</span><span>slider</span></p>
+          <h3><a href="cases/image_1629/case.md">image_1629</a> · 局部小组件被扩成整张画布</h3>
+          <p><strong>肉眼现象：</strong>小天气 widget 被生成成全屏深色天气控制条。</p>
+          <p><strong>初步归因：</strong>layout 抓到小卡片 bbox，但 DSL 将局部对象当成整个画布，忽略外部灰色背景和相对尺度。</p>
+          <table class="compact-score">
+            <tr><td>ContentAspectDiff</td><td class="num">0.00</td></tr><tr><td>Palette</td><td class="num">0.05</td></tr><tr><td>Vibrancy</td><td class="num">0.04</td></tr><tr><td>SSIM</td><td class="num">0.121</td></tr>
+          </table>
+          <p class="pathline">中间产物：<a href="cases/image_1629/intermediate/intermediate_manifest.json">manifest</a> · <a href="cases/image_1629/intermediate/7-dsl/raw_response.txt">raw response</a> · <a href="cases/image_1629/intermediate/4-icon-retrieval/icon-retrieval.json">icon retrieval</a></p>
+        </div>
+        <div class="case-images duo">
+          <figure class="compare-shot"><img src="cases/image_1629/input/input.png" alt="image_1629 输入图"><figcaption>参考输入图</figcaption></figure>
+          <figure class="compare-shot"><img src="cases/image_1629/output/output.png" alt="image_1629 输出图"><figcaption>模型最终输出图</figcaption></figure>
+        </div>
+      </article>
+    
+      <article class="case-block" id="case-image_1388">
+        <div class="case-copy">
+          <p class="case-kicker"><span>图片</span><span>overlay</span><span>层级</span></p>
+          <h3><a href="cases/image_1388/case.md">image_1388</a> · 背景图片和 overlay 层级失败</h3>
+          <p><strong>肉眼现象：</strong>模糊来电背景被换成清晰人像，按钮和文字被挤到底部。</p>
+          <p><strong>初步归因：</strong>layout 抓到了按钮和文字，但 DSL 用新图片替代原背景，且把 overlay 层级变成上下堆叠。</p>
+          <table class="compact-score">
+            <tr><td>Margin</td><td class="num">3.13</td></tr><tr><td>TextJaccard</td><td class="num">0.00</td></tr><tr><td>LPIPS</td><td class="num">0.814</td></tr><tr><td>SSIM</td><td class="num">0.184</td></tr>
+          </table>
+          <p class="pathline">中间产物：<a href="cases/image_1388/intermediate/intermediate_manifest.json">manifest</a> · <a href="cases/image_1388/intermediate/7-dsl/raw_response.txt">raw response</a> · <a href="cases/image_1388/intermediate/4-icon-retrieval/icon-retrieval.json">icon retrieval</a></p>
+        </div>
+        <div class="case-images duo">
+          <figure class="compare-shot"><img src="cases/image_1388/input/input.png" alt="image_1388 输入图"><figcaption>参考输入图</figcaption></figure>
+          <figure class="compare-shot"><img src="cases/image_1388/output/output.png" alt="image_1388 输出图"><figcaption>模型最终输出图</figcaption></figure>
+        </div>
+      </article>
+    
+          </div>
+        </section>
+
+        <section id="directions">
+          <div class="section-head">
+            <div>
+              <h2>关键 insight 与方法动机</h2>
+              <p class="note">Widget2Code 暴露的核心问题不是单纯“看不懂图”，而是截图理解到结构化 DSL 生成之间存在断层。</p>
+            </div>
+          </div>
+          <div class="method-thesis">
+            <strong>方法假设：从 one-shot screenshot-to-DSL 改成结构化感知、DSL 校验、局部修复的闭环。</strong>
+            <p>模型一次性写完整 <code>widget.json</code> 很容易把视觉理解、资产检索、布局比例和 renderer 约束混在一起出错。更可控的方向是先生成 DSL，再执行渲染，用最终图和中间件定位错误，最后只修改出错的 DSL 局部。</p>
+          </div>
+          <div class="insight-list">
+            <div class="insight"><strong>1. DSL 是主要瓶颈</strong><p>模型不是直接画图，而是把截图翻译成 <code>widget.json</code>。难点不只是看懂截图，还包括把视觉结果写成 renderer 可执行、视觉保真的结构。</p></div>
+            <div class="insight"><strong>2. 低分可能来自 DSL 表达失败</strong><p>模型可能识别到了组件名，但 DSL 没写内部状态、中心文字、进度值或层级。肉眼看就是“组件在，但语义没有落地”。</p></div>
+            <div class="insight"><strong>3. 资产 grounding 是大问题</strong><p>图标、Logo、图片 crop 被 caption/retrieval 错替换后，会同时拉低语义相似度、颜色、布局和整体观感。</p></div>
+            <div class="insight"><strong>4. 布局比例比组件存在更关键</strong><p>很多 case 组件类别基本有了，但局部-全局尺度、相对面积、横纵比例错了，最终仍然不像原图。</p></div>
+            <div class="insight"><strong>5. 中间模块噪声会被 DSL 放大</strong><p>layout bbox、icon caption、asset retrieval、color extraction 的小偏差会在 DSL 里固化，最后变成明显的视觉错误。</p></div>
+            <div class="insight"><strong>6. 官方分数只看两张图，归因必须看中间件</strong><p>评测只比较参考图和 <code>output.png</code>，但方法动机需要回看 <code>layout-data.json</code>、<code>icon-retrieval.json</code>、<code>raw_response.txt</code> 和 <code>widget.json</code>。</p></div>
+            <div class="insight"><strong>7. 小模型缺少自校验能力</strong><p>9B 可以生成大部分 DSL，但不会稳定检查 schema、红屏、小字溢出、布局比例和图片替换问题，需要外部校验与局部修复环节。</p></div>
+          </div>
+        </section>
+
+        <p class="foot">本报告由本地已有 Widget2Code 实验产物生成，没有重新调用模型或评测器。相对路径均以本 HTML 所在目录为基准。</p>
+      </div>
+    </div>
+  </main>
+
+  <div class="lightbox" id="imageLightbox" aria-hidden="true">
+    <div class="lightbox-shell" role="dialog" aria-modal="true" aria-label="图片预览">
+      <div class="lightbox-toolbar">
+        <div class="lightbox-caption" id="lightboxCaption">图片预览</div>
+        <div class="lightbox-actions">
+          <button type="button" data-lightbox-zoom="out">缩小</button>
+          <span class="zoom-readout" id="lightboxZoom">100%</span>
+          <button type="button" data-lightbox-zoom="in">放大</button>
+          <button type="button" data-lightbox-zoom="reset">还原</button>
+          <button type="button" data-lightbox-close>关闭</button>
+        </div>
+      </div>
+      <div class="lightbox-canvas"><img id="lightboxImage" alt="" /></div>
+    </div>
+  </div>
+
+  <script>
+    const sideLinks = Array.from(document.querySelectorAll(".side-nav a"));
+    const observedSections = sideLinks.map(link => document.querySelector(link.getAttribute("href"))).filter(Boolean);
+    if ("IntersectionObserver" in window && observedSections.length > 0) {
+      const sectionObserver = new IntersectionObserver(entries => {
+        const visible = entries.filter(entry => entry.isIntersecting).sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0];
+        if (!visible) return;
+        sideLinks.forEach(link => link.classList.toggle("active", link.getAttribute("href") === "#" + visible.target.id));
+      }, { rootMargin: "-18% 0px -68% 0px", threshold: [0.01, 0.2, 0.45] });
+      observedSections.forEach(section => sectionObserver.observe(section));
+    }
+
+    const lightbox = document.querySelector("#imageLightbox");
+    const lightboxCanvas = document.querySelector(".lightbox-canvas");
+    const lightboxImage = document.querySelector("#lightboxImage");
+    const lightboxCaption = document.querySelector("#lightboxCaption");
+    const lightboxZoom = document.querySelector("#lightboxZoom");
+    let currentZoom = 1, panX = 0, panY = 0, dragStartX = 0, dragStartY = 0, isDragging = false;
+    function applyLightboxTransform() {
+      lightboxImage.style.transform = "translate(" + panX + "px, " + panY + "px) scale(" + currentZoom + ")";
+      lightboxZoom.textContent = Math.round(currentZoom * 100) + "%";
+    }
+    function setLightboxZoom(value) {
+      currentZoom = Math.max(0.5, Math.min(5, Math.round(value * 100) / 100));
+      if (currentZoom === 1) { panX = 0; panY = 0; }
+      applyLightboxTransform();
+    }
+    function resetLightboxView() { currentZoom = 1; panX = 0; panY = 0; applyLightboxTransform(); }
+    function openLightbox(sourceImage) {
+      const figure = sourceImage.closest("figure");
+      const caption = (figure && figure.querySelector("figcaption") && figure.querySelector("figcaption").textContent) || sourceImage.alt || "图片预览";
+      lightboxImage.src = sourceImage.currentSrc || sourceImage.src;
+      lightboxImage.alt = sourceImage.alt || caption;
+      lightboxCaption.textContent = caption;
+      lightbox.classList.add("open");
+      lightbox.setAttribute("aria-hidden", "false");
+      document.body.style.overflow = "hidden";
+      resetLightboxView();
+    }
+    function closeLightbox() {
+      lightbox.classList.remove("open");
+      lightbox.setAttribute("aria-hidden", "true");
+      document.body.style.overflow = "";
+      lightboxImage.removeAttribute("src");
+    }
+    document.querySelectorAll(".compare-shot img").forEach(image => image.addEventListener("click", () => openLightbox(image)));
+    lightbox.addEventListener("click", event => { if (event.target === lightbox) closeLightbox(); });
+    document.querySelector("[data-lightbox-close]").addEventListener("click", closeLightbox);
+    document.querySelectorAll("[data-lightbox-zoom]").forEach(button => {
+      button.addEventListener("click", () => {
+        const action = button.dataset.lightboxZoom;
+        if (action === "in") setLightboxZoom(currentZoom + 0.25);
+        if (action === "out") setLightboxZoom(currentZoom - 0.25);
+        if (action === "reset") resetLightboxView();
+      });
+    });
+    lightboxCanvas.addEventListener("wheel", event => {
+      if (!lightbox.classList.contains("open") || !event.ctrlKey) return;
+      event.preventDefault();
+      setLightboxZoom(currentZoom + (event.deltaY < 0 ? 0.12 : -0.12));
+    }, { passive: false });
+    lightboxCanvas.addEventListener("pointerdown", event => {
+      if (!lightbox.classList.contains("open") || event.button !== 0) return;
+      isDragging = true;
+      dragStartX = event.clientX - panX;
+      dragStartY = event.clientY - panY;
+      lightboxCanvas.classList.add("dragging");
+      lightboxCanvas.setPointerCapture(event.pointerId);
+    });
+    lightboxCanvas.addEventListener("pointermove", event => {
+      if (!isDragging) return;
+      panX = event.clientX - dragStartX;
+      panY = event.clientY - dragStartY;
+      applyLightboxTransform();
+    });
+    function stopLightboxDrag(event) {
+      if (!isDragging) return;
+      isDragging = false;
+      lightboxCanvas.classList.remove("dragging");
+      if (event && event.pointerId !== undefined && lightboxCanvas.hasPointerCapture(event.pointerId)) {
+        lightboxCanvas.releasePointerCapture(event.pointerId);
+      }
+    }
+    lightboxCanvas.addEventListener("pointerup", stopLightboxDrag);
+    lightboxCanvas.addEventListener("pointercancel", stopLightboxDrag);
+    lightboxCanvas.addEventListener("pointerleave", stopLightboxDrag);
+    document.addEventListener("keydown", event => {
+      if (!lightbox.classList.contains("open")) return;
+      if (event.key === "Escape") closeLightbox();
+      if (event.key === "+" || event.key === "=") setLightboxZoom(currentZoom + 0.25);
+      if (event.key === "-") setLightboxZoom(currentZoom - 0.25);
+      if (event.key === "0") resetLightboxView();
+    });
+  </script>
+</body>
+</html>

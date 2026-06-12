@@ -1,0 +1,2731 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>WebGen-Bench 实验分析报告</title>
+  <style>
+    :root {
+      --bg: #f7f8f5;
+      --ink: #1f2522;
+      --muted: #626b66;
+      --line: #d9ded8;
+      --panel: #ffffff;
+      --accent: #1f6f78;
+      --accent-2: #b35c23;
+      --bad: #b6423c;
+      --warn: #a26b0b;
+      --good: #2d6d4b;
+      --soft: #eef3ef;
+      --shadow: 0 16px 40px rgba(31, 37, 34, 0.08);
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--ink);
+      font: 15px/1.55 -apple-system, BlinkMacSystemFont, "Segoe UI", "Microsoft YaHei", sans-serif;
+    }
+    a { color: var(--accent); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    .topbar {
+      position: sticky;
+      top: 0;
+      z-index: 20;
+      border-bottom: 1px solid var(--line);
+      background: rgba(247, 248, 245, 0.92);
+      backdrop-filter: blur(12px);
+    }
+    .topbar-inner {
+      max-width: 1480px;
+      margin: 0 auto;
+      padding: 12px 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+    }
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-weight: 800;
+    }
+    .brand-mark {
+      width: 12px;
+      height: 28px;
+      border-radius: 2px;
+      background: linear-gradient(180deg, var(--accent), var(--accent-2));
+    }
+    .nav { display: flex; flex-wrap: wrap; gap: 4px; justify-content: flex-end; }
+    .nav a {
+      padding: 7px 10px;
+      border-radius: 6px;
+      color: var(--muted);
+      font-size: 13px;
+    }
+    .nav a:hover { background: var(--soft); color: var(--ink); text-decoration: none; }
+    main { max-width: 1480px; margin: 0 auto; padding: 34px 24px 64px; }
+    .report-layout {
+      display: grid;
+      grid-template-columns: 228px minmax(0, 1fr);
+      gap: 28px;
+      align-items: start;
+    }
+    .report-content { min-width: 0; }
+    .side-nav {
+      position: sticky;
+      top: 78px;
+      align-self: start;
+      max-height: calc(100vh - 96px);
+      overflow: auto;
+      padding: 14px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: rgba(255, 255, 255, 0.86);
+      box-shadow: var(--shadow);
+    }
+    .side-nav-title {
+      margin: 0 0 10px;
+      color: var(--muted);
+      font-size: 12px;
+      font-weight: 800;
+    }
+    .side-nav a {
+      display: grid;
+      grid-template-columns: 22px minmax(0, 1fr);
+      align-items: center;
+      gap: 8px;
+      min-height: 34px;
+      padding: 6px 8px;
+      border-radius: 6px;
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.25;
+    }
+    .side-nav a:hover,
+    .side-nav a.active { background: var(--soft); color: var(--ink); text-decoration: none; }
+    .side-nav a.active { font-weight: 800; }
+    .side-nav-index {
+      display: inline-grid;
+      place-items: center;
+      width: 20px;
+      height: 20px;
+      border-radius: 999px;
+      background: #edf2ee;
+      color: var(--accent);
+      font-size: 11px;
+      font-weight: 800;
+      font-variant-numeric: tabular-nums;
+    }
+    .side-nav a.active .side-nav-index { background: var(--accent); color: #fff; }
+    .hero {
+      display: grid;
+      grid-template-columns: minmax(0, 1.35fr) minmax(280px, 0.65fr);
+      gap: 34px;
+      align-items: end;
+      padding: 18px 0 30px;
+      border-bottom: 1px solid var(--line);
+    }
+    h1 {
+      margin: 0 0 14px;
+      font-size: clamp(34px, 5vw, 64px);
+      line-height: 1.02;
+      letter-spacing: 0;
+    }
+    h2 { margin: 0; font-size: 28px; line-height: 1.18; }
+    h3 { margin: 0; font-size: 18px; }
+    .lead {
+      max-width: 820px;
+      margin: 0;
+      color: var(--muted);
+      font-size: 18px;
+    }
+    .stamp {
+      justify-self: end;
+      width: min(100%, 380px);
+      padding: 18px;
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      box-shadow: var(--shadow);
+    }
+    .stamp-row {
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      padding: 8px 0;
+      border-bottom: 1px solid var(--line);
+      font-size: 13px;
+    }
+    .stamp-row:last-child { border-bottom: 0; }
+    .stamp-row span:first-child { color: var(--muted); }
+    section { padding: 34px 0 0; scroll-margin-top: 80px; }
+    .section-head {
+      display: flex;
+      align-items: end;
+      justify-content: space-between;
+      gap: 18px;
+      margin-bottom: 16px;
+      padding-bottom: 10px;
+      border-bottom: 1px solid var(--line);
+    }
+    .note {
+      margin: 6px 0 0;
+      color: var(--muted);
+      font-size: 13px;
+    }
+    .metrics {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 12px;
+      margin-top: 18px;
+    }
+    .metric {
+      min-width: 0;
+      padding: 16px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: var(--panel);
+      box-shadow: var(--shadow);
+    }
+    .metric-label {
+      display: block;
+      color: var(--muted);
+      font-size: 12px;
+      font-weight: 800;
+    }
+    .metric strong {
+      display: block;
+      margin-top: 8px;
+      font-size: 30px;
+      line-height: 1;
+      font-variant-numeric: tabular-nums;
+    }
+    .metric-note {
+      display: block;
+      margin-top: 9px;
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.35;
+    }
+    .panel {
+      margin-top: 16px;
+      padding: 18px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: var(--panel);
+      box-shadow: var(--shadow);
+    }
+    .panel-title {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      gap: 16px;
+      margin-bottom: 12px;
+    }
+    .panel-title p { margin: 0; color: var(--muted); font-size: 13px; }
+    .grid-2 {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 16px;
+    }
+    .definition-list {
+      display: grid;
+      gap: 10px;
+      margin: 0;
+    }
+    .definition-list div {
+      display: grid;
+      grid-template-columns: 110px minmax(0, 1fr);
+      gap: 12px;
+      padding-bottom: 10px;
+      border-bottom: 1px solid var(--line);
+    }
+    .definition-list div:last-child { border-bottom: 0; padding-bottom: 0; }
+    .definition-list dt {
+      color: var(--muted);
+      font-weight: 800;
+      font-size: 13px;
+    }
+    .definition-list dd { margin: 0; }
+    .flow {
+      display: grid;
+      grid-template-columns: repeat(5, minmax(0, 1fr));
+      gap: 10px;
+      margin-top: 12px;
+    }
+    .flow-step {
+      position: relative;
+      padding: 14px;
+      min-height: 126px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: #fbfcfa;
+    }
+    .flow-step span {
+      display: inline-grid;
+      place-items: center;
+      width: 24px;
+      height: 24px;
+      margin-bottom: 10px;
+      border-radius: 999px;
+      background: var(--accent);
+      color: #fff;
+      font-size: 12px;
+      font-weight: 900;
+    }
+    .flow-step strong { display: block; margin-bottom: 6px; }
+    .flow-step p { margin: 0; color: var(--muted); font-size: 13px; }
+    .input-showcase {
+      margin-top: 16px;
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      background:
+        linear-gradient(135deg, rgba(31, 111, 120, 0.08), rgba(179, 92, 35, 0.05) 42%, rgba(255, 255, 255, 0) 70%),
+        var(--panel);
+      box-shadow: var(--shadow);
+      overflow: hidden;
+    }
+    .input-showcase-head {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 24px;
+      padding: 20px 22px 16px;
+      border-bottom: 1px solid var(--line);
+    }
+    .input-showcase-head h3 {
+      margin: 2px 0 7px;
+      font-size: 24px;
+      line-height: 1.18;
+    }
+    .input-showcase-head p {
+      max-width: 900px;
+      margin: 0;
+      color: var(--muted);
+      font-size: 14px;
+      line-height: 1.65;
+    }
+    .eyebrow-label {
+      display: inline-flex;
+      margin-bottom: 4px;
+      color: var(--accent);
+      font-size: 12px;
+      font-weight: 900;
+    }
+    .input-id {
+      min-width: 96px;
+      padding: 12px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: rgba(255, 255, 255, 0.76);
+      text-align: center;
+    }
+    .input-id span {
+      display: block;
+      color: var(--muted);
+      font-size: 11px;
+      font-weight: 900;
+    }
+    .input-id strong {
+      display: block;
+      margin-top: 3px;
+      font-size: 24px;
+      line-height: 1;
+      font-variant-numeric: tabular-nums;
+    }
+    .input-showcase-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 0.92fr) minmax(0, 1.08fr);
+      gap: 0;
+    }
+    .input-pane {
+      min-width: 0;
+      padding: 20px 22px 22px;
+    }
+    .input-pane + .input-pane { border-left: 1px solid var(--line); }
+    .pane-head {
+      display: grid;
+      grid-template-columns: 12px minmax(0, 1fr) auto;
+      align-items: start;
+      gap: 10px;
+      margin-bottom: 14px;
+    }
+    .pane-head strong {
+      display: block;
+      font-size: 17px;
+      line-height: 1.2;
+    }
+    .pane-head p {
+      margin: 5px 0 0;
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.45;
+    }
+    .stage-dot {
+      width: 10px;
+      height: 10px;
+      margin-top: 5px;
+      border-radius: 999px;
+      background: var(--good);
+      box-shadow: 0 0 0 5px rgba(45, 109, 75, 0.12);
+    }
+    .stage-dot.eval {
+      background: var(--warn);
+      box-shadow: 0 0 0 5px rgba(162, 107, 11, 0.13);
+    }
+    .stage-tag {
+      align-self: start;
+      display: inline-flex;
+      padding: 5px 8px;
+      border-radius: 999px;
+      font-size: 11px;
+      font-weight: 900;
+      white-space: nowrap;
+    }
+    .stage-tag.good { background: #e7f3eb; color: var(--good); }
+    .stage-tag.warn { background: #fbf1df; color: var(--warn); }
+    .instruction-box {
+      padding: 18px;
+      border: 1px solid #cfd8d1;
+      border-radius: 8px;
+      background: #fcfdfb;
+      color: #222a26;
+      font-size: 15px;
+      line-height: 1.78;
+      box-shadow: inset 0 1px 0 rgba(255,255,255,0.8);
+    }
+    .instruction-box.zh {
+      font-size: 16px;
+      line-height: 1.85;
+      color: #1f2a25;
+    }
+    .raw-input,
+    .raw-task {
+      margin-top: 10px;
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.55;
+    }
+    .raw-input summary,
+    .raw-task summary {
+      cursor: pointer;
+      color: var(--accent);
+      font-weight: 800;
+      user-select: none;
+    }
+    .raw-input p,
+    .raw-task p {
+      margin: 8px 0 0;
+      padding: 10px;
+      border-radius: 8px;
+      background: rgba(238, 243, 239, 0.72);
+    }
+    .input-facts {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 8px;
+      margin-top: 12px;
+    }
+    .input-facts span {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      gap: 12px;
+      padding: 9px 10px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: rgba(255, 255, 255, 0.72);
+      color: #35413b;
+      font-size: 12px;
+    }
+    .input-facts b {
+      color: var(--muted);
+      font-size: 11px;
+      text-transform: none;
+      white-space: nowrap;
+    }
+    .ui-task-list {
+      display: grid;
+      gap: 9px;
+      max-height: 620px;
+      overflow: auto;
+      padding-right: 4px;
+    }
+    .ui-task-item {
+      display: grid;
+      grid-template-columns: 38px minmax(0, 1fr);
+      gap: 10px;
+      padding: 11px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: rgba(255, 255, 255, 0.78);
+    }
+    .task-index {
+      display: inline-grid;
+      place-items: center;
+      width: 32px;
+      height: 32px;
+      border-radius: 8px;
+      background: var(--soft);
+      color: var(--accent);
+      font-size: 12px;
+      font-weight: 900;
+      font-variant-numeric: tabular-nums;
+    }
+    .task-line {
+      color: var(--ink);
+      font-size: 13px;
+      font-weight: 800;
+      line-height: 1.35;
+    }
+    .task-expect {
+      margin-top: 5px;
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.45;
+    }
+    .task-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-top: 8px;
+    }
+    .task-meta span {
+      padding: 3px 7px;
+      border-radius: 999px;
+      background: #f0f3ef;
+      color: #53605a;
+      font-size: 11px;
+      font-weight: 800;
+    }
+    .paper-figure-list {
+      display: grid;
+      gap: 18px;
+    }
+    .paper-figure {
+      margin: 0;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: var(--panel);
+      box-shadow: var(--shadow);
+      overflow: hidden;
+    }
+    .paper-figure img {
+      display: block;
+      width: 100%;
+      max-height: 760px;
+      object-fit: contain;
+      background: #fff;
+      cursor: zoom-in;
+    }
+    .followup-figures .paper-figure img {
+      object-position: top center;
+    }
+    .paper-figure figcaption {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      gap: 16px;
+      padding: 11px 14px;
+      color: var(--muted);
+      border-top: 1px solid var(--line);
+      font-size: 13px;
+      background: #fbfcfa;
+    }
+    .paper-figure figcaption strong {
+      color: var(--ink);
+      font-size: 14px;
+    }
+    .followup-summary {
+      display: grid;
+      grid-template-columns: minmax(0, 1.05fr) minmax(300px, 0.95fr);
+      gap: 16px;
+      margin-bottom: 18px;
+    }
+    .followup-claim {
+      padding: 18px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: var(--panel);
+      box-shadow: var(--shadow);
+    }
+    .followup-claim strong {
+      display: block;
+      margin-bottom: 8px;
+      font-size: 19px;
+    }
+    .followup-claim p {
+      margin: 0;
+      color: var(--muted);
+      line-height: 1.7;
+    }
+    .followup-legend {
+      display: grid;
+      gap: 8px;
+      padding: 18px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: #fbfcfa;
+      box-shadow: var(--shadow);
+    }
+    .followup-legend span {
+      display: grid;
+      grid-template-columns: 92px minmax(0, 1fr);
+      gap: 10px;
+      align-items: start;
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.45;
+    }
+    .followup-legend b {
+      display: inline-flex;
+      justify-content: center;
+      padding: 4px 8px;
+      border-radius: 999px;
+      color: #fff;
+      font-size: 11px;
+      font-weight: 900;
+      white-space: nowrap;
+    }
+    .followup-legend .direct b,
+    .paper-status.direct { background: var(--good); }
+    .followup-legend .partial b,
+    .paper-status.partial { background: var(--warn); }
+    .followup-paper-list {
+      display: grid;
+      gap: 22px;
+    }
+    .followup-paper {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr);
+      gap: 14px;
+      align-items: start;
+      padding: 20px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: var(--panel);
+      box-shadow: var(--shadow);
+    }
+    .followup-paper-info {
+      min-width: 0;
+    }
+    .paper-status {
+      display: inline-flex;
+      margin-bottom: 10px;
+      padding: 5px 9px;
+      border-radius: 999px;
+      color: #fff;
+      font-size: 11px;
+      font-weight: 900;
+    }
+    .followup-paper-info h3 {
+      margin-bottom: 8px;
+      font-size: 22px;
+      line-height: 1.22;
+    }
+    .paper-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin: 0 0 12px;
+    }
+    .paper-meta span {
+      padding: 4px 7px;
+      border-radius: 999px;
+      background: var(--soft);
+      color: #4f5d56;
+      font-size: 11px;
+      font-weight: 800;
+    }
+    .followup-paper-info p {
+      margin: 0 0 10px;
+      color: var(--muted);
+      line-height: 1.65;
+    }
+    .paper-takeaway {
+      padding: 12px;
+      border-left: 3px solid var(--accent);
+      border-radius: 6px;
+      background: #f2f7f4;
+      color: #26312c;
+      font-size: 13px;
+      line-height: 1.55;
+    }
+    .followup-figures {
+      display: grid;
+      gap: 12px;
+      min-width: 0;
+    }
+    .followup-figures .paper-figure img {
+      max-height: 980px;
+    }
+    .followup-figures.compact .paper-figure img {
+      max-height: 780px;
+    }
+    .metric-explain-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 12px;
+    }
+    .metric-explain {
+      padding: 14px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: #fbfcfa;
+    }
+    .metric-explain strong {
+      display: block;
+      margin-bottom: 6px;
+      font-size: 15px;
+    }
+    .metric-explain p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.55;
+    }
+    .paper-table-block {
+      display: grid;
+      gap: 9px;
+      padding: 2px 0 4px;
+    }
+    .paper-table-block + .paper-table-block { margin-top: 22px; }
+    .paper-table-caption {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      gap: 16px;
+      color: #111;
+    }
+    .paper-table-caption span {
+      font: 700 16px/1.25 "Times New Roman", Times, serif;
+    }
+    .paper-table-caption em {
+      color: var(--muted);
+      font-size: 13px;
+      font-style: normal;
+    }
+    .paper-table-wrap {
+      overflow: auto;
+      background: #fff;
+      border-radius: 2px;
+    }
+    .paper-like-table {
+      min-width: 860px;
+      width: 100%;
+      border-collapse: collapse;
+      border-top: 2px solid #000;
+      border-bottom: 2px solid #000;
+      color: #000;
+      background: #fff;
+      font-family: "Times New Roman", Times, serif;
+      font-size: 14px;
+      line-height: 1.22;
+    }
+    .paper-like-table th,
+    .paper-like-table td {
+      padding: 7px 10px;
+      border: 0;
+      border-bottom: 1px solid #000;
+      background: #fff;
+      color: #000;
+      text-align: center;
+      vertical-align: middle;
+      white-space: normal;
+    }
+    .paper-like-table th {
+      position: static;
+      top: auto;
+      z-index: auto;
+      font-size: 14px;
+      font-weight: 700;
+    }
+    .paper-like-table td:first-child,
+    .paper-like-table th:first-child {
+      text-align: left;
+      min-width: 178px;
+    }
+    .paper-like-table thead tr:last-child th {
+      border-bottom: 1.5px solid #000;
+    }
+    .paper-like-table tbody tr:last-child td {
+      border-bottom: 0;
+    }
+    .paper-like-table .paper-group-row td {
+      padding-top: 8px;
+      padding-bottom: 5px;
+      border-top: 1.5px solid #000;
+      border-bottom: 0;
+      font-weight: 700;
+      text-align: left;
+    }
+    .paper-like-table .paper-ours-row td {
+      font-weight: 500;
+    }
+    .paper-like-table .paper-ours-row td:first-child {
+      padding-left: 24px;
+    }
+    .paper-like-table strong {
+      color: #000;
+      font-weight: 700;
+    }
+    .paper-table-note {
+      margin: 0;
+      color: #3f4742;
+      font-size: 13px;
+      line-height: 1.65;
+    }
+    .paper-table-note code {
+      padding: 1px 4px;
+      border: 1px solid #d6d6d6;
+      border-radius: 3px;
+      background: #fafafa;
+      color: #111;
+      font-size: 12px;
+    }
+    .category-map {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) 38px minmax(0, 1fr) 38px minmax(0, 1fr);
+      gap: 0;
+      align-items: stretch;
+    }
+    .relation-card {
+      min-width: 0;
+      padding: 16px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: #fbfcfa;
+    }
+    .relation-card.root {
+      background: #eff6f5;
+      border-color: rgba(31, 111, 120, 0.22);
+    }
+    .relation-label {
+      display: inline-flex;
+      margin-bottom: 9px;
+      color: var(--accent);
+      font-size: 12px;
+      font-weight: 900;
+    }
+    .relation-card strong {
+      display: block;
+      font-size: 17px;
+      line-height: 1.25;
+    }
+    .relation-card p {
+      margin: 8px 0 0;
+      color: var(--muted);
+      font-size: 13px;
+    }
+    .relation-arrow {
+      position: relative;
+      min-height: 100%;
+    }
+    .relation-arrow::before {
+      content: "";
+      position: absolute;
+      top: 50%;
+      left: 8px;
+      right: 8px;
+      border-top: 2px solid rgba(31, 111, 120, 0.25);
+    }
+    .relation-arrow::after {
+      content: "";
+      position: absolute;
+      top: calc(50% - 5px);
+      right: 6px;
+      width: 10px;
+      height: 10px;
+      border-top: 2px solid rgba(31, 111, 120, 0.35);
+      border-right: 2px solid rgba(31, 111, 120, 0.35);
+      transform: rotate(45deg);
+    }
+    .category-explain-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 12px;
+    }
+    .category-card {
+      min-width: 0;
+      display: grid;
+      gap: 12px;
+      padding: 15px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: #fbfcfa;
+    }
+    .category-card-head {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 12px;
+    }
+    .category-card-head span {
+      display: block;
+      color: var(--muted);
+      font-size: 12px;
+      font-weight: 800;
+    }
+    .category-card-head strong {
+      display: block;
+      margin-top: 2px;
+      font-size: 17px;
+    }
+    .category-card-head b {
+      flex: 0 0 auto;
+      padding: 5px 9px;
+      border-radius: 999px;
+      background: var(--soft);
+      color: var(--accent);
+      font-variant-numeric: tabular-nums;
+    }
+    .category-card p {
+      margin: 0;
+      color: #3e4742;
+      font-size: 13px;
+      line-height: 1.6;
+    }
+    .category-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 7px;
+    }
+    .category-meta span {
+      padding: 4px 7px;
+      border-radius: 999px;
+      background: #eef3ef;
+      color: #51605a;
+      font-size: 11px;
+      font-weight: 800;
+    }
+    .takeaway-list {
+      display: grid;
+      gap: 10px;
+    }
+    .takeaway-row {
+      display: grid;
+      grid-template-columns: 32px minmax(0, 1fr);
+      gap: 10px;
+      align-items: start;
+      padding: 12px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: #fbfcfa;
+    }
+    .takeaway-row > span {
+      display: inline-grid;
+      place-items: center;
+      width: 26px;
+      height: 26px;
+      border-radius: 8px;
+      background: var(--accent);
+      color: #fff;
+      font-size: 12px;
+      font-weight: 900;
+    }
+    .takeaway-row p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.6;
+    }
+    .takeaway-row strong { color: var(--ink); }
+    .table-wrap {
+      overflow: auto;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      background: #fff;
+      font-size: 13px;
+      min-width: 760px;
+    }
+    th, td {
+      padding: 10px 12px;
+      border-bottom: 1px solid var(--line);
+      text-align: left;
+      vertical-align: top;
+      white-space: nowrap;
+    }
+    th {
+      position: sticky;
+      top: 0;
+      background: #f0f3ef;
+      color: #36413b;
+      font-size: 12px;
+      font-weight: 900;
+      z-index: 1;
+    }
+    td strong { color: var(--accent); }
+    tr.ours-row td {
+      background: #f7fbfa;
+      font-weight: 800;
+    }
+    .wide td:last-child { white-space: normal; min-width: 260px; }
+    .tag {
+      display: inline-flex;
+      align-items: center;
+      min-height: 24px;
+      padding: 4px 8px;
+      border-radius: 999px;
+      background: var(--soft);
+      color: var(--muted);
+      font-size: 12px;
+      font-weight: 800;
+      white-space: nowrap;
+    }
+    .tag.good { background: #e7f3eb; color: var(--good); }
+    .tag.warn { background: #fbf1df; color: var(--warn); }
+    .tag.bad { background: #f8e6e4; color: var(--bad); }
+    .callout {
+      padding: 14px 16px;
+      border-left: 4px solid var(--accent);
+      background: #f3f7f4;
+      border-radius: 0 8px 8px 0;
+      color: #33413a;
+    }
+    .callout p { margin: 0; }
+    .problem-tree {
+      display: block;
+    }
+    .issue-tree {
+      position: relative;
+      overflow: hidden;
+      padding: 20px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background:
+        linear-gradient(180deg, rgba(238, 243, 239, 0.75), transparent 190px),
+        var(--panel);
+      box-shadow: var(--shadow);
+    }
+    .tree-summary {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 10px;
+      margin: 0 0 18px;
+    }
+    .summary-chip {
+      min-height: 76px;
+      display: grid;
+      align-content: center;
+      gap: 4px;
+      padding: 12px;
+      border: 1px solid rgba(217, 222, 216, 0.9);
+      border-radius: 8px;
+      background: rgba(255, 255, 255, 0.86);
+    }
+    .summary-chip.bad { background: #fff8f7; border-color: #edd0cc; }
+    .summary-chip.warn { background: #fffaf1; border-color: #eadab6; }
+    .summary-chip.good { background: #f5faf7; border-color: #cfe2d6; }
+    .summary-label {
+      color: var(--muted);
+      font-size: 12px;
+      font-weight: 800;
+    }
+    .summary-value {
+      color: var(--ink);
+      font-size: 25px;
+      line-height: 1;
+      font-weight: 900;
+      font-variant-numeric: tabular-nums;
+    }
+    .tree-node {
+      position: relative;
+      border-left: 2px solid rgba(31, 111, 120, 0.18);
+      margin-left: 18px;
+      padding-left: 18px;
+    }
+    .tree-node.root {
+      border-left: 0;
+      margin-left: 0;
+      padding-left: 0;
+    }
+    .tree-node:not(.root)::before {
+      content: "";
+      position: absolute;
+      left: -2px;
+      top: 22px;
+      width: 14px;
+      border-top: 2px solid rgba(31, 111, 120, 0.18);
+      transform: translateX(-100%);
+    }
+    .tree-stage {
+      display: inline-flex;
+      align-items: center;
+      min-height: 26px;
+      margin: 14px 0 5px 18px;
+      padding: 3px 9px;
+      border: 1px solid rgba(31, 111, 120, 0.18);
+      border-radius: 999px;
+      background: rgba(31, 111, 120, 0.08);
+      color: var(--accent);
+      font-size: 12px;
+      font-weight: 900;
+    }
+    .node-line {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto auto;
+      gap: 10px;
+      align-items: center;
+      min-height: 42px;
+      margin: 7px 0;
+      padding: 9px 10px 9px 12px;
+      border: 1px solid rgba(217, 222, 216, 0.95);
+      border-left: 4px solid rgba(31, 111, 120, 0.3);
+      border-radius: 8px;
+      background: rgba(255, 255, 255, 0.88);
+      box-shadow: 0 8px 18px rgba(31, 37, 34, 0.05);
+    }
+    .tree-node.root > .node-line {
+      background: #1f2522;
+      color: #fff;
+      border-color: #1f2522;
+      box-shadow: 0 12px 28px rgba(31, 37, 34, 0.15);
+    }
+    .node-name {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      min-width: 0;
+      font-weight: 900;
+    }
+    .node-name::before {
+      content: "";
+      flex: 0 0 auto;
+      width: 8px;
+      height: 8px;
+      border-radius: 999px;
+      background: var(--accent);
+    }
+    .node-count {
+      min-width: 50px;
+      padding: 4px 9px;
+      border-radius: 999px;
+      background: var(--soft);
+      text-align: center;
+      font-weight: 900;
+      font-variant-numeric: tabular-nums;
+    }
+    .node-rate {
+      min-width: 96px;
+      color: var(--muted);
+      font-size: 12px;
+      font-variant-numeric: tabular-nums;
+      text-align: right;
+      white-space: nowrap;
+    }
+    .tree-node.root > .node-line .node-rate {
+      color: rgba(255, 255, 255, 0.72);
+    }
+    .tree-node.root > .node-line .node-name::before {
+      background: #fff;
+    }
+    .tree-node.root > .node-line .node-count {
+      background: rgba(255, 255, 255, 0.14);
+      color: #fff;
+    }
+    .tree-node.bad > .node-line {
+      border-left-color: var(--bad);
+    }
+    .tree-node.bad > .node-line .node-name::before {
+      background: var(--bad);
+    }
+    .tree-node.bad > .node-line .node-count,
+    .tree-node.bad > .node-line .node-name {
+      color: var(--bad);
+    }
+    .tree-node.bad > .node-line .node-count {
+      background: #f8e9e7;
+    }
+    .tree-node.warn > .node-line {
+      border-left-color: var(--warn);
+    }
+    .tree-node.warn > .node-line .node-name::before {
+      background: var(--warn);
+    }
+    .tree-node.warn > .node-line .node-count,
+    .tree-node.warn > .node-line .node-name {
+      color: var(--warn);
+    }
+    .tree-node.warn > .node-line .node-count {
+      background: #f6edda;
+    }
+    .tree-node.good > .node-line {
+      border-left-color: var(--good);
+    }
+    .tree-node.good > .node-line .node-name::before {
+      background: var(--good);
+    }
+    .tree-node.good > .node-line .node-count,
+    .tree-node.good > .node-line .node-name {
+      color: var(--good);
+    }
+    .tree-node.good > .node-line .node-count {
+      background: #e4f0e9;
+    }
+    .node-note {
+      margin: -2px 0 9px 12px;
+      padding: 8px 10px;
+      border-left: 3px solid var(--line);
+      border-radius: 0 6px 6px 0;
+      background: rgba(238, 243, 239, 0.65);
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.5;
+    }
+    .example-list {
+      display: grid;
+      gap: 18px;
+    }
+    .example-card {
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: var(--panel);
+      box-shadow: var(--shadow);
+      overflow: hidden;
+    }
+    .example-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      padding: 16px 18px;
+      border-bottom: 1px solid var(--line);
+      background: #fbfcfa;
+    }
+    .example-title { margin: 0 0 4px; }
+    .example-sub { margin: 0; color: var(--muted); font-size: 13px; }
+    .example-body {
+      display: grid;
+      grid-template-columns: minmax(320px, 0.95fr) minmax(0, 1.05fr);
+      gap: 18px;
+      padding: 18px;
+      align-items: start;
+    }
+    .case-shot {
+      margin: 0;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      overflow: hidden;
+      background: #f8faf8;
+    }
+    .case-shot img {
+      display: block;
+      width: 100%;
+      max-height: 520px;
+      object-fit: contain;
+      cursor: zoom-in;
+      background: #fff;
+    }
+    figcaption {
+      padding: 9px 11px;
+      color: var(--muted);
+      border-top: 1px solid var(--line);
+      font-size: 12px;
+      background: #fbfcfa;
+    }
+    .case-copy p { margin: 0 0 12px; }
+    .mini-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 10px;
+      margin: 12px 0;
+    }
+    .mini-grid div {
+      min-width: 0;
+      padding: 11px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: #fbfcfa;
+    }
+    .mini-grid span {
+      display: block;
+      color: var(--muted);
+      font-size: 11px;
+      font-weight: 800;
+    }
+    .mini-grid strong {
+      display: block;
+      margin-top: 5px;
+      font-size: 18px;
+      line-height: 1.15;
+    }
+    .prompt {
+      padding: 12px;
+      border-radius: 8px;
+      background: var(--soft);
+      color: #38453f;
+      font-size: 13px;
+    }
+    .pathline { color: var(--muted); font-size: 13px; }
+    .direction-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 12px;
+    }
+    .direction-claim {
+      display: grid;
+      grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
+      gap: 18px;
+      align-items: stretch;
+      margin-bottom: 14px;
+      padding: 18px;
+      border: 1px solid rgba(31, 111, 120, 0.22);
+      border-radius: 8px;
+      background: linear-gradient(135deg, rgba(31, 111, 120, 0.09), rgba(255, 255, 255, 0.86));
+    }
+    .direction-claim h3 {
+      margin: 0;
+      max-width: 560px;
+      font-size: 25px;
+      line-height: 1.25;
+    }
+    .direction-claim p {
+      margin: 0;
+      color: #34433e;
+      font-size: 14px;
+      line-height: 1.75;
+    }
+    .method-loop {
+      display: grid;
+      grid-template-columns: repeat(6, minmax(0, 1fr));
+      gap: 8px;
+      margin-bottom: 14px;
+    }
+    .method-step {
+      min-width: 0;
+      padding: 11px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: #fbfcfa;
+    }
+    .method-step span {
+      display: inline-grid;
+      place-items: center;
+      width: 24px;
+      height: 24px;
+      margin-bottom: 8px;
+      border-radius: 7px;
+      background: var(--accent);
+      color: #fff;
+      font-size: 12px;
+      font-weight: 900;
+    }
+    .method-step strong {
+      display: block;
+      margin-bottom: 5px;
+      font-size: 13px;
+    }
+    .method-step p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.45;
+    }
+    .direction {
+      position: relative;
+      padding: 15px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: #fbfcfa;
+    }
+    .direction.priority {
+      border-color: rgba(179, 92, 35, 0.42);
+      background: linear-gradient(180deg, #fff8ef 0%, #fffdf9 100%);
+      box-shadow: 0 14px 30px rgba(179, 92, 35, 0.08);
+    }
+    .direction.priority::after {
+      content: "重点";
+      position: absolute;
+      top: 12px;
+      right: 12px;
+      padding: 3px 8px;
+      border-radius: 999px;
+      background: #fbf1df;
+      color: var(--warn);
+      font-size: 11px;
+      font-weight: 900;
+    }
+    .direction-kicker {
+      display: inline-flex;
+      margin-bottom: 8px;
+      color: var(--accent);
+      font-size: 12px;
+      font-weight: 900;
+    }
+    .direction.priority .direction-kicker {
+      color: var(--accent-2);
+    }
+    .direction strong {
+      display: block;
+      margin-bottom: 8px;
+      font-size: 16px;
+      line-height: 1.3;
+    }
+    .direction p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.62;
+    }
+    .direction hr {
+      height: 1px;
+      margin: 12px 0;
+      border: 0;
+      background: var(--line);
+    }
+    .direction b {
+      color: var(--ink);
+      font-weight: 900;
+    }
+    .foot {
+      margin: 34px 0 0;
+      padding-top: 16px;
+      border-top: 1px solid var(--line);
+      color: var(--muted);
+      font-size: 13px;
+    }
+    .lightbox {
+      position: fixed;
+      inset: 0;
+      z-index: 100;
+      display: none;
+      background: rgba(15, 18, 16, 0.88);
+    }
+    .lightbox.open { display: block; }
+    .lightbox-shell {
+      position: absolute;
+      inset: 24px;
+      display: grid;
+      grid-template-rows: auto minmax(0, 1fr);
+      border: 1px solid rgba(255, 255, 255, 0.18);
+      border-radius: 10px;
+      background: rgba(17, 22, 19, 0.94);
+      overflow: hidden;
+    }
+    .lightbox-toolbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      padding: 10px 12px;
+      color: #fff;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.16);
+    }
+    .lightbox-caption {
+      min-width: 0;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      font-size: 13px;
+    }
+    .lightbox-actions {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      flex: 0 0 auto;
+    }
+    .lightbox-actions button {
+      border: 1px solid rgba(255, 255, 255, 0.26);
+      border-radius: 6px;
+      background: rgba(255, 255, 255, 0.09);
+      color: #fff;
+      padding: 6px 9px;
+      cursor: pointer;
+      font: inherit;
+      font-size: 12px;
+    }
+    .zoom-readout {
+      min-width: 48px;
+      text-align: center;
+      color: rgba(255, 255, 255, 0.8);
+      font-size: 12px;
+    }
+    .lightbox-canvas {
+      position: relative;
+      overflow: hidden;
+      cursor: grab;
+      touch-action: none;
+    }
+    .lightbox-canvas.dragging { cursor: grabbing; }
+    .lightbox-canvas img {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      max-width: 94%;
+      max-height: 94%;
+      transform: translate(0, 0) scale(1);
+      transform-origin: center;
+      translate: -50% -50%;
+      user-select: none;
+      will-change: transform;
+      background: #fff;
+      box-shadow: 0 24px 80px rgba(0,0,0,0.35);
+    }
+    @media (max-width: 1100px) {
+      .report-layout { grid-template-columns: 1fr; }
+      .side-nav { position: static; max-height: none; }
+      .hero, .example-body, .grid-2 { grid-template-columns: 1fr; }
+      .stamp { justify-self: start; }
+      .flow { grid-template-columns: 1fr 1fr; }
+      .metrics, .tree-summary { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .category-map { grid-template-columns: 1fr; gap: 10px; }
+      .relation-arrow { display: none; }
+      .category-explain-grid { grid-template-columns: 1fr; }
+      .direction-claim { grid-template-columns: 1fr; }
+      .method-loop { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+      .input-showcase-grid { grid-template-columns: 1fr; }
+      .input-pane + .input-pane { border-left: 0; border-top: 1px solid var(--line); }
+      .metric-explain-grid { grid-template-columns: 1fr; }
+      .followup-summary, .followup-paper { grid-template-columns: 1fr; }
+      .followup-paper-info { position: static; }
+    }
+    @media (max-width: 720px) {
+      .topbar-inner { align-items: flex-start; flex-direction: column; }
+      main { padding: 24px 14px 48px; }
+      .nav { justify-content: flex-start; }
+      .flow, .metrics, .tree-summary, .mini-grid, .direction-grid, .method-loop { grid-template-columns: 1fr; }
+      .section-head, .panel-title, .example-head { align-items: flex-start; flex-direction: column; }
+      .issue-tree { padding: 14px; }
+      .tree-node { margin-left: 10px; padding-left: 12px; }
+      .node-line { grid-template-columns: minmax(0, 1fr); gap: 6px; }
+      .node-rate { min-width: 0; text-align: left; }
+      .definition-list div { grid-template-columns: 1fr; gap: 4px; }
+      .input-showcase-head { flex-direction: column; }
+      .pane-head { grid-template-columns: 12px minmax(0, 1fr); }
+      .stage-tag { grid-column: 2; }
+      .followup-legend span { grid-template-columns: 1fr; }
+      .paper-figure figcaption { align-items: flex-start; flex-direction: column; gap: 4px; }
+      .lightbox-shell { inset: 10px; }
+      .lightbox-toolbar { align-items: flex-start; flex-direction: column; }
+      .lightbox-actions { flex-wrap: wrap; }
+    }
+  </style>
+</head>
+<body>
+  <div class="shell">
+    <header class="topbar">
+      <div class="topbar-inner">
+        <div class="brand"><span class="brand-mark"></span><span>前端 Bench Case Hub</span></div>
+        <nav class="nav" aria-label="顶部导航">
+          <a href="#overview">概览</a><a href="#task">任务链路</a><a href="#paper">论文主表</a><a href="#followups">后续打榜</a><a href="#ours">我们结果</a><a href="#categories">类别分析</a><a href="#problem-tree">问题分布</a><a href="#cases">代表案例</a><a href="#directions">优化方向</a>
+        </nav>
+      </div>
+    </header>
+    <main>
+      <div class="report-layout">
+        <aside class="side-nav" aria-label="页面目录">
+          <p class="side-nav-title">WebGen-Bench 报告目录</p>
+          <a href="#overview"><span class="side-nav-index">1</span><span>概览</span></a><a href="#task"><span class="side-nav-index">2</span><span>任务链路</span></a><a href="#paper"><span class="side-nav-index">3</span><span>论文主表</span></a><a href="#followups"><span class="side-nav-index">4</span><span>后续打榜</span></a><a href="#ours"><span class="side-nav-index">5</span><span>我们结果</span></a><a href="#categories"><span class="side-nav-index">6</span><span>类别分析</span></a><a href="#problem-tree"><span class="side-nav-index">7</span><span>问题分布</span></a><a href="#cases"><span class="side-nav-index">8</span><span>代表案例</span></a><a href="#directions"><span class="side-nav-index">9</span><span>优化方向</span></a>
+        </aside>
+        <div class="report-content">
+          <section class="hero" id="overview">
+            <div>
+              <h1>WebGen-Bench 实验分析报告</h1>
+              <p class="lead">本页仿照 Interaction2Code 分析页，把 WebGen-Bench 的任务定义、官方主表、我们本地 qwen3.5-9b + Bolt.diy 结果、类别失败分布和代表 case 放在同一个可浏览页面里，方便后续 failure case 分析和方法动机提炼。</p>
+            </div>
+            <div class="stamp" aria-label="实验口径">
+              <div class="stamp-row"><span>报告生成</span><strong>2026-06-12</strong></div>
+              <div class="stamp-row"><span>生成 scaffold</span><strong>Bolt.diy</strong></div>
+              <div class="stamp-row"><span>主体模型</span><strong>qwen3.5-9b</strong></div>
+              <div class="stamp-row"><span>评测对象</span><strong>101 apps / 647 UI tasks</strong></div>
+            </div>
+          </section>
+
+          <div class="metrics">
+            
+    <div class="metric">
+      <span class="metric-label">生成覆盖</span>
+      <strong>101 / 101</strong>
+      <span class="metric-note">所有 WebGen app 均有生成产物</span>
+    </div>
+  
+    <div class="metric">
+      <span class="metric-label">UI Accuracy</span>
+      <strong>17.16%</strong>
+      <span class="metric-note">YES 96，PARTIAL 30，NO 512，START_FAILED 9</span>
+    </div>
+  
+    <div class="metric">
+      <span class="metric-label">Appearance</span>
+      <strong>1.76 / 5</strong>
+      <span class="metric-note">按 101 个 app 分母；成功截图均分 1.78 / 5</span>
+    </div>
+  
+    <div class="metric">
+      <span class="metric-label">可见非白屏</span>
+      <strong>31 / 101</strong>
+      <span class="metric-note">排除空白页和运行/编译错误页后的严格口径</span>
+    </div>
+  
+          </div>
+
+          <section id="task">
+            <div class="section-head">
+              <div>
+                <h2>任务、输入、输出和评测链路</h2>
+                <p class="note">WebGen-Bench 不是单页截图复现，而是从自然语言需求生成完整网站，再用 UI agent 和 VLM 评测网站功能与外观。</p>
+              </div>
+              <span class="tag warn">输入很短，测试很细</span>
+            </div>
+            <div class="grid-2">
+              <div class="panel">
+                <div class="panel-title"><h3>Benchmark 任务</h3></div>
+                <dl class="definition-list">
+                  <div><dt>输入</dt><dd>每个 app 给一段自然语言 instruction，描述网站类型、核心功能、用户操作和颜色约束。评测集还带有隐藏/保留的 <code>ui_instruct</code> 子任务，用于后续 UI evaluation。</dd></div>
+                  <div><dt>输出</dt><dd>一个可运行的网站项目，通常包括生成 trace、zip、展开源码、依赖文件、启动脚本和运行截图。不是只交一个 HTML 片段。</dd></div>
+                  <div><dt>UI 评测</dt><dd>WebVoyager 风格 UI agent 打开生成网站，逐条执行 647 个测试任务，输出 YES / PARTIAL / NO / START_FAILED。</dd></div>
+                  <div><dt>外观评测</dt><dd>对每个 app 的页面截图做 1-5 分 appearance judge，关注成功渲染、内容相关性、布局和现代美观程度。</dd></div>
+                </dl>
+              </div>
+              <div class="panel">
+                <div class="panel-title"><h3>我们这次的关键差异</h3></div>
+                <dl class="definition-list">
+                  <div><dt>生成模型</dt><dd>论文主表没有 qwen3.5-9b；我们使用 OpenRouter 上的 qwen3.5-9b 作为 Bolt.diy 主体生成模型。</dd></div>
+                  <div><dt>UI judge</dt><dd>论文 UI agent engine 使用 Qwen2.5-VL-32B-Instruct；本地最终合并中使用 qwen3-vl-plus 与 Mimo 修复 APIConnectionError 后的结果。</dd></div>
+                  <div><dt>Appearance</dt><dd>论文用 GPT-4o 打外观分；我们使用 Mimo 对 100 张成功截图重评，000051 因依赖/启动问题没有截图。</dd></div>
+                  <div><dt>本地兼容</dt><dd>生成路线对齐 Bolt.diy，但运行时有 Windows、Vite、静态页面和续跑兼容处理；这些会影响工程复现细节，不改变任务定义。</dd></div>
+                </dl>
+              </div>
+            </div>
+            
+    <div class="input-showcase">
+      <div class="input-showcase-head">
+        <div>
+          <span class="eyebrow-label">真实样本 input.json</span>
+          <h3>模型生成输入和评测任务不是一回事</h3>
+          <p>以 <a href="cases/000001/input/input.json">case 000001</a> 为例：生成阶段主要把 <code>instruction</code> 交给 Bolt.diy + 模型；<code>ui_instruct</code> 是官方保留的评测任务，后续由 UI agent 打开生成网站逐条执行。</p>
+        </div>
+        <div class="input-id">
+          <span>Case</span>
+          <strong>000001</strong>
+        </div>
+      </div>
+      <div class="input-showcase-grid">
+        <article class="input-pane generation-pane">
+          <div class="pane-head">
+            <span class="stage-dot"></span>
+            <div>
+              <strong>生成阶段输入</strong>
+              <p>这段需求会进入模型/agent，用来生成完整网站项目。</p>
+            </div>
+            <span class="stage-tag good">给模型</span>
+          </div>
+          <div class="instruction-box zh">请实现一个用于生成股票报告的网站，提供股票信息和分析。网站需要支持搜索和汇总股票信息，并根据用户需求生成定制化股票报告。用户应能输入股票代码或名称，选择报告格式和内容，网站自动生成对应报告。报告应包含股票基础信息、市场趋势、财务数据等。背景色设为白色，组件颜色设为海军蓝。</div>
+          <div class="input-facts">
+            <span><b>需求类别</b>数据管理</span>
+            <span><b>需求子类</b>增删改查 / API 集成 / 数据可视化</span>
+            <span><b>应用类型</b>分析平台 / 仪表盘</span>
+          </div>
+          <details class="raw-input">
+            <summary>展开英文原文</summary>
+            <p>Please implement a website for generating stock reports to provide stock information and analysis. The website should have the functionality to search and summarize stock information, and generate customized stock reports based on user requirements. Users should be able to input stock codes or names, select report formats and content, and the website will automatically generate the corresponding reports. The reports should include basic stock information, market trends, financial data, and more. Set the background color to white and the component color to navy.</p>
+            <p>Category: Data Management；Subcategories: CRUD Operations / API Integration / Data Visualization；Application Type: Analytics Platforms/Dashboards</p>
+          </details>
+        </article>
+        <article class="input-pane eval-pane">
+          <div class="pane-head">
+            <span class="stage-dot eval"></span>
+            <div>
+              <strong>ui_instruct 评测任务</strong>
+              <p>这些任务不用于指导生成；评测时 UI agent 用它们检查网站功能、数据展示和设计约束。</p>
+            </div>
+            <span class="stage-tag warn">评测用</span>
+          </div>
+          <div class="ui-task-list">
+            
+              <div class="ui-task-item">
+                <div class="task-index">01</div>
+                <div class="task-copy">
+                  <div class="task-line">输入有效股票代码，验证股票搜索功能。</div>
+                  <div class="task-expect">系统应返回与该股票代码相关的信息和分析，包括基础信息、市场趋势和财务数据。</div>
+                  <div class="task-meta">
+                    <span>功能测试</span>
+                    <span>搜索</span>
+                  </div>
+                  <details class="raw-task">
+                    <summary>英文原文</summary>
+                    <p>Verify the stock search functionality by entering a valid stock code.</p>
+                    <p>The system returns relevant stock information and analysis corresponding to the entered stock code, displaying details such as basic stock information, market trends, and financial data.</p>
+                  </details>
+                </div>
+              </div>
+            
+              <div class="ui-task-item">
+                <div class="task-index">02</div>
+                <div class="task-copy">
+                  <div class="task-line">选择不同报告格式和内容选项，测试报告定制功能。</div>
+                  <div class="task-expect">系统应提供多种报告格式和内容定制选项，让用户可以按偏好选择。</div>
+                  <div class="task-meta">
+                    <span>功能测试</span>
+                    <span>生成</span>
+                  </div>
+                  <details class="raw-task">
+                    <summary>英文原文</summary>
+                    <p>Test the report customization feature by selecting different report formats and content options.</p>
+                    <p>The system provides options for various report formats and content customization, enabling users to choose according to their preferences.</p>
+                  </details>
+                </div>
+              </div>
+            
+              <div class="ui-task-item">
+                <div class="task-index">03</div>
+                <div class="task-copy">
+                  <div class="task-line">输入股票名称而不是股票代码，搜索股票信息。</div>
+                  <div class="task-expect">网站应能识别股票名称，并检索、展示相关股票信息和分析。</div>
+                  <div class="task-meta">
+                    <span>功能测试</span>
+                    <span>搜索</span>
+                  </div>
+                  <details class="raw-task">
+                    <summary>英文原文</summary>
+                    <p>Input a stock name instead of a stock code to search for stock information.</p>
+                    <p>The website successfully recognizes the stock name, retrieving and displaying the relevant stock information and analysis.</p>
+                  </details>
+                </div>
+              </div>
+            
+              <div class="ui-task-item">
+                <div class="task-index">04</div>
+                <div class="task-copy">
+                  <div class="task-line">选择特定元素生成定制报告，例如市场趋势、财务数据。</div>
+                  <div class="task-expect">生成的报告应准确包含用户选择的元素，并正确反映用户指定的内容。</div>
+                  <div class="task-meta">
+                    <span>功能测试</span>
+                    <span>生成 / 筛选</span>
+                  </div>
+                  <details class="raw-task">
+                    <summary>英文原文</summary>
+                    <p>Generate a customized stock report by choosing specific elements to include (e.g., market trends, financial data).</p>
+                    <p>The generated report correctly includes the selected elements, accurately reflecting the user's specified choices.</p>
+                  </details>
+                </div>
+              </div>
+            
+              <div class="ui-task-item">
+                <div class="task-index">05</div>
+                <div class="task-copy">
+                  <div class="task-line">点击网站上的各个按钮并返回首页，验证所有按钮是否正常工作。</div>
+                  <div class="task-expect">每次点击都应进入正确页面或触发正确动作，不应出现错误，导航应保持顺畅。</div>
+                  <div class="task-meta">
+                    <span>功能测试</span>
+                    <span>表单操作 / 通信 / 电商流程</span>
+                  </div>
+                  <details class="raw-task">
+                    <summary>英文原文</summary>
+                    <p>Navigate through the website and test all buttons function correctly by clicking each of them and back to the homepage.</p>
+                    <p>Each click on a button leads to the appropriate page or action without any errors, ensuring smooth navigation.</p>
+                  </details>
+                </div>
+              </div>
+            
+              <div class="ui-task-item">
+                <div class="task-index">06</div>
+                <div class="task-copy">
+                  <div class="task-line">提交不完整或错误的股票信息，评估表单输入处理能力。</div>
+                  <div class="task-expect">系统应显示合适的错误提示和修正指引，保证输入校验足够健壮。</div>
+                  <div class="task-meta">
+                    <span>功能测试</span>
+                    <span>表单操作</span>
+                  </div>
+                  <details class="raw-task">
+                    <summary>英文原文</summary>
+                    <p>Evaluate the website's form inputs by submitting incomplete or incorrect stock information.</p>
+                    <p>The system displays appropriate error messages and guidance on how to correct the input errors, ensuring robust input validation.</p>
+                  </details>
+                </div>
+              </div>
+            
+              <div class="ui-task-item">
+                <div class="task-index">07</div>
+                <div class="task-copy">
+                  <div class="task-line">验证网站是否按设计要求使用白色背景和海军蓝组件色。</div>
+                  <div class="task-expect">网站背景应为白色，按钮、卡片、标题等组件应使用海军蓝，准确符合设计要求。</div>
+                  <div class="task-meta">
+                    <span>设计验证</span>
+                    <span>UI 一致性</span>
+                  </div>
+                  <details class="raw-task">
+                    <summary>英文原文</summary>
+                    <p>Verify that the website uses 'white' as the background color and 'navy' as the component color, as specified in the design requirements.</p>
+                    <p>The website has a background color of 'white' and components (such as buttons, cards, headers, etc.) are styled with the color 'navy', accurately reflecting the design instruction.</p>
+                  </details>
+                </div>
+              </div>
+            
+          </div>
+        </article>
+      </div>
+    </div>
+  
+            <div class="panel">
+              <div class="panel-title"><h3>执行流程</h3><p>从需求到分数的阶段拆解。</p></div>
+              <div class="flow">
+                <div class="flow-step"><span>1</span><strong>读入 instruction</strong><p>官方样本包含网站需求、类别和保留的 UI 测试任务。</p></div>
+                <div class="flow-step"><span>2</span><strong>Bolt.diy 生成</strong><p>模型在 agent scaffold 中生成完整项目和代码包。</p></div>
+                <div class="flow-step"><span>3</span><strong>安装与启动</strong><p>解压、安装依赖、启动本地服务，失败则进入 START_FAILED 或截图缺失。</p></div>
+                <div class="flow-step"><span>4</span><strong>UI 子任务评测</strong><p>UI agent 按 ui_instruct 执行操作并判断 YES/PARTIAL/NO。</p></div>
+                <div class="flow-step"><span>5</span><strong>Appearance 评测</strong><p>对页面截图进行 1-5 分外观判断，和 UI 分数分开分析。</p></div>
+              </div>
+            </div>
+          </section>
+
+          <section id="paper">
+            <div class="section-head">
+              <div>
+                <h2>论文主表</h2>
+                <p class="note">这里直接放 WebGen-Bench 原论文 Table 3、Table 4、Table 5 的截图，避免手抄表格造成口径偏差；点击图片可放大查看。</p>
+              </div>
+              <span class="tag">Table 3-5</span>
+            </div>
+            <div class="paper-figure-list">
+              <figure class="paper-figure compare-shot">
+                <img src="assets/paper_table_3.png" alt="WebGen-Bench paper Table 3" />
+                <figcaption><strong>Table 3：整体主结果</strong><span>不同 code-agent framework 与模型组合在全量 WebGen-Bench 上的 UI accuracy 和 appearance score。</span></figcaption>
+              </figure>
+              <figure class="paper-figure compare-shot">
+                <img src="assets/paper_table_4.png" alt="WebGen-Bench paper Table 4" />
+                <figcaption><strong>Table 4：类别结果</strong><span>按 instruction category 和 test case category 拆分的 accuracy。</span></figcaption>
+              </figure>
+              <figure class="paper-figure compare-shot">
+                <img src="assets/paper_table_5.png" alt="WebGen-Bench paper Table 5" />
+                <figcaption><strong>Table 5：UI Agent 与人工一致性</strong><span>比较 UI agent 自动评测结果和人工复核结果。</span></figcaption>
+              </figure>
+            </div>
+            <div class="panel">
+              <div class="panel-title"><h3>指标说明</h3><p>这些解释用于读 Table 3-5，和我们后面本地结果的列对齐。</p></div>
+              <div class="metric-explain-grid">
+                <div class="metric-explain"><strong>Yes Rate</strong><p>UI 子任务被评为 YES 的比例，表示网站完全满足该条测试要求。</p></div>
+                <div class="metric-explain"><strong>Partial Rate</strong><p>UI 子任务被评为 PARTIAL 的比例，表示部分满足要求，但功能、内容或交互仍有缺失。</p></div>
+                <div class="metric-explain"><strong>No Rate</strong><p>UI 子任务被评为 NO 的比例，表示没有达成该条测试要求，或页面没有可用入口。</p></div>
+                <div class="metric-explain"><strong>Start Failed</strong><p>网站启动失败、无法进入可测状态的比例。Table 5 的人工对齐表没有这一列。</p></div>
+                <div class="metric-explain"><strong>Accuracy</strong><p>论文主分数：<code>(YES + 0.5 * PARTIAL) / Total × 100%</code>。YES 权重为 1，PARTIAL 权重为 0.5。</p></div>
+                <div class="metric-explain"><strong>Appearance Score</strong><p>页面外观评分，范围 1-5，由 VLM 根据渲染成功、内容相关性、布局和现代美观程度给分。</p></div>
+                <div class="metric-explain"><strong>Instruction Categories</strong><p>网站生成需求所属类别：Content Presentation、User Interaction、Data Management。</p></div>
+                <div class="metric-explain"><strong>Test Case Categories</strong><p>评测子任务类别：Functional Testing、Data Display Testing、Design Validation Testing。</p></div>
+                <div class="metric-explain"><strong>Testing Method</strong><p>Table 5 中的 UI Agent 是自动浏览器评测，Manual 是人工复核结果。</p></div>
+                <div class="metric-explain"><strong>Alignment Rate</strong><p>Table 5 中 UI agent 结果与人工标注一致的比例，公式为 <code>N_manual=agent / N_total × 100%</code>。</p></div>
+              </div>
+            </div>
+          </section>
+
+          <section id="followups">
+            <div class="section-head">
+              <div>
+                <h2>后续打榜资料</h2>
+                <p class="note">这里放后续论文中和 WebGen-Bench 直接相关的结果表截图，并标明是否是原 benchmark 全量口径。点击图片可放大查看。</p>
+              </div>
+              <span class="tag">2025-09 至 2026-05</span>
+            </div>
+
+            <div class="followup-summary">
+              <div class="followup-claim">
+                <strong>结论：WebGen-Bench 有人持续打，但还没有被刷爆。</strong>
+                <p>后续最强的直接结果大致在 50%-60% accuracy / FSR 区间；7B-8B 级模型经过 SFT、Step-GRPO、scaffold 或视觉反馈后可以到 40% 左右。它不是 nobody cares 的冷门 benchmark，但距离 90%+ 饱和还很远。</p>
+              </div>
+              <div class="followup-legend">
+                <span class="direct"><b>直接打榜</b>使用 WebGen-Bench 原任务/测试集并报告可比结果，适合放进横向 baseline。</span>
+                <span class="partial"><b>半直接</b>抽样、增强或改造 WebGen-Bench，说明社区关注方向，但不能和原论文主表直接混排。</span>
+              </div>
+            </div>
+
+            <div class="followup-paper-list">
+              <article class="followup-paper">
+                <div class="followup-paper-info">
+                  <span class="paper-status direct">直接打榜</span>
+                  <h3>WebGen-Agent</h3>
+                  <p class="paper-meta"><span>arXiv 2025-09</span><span>全量 101 / 647</span><span>Accuracy + Appearance</span></p>
+                  <p>核心做法是把网站生成改成多步闭环：代码生成、执行、截图反馈、GUI-agent 测试反馈、backtrack 和 select-best。它还用 step-level screenshot / GUI-agent score 做 Step-GRPO。</p>
+                  <div class="paper-takeaway">最强后续竞争基线。Claude-3.5-Sonnet 从 26.4 提到 51.9；Qwen2.5-Coder-7B Step-GRPO 到 45.4；Qwen3-Coder-480B-A35B 到 58.2。</div>
+                </div>
+                <div class="followup-figures">
+                  <figure class="paper-figure compare-shot">
+                    <img src="assets/followup_webgen_agent_table1.png" alt="WebGen-Agent Table 1 on WebGen-Bench" />
+                    <figcaption><strong>WebGen-Agent Table 1：主结果</strong><span>和 OpenHands、Aider、Bolt.diy、WebGen-LM 同表比较。</span></figcaption>
+                  </figure>
+                </div>
+              </article>
+
+              <article class="followup-paper">
+                <div class="followup-paper-info">
+                  <span class="paper-status direct">直接打榜，指标不同</span>
+                  <h3>WebGen-R1</h3>
+                  <p class="paper-meta"><span>arXiv 2026-04</span><span>WebGen-Bench</span><span>FSR / AAS / VRR</span></p>
+                  <p>这篇走 scaffold-driven structured generation，加 SFT 和 RL，把项目级网站生成拆成更可控的结构化输出，再用功能、渲染、视觉奖励训练 7B 模型。</p>
+                  <div class="paper-takeaway">不能直接和原论文 Accuracy 混算，因为它报告 FSR/AAS/VRR。它说明小模型 RL 路线有人做：WebGen-R1-7B FSR 29.21，AAS 3.94，VRR 95.89。</div>
+                </div>
+                <div class="followup-figures compact">
+                  <figure class="paper-figure compare-shot">
+                    <img src="assets/followup_webgen_r1_table1.png" alt="WebGen-R1 Table 1 on WebGen-Bench" />
+                    <figcaption><strong>WebGen-R1 Table 1：主结果</strong><span>FSR、AAS、VRR 三个指标。</span></figcaption>
+                  </figure>
+                </div>
+              </article>
+
+              <article class="followup-paper">
+                <div class="followup-paper-info">
+                  <span class="paper-status direct">直接打榜，修复路线</span>
+                  <h3>VF-Coder / Coding with Eyes</h3>
+                  <p class="paper-meta"><span>arXiv 2026-03</span><span>附录 B.2</span><span>Accuracy + Appearance</span></p>
+                  <p>这篇不是替代 WebGen 的从零生成 scaffold，而是基于 Bolt.diy 生成的完整 codebase 继续做视觉反馈调试和代码修复。</p>
+                  <div class="paper-takeaway">对我们很有参考价值：它证明“生成后视觉/交互反馈修复”能在 WebGen-Bench 上涨分，accuracy 31.8 -> 41.8，appearance 2.74 -> 3.96。</div>
+                </div>
+                <div class="followup-figures compact">
+                  <figure class="paper-figure compare-shot">
+                    <img src="assets/followup_vf_coder_tables7_8.png" alt="VF-Coder Tables 7 and 8 on WebGen-Bench" />
+                    <figcaption><strong>VF-Coder Table 7-8：WebGen-Bench 结果</strong><span>主结果和类别拆分都显示视觉反馈修复带来提升。</span></figcaption>
+                  </figure>
+                </div>
+              </article>
+
+              <article class="followup-paper">
+                <div class="followup-paper-info">
+                  <span class="paper-status partial">半直接：增强版 / 抽样</span>
+                  <h3>TDDev</h3>
+                  <p class="paper-meta"><span>arXiv 2025-09 / 2026-05</span><span>TDD framework</span><span>抽样或增强 WebGen-Bench</span></p>
+                  <p>TDDev 把需求先转成 acceptance tests，再部署网站、浏览器交互验证、把失败变成修复信号。2025 版用 WebGen-Bench 增强版 Req-to-App-MM；2026 版固定 seed 抽样 50 个 WebGen-Bench case。</p>
+                  <div class="paper-takeaway">不能作为原榜单全量数字，但它非常支持我们的问题动机：Web app 生成难点在“从需求到可测试功能闭环”，TDD/浏览器反馈可以显著提高分数。</div>
+                </div>
+                <div class="followup-figures">
+                  <figure class="paper-figure compare-shot">
+                    <img src="assets/followup_tddev_v1_tables6_8.png" alt="TDDev 2025 Tables 6 to 8 on Req-to-App-MM" />
+                    <figcaption><strong>TDDev 2025 Table 6-8：增强版结果</strong><span>基于 WebGen-Bench 增强版，不是原始全量榜单。</span></figcaption>
+                  </figure>
+                </div>
+              </article>
+            </div>
+          </section>
+
+          <section id="ours">
+            <div class="section-head">
+              <div>
+                <h2>我们的主表对齐结果</h2>
+                <p class="note">这里把最终合并后的 647 个 UI 子任务和 100 张 appearance 截图，分别对齐到论文 Table 3 和 Table 4 的表格结构里。</p>
+              </div>
+              <span class="tag good">最终合并口径</span>
+            </div>
+            <div class="panel">
+              <div class="panel-title"><h3>对齐 Table 3：整体主结果</h3><p>样式按论文表格的黑白横线结构重做。</p></div>
+              
+    <div class="paper-table-block">
+      <div class="paper-table-caption">
+        <span>Table 3 对齐：Overall Results of WebGen-Bench</span>
+        <em>我们的 qwen3.5-9b 结果放入论文 Table 3 的列结构</em>
+      </div>
+      <div class="paper-table-wrap">
+        <table class="paper-like-table paper-table-3">
+          <thead>
+            <tr>
+              <th>Test Name</th>
+              <th>Yes Rate</th>
+              <th>Partial Rate</th>
+              <th>No Rate</th>
+              <th>Start Failed</th>
+              <th>Accuracy</th>
+              <th>Appearance<br />Score</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr class="paper-group-row">
+              <td colspan="7">Bolt.diy</td>
+            </tr>
+            <tr class="paper-ours-row">
+              <td>Ours / qwen3.5-9b</td>
+              <td>14.84</td>
+              <td>4.64</td>
+              <td>79.13</td>
+              <td>1.39</td>
+              <td><strong>17.16</strong></td>
+              <td><strong>1.76 / 1.78</strong></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="paper-table-note">说明：UI 分数使用最终合并后的 647 个子任务；Appearance 写成“按 101 个 app 分母 / 按 100 张成功截图分母”。论文 Table 3 的外观评分由 GPT-4o judge，我们这里用 Mimo 重评，因此外观列只能作为本地对齐参考。</p>
+    </div>
+  
+            </div>
+            <div class="panel">
+              <div class="panel-title"><h3>对齐 Table 4：类别主结果</h3><p>Instruction category 与 test case category 的 Accuracy 拆分。</p></div>
+              
+    <div class="paper-table-block">
+      <div class="paper-table-caption">
+        <span>Table 4 对齐：Accuracy by Category</span>
+        <em>按 instruction category 和 test case category 拆开看</em>
+      </div>
+      <div class="paper-table-wrap">
+        <table class="paper-like-table paper-table-4">
+          <thead>
+            <tr>
+              <th rowspan="2">Test Name</th>
+              <th colspan="3">Instruction Categories</th>
+              <th colspan="3">Test Case Categories</th>
+            </tr>
+            <tr>
+              <th>Content<br />Presentation</th>
+              <th>User<br />Interaction</th>
+              <th>Data<br />Management</th>
+              <th>Functional<br />Testing</th>
+              <th>Data Display<br />Testing</th>
+              <th>Design Validation<br />Testing</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr class="paper-group-row">
+              <td colspan="7">Bolt.diy</td>
+            </tr>
+            <tr class="paper-ours-row">
+              <td>Ours / qwen3.5-9b</td>
+              <td>34.77</td>
+              <td>8.15</td>
+              <td>15.63</td>
+              <td>11.36</td>
+              <td>19.89</td>
+              <td>29.10</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="paper-table-note">说明：Table 4 每一列都是该类别内的 Accuracy，计算方式仍为 <code>(YES + 0.5 * PARTIAL) / Total × 100%</code>。这里使用的是同一批最终合并 UI judge 结果。</p>
+    </div>
+  
+            </div>
+            <div class="panel">
+              <div class="panel-title"><h3>Appearance 分布补充</h3><p>100 / 101 个 app 成功截图并完成 Mimo 外观判断。</p></div>
+              
+    <div class="table-wrap">
+      <table class="">
+        <thead><tr><th>Grade</th><th>数量</th><th>占 101 app</th><th>占成功截图</th></tr></thead>
+        <tbody>
+          <tr><td>1 / 5</td><td>73</td><td>72.28%</td><td>73.00%</td></tr><tr><td>2 / 5</td><td>2</td><td>1.98%</td><td>2.00%</td></tr><tr><td>3 / 5</td><td>5</td><td>4.95%</td><td>5.00%</td></tr><tr><td>4 / 5</td><td>14</td><td>13.86%</td><td>14.00%</td></tr><tr><td>5 / 5</td><td>6</td><td>5.94%</td><td>6.00%</td></tr>
+        </tbody>
+      </table>
+    </div>
+  
+              <p class="note">1 分样本有 73 个，其中大量是空白页、运行/编译错误页或只有背景色的无内容页面。</p>
+            </div>
+          </section>
+
+          <section id="categories">
+            <div class="section-head">
+              <div>
+                <h2>类别分析</h2>
+                <p class="note">这里先讲清楚 case、instruction category、test case category 的关系，再解释每个 category 具体在测什么。</p>
+              </div>
+              <span class="tag warn">User Interaction 最弱</span>
+            </div>
+            <div class="panel">
+              <div class="panel-title"><h3>Category 体系关系</h3><p>WebGen-Bench 的类别不是同一个层级，读分数时要先分清分母。</p></div>
+              
+    <div class="category-map">
+      <div class="relation-card root">
+        <span class="relation-label">Case / App</span>
+        <strong>101 个网站需求</strong>
+        <p>每个 case 是一个完整网站生成任务：给一段 instruction，要求模型产出一个可运行网站。</p>
+      </div>
+      <div class="relation-arrow" aria-hidden="true"></div>
+      <div class="relation-card">
+        <span class="relation-label">Instruction Category</span>
+        <strong>给整个网站需求分类型</strong>
+        <p>一个 case 通常只有一个主类别，用来描述这个网站需求本身属于内容展示、用户交互还是数据管理。</p>
+      </div>
+      <div class="relation-arrow" aria-hidden="true"></div>
+      <div class="relation-card">
+        <span class="relation-label">Test Case Category</span>
+        <strong>给每条评测任务分类型</strong>
+        <p>一个 case 会拆成多条 ui_instruct，每条评测任务再标成功能测试、数据展示测试或设计验证测试。</p>
+      </div>
+    </div>
+  
+            </div>
+            <div class="panel">
+              <div class="panel-title"><h3>Instruction Category 是什么</h3><p>它描述“这个网站需求本身属于哪种类型”，一个 case 通常对应一个主类。</p></div>
+              
+    <div class="category-explain-grid">
+      
+          <article class="category-card">
+            <div class="category-card-head">
+              <div>
+                <span>Content Presentation</span>
+                <strong>内容展示型</strong>
+              </div>
+              <b>34.77%</b>
+            </div>
+            <p>核心是把信息组织成可读网页，例如机构介绍、课程/文章、产品目录、活动宣传、帮助文档等。它主要考察内容覆盖、页面结构、信息层级和基础视觉呈现。</p>
+            <div class="category-meta">
+              <span>28 个 case</span>
+              <span>174 条 ui_instruct</span>
+              <span>静态内容、导航、列表/详情、视觉排版</span>
+            </div>
+          </article>
+        
+          <article class="category-card">
+            <div class="category-card-head">
+              <div>
+                <span>User Interaction</span>
+                <strong>用户交互型</strong>
+              </div>
+              <b>8.15%</b>
+            </div>
+            <p>核心是用户可以完成一串动作，例如注册登录、报名申请、购物下单、聊天咨询、提交表单、预约服务等。它最容易暴露状态流、表单校验和跨页面闭环问题。</p>
+            <div class="category-meta">
+              <span>49 个 case</span>
+              <span>313 条 ui_instruct</span>
+              <span>多步骤流程、按钮/表单、状态变化、错误处理</span>
+            </div>
+          </article>
+        
+          <article class="category-card">
+            <div class="category-card-head">
+              <div>
+                <span>Data Management</span>
+                <strong>数据管理型</strong>
+              </div>
+              <b>15.63%</b>
+            </div>
+            <p>核心是围绕数据对象做搜索、筛选、增删改查、统计报表、图表或记录管理。它要求页面不只是有外壳，还要有稳定的数据模型和数据展示逻辑。</p>
+            <div class="category-meta">
+              <span>24 个 case</span>
+              <span>160 条 ui_instruct</span>
+              <span>CRUD、搜索筛选、报表图表、列表/详情同步</span>
+            </div>
+          </article>
+        
+    </div>
+  
+            </div>
+            <div class="panel">
+              <div class="panel-title"><h3>Test Case Category 是什么</h3><p>它描述“每条 ui_instruct 在检查什么能力”，同一个 case 下面会有多条不同类别的评测任务。</p></div>
+              
+    <div class="category-explain-grid">
+      
+          <article class="category-card">
+            <div class="category-card-head">
+              <div>
+                <span>Functional Testing</span>
+                <strong>功能测试</strong>
+              </div>
+              <b>11.36%</b>
+            </div>
+            <p>逐条检查某个功能路径能不能跑通，例如搜索、生成、提交、登录、预约、导航、表单校验等。它是任务数最多的一类，也是 WebGen 里最低分的主战场。</p>
+            <div class="category-meta">
+              <span>339 条任务</span>
+              <span>52.40% task 占比</span>
+              <span>能不能完成用户动作</span>
+            </div>
+          </article>
+        
+          <article class="category-card">
+            <div class="category-card-head">
+              <div>
+                <span>Data Display Testing</span>
+                <strong>数据展示测试</strong>
+              </div>
+              <b>19.89%</b>
+            </div>
+            <p>检查页面是否正确展示列表、详情、图表、历史记录、状态、结果页或推荐内容。它关注数据有没有出现、是否和任务目标一致、是否能被用户读到。</p>
+            <div class="category-meta">
+              <span>186 条任务</span>
+              <span>28.75% task 占比</span>
+              <span>有没有把数据正确展示出来</span>
+            </div>
+          </article>
+        
+          <article class="category-card">
+            <div class="category-card-head">
+              <div>
+                <span>Design Validation Testing</span>
+                <strong>设计约束测试</strong>
+              </div>
+              <b>29.10%</b>
+            </div>
+            <p>检查 instruction 中明确给出的颜色、背景、组件视觉风格和布局要求是否被实现。它不一定要求复杂交互，但会惩罚空白页、样式不符和组件缺失。</p>
+            <div class="category-meta">
+              <span>122 条任务</span>
+              <span>18.86% task 占比</span>
+              <span>视觉约束是否按要求实现</span>
+            </div>
+          </article>
+        
+    </div>
+  
+            </div>
+            <div class="panel">
+              <div class="panel-title"><h3>类别结果表：按网站需求分组</h3><p>模型最不擅长交互型网站，Content Presentation 是相对上界。</p></div>
+              
+    <div class="table-wrap">
+      <table class="">
+        <thead><tr><th>Category</th><th>Apps</th><th>Tasks</th><th>YES</th><th>PARTIAL</th><th>NO</th><th>Start Failed</th><th>Accuracy</th><th>Avg Appearance</th></tr></thead>
+        <tbody>
+          <tr><td>User Interaction</td><td>49</td><td>313</td><td>6.71%</td><td>2.88%</td><td>87.54%</td><td>2.88%</td><td><strong>8.15%</strong></td><td>1.46</td></tr><tr><td>Content Presentation</td><td>28</td><td>174</td><td>31.03%</td><td>7.47%</td><td>61.49%</td><td>0.00%</td><td><strong>34.77%</strong></td><td>2.46</td></tr><tr><td>Data Management</td><td>24</td><td>160</td><td>13.13%</td><td>5.00%</td><td>81.88%</td><td>0.00%</td><td><strong>15.63%</strong></td><td>1.63</td></tr>
+        </tbody>
+      </table>
+    </div>
+  
+            </div>
+            <div class="panel">
+              <div class="panel-title"><h3>类别结果表：按评测任务分组</h3><p>Functional Testing 是最大且最低分的测试类，说明卡分点主要在功能路径和状态闭环。</p></div>
+              
+    <div class="table-wrap">
+      <table class="">
+        <thead><tr><th>Category</th><th>Tasks</th><th>YES</th><th>PARTIAL</th><th>NO</th><th>Start Failed</th><th>Accuracy</th></tr></thead>
+        <tbody>
+          <tr><td>Functional Testing</td><td>339</td><td>9.14%</td><td>4.42%</td><td>84.96%</td><td>1.47%</td><td><strong>11.36%</strong></td></tr><tr><td>Data Display Testing</td><td>186</td><td>18.82%</td><td>2.15%</td><td>77.96%</td><td>1.08%</td><td><strong>19.89%</strong></td></tr><tr><td>Design Validation Testing</td><td>122</td><td>24.59%</td><td>9.02%</td><td>64.75%</td><td>1.64%</td><td><strong>29.10%</strong></td></tr>
+        </tbody>
+      </table>
+    </div>
+  
+            </div>
+            <div class="panel">
+              <div class="panel-title"><h3>读表结论</h3><p>这里直接保留对方法设计有用的类别结论。</p></div>
+              
+    <div class="takeaway-list">
+      <div class="takeaway-row">
+        <span>1</span>
+        <p><strong>分数不能只按 case 看。</strong>一个网站需求会拆成多条 ui_instruct；一个空白页会让这个 case 下的多条功能、数据展示、设计验证任务一起失败。</p>
+      </div>
+      <div class="takeaway-row">
+        <span>2</span>
+        <p><strong>Instruction Category 解释“网站是什么”。</strong>User Interaction 最低，说明带流程闭环的网站最难；Content Presentation 较高，说明静态信息组织相对容易。</p>
+      </div>
+      <div class="takeaway-row">
+        <span>3</span>
+        <p><strong>Test Case Category 解释“评测在查什么”。</strong>Functional Testing 覆盖最多，也最低，说明真正卡分的不是单个页面长得像不像，而是功能路径能不能被 UI agent 跑通。</p>
+      </div>
+    </div>
+  
+            </div>
+          </section>
+
+          <section id="problem-tree">
+            <div class="section-head">
+              <div>
+                <h2>问题分布树</h2>
+                <p class="note">这里仿照 Interaction2Code 的互斥路径样式：先看生成/启动，再看截图和页面可用性，最后才看 UI 子任务是否通过。</p>
+              </div>
+              <span class="tag bad">前置渲染失败占主导</span>
+            </div>
+            <div class="problem-tree">
+              <div class="issue-tree">
+                <div class="tree-summary" aria-label="问题分布摘要">
+                  <div class="summary-chip">
+                    <div class="summary-label">全量网站</div>
+                    <div class="summary-value">101</div>
+                  </div>
+                  <div class="summary-chip bad">
+                    <div class="summary-label">启动/截图失败</div>
+                    <div class="summary-value">1</div>
+                  </div>
+                  <div class="summary-chip warn">
+                    <div class="summary-label">外观 1 分</div>
+                    <div class="summary-value">73</div>
+                  </div>
+                  <div class="summary-chip good">
+                    <div class="summary-label">外观大于 1 分</div>
+                    <div class="summary-value">27</div>
+                  </div>
+                </div>
+                <div class="tree-node root">
+                  <div class="node-line">
+                    <div class="node-name">WebGen-Bench 本地 101 个网站</div>
+                    <div class="node-count">101</div>
+                    <div class="node-rate">647 UI tasks</div>
+                  </div>
+                  <div class="tree-stage">生成与启动</div>
+                  <div class="tree-node bad">
+                    <div class="node-line">
+                      <div class="node-name">启动失败 / 没有可评测截图</div>
+                      <div class="node-count">1</div>
+                      <div class="node-rate">9 tasks</div>
+                    </div>
+                    <p class="node-note">集中在 000051：依赖/启动链路没有产出可测页面，UI 子任务全部 START_FAILED，也没有 appearance 截图。</p>
+                  </div>
+                  <div class="tree-node good">
+                    <div class="node-line">
+                      <div class="node-name">生成产物可启动并完成截图</div>
+                      <div class="node-count">100</div>
+                      <div class="node-rate">638 tasks</div>
+                    </div>
+                    <div class="tree-stage">截图与外观质量</div>
+                    <div class="tree-node warn">
+                      <div class="node-line">
+                        <div class="node-name">外观 1 分：页面不可用或几乎不可用</div>
+                        <div class="node-count">73</div>
+                        <div class="node-rate">474 tasks</div>
+                      </div>
+                      <p class="node-note">73 个已截图网站被 Mimo 判为 1 分，其中 56 个 UI score 为 0。它们不是简单“视觉不好”，更多是空白页、运行/编译错误页、占位页或需求内容基本缺失。</p>
+                      <div class="tree-node bad">
+                        <div class="node-line"><div class="node-name">空白页面</div><div class="node-count">46</div><div class="node-rate">1 分样本主因</div></div>
+                      </div>
+                      <div class="tree-node bad">
+                        <div class="node-line"><div class="node-name">运行/编译错误页</div><div class="node-count">23</div><div class="node-rate">1 分样本主因</div></div>
+                      </div>
+                      <div class="tree-node warn">
+                        <div class="node-line"><div class="node-name">需求内容基本缺失 / 占位 / 颜色严重不符</div><div class="node-count">4</div><div class="node-rate">1 分样本主因</div></div>
+                      </div>
+                      <div class="tree-stage">1 分页面内的 UI 结果</div>
+                      <div class="tree-node bad">
+                        <div class="node-line"><div class="node-name">UI 子任务 NO</div><div class="node-count">454</div><div class="node-rate">95.78%</div></div>
+                      </div>
+                      <div class="tree-node warn">
+                        <div class="node-line"><div class="node-name">UI 子任务 YES / PARTIAL</div><div class="node-count">20</div><div class="node-rate">4.22%</div></div>
+                      </div>
+                    </div>
+                    <div class="tree-node good">
+                      <div class="node-line">
+                        <div class="node-name">外观大于 1 分：可进入功能分析</div>
+                        <div class="node-count">27</div>
+                        <div class="node-rate">164 tasks</div>
+                      </div>
+                      <p class="node-note">这 27 个网站至少有可见 UI，不再主要死于白屏/报错；后续 failure case 应重点看状态流、表单校验、数据结构、图表展示和设计约束。</p>
+                      <div class="tree-stage">可用页面内的 UI 结果</div>
+                      <div class="tree-node good">
+                        <div class="node-line"><div class="node-name">UI 子任务 YES</div><div class="node-count">83</div><div class="node-rate">50.61%</div></div>
+                      </div>
+                      <div class="tree-node warn">
+                        <div class="node-line"><div class="node-name">UI 子任务 PARTIAL</div><div class="node-count">23</div><div class="node-rate">14.02%</div></div>
+                      </div>
+                      <div class="tree-node bad">
+                        <div class="node-line"><div class="node-name">UI 子任务 NO</div><div class="node-count">58</div><div class="node-rate">35.37%</div></div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="callout">
+                <p><strong>核心判断：</strong>WebGen-Bench 当前不是单纯“按钮没写好”的问题。最前置的 runnable frontend reliability 已经吞掉大量任务；只有把空白页、构建错误和无内容页面压下去，后续状态建模、交互闭环和视觉修复才会真正体现在分数上。</p>
+              </div>
+            </div>
+          </section>
+
+          <section id="cases">
+            <div class="section-head">
+              <div>
+                <h2>代表案例</h2>
+                <p class="note">每个 case 都链接到本地 case.md；截图、输入、源码、trace 和逐条 UI 任务结果都在对应目录里。</p>
+              </div>
+              <span class="tag">点击图片可放大</span>
+            </div>
+            <div class="example-list">
+              
+    <article class="example-card">
+      <div class="example-head">
+        <div>
+          <h3 class="example-title">空白页面导致整组 UI 子任务全挂</h3>
+          <p class="example-sub">代表样本：<a href="cases/000004/case.md">000004</a>，Instruction Category：Data Management。</p>
+        </div>
+        <span class="tag bad">渲染前置失败</span>
+      </div>
+      <div class="example-body">
+        <figure class="case-shot compare-shot">
+          <img src="cases/000004/output/screenshot.png" alt="WebGen-Bench 000004 输出截图" />
+          <figcaption>000004 输出截图，点击可放大拖拽查看</figcaption>
+        </figure>
+        <div class="case-copy">
+          <p>这是最典型的 WebGen 低分样本：网站产物存在，但浏览器里没有任何有效组件。WebVoyager 式 UI agent 只能等待、滚动或返回，所有篮球数据、预测、推荐、排名和球员表现测试都无法执行。</p>
+          <div class="mini-grid">
+            <div><span>UI 分数</span><strong>0.00%</strong></div>
+            <div><span>YES / PARTIAL / NO / START_FAILED</span><strong>0/0/7/0</strong></div>
+            <div><span>Appearance</span><strong>1 / 5</strong></div>
+            <div><span>Diagnostic proxy</span><strong>10.00</strong></div>
+          </div>
+          <p class="prompt"><strong>输入需求：</strong>Please implement a sports analytics website that provides basketball betting data and analysis. The website should have functionalities for data visualization, match prediction, and betting recommendations. Users should be able to browse data for basketball, view match history, ...</p>
+          <p class="pathline">更多输入、源码、trace 和逐条 UI 分数见：<a href="cases/000004/case.md">cases/000004/case.md</a></p>
+        </div>
+      </div>
+    </article>
+  
+    <article class="example-card">
+      <div class="example-head">
+        <div>
+          <h3 class="example-title">只渲染背景色，交互入口完全缺失</h3>
+          <p class="example-sub">代表样本：<a href="cases/000054/case.md">000054</a>，Instruction Category：User Interaction。</p>
+        </div>
+        <span class="tag warn">背景页失败</span>
+      </div>
+      <div class="example-body">
+        <figure class="case-shot compare-shot">
+          <img src="cases/000054/output/screenshot.png" alt="WebGen-Bench 000054 输出截图" />
+          <figcaption>000054 输出截图：模型只渲染了背景色，不是图片丢失</figcaption>
+        </figure>
+        <div class="case-copy">
+          <p>这张图不是截图丢失，而是模型只生成了接近 ghost white 的背景色。需求要求运动招聘平台，包含注册、登录、职位发布、申请和通知；但页面没有任何表单、按钮、职位列表或消息入口，因此 6 条 UI 子任务里 5 条为 NO，只有颜色验证拿到 PARTIAL。</p>
+          <div class="mini-grid">
+            <div><span>UI 分数</span><strong>8.33%</strong></div>
+            <div><span>YES / PARTIAL / NO / START_FAILED</span><strong>0/1/5/0</strong></div>
+            <div><span>Appearance</span><strong>1 / 5</strong></div>
+            <div><span>Diagnostic proxy</span><strong>14.16</strong></div>
+          </div>
+          <p class="prompt"><strong>输入需求：</strong>Please implement a high-performance sports recruitment platform that connects athletes and sports organizations. The platform should have functionalities for athlete registration, job posting, job application, and message notification. Users should be able to log in, browse job ...</p>
+          <p class="pathline">更多输入、源码、trace 和逐条 UI 分数见：<a href="cases/000054/case.md">cases/000054/case.md</a></p>
+        </div>
+      </div>
+    </article>
+  
+    <article class="example-card">
+      <div class="example-head">
+        <div>
+          <h3 class="example-title">功能路径部分能过，但视觉和资源崩坏</h3>
+          <p class="example-sub">代表样本：<a href="cases/000021/case.md">000021</a>，Instruction Category：Content Presentation。</p>
+        </div>
+        <span class="tag good">外观与资源失败</span>
+      </div>
+      <div class="example-body">
+        <figure class="case-shot compare-shot">
+          <img src="cases/000021/output/screenshot.png" alt="WebGen-Bench 000021 输出截图" />
+          <figcaption>000021 输出截图，点击可放大拖拽查看</figcaption>
+        </figure>
+        <div class="case-copy">
+          <p>菜单、扑克房和活动页面可以被 UI agent 找到，所以 UI score 不低；但页面像未样式化文档，颜色约束不符合，图片资源破损，appearance 只有 1 分。这说明功能测试和外观质量会出现明显分歧。</p>
+          <div class="mini-grid">
+            <div><span>UI 分数</span><strong>60.00%</strong></div>
+            <div><span>YES / PARTIAL / NO / START_FAILED</span><strong>3/0/2/0</strong></div>
+            <div><span>Appearance</span><strong>1 / 5</strong></div>
+            <div><span>Diagnostic proxy</span><strong>40.00</strong></div>
+          </div>
+          <p class="prompt"><strong>输入需求：</strong>Please implement a website for The All-In Bourbon Bar to showcase its products and services. The website should have functionalities for displaying menus, introducing the membership-only private poker room, and showcasing events and promotions. Users should be able to browse the...</p>
+          <p class="pathline">更多输入、源码、trace 和逐条 UI 分数见：<a href="cases/000021/case.md">cases/000021/case.md</a></p>
+        </div>
+      </div>
+    </article>
+  
+    <article class="example-card">
+      <div class="example-head">
+        <div>
+          <h3 class="example-title">可运行的中等样本：基础功能有，深层定制弱</h3>
+          <p class="example-sub">代表样本：<a href="cases/000001/case.md">000001</a>，Instruction Category：Data Management。</p>
+        </div>
+        <span class="tag good">部分可用</span>
+      </div>
+      <div class="example-body">
+        <figure class="case-shot compare-shot">
+          <img src="cases/000001/output/screenshot.png" alt="WebGen-Bench 000001 输出截图" />
+          <figcaption>000001 输出截图，点击可放大拖拽查看</figcaption>
+        </figure>
+        <div class="case-copy">
+          <p>股票报告网站完成了搜索、基础展示和部分报告生成，但报告格式/内容选择、错误输入校验、指定 navy 组件色没有稳定满足。它代表了模型在可运行页面上的典型瓶颈：浅层 UI 有，深层业务状态和约束弱。</p>
+          <div class="mini-grid">
+            <div><span>UI 分数</span><strong>57.14%</strong></div>
+            <div><span>YES / PARTIAL / NO / START_FAILED</span><strong>3/2/2/0</strong></div>
+            <div><span>Appearance</span><strong>4 / 5</strong></div>
+            <div><span>Diagnostic proxy</span><strong>68.57</strong></div>
+          </div>
+          <p class="prompt"><strong>输入需求：</strong>Please implement a website for generating stock reports to provide stock information and analysis. The website should have the functionality to search and summarize stock information, and generate customized stock reports based on user requirements. Users should be able to input...</p>
+          <p class="pathline">更多输入、源码、trace 和逐条 UI 分数见：<a href="cases/000001/case.md">cases/000001/case.md</a></p>
+        </div>
+      </div>
+    </article>
+  
+    <article class="example-card">
+      <div class="example-head">
+        <div>
+          <h3 class="example-title">UI 子任务全过，但外观仍不高</h3>
+          <p class="example-sub">代表样本：<a href="cases/000074/case.md">000074</a>，Instruction Category：Content Presentation。</p>
+        </div>
+        <span class="tag good">内容展示较容易</span>
+      </div>
+      <div class="example-body">
+        <figure class="case-shot compare-shot">
+          <img src="cases/000074/output/screenshot.png" alt="WebGen-Bench 000074 输出截图" />
+          <figcaption>000074 输出截图，点击可放大拖拽查看</figcaption>
+        </figure>
+        <div class="case-copy">
+          <p>传记网站的 6 个 UI 子任务全部通过，说明静态内容展示比交互/数据管理更容易。但 appearance 只有 2 分，原因是版式拥挤、现代感弱，这对后续视觉自检仍是信号。</p>
+          <div class="mini-grid">
+            <div><span>UI 分数</span><strong>100.00%</strong></div>
+            <div><span>YES / PARTIAL / NO / START_FAILED</span><strong>6/0/0/0</strong></div>
+            <div><span>Appearance</span><strong>2 / 5</strong></div>
+            <div><span>Diagnostic proxy</span><strong>70.00</strong></div>
+          </div>
+          <p class="prompt"><strong>输入需求：</strong>Please create a biography website to display a person's life and achievements. The website should have functionalities to display basic information, life experiences, achievements, and honors. Users should be able to browse biographies, view detailed information, and search for ...</p>
+          <p class="pathline">更多输入、源码、trace 和逐条 UI 分数见：<a href="cases/000074/case.md">cases/000074/case.md</a></p>
+        </div>
+      </div>
+    </article>
+  
+    <article class="example-card">
+      <div class="example-head">
+        <div>
+          <h3 class="example-title">复杂业务流程可见，但端到端闭环不足</h3>
+          <p class="example-sub">代表样本：<a href="cases/000101/case.md">000101</a>，Instruction Category：Data Management。</p>
+        </div>
+        <span class="tag good">状态流失败</span>
+      </div>
+      <div class="example-body">
+        <figure class="case-shot compare-shot">
+          <img src="cases/000101/output/screenshot.png" alt="WebGen-Bench 000101 输出截图" />
+          <figcaption>000101 输出截图，点击可放大拖拽查看</figcaption>
+        </figure>
+        <div class="case-copy">
+          <p>差旅报销系统渲染正常，也有表单和票务/酒店/火车等入口；但订票、结算、报销提交、状态查看这些多步骤状态流没有稳定闭环。它适合作为后续多轮修复或 agentic self-check 的动机样本。</p>
+          <div class="mini-grid">
+            <div><span>UI 分数</span><strong>50.00%</strong></div>
+            <div><span>YES / PARTIAL / NO / START_FAILED</span><strong>3/1/3/0</strong></div>
+            <div><span>Appearance</span><strong>3 / 5</strong></div>
+            <div><span>Diagnostic proxy</span><strong>55.00</strong></div>
+          </div>
+          <p class="prompt"><strong>输入需求：</strong>Please implement a travel reimbursement and payment system for employee travel expenses. The system should have functionalities for booking tickets, hotels, and trains, generating settlements, submitting reimbursement applications, and more. Users should be able to book tickets,...</p>
+          <p class="pathline">更多输入、源码、trace 和逐条 UI 分数见：<a href="cases/000101/case.md">cases/000101/case.md</a></p>
+        </div>
+      </div>
+    </article>
+  
+            </div>
+          </section>
+
+          <section id="directions">
+            <div class="section-head">
+              <div>
+                <h2>可优化方向</h2>
+                <p class="note">这里把 WebGen-Bench 带来的主要 insight 落成可做方法的方向，重点不是单纯 polish，而是从一句话需求到可运行网站的闭环。</p>
+              </div>
+              <span class="tag good">方法动机候选</span>
+            </div>
+            <div class="direction-claim">
+              <h3>WebGen-Bench 的核心挑战：一句话产品需求，要生成一个完整可用的前端网站。</h3>
+              <p>它和截图复现类 benchmark 不同。模型没有明确设计稿、组件树或交互前后状态，只拿到一段很短的 instruction，却要补全页面结构、角色、数据对象、用户流程、视觉约束和可运行工程。我们当前看到的失败，很多不是某个按钮写错，而是这个隐式产品规格没有被展开。</p>
+            </div>
+            <div class="method-loop">
+              <div class="method-step"><span>1</span><strong>需求展开</strong><p>把一句话转成页面、角色、数据和验收点。</p></div>
+              <div class="method-step"><span>2</span><strong>规格检查</strong><p>确认功能入口和测试任务能互相覆盖。</p></div>
+              <div class="method-step"><span>3</span><strong>代码生成</strong><p>按结构化 spec 生成完整项目，而不是只写外壳。</p></div>
+              <div class="method-step"><span>4</span><strong>启动截图</strong><p>先排除白屏、报错、占位页和资源缺失。</p></div>
+              <div class="method-step"><span>5</span><strong>浏览器验证</strong><p>按任务逐条点击、输入、检查状态变化。</p></div>
+              <div class="method-step"><span>6</span><strong>定向修复</strong><p>根据失败类型回写 spec 或代码并重跑。</p></div>
+            </div>
+            <div class="direction-grid">
+              <div class="direction priority">
+                <span class="direction-kicker">Insight 1</span>
+                <strong>一句话需求要生成完整前端系统。</strong>
+                <p>WebGen 不给截图、组件树或交互状态，只给短 instruction。模型必须主动补全页面结构、角色、数据对象、流程和视觉约束。</p>
+                <hr />
+                <p><b>可做方向：</b>spec-first planner，把短需求展开成可检查的产品规格。</p>
+              </div>
+              <div class="direction">
+                <span class="direction-kicker">Insight 2</span>
+                <strong>短 instruction 和细验收之间有鸿沟。</strong>
+                <p>输入很短，但 ui_instruct 会按注册、搜索、提交、展示、颜色等细任务验收。模型如果不主动生成验收清单，就容易只写一个表层页面。</p>
+                <hr />
+                <p><b>可做方向：</b>把 instruction 展开成页面清单、组件清单、数据清单和测试点清单。</p>
+              </div>
+              <div class="direction priority">
+                <span class="direction-kicker">Insight 3</span>
+                <strong>低分首先不是审美问题，而是可运行性问题。</strong>
+                <p>大量失败来自白屏、只渲染背景色、运行/编译错误页或占位页。一个前置失败会让同一个 case 下多条 UI task 一起变成 NO。</p>
+                <hr />
+                <p><b>可做方向：</b>先做启动、截图、非空页面、控制台错误和资源完整性自检。</p>
+              </div>
+              <div class="direction">
+                <span class="direction-kicker">Insight 4</span>
+                <strong>功能必须可发现，入口不存在就等于没有实现。</strong>
+                <p>UI agent 通过浏览器使用页面，不读源码。注册、登录、发布、申请、消息、搜索等能力必须有清晰入口、可操作表单和反馈区域。</p>
+                <hr />
+                <p><b>可做方向：</b>把每条 ui_instruct 映射到导航项、按钮、输入框和结果区域。</p>
+              </div>
+              <div class="direction priority">
+                <span class="direction-kicker">Insight 5</span>
+                <strong>User Interaction 的难点是状态闭环。</strong>
+                <p>交互型网站低分不是因为按钮少，而是注册登录、申请、提交、消息、预约等流程没有保存状态、更新列表、显示反馈或区分角色。</p>
+                <hr />
+                <p><b>可做方向：</b>显式生成用户流程图或状态机，再用浏览器逐步执行验证。</p>
+              </div>
+              <div class="direction">
+                <span class="direction-kicker">Insight 6</span>
+                <strong>Data Management 需要数据模型，不是 dashboard 外观。</strong>
+                <p>很多页面像管理系统，但没有稳定的列表、详情、筛选、图表、记录更新和报表生成逻辑。数据类任务要求数据对象和页面状态真的存在。</p>
+                <hr />
+                <p><b>可做方向：</b>先生成 mock data schema、CRUD contract、数据流和展示视图。</p>
+              </div>
+              <div class="direction">
+                <span class="direction-kicker">Insight 7</span>
+                <strong>UI 分和外观分会分叉。</strong>
+                <p>有的页面功能路径能部分跑通，但视觉很差；也有页面只满足背景色却没有业务内容。功能正确和视觉质量需要分开诊断。</p>
+                <hr />
+                <p><b>可做方向：</b>browser task 结果修功能路径，VLM appearance 修视觉约束、布局、破图和现代感。</p>
+              </div>
+              <div class="direction">
+                <span class="direction-kicker">Insight 8</span>
+                <strong>WebGen 适合做 agentic repair，而不是一次性生成。</strong>
+                <p>失败信号很明确：启动失败、截图空白、找不到按钮、任务 NO、appearance 低分。它天然适合生成后执行检查，再按失败类型定向修复。</p>
+                <hr />
+                <p><b>可做方向：</b>生成-运行-截图-点击-诊断-修复的单 agent 或双 agent 闭环。</p>
+              </div>
+              <div class="direction">
+                <span class="direction-kicker">Insight 9</span>
+                <strong>它和截图复现类 benchmark 互补。</strong>
+                <p>Vision2Web / Interaction2Code 更像照着明确目标复现；WebGen 更像从需求构建产品。它能支撑“requirement-to-frontend-system”的研究叙事。</p>
+                <hr />
+                <p><b>可做方向：</b>证明框架不仅会复现界面，还能补全需求、构建系统并通过浏览器验证。</p>
+              </div>
+            </div>
+          </section>
+
+          <p class="foot">本报告由现有本地实验产物汇总生成，没有重新调用模型或评测器。相对路径均以本 HTML 所在目录为基准。</p>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <div class="lightbox" id="imageLightbox" aria-hidden="true">
+    <div class="lightbox-shell" role="dialog" aria-modal="true" aria-label="图片预览">
+      <div class="lightbox-toolbar">
+        <div class="lightbox-caption" id="lightboxCaption">图片预览</div>
+        <div class="lightbox-actions">
+          <button type="button" data-lightbox-zoom="out">缩小</button>
+          <span class="zoom-readout" id="lightboxZoom">100%</span>
+          <button type="button" data-lightbox-zoom="in">放大</button>
+          <button type="button" data-lightbox-zoom="reset">还原</button>
+          <button type="button" data-lightbox-close>关闭</button>
+        </div>
+      </div>
+      <div class="lightbox-canvas">
+        <img id="lightboxImage" alt="" />
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const sideLinks = Array.from(document.querySelectorAll(".side-nav a"));
+    const observedSections = sideLinks
+      .map(link => document.querySelector(link.getAttribute("href")))
+      .filter(Boolean);
+    if ("IntersectionObserver" in window && observedSections.length > 0) {
+      const sectionObserver = new IntersectionObserver(entries => {
+        const visible = entries
+          .filter(entry => entry.isIntersecting)
+          .sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0];
+        if (!visible) return;
+        sideLinks.forEach(link => {
+          link.classList.toggle("active", link.getAttribute("href") === "#" + visible.target.id);
+        });
+      }, {
+        rootMargin: "-18% 0px -68% 0px",
+        threshold: [0.01, 0.2, 0.45]
+      });
+      observedSections.forEach(section => sectionObserver.observe(section));
+    }
+
+    const lightbox = document.querySelector("#imageLightbox");
+    const lightboxCanvas = document.querySelector(".lightbox-canvas");
+    const lightboxImage = document.querySelector("#lightboxImage");
+    const lightboxCaption = document.querySelector("#lightboxCaption");
+    const lightboxZoom = document.querySelector("#lightboxZoom");
+    let currentZoom = 1;
+    let panX = 0;
+    let panY = 0;
+    let dragStartX = 0;
+    let dragStartY = 0;
+    let isDragging = false;
+
+    function applyLightboxTransform() {
+      lightboxImage.style.transform = "translate(" + panX + "px, " + panY + "px) scale(" + currentZoom + ")";
+      lightboxZoom.textContent = Math.round(currentZoom * 100) + "%";
+    }
+
+    function setLightboxZoom(value) {
+      currentZoom = Math.max(0.5, Math.min(5, Math.round(value * 100) / 100));
+      if (currentZoom === 1) {
+        panX = 0;
+        panY = 0;
+      }
+      applyLightboxTransform();
+    }
+
+    function resetLightboxView() {
+      currentZoom = 1;
+      panX = 0;
+      panY = 0;
+      applyLightboxTransform();
+    }
+
+    function openLightbox(sourceImage) {
+      const figure = sourceImage.closest("figure");
+      const caption = (figure && figure.querySelector("figcaption") && figure.querySelector("figcaption").textContent) || sourceImage.alt || "图片预览";
+      lightboxImage.src = sourceImage.currentSrc || sourceImage.src;
+      lightboxImage.alt = sourceImage.alt || caption;
+      lightboxCaption.textContent = caption;
+      lightbox.classList.add("open");
+      lightbox.setAttribute("aria-hidden", "false");
+      document.body.style.overflow = "hidden";
+      resetLightboxView();
+    }
+
+    function closeLightbox() {
+      lightbox.classList.remove("open");
+      lightbox.setAttribute("aria-hidden", "true");
+      document.body.style.overflow = "";
+      lightboxImage.removeAttribute("src");
+    }
+
+    document.querySelectorAll(".compare-shot img").forEach(image => {
+      image.addEventListener("click", () => openLightbox(image));
+    });
+
+    lightbox.addEventListener("click", event => {
+      if (event.target === lightbox) closeLightbox();
+    });
+
+    document.querySelector("[data-lightbox-close]").addEventListener("click", closeLightbox);
+
+    document.querySelectorAll("[data-lightbox-zoom]").forEach(button => {
+      button.addEventListener("click", () => {
+        const action = button.dataset.lightboxZoom;
+        if (action === "in") setLightboxZoom(currentZoom + 0.25);
+        if (action === "out") setLightboxZoom(currentZoom - 0.25);
+        if (action === "reset") resetLightboxView();
+      });
+    });
+
+    lightboxCanvas.addEventListener("wheel", event => {
+      if (!lightbox.classList.contains("open") || !event.ctrlKey) return;
+      event.preventDefault();
+      const direction = event.deltaY < 0 ? 1 : -1;
+      setLightboxZoom(currentZoom + direction * 0.12);
+    }, { passive: false });
+
+    lightboxCanvas.addEventListener("pointerdown", event => {
+      if (!lightbox.classList.contains("open") || event.button !== 0) return;
+      isDragging = true;
+      dragStartX = event.clientX - panX;
+      dragStartY = event.clientY - panY;
+      lightboxCanvas.classList.add("dragging");
+      lightboxCanvas.setPointerCapture(event.pointerId);
+    });
+
+    lightboxCanvas.addEventListener("pointermove", event => {
+      if (!isDragging) return;
+      panX = event.clientX - dragStartX;
+      panY = event.clientY - dragStartY;
+      applyLightboxTransform();
+    });
+
+    function stopLightboxDrag(event) {
+      if (!isDragging) return;
+      isDragging = false;
+      lightboxCanvas.classList.remove("dragging");
+      if (event && event.pointerId !== undefined && lightboxCanvas.hasPointerCapture(event.pointerId)) {
+        lightboxCanvas.releasePointerCapture(event.pointerId);
+      }
+    }
+
+    lightboxCanvas.addEventListener("pointerup", stopLightboxDrag);
+    lightboxCanvas.addEventListener("pointercancel", stopLightboxDrag);
+    lightboxCanvas.addEventListener("pointerleave", stopLightboxDrag);
+
+    document.addEventListener("keydown", event => {
+      if (!lightbox.classList.contains("open")) return;
+      if (event.key === "Escape") closeLightbox();
+      if (event.key === "+" || event.key === "=") setLightboxZoom(currentZoom + 0.25);
+      if (event.key === "-") setLightboxZoom(currentZoom - 0.25);
+      if (event.key === "0") resetLightboxView();
+    });
+  </script>
+</body>
+</html>
