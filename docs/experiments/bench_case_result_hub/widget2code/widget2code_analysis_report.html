@@ -164,6 +164,97 @@
     .paper-like td { color: #111; background: #fff; text-align: center; }
     .paper-like td:first-child, .paper-like th:first-child { text-align: left; font-weight: 800; }
     .paper-note { margin: 10px 14px 14px; color: var(--muted); font-size: 12px; }
+    .followup-summary {
+      display: grid;
+      grid-template-columns: minmax(0, 1.08fr) minmax(300px, 0.92fr);
+      gap: 16px;
+      margin-bottom: 16px;
+    }
+    .followup-claim {
+      padding: 18px;
+      border: 1px solid var(--line);
+      border-left: 4px solid var(--accent);
+      border-radius: 8px;
+      background: var(--panel);
+      box-shadow: var(--shadow);
+    }
+    .followup-claim strong { display: block; margin-bottom: 8px; font-size: 20px; }
+    .followup-claim p { margin: 0; color: var(--muted); line-height: 1.7; }
+    .followup-legend {
+      display: grid;
+      gap: 8px;
+      padding: 18px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: #fbfcfa;
+      box-shadow: var(--shadow);
+    }
+    .followup-legend span {
+      display: grid;
+      grid-template-columns: 110px minmax(0, 1fr);
+      gap: 10px;
+      align-items: start;
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.45;
+    }
+    .followup-legend b {
+      display: inline-flex;
+      justify-content: center;
+      padding: 4px 8px;
+      border-radius: 999px;
+      color: #fff;
+      font-size: 11px;
+      font-weight: 900;
+      white-space: nowrap;
+    }
+    .followup-legend .direct b, .followup-status.direct { background: var(--good); }
+    .followup-legend .partial b, .followup-status.partial { background: var(--warn); }
+    .followup-legend .note-only b, .followup-status.note-only { background: #68736d; }
+    .followup-status {
+      display: inline-flex;
+      width: max-content;
+      margin-bottom: 10px;
+      padding: 5px 9px;
+      border-radius: 999px;
+      color: #fff;
+      font-size: 11px;
+      font-weight: 900;
+    }
+    .followup-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 14px;
+      margin-bottom: 16px;
+    }
+    .followup-card {
+      min-height: 186px;
+      padding: 16px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: var(--panel);
+      box-shadow: var(--shadow);
+    }
+    .followup-card h3 { margin: 0 0 8px; font-size: 18px; }
+    .followup-card p { margin: 0 0 10px; color: var(--muted); line-height: 1.6; }
+    .followup-card a { font-weight: 800; }
+    .source-table td:first-child { min-width: 180px; font-weight: 800; }
+    .source-table td:nth-child(3) { min-width: 210px; }
+    .source-table td:nth-child(4) { min-width: 300px; }
+    .takeaway-strip {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 12px;
+      margin-top: 16px;
+    }
+    .takeaway-strip div {
+      padding: 14px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: #fbfcfa;
+    }
+    .takeaway-strip b { display: block; margin-bottom: 5px; }
+    .takeaway-strip span { color: var(--muted); font-size: 13px; line-height: 1.5; }
     .mini-bar { display: block; width: 120px; height: 8px; border-radius: 999px; background: #e6e9e3; overflow: hidden; }
     .mini-bar i { display: block; height: 100%; border-radius: inherit; background: var(--accent); }
     .mini-bar.bad i { background: var(--bad); }
@@ -285,13 +376,14 @@
       .side-nav { position: static; max-height: none; }
       .hero, .case-block { grid-template-columns: 1fr; }
       .stamp { justify-self: start; }
-      .metrics, .grid-3, .tree-children, .insight-list, .funnel, .problem-method { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .metrics, .grid-3, .tree-children, .insight-list, .funnel, .problem-method, .followup-summary, .followup-grid, .takeaway-strip { grid-template-columns: repeat(2, minmax(0, 1fr)); }
     }
     @media (max-width: 720px) {
       main { padding: 22px 14px 48px; }
       .topbar-inner { padding: 10px 14px; }
       .nav { display: none; }
-      .metrics, .grid-2, .grid-3, .tree-children, .insight-list, .case-images.tri, .case-images.duo, .funnel, .problem-method { grid-template-columns: 1fr; }
+      .metrics, .grid-2, .grid-3, .tree-children, .insight-list, .case-images.tri, .case-images.duo, .funnel, .problem-method, .followup-summary, .followup-grid, .takeaway-strip { grid-template-columns: 1fr; }
+      .followup-legend span { grid-template-columns: 1fr; }
       table { min-width: 720px; }
     }
   </style>
@@ -315,11 +407,12 @@
         <a href="#task"><span class="side-nav-index">2</span><span>任务与链路</span></a>
         <a href="#metrics"><span class="side-nav-index">3</span><span>评测口径</span></a>
         <a href="#paper"><span class="side-nav-index">4</span><span>论文主表</span></a>
-        <a href="#results"><span class="side-nav-index">5</span><span>我们的结果</span></a>
-        <a href="#submetrics"><span class="side-nav-index">6</span><span>12 个小指标</span></a>
-        <a href="#problem-distribution"><span class="side-nav-index">7</span><span>问题分布</span></a>
-        <a href="#cases"><span class="side-nav-index">8</span><span>代表 case</span></a>
-        <a href="#directions"><span class="side-nav-index">9</span><span>方法 insight</span></a>
+        <a href="#followups"><span class="side-nav-index">5</span><span>后续打榜</span></a>
+        <a href="#results"><span class="side-nav-index">6</span><span>我们的结果</span></a>
+        <a href="#submetrics"><span class="side-nav-index">7</span><span>12 个小指标</span></a>
+        <a href="#problem-distribution"><span class="side-nav-index">8</span><span>问题分布</span></a>
+        <a href="#cases"><span class="side-nav-index">9</span><span>代表 case</span></a>
+        <a href="#directions"><span class="side-nav-index">10</span><span>方法 insight</span></a>
       </aside>
 
       <div class="report-content">
@@ -383,6 +476,105 @@
             <img src="assets/paper_main_table.png" alt="Widget2Code official benchmark table" />
             <figcaption>官方主表截图：Layout、Legibility、Style、Perceptual、Geometry 五组指标。</figcaption>
           </figure>
+        </section>
+
+        <section id="followups">
+          <div class="section-head">
+            <div>
+              <h2>后续打榜资料</h2>
+              <p class="note">这一节按 WebGen-Bench 页面的口径整理：先判断有没有“独立后续论文直接打原 benchmark”，再把工具、数据集和引用资料分层列出来。</p>
+            </div>
+            <span class="tag">检索至 2026-06-13</span>
+          </div>
+          <div class="followup-summary">
+            <div class="followup-claim">
+              <strong>结论：暂未发现独立后续直接打榜。</strong>
+              <p>公开检索中还没有看到后续论文在 Widget2Code 官方 1,000 test split 和官方 evaluator 上报告新的、可直接和 Table 1 混排的结果。目前可比数字主要仍来自官方论文/项目页的 leaderboard。</p>
+            </div>
+            <div class="followup-legend">
+              <span class="direct"><b>直接打榜</b>同一测试集、同一 evaluator、报告可混排数字。Widget2Code 当前未发现这类独立后续结果。</span>
+              <span class="partial"><b>半直接</b>使用官方数据、工具或结果，但没有报告新的全量可比分数。</span>
+              <span class="note-only"><b>引用/笔记</b>论文笔记、awesome list、daily arXiv，只说明有人关注，不等于打榜。</span>
+            </div>
+          </div>
+          <div class="followup-grid">
+            <article class="followup-card">
+              <span class="followup-status direct">官方可比榜单</span>
+              <h3>原论文 / 项目页 leaderboard</h3>
+              <p>包含 Seed1.6-Thinking、Gemini2.5-Pro、GPT-4o、Qwen3-VL、Qwen3-VL-235B，以及 Design2Code、DCGen、LatCoder、UICopilot、WebSight-VLM-8B、ScreenCoder、UI-UG 等 baseline。</p>
+              <a href="https://djanghao.github.io/widget2code/">官方项目页</a>
+            </article>
+            <article class="followup-card">
+              <span class="followup-status partial">复现工具</span>
+              <h3>widget2code-bench / bench-exp</h3>
+              <p>官方 evaluator 已发布到 PyPI，支持 <code>gt_dir</code>、<code>pred_dir</code>、<code>workers</code>、<code>cuda</code>，输出 per-case <code>evaluation.json</code> 和聚合表。</p>
+              <a href="https://pypi.org/project/widget2code-bench/">PyPI evaluator</a>
+            </article>
+            <article class="followup-card">
+              <span class="followup-status note-only">社区信号</span>
+              <h3>数据集 / 笔记 / GitHub 搜索</h3>
+              <p>Hugging Face 数据集公开 2.82k rows，GitHub repo 搜索主要是作者自己的实现、bench、SFT、lab；PaperNotes/Gist 等页面复述官方表格，没有新增分数。</p>
+              <a href="https://huggingface.co/datasets/Djanghao/widget2code-benchmark">HF 数据集</a>
+            </article>
+          </div>
+          <div class="table-wrap">
+            <table class="source-table">
+              <thead>
+                <tr>
+                  <th>资料</th><th>类型</th><th>能否当作打榜</th><th>关键证据</th><th>对我们的意义</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><a href="https://arxiv.org/html/2512.19918">Widget2Code 论文</a><br><span>arXiv 2025-12 / CVPR 2026</span></td>
+                  <td>原始 benchmark 论文</td>
+                  <td><span class="followup-status direct">官方主表</span></td>
+                  <td>Table 1 报告五组指标：Layout、Legibility、Style、Perceptual、Geometry；官方方法 Widget2Code 仍只有 Style 58.09 / 51.38 / 63.28、SSIM 0.721、CLIP 0.838。</td>
+                  <td>榜单不是 90+ 饱和状态，尤其颜色、图标、局部比例和 DSL 约束仍有明显空间。</td>
+                </tr>
+                <tr>
+                  <td><a href="https://github.com/Djanghao/widget2code">Djanghao/widget2code</a><br><span>官方代码仓库</span></td>
+                  <td>官方实现与结果下载</td>
+                  <td><span class="followup-status partial">可复现，不是独立打榜</span></td>
+                  <td>README 提供完整 framework、batch scripts、evaluation tools，并提供 All Methods Results 下载；这些是作者发布的官方结果。</td>
+                  <td>我们后续如果做方法，需要优先对齐这个 repo 的输入、DSL、renderer 和 evaluator，避免评测口径被质疑。</td>
+                </tr>
+                <tr>
+                  <td><a href="https://pypi.org/project/widget2code-bench/">widget2code-bench</a><br><span>PyPI 2026-03</span></td>
+                  <td>官方 evaluator 包</td>
+                  <td><span class="followup-status partial">工具使用信号</span></td>
+                  <td>包文档明确按 GT 图和 prediction 图计算 12 个质量指标，并输出 <code>metrics_stats.json</code> / <code>metrics.xlsx</code>。</td>
+                  <td>可跑性很好，适合我们把 9B、多轮修复、agentic/self-check 方法做成可复现结果。</td>
+                </tr>
+                <tr>
+                  <td><a href="https://huggingface.co/datasets/Djanghao/widget2code-benchmark">HF dataset</a><br><span>Djanghao/widget2code-benchmark</span></td>
+                  <td>官方数据集</td>
+                  <td><span class="followup-status partial">数据使用信号</span></td>
+                  <td>数据集页面显示约 2.82k rows，包含 train/test split；公开下载量说明已有社区关注，但不提供模型打分。</td>
+                  <td>不是 nobody cares；但由于后续直接榜少，如果我们跑全量且开源结果，容易形成第一批独立可比 baseline。</td>
+                </tr>
+                <tr>
+                  <td><a href="https://en.papernotes.org/CVPR2026/multimodal_vlm/widget2code_from_visual_widgets_to_ui_code_via_multimodal_llms/">PaperNotes</a> / <a href="https://gist.science/paper/2512.19918">Gist.Science</a></td>
+                  <td>第三方论文笔记</td>
+                  <td><span class="followup-status note-only">只引用</span></td>
+                  <td>页面复述原论文 Table 1、ablation 和关键发现，没有新增模型或新实验数字。</td>
+                  <td>可作为“有人读/有人收录”的信号，不能作为横向 baseline。</td>
+                </tr>
+                <tr>
+                  <td>arXiv / GitHub 搜索</td>
+                  <td>公开索引检索</td>
+                  <td><span class="followup-status note-only">未命中直接打榜</span></td>
+                  <td>精确检索 <code>Widget2Code</code>、<code>WidgetFactory</code>、<code>widget2code-bench</code> 未发现后续独立论文结果；GitHub repo 搜索返回的公开仓库主要是作者 Djanghao 系列。</td>
+                  <td>当前最稳妥的写法是“暂未发现独立后续直接打榜”，不要写成“没人关注”。</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="takeaway-strip">
+            <div><b>选题机会</b><span>Widget2Code 有 CVPR Highlight、官方工具和数据，但独立 follow-up 少；这比“已经刷爆的榜”更适合作为方法验证对象。</span></div>
+            <div><b>论文风险</b><span>如果只跑我们自己的简化 evaluator，不足以说明超过官方榜；必须尽量对齐官方 test/evaluator，并说明 CLIP backbone 等差异。</span></div>
+            <div><b>方法落点</b><span>官方最强仍在 Style、局部比例、资产 grounding 上不高，和我们 case 分析中的图标检索、图片替换、DSL 约束问题一致。</span></div>
+          </div>
         </section>
 
         <section id="results">
